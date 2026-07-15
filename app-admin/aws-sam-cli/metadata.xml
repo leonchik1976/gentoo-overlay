@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<upstream>
+		<remote-id type="github">aws/aws-sam-cli</remote-id>
+		<remote-id type="pypi">aws-sam-cli</remote-id>
+		<doc>https://docs.aws.amazon.com/serverless-application-model/</doc>
+	</upstream>
+</pkgmetadata>

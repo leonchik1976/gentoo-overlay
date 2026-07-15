@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Istioctl configures, installs, upgrades, and diagnoses an Istio service
+		mesh. It communicates with Kubernetes and Istio control-plane APIs and
+		can analyze local Kubernetes configuration files.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">istio/istio</remote-id>
+	</upstream>
+</pkgmetadata>

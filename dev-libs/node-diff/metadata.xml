@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription>
+		JsDiff provides functions for calculating character, word, line, JSON,
+		CSS, and array differences, as well as creating, parsing, and applying
+		unified patches. It supports CommonJS, ECMAScript modules, and browsers.
+	</longdescription>
+	<upstream>
+		<bugs-to>https://github.com/kpdecker/jsdiff/issues</bugs-to>
+		<remote-id type="github">kpdecker/jsdiff</remote-id>
+	</upstream>
+</pkgmetadata>

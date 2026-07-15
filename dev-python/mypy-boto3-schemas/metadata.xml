@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<upstream>
+		<remote-id type="github">youtype/mypy_boto3_builder</remote-id>
+		<remote-id type="pypi">mypy-boto3-schemas</remote-id>
+		<doc>https://youtype.github.io/boto3_stubs_docs/mypy_boto3_schemas/</doc>
+	</upstream>
+</pkgmetadata>

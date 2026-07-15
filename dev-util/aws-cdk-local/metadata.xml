@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription>
+		AWS CDK Local provides the cdklocal command, a thin runtime-patching
+		wrapper that redirects AWS CDK deployments to LocalStack endpoints.
+		It supports local and remote LocalStack instances while using the
+		separately installed AWS CDK CLI.
+	</longdescription>
+	<upstream>
+		<bugs-to>https://github.com/localstack/aws-cdk-local/issues</bugs-to>
+		<remote-id type="github">localstack/aws-cdk-local</remote-id>
+	</upstream>
+</pkgmetadata>

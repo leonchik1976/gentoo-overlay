@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<use>
+		<flag name="bedrock">Install dependencies for Amazon Bedrock provider support</flag>
+		<flag name="ollama">Install dependencies for Ollama provider support</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">mozilla-ai/any-llm</remote-id>
+		<remote-id type="pypi">any-llm-sdk</remote-id>
+	</upstream>
+</pkgmetadata>

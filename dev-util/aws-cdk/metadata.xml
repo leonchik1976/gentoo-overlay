@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription>
+		The AWS Cloud Development Kit CLI synthesizes, compares, deploys, and
+		manages AWS CloudFormation applications defined with the AWS CDK. This
+		package installs upstream's bundled JavaScript release and runs it with
+		the system Node.js interpreter.
+	</longdescription>
+	<upstream>
+		<bugs-to>https://github.com/aws/aws-cdk-cli/issues</bugs-to>
+		<remote-id type="github">aws/aws-cdk-cli</remote-id>
+		<doc>https://docs.aws.amazon.com/cdk/v2/guide/</doc>
+	</upstream>
+</pkgmetadata>

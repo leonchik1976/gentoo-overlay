@@ -1,0 +1,11 @@
+--- a/wd.c
++++ b/wd.c
+@@ -647,7 +647,7 @@ static int wd_alg_attrs_init(struct wd_alg_attrs *alg_attrs)
+ 
+ static bool dev_has_alg(const char *dev_alg_name, const char *alg_name)
+ {
+-	char *str;
++	const char *str;
+ 
+ 	str = strstr(dev_alg_name, alg_name);
+ 	if (!str)

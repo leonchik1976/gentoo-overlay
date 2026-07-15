@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Cursor is an AI-powered code editor based on Visual Studio Code. It
+		provides code completion, natural-language editing, and agent-based
+		workflows with project-aware context.
+	</longdescription>
+	<upstream>
+		<doc>https://docs.cursor.com/</doc>
+	</upstream>
+</pkgmetadata>

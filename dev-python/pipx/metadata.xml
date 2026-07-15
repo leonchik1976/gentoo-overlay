@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<use>
+		<flag name="uv">Install <pkg>dev-python/uv</pkg> for pipx's optional uv backend.</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">pypa/pipx</remote-id>
+		<remote-id type="pypi">pipx</remote-id>
+	</upstream>
+</pkgmetadata>

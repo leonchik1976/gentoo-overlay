@@ -1,0 +1,6 @@
+#!/bin/sh
+
+NODE_PATH="/usr/libexec:/usr/lib64/node_modules:/usr/lib/node_modules${NODE_PATH:+:${NODE_PATH}}"
+export NODE_PATH
+
+exec /usr/bin/node /usr/libexec/aws-cdk-local/bin/cdklocal "$@"

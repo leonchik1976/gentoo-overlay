@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Cursor Agent is a command-line interface for interacting with Cursor's AI
+		agents from a terminal. It supports interactive sessions, scripted
+		prompts, code modification, and resuming previous sessions.
+	</longdescription>
+	<upstream>
+		<doc>https://docs.cursor.com/en/cli</doc>
+	</upstream>
+</pkgmetadata>
