@@ -18,6 +18,10 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
+PATCHES=(
+	"${FILESDIR}/${P}-pep517-backend.patch"
+)
+
 RDEPEND="
 	dev-python/certifi[${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]
