@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Lens is Mirantis' proprietary desktop application for managing,
+		observing, and troubleshooting Kubernetes clusters. This package
+		installs the official prebuilt AMD64 Linux release.
+	</longdescription>
+	<upstream>
+		<bugs-to>https://github.com/lensapp/lens/issues</bugs-to>
+		<doc>https://docs.k8slens.dev/</doc>
+	</upstream>
+</pkgmetadata>
