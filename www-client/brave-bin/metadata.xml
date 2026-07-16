@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<use>
+		<flag name="qt6">Retain the bundled Qt 6 shim for native Qt file dialogs.</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">brave/brave-browser</remote-id>
+		<bugs-to>https://github.com/brave/brave-browser/issues</bugs-to>
+	</upstream>
+</pkgmetadata>
