@@ -1,0 +1,21 @@
+From: Gentoo
+Subject: Remove unused implicit event loop lookup from async test
+Upstream: not submitted; test-only Python 3.14 compatibility fix
+
+Python 3.14 no longer implicitly creates an event loop in
+asyncio.get_event_loop().  The returned loop was unused because the actual
+network send is intentionally commented out, so the lookup is unrelated to
+what this offline test covers.
+
+--- a/tests/test_webhook.py
++++ b/tests/test_webhook.py
+@@ -40,9 +40,6 @@ def test_async_send_message():
+     This asynchronously send a simple text message with a title and link button.
+     """
+ 
+-    # loop = asyncio.get_event_loop()
+-    _ = asyncio.get_event_loop()
+-
+     teams_message = pymsteams.async_connectorcard(os.getenv("MS_TEAMS_WEBHOOK"))
+     teams_message.text("This is a simple text message.")
+     teams_message.title("Simple Message Title")
