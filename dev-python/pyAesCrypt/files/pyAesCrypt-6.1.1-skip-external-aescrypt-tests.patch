@@ -1,0 +1,16 @@
+--- a/pyAesCrypt/test_crypto.py
++++ b/pyAesCrypt/test_crypto.py
+@@ -143,5 +143,6 @@
+             
+     # test encryption with pyAesCrypt and decryption with AES Crypt
++    @unittest.skip("requires the external aescrypt program")
+     def test_enc_pyAesCrypt_dec_AesCrypt(self):
+         for pt, ct, ou in zip(filenames, encfilenames, decfilenames):
+             # encrypt file
+@@ -153,5 +154,6 @@
+             
+     # test encryption with AES Crypt and decryption with pyAesCrypt
++    @unittest.skip("requires the external aescrypt program")
+     def test_enc_AesCrypt_dec_pyAesCrypt(self):
+         for pt, ct, ou in zip(filenames, encfilenames, decfilenames):
+             # encrypt file
