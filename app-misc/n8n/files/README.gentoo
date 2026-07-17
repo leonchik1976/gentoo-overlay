@@ -6,9 +6,26 @@ directory, and persistent application state in /var/lib/n8n. OpenRC logs to
 /var/log/n8n/n8n.log; systemd logs to the journal. The service listens on
 127.0.0.1:5678 by default.
 
-Review /etc/conf.d/n8n before starting the service. In particular, configure a
-stable N8N_ENCRYPTION_KEY and the public URLs used by webhooks and the editor.
-The default file contains no secret. If secrets are added, retain mode 0600.
+OpenRC users configure /etc/conf.d/n8n before starting the service. In
+particular, configure a stable N8N_ENCRYPTION_KEY and the public URLs used by
+webhooks and the editor. The default file contains no secret. If secrets are
+added, retain mode 0600.
+
+systemd does not read /etc/conf.d/n8n. systemd users should create an
+administrator-controlled service override with:
+
+    systemctl edit n8n
+
+For example:
+
+    [Service]
+    Environment="N8N_ENCRYPTION_KEY=replace-with-a-long-random-value"
+    Environment="WEBHOOK_URL=https://n8n.example.com/"
+    Environment="N8N_EDITOR_BASE_URL=https://n8n.example.com/"
+    Environment="N8N_PROXY_HOPS=1"
+
+This creates a drop-in under /etc/systemd/system/n8n.service.d/. The package
+does not create an administrator override automatically.
 
 The optional computer-use shell sandbox uses the system /usr/bin/rg rather than
 the prebuilt executable downloaded by @vscode/ripgrep. Its additional sandbox

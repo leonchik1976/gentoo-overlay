@@ -14,8 +14,7 @@ respawn_delay=5
 respawn_max=5
 respawn_period=60
 
-# /etc/conf.d/n8n is also consumed directly by systemd, so it contains plain
-# assignments rather than shell-specific export statements.
+# Export the supported values after OpenRC sources /etc/conf.d/n8n.
 export N8N_LISTEN_ADDRESS N8N_PORT N8N_USER_FOLDER N8N_ENCRYPTION_KEY
 export WEBHOOK_URL N8N_EDITOR_BASE_URL N8N_PROXY_HOPS
 

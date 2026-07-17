@@ -307,7 +307,8 @@ src_install() {
 }
 
 pkg_postinst() {
-	einfo "Review /etc/conf.d/n8n before starting the n8n service."
+	einfo "For OpenRC, review /etc/conf.d/n8n before starting the service."
+	einfo "For systemd, use 'systemctl edit n8n' to configure environment overrides."
 	einfo "Set and retain a stable N8N_ENCRYPTION_KEY for production use."
-	einfo "The OpenRC and systemd services are not enabled or started automatically."
+	einfo "Neither service is enabled or started automatically."
 }
