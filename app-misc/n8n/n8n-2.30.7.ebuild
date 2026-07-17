@@ -5,7 +5,7 @@ EAPI=8
 
 PYTHON_COMPAT=( python3_{11..15} )
 
-inherit check-reqs multiprocessing n8n-pnpm-deps python-any-r1 systemd
+inherit check-reqs multiprocessing n8n-pnpm-deps python-any-r1 systemd wrapper
 
 N8N_TAG="n8n@${PV}"
 N8N_COMMIT="1e2d027d6d239a55fc95598179e2a25d47e78c9b"
@@ -294,7 +294,7 @@ src_install() {
 		arm64) agent_binary=agent-browser-linux-arm64 ;;
 	esac
 	fperms 0755 "/usr/libexec/n8n/node_modules/.pnpm/agent-browser@0.26.0/node_modules/agent-browser/bin/${agent_binary}"
-	dosym ../libexec/n8n/bin/n8n /usr/bin/n8n
+	make_wrapper n8n /usr/libexec/n8n/bin/n8n
 
 	newinitd "${FILESDIR}/n8n.initd" n8n
 	newconfd "${FILESDIR}/n8n.confd" n8n
