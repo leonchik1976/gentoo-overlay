@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		n8n is a self-hosted workflow automation platform with an extensible
+		node-based editor and integrations for external services.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">n8n-io/n8n</remote-id>
+	</upstream>
+</pkgmetadata>

@@ -1,0 +1,31 @@
+#!/sbin/openrc-run
+
+description="Workflow automation platform"
+
+command="/usr/bin/n8n"
+command_args="start"
+command_user="n8n:n8n"
+directory="/var/lib/n8n"
+supervisor="supervise-daemon"
+output_log="/var/log/n8n/n8n.log"
+error_log="/var/log/n8n/n8n.log"
+
+respawn_delay=5
+respawn_max=5
+respawn_period=60
+
+# /etc/conf.d/n8n is also consumed directly by systemd, so it contains plain
+# assignments rather than shell-specific export statements.
+export N8N_LISTEN_ADDRESS N8N_PORT N8N_USER_FOLDER N8N_ENCRYPTION_KEY
+export WEBHOOK_URL N8N_EDITOR_BASE_URL N8N_PROXY_HOPS
+
+depend() {
+	need net
+	use logger
+}
+
+start_pre() {
+	checkpath --directory --mode 0750 --owner n8n:n8n /run/n8n
+	checkpath --directory --mode 0750 --owner n8n:n8n /var/lib/n8n
+	checkpath --directory --mode 0750 --owner n8n:n8n /var/log/n8n
+}

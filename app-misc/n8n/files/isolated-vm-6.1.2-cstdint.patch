@@ -1,0 +1,7 @@
+--- a/src/lib/timer.h
++++ b/src/lib/timer.h
+@@ -1,4 +1,5 @@
+ #pragma once
+ #include <memory>
++#include <cstdint>
+ #include <functional>

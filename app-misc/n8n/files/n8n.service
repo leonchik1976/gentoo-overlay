@@ -1,0 +1,21 @@
+[Unit]
+Description=n8n workflow automation platform
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=n8n
+Group=n8n
+WorkingDirectory=/var/lib/n8n
+EnvironmentFile=-/etc/conf.d/n8n
+ExecStart=/usr/bin/n8n start
+Restart=on-failure
+RestartSec=5s
+RuntimeDirectory=n8n
+RuntimeDirectoryMode=0750
+StateDirectory=n8n
+StateDirectoryMode=0750
+
+[Install]
+WantedBy=multi-user.target

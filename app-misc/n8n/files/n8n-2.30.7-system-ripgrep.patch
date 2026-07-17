@@ -1,0 +1,22 @@
+--- a/package.json
++++ b/package.json
+@@ -95,7 +95,7 @@
+   },
+   "pnpm": {
+     "onlyBuiltDependencies": [
+-      "@vscode/ripgrep",
++      "@parcel/watcher",
+       "isolated-vm",
+       "sqlite3"
+     ],
+--- a/packages/@n8n/computer-use/src/tools/shell/sandbox.ts
++++ b/packages/@n8n/computer-use/src/tools/shell/sandbox.ts
+@@ -61,7 +61,7 @@
+ 	}
+ 
+ 	const { SandboxManager } = await import('@anthropic-ai/sandbox-runtime');
+-	const { rgPath } = await import('@vscode/ripgrep');
++	const rgPath = '/usr/bin/rg';
+ 
+ 	if (!SandboxManager.isSupportedPlatform()) {
+ 		return {

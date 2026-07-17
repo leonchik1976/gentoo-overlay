@@ -1,0 +1,14 @@
+# n8n environment. Keep this file readable only by root if it contains secrets.
+
+N8N_LISTEN_ADDRESS="127.0.0.1"
+N8N_PORT="5678"
+N8N_USER_FOLDER="/var/lib/n8n"
+
+# Set a long, random value before putting n8n into production. Changing it later
+# prevents n8n from decrypting credentials stored with the previous key.
+# N8N_ENCRYPTION_KEY=""
+
+# Set the public URL when n8n is served behind a reverse proxy.
+# WEBHOOK_URL="https://n8n.example.invalid/"
+# N8N_EDITOR_BASE_URL="https://n8n.example.invalid/"
+# N8N_PROXY_HOPS="1"

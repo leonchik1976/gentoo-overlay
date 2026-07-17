@@ -1,0 +1,50 @@
+n8n on Gentoo
+=============
+
+The OpenRC and systemd services run as n8n:n8n with their home, working
+directory, and persistent application state in /var/lib/n8n. OpenRC logs to
+/var/log/n8n/n8n.log; systemd logs to the journal. The service listens on
+127.0.0.1:5678 by default.
+
+Review /etc/conf.d/n8n before starting the service. In particular, configure a
+stable N8N_ENCRYPTION_KEY and the public URLs used by webhooks and the editor.
+The default file contains no secret. If secrets are added, retain mode 0600.
+
+The optional computer-use shell sandbox uses the system /usr/bin/rg rather than
+the prebuilt executable downloaded by @vscode/ripgrep. Its additional sandbox
+helpers (for example bubblewrap and socat on Linux) are not installed
+automatically; n8n reports their absence and leaves that feature unavailable.
+
+Neither service is enabled or started automatically. After configuration, use
+the commands for the init system installed on the host.
+
+For systemd:
+
+    systemctl enable --now n8n
+    systemctl status n8n
+    journalctl -u n8n
+
+For OpenRC:
+
+    rc-update add n8n default
+    rc-service n8n start
+
+The package is licensed for qualifying internal use under the Sustainable Use
+License. Enterprise-marked code has separate terms; obtain an n8n Enterprise
+license before using those features in production.
+
+Building requires approximately 1.9 GiB of distfiles and at least 15 GiB of
+temporary build space with ample inodes. Allow at least 2 GiB free under /usr
+for installation.
+On a 16-core amd64 host the source build and production deployment take several
+minutes; slower arm64 systems may take substantially longer.
+
+Sentry native profiling and native stacktrace acceleration are omitted. Oracle
+connections use node-oracledb Thin mode; Thick mode is unavailable because its
+bundled native matrix is removed. Selenium Manager is omitted, so optional
+Selenium consumers must be configured with an external browser driver.
+
+The agent-browser feature retains one upstream prebuilt executable matching the
+host architecture and glibc. Its npm release does not contain the Rust sources
+needed to rebuild it. Other architectures, musl, macOS, and Windows binaries are
+removed.
