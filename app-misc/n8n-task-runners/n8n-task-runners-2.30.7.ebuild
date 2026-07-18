@@ -128,18 +128,8 @@ replace_literal() {
 	local file=${1} old=${2} new=${3}
 	grep -Fq -- "${old}" "${file}" ||
 		die "expected text is missing from ${file}: ${old}"
-	"${PYTHON}" - "${file}" "${old}" "${new}" <<-'PY' ||
-		import sys
-		from pathlib import Path
-
-		path = Path(sys.argv[1])
-		old, new = sys.argv[2:]
-		data = path.read_text()
-		count = data.count(old)
-		if count != 1:
-			raise SystemExit(f"expected exactly one occurrence in {path}, found {count}")
-		path.write_text(data.replace(old, new, 1))
-	PY
+	"${PYTHON}" "${FILESDIR}/n8n-task-runners-replace-literal.py" \
+		"${file}" "${old}" "${new}" ||
 		die "failed to update ${file}"
 	grep -Fq -- "${new}" "${file}" ||
 		die "replacement is missing from ${file}: ${new}"
