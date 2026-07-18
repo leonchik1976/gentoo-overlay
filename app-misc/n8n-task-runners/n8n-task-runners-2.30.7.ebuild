@@ -179,7 +179,7 @@ src_configure() {
 }
 
 src_compile() {
-	local deploy="${WORKDIR}/javascript" isolated_deploy jobs native_addon node_gyp npm_root
+	local deploy="${WORKDIR}/javascript" isolated_deploy jobs manifest native_addon node_gyp npm_root
 	local venv="${WORKDIR}/python/.venv" purelib runtime_addon
 	export CI=true NODE_ENV=production DOCKER_BUILD=true npm_config_offline=true
 	export NODE_OPTIONS="--max-old-space-size=7168"
@@ -191,9 +191,20 @@ src_compile() {
 	replace_literal packages/nodes-base/package.json \
 		"https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz" \
 		"file:${DISTDIR}/${N8N_TASK_RUNNERS_XLSX_DISTFILE}"
+	replace_literal packages/@n8n/instance-ai/package.json \
+		"https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz" \
+		"file:${DISTDIR}/${N8N_TASK_RUNNERS_XLSX_DISTFILE}"
 	replace_literal packages/frontend/editor-ui/package.json \
 		"github:rhashimoto/wa-sqlite#779219540f66cecaa159da32b3b8936697ba10a7" \
 		"file:${DISTDIR}/${N8N_TASK_RUNNERS_WA_SQLITE_DISTFILE}"
+	while IFS= read -r -d '' manifest; do
+		if grep -Fq \
+			-e "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz" \
+			-e "github:rhashimoto/wa-sqlite#779219540f66cecaa159da32b3b8936697ba10a7" \
+			"${manifest}"; then
+			die "unreplaced direct dependency in ${manifest}"
+		fi
+	done < <(find packages -name package.json -print0)
 	"${PYTHON}" "${FILESDIR}/n8n-task-runners-create-pnpm-metadata.py" \
 		pnpm-lock.yaml "${T%/temp}/homedir/.cache/pnpm" || die
 	runner_pnpm --filter=@n8n/task-runner --prod --legacy deploy --no-optional "${deploy}"
