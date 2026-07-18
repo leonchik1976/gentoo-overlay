@@ -1,0 +1,31 @@
+#!/sbin/openrc-run
+
+description="n8n external task runners"
+service_user="n8n-task-runners"
+service_group="n8n-task-runners"
+log_file="/var/log/n8n-task-runners.log"
+command="/usr/libexec/n8n-task-runners/task-runner-launcher"
+command_args="javascript python"
+command_user="${service_user}:${service_group}"
+supervisor="supervise-daemon"
+respawn_delay=5
+respawn_max=0
+directory="/var/lib/n8n-task-runners"
+output_log="${log_file}"
+error_log="${log_file}"
+retry="TERM/30/KILL/5"
+
+depend() {
+	need n8n
+	use net
+}
+
+start_pre() {
+	checkpath -d -m 0750 -o "${service_user}:${service_group}" \
+		/run/n8n-task-runners || return 1
+	checkpath -f -m 0640 -o "${service_user}:${service_group}" \
+		"${log_file}" || return 1
+	: "${N8N_RUNNERS_AUTH_TOKEN:?Set N8N_RUNNERS_AUTH_TOKEN in /etc/conf.d/n8n-task-runners}"
+	export N8N_RUNNERS_AUTH_TOKEN N8N_RUNNERS_TASK_BROKER_URI
+	export N8N_RUNNERS_CONFIG_PATH N8N_RUNNERS_HEALTH_CHECK_SERVER_HOST
+}

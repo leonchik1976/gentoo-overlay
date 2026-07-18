@@ -1,0 +1,5 @@
+# OpenRC environment. Required: configure a strong token shared with n8n.
+# N8N_RUNNERS_AUTH_TOKEN="replace-with-a-long-random-value"
+N8N_RUNNERS_TASK_BROKER_URI="http://127.0.0.1:5679"
+N8N_RUNNERS_CONFIG_PATH="/etc/n8n-task-runners.json"
+N8N_RUNNERS_HEALTH_CHECK_SERVER_HOST="127.0.0.1"

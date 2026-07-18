@@ -1,0 +1,10 @@
+/var/log/n8n-task-runners.log {
+    weekly
+    rotate 8
+    compress
+    delaycompress
+    missingok
+    notifempty
+    copytruncate
+    create 0640 n8n-task-runners n8n-task-runners
+}

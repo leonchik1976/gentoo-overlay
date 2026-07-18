@@ -1,0 +1,42 @@
+n8n external task runners on Gentoo
+===================================
+
+This package and app-misc/n8n must remain at exactly the same n8n release.
+Before starting, generate one long random token and put the same value in the
+runner and n8n configurations. No token is generated or installed by Portage.
+
+For systemd, edit /etc/n8n-task-runners.env, then run `systemctl edit n8n` and
+add:
+
+  [Service]
+  EnvironmentFile=/etc/n8n-task-runners.env
+  Environment="N8N_RUNNERS_ENABLED=true"
+  Environment="N8N_RUNNERS_MODE=external"
+  Environment="N8N_NATIVE_PYTHON_RUNNER=true"
+
+PID 1 reads the root-only environment file before changing service identity.
+Enable n8n first, then `systemctl enable --now n8n-task-runners`. Inspect logs
+with `journalctl -u n8n-task-runners`.
+
+For OpenRC, put N8N_RUNNERS_ENABLED=true, N8N_RUNNERS_MODE=external,
+N8N_NATIVE_PYTHON_RUNNER=true, and the matching N8N_RUNNERS_AUTH_TOKEN in
+/etc/conf.d/n8n. Put the runner token in /etc/conf.d/n8n-task-runners, then use
+`rc-update add n8n-task-runners default` and `rc-service n8n-task-runners start`.
+
+The broker and all three health endpoints bind to loopback. The dedicated
+n8n-task-runners account cannot modify installed runner code. The Python runner
+uses a private Python-3.13 virtual environment backed by Gentoo-packaged
+urllib3 and websockets; the optional Sentry Python extra is not installed.
+
+The JavaScript runner's isolated-vm addon is compiled locally for the active
+Node 24 ABI. Optional Sentry native profiling and native-stacktrace addons are
+omitted; the JavaScript Sentry SDK continues to work without those optional
+accelerators. No upstream prebuilt executable or native addon is installed.
+The launcher carries a small Gentoo patch that binds its otherwise
+unauthenticated health listener explicitly to loopback.
+
+For 2.30.7, expect approximately 1.7 GiB of distfiles, 4.2 GiB of peak Portage
+package-tree space, a 293 MiB installed image as reported by Portage, and at
+least 8 GiB of available memory. Upstream's production deploy needs a 7168 MiB
+Node heap. The validated 16-job amd64 build took a few minutes after distfiles
+were present; slower arm64 systems may take longer.

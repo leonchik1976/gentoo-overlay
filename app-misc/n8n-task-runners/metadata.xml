@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Native external JavaScript and Python task runners, with the upstream Go
+		task-runner launcher, for a matching n8n installation.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">n8n-io/n8n</remote-id>
+		<remote-id type="github">n8n-io/task-runner-launcher</remote-id>
+	</upstream>
+</pkgmetadata>
