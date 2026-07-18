@@ -1,0 +1,105 @@
+From 3e058bd992c7b266c224f11a4e8f2c2f9f34a3c3 Mon Sep 17 00:00:00 2001
+From: Mounir IDRASSI <mounir.idrassi@amcrypto.jp>
+Date: Sat, 13 Jun 2026 12:04:02 +0900
+Subject: [PATCH] Remove TC_STR_RELEASE_DATE and build release string from
+ numeric date defines
+
+Adapted to the 1.26.29 release archive: the upstream post-release commit
+expects TC_STR_RELEASE_DATE to contain "June 9, 2026", but the tagged archive
+contains "June 8, 2026" while its numeric date fields specify June 9.
+
+- Remove the redundant TC_STR_RELEASE_DATE define from Common/Tcdefs.h
+- Add preprocessor helpers to convert TC_RELEASE_DATE_YEAR/MONTH/DAY into
+  the same "Month Day, Year" wide string used by TC_STR_RELEASED_BY
+- Update source_date_epoch.sh to derive SOURCE_DATE_EPOCH from the three
+  numeric date defines only, removing the string-date parsing fallback
+---
+ src/Build/Tools/source_date_epoch.sh | 20 +-------------------
+ src/Common/Tcdefs.h                  | 22 ++++++++++++++++++++--
+ 2 files changed, 21 insertions(+), 21 deletions(-)
+
+diff --git a/src/Build/Tools/source_date_epoch.sh b/src/Build/Tools/source_date_epoch.sh
+index f9d1495653..9e25aa1a26 100755
+--- a/Build/Tools/source_date_epoch.sh
++++ b/Build/Tools/source_date_epoch.sh
+@@ -59,12 +59,6 @@ fi
+ 
+ RELEASE_EPOCH=$(awk '
+     function leap(y) { return ((y % 4 == 0 && y % 100 != 0) || (y % 400 == 0)) }
+-    function month_number(name) {
+-        return (name == "January" ? 1 : name == "February" ? 2 : name == "March" ? 3 :
+-            name == "April" ? 4 : name == "May" ? 5 : name == "June" ? 6 :
+-            name == "July" ? 7 : name == "August" ? 8 : name == "September" ? 9 :
+-            name == "October" ? 10 : name == "November" ? 11 : name == "December" ? 12 : 0);
+-    }
+     function mdays(m, y) { return (m == 2 ? 28 + leap(y) : (m == 4 || m == 6 || m == 9 || m == 11 ? 30 : 31)) }
+     function epoch(y, m, d, days, i) {
+         days = 0;
+@@ -75,17 +69,6 @@ RELEASE_EPOCH=$(awk '
+     }
+     function is_number(value) { return (value ~ /^[0-9]+$/) }
+ 
+-    /^[[:space:]]*#define[[:space:]]+TC_STR_RELEASE_DATE[[:space:]]+L"/ {
+-        date = $0;
+-        sub(/^.*L"/, "", date);
+-        sub(/".*$/, "", date);
+-        split(date, parts, /[ ,]+/);
+-        if (month_number(parts[1]) == 0 || !is_number(parts[2]) || !is_number(parts[3])) exit 1;
+-        date_month = month_number(parts[1]);
+-        date_day = parts[2] + 0;
+-        date_year = parts[3] + 0;
+-        seen_date = 1;
+-    }
+     /^[[:space:]]*#define[[:space:]]+TC_RELEASE_DATE_YEAR[[:space:]]+/ {
+         if (!is_number($3)) exit 1;
+         year = $3 + 0;
+@@ -102,9 +85,8 @@ RELEASE_EPOCH=$(awk '
+         seen_day = 1;
+     }
+     END {
+-        if (!seen_date || !seen_year || !seen_month || !seen_day) exit 1;
++        if (!seen_year || !seen_month || !seen_day) exit 1;
+         if (year < 1970 || month < 1 || month > 12 || day < 1 || day > mdays(month, year)) exit 1;
+-        if (date_month != month || date_day != day || date_year != year) exit 1;
+         printf "%d", epoch(year, month, day);
+     }' "$TCDEFS_H") || {
+     echo "Error: unable to derive SOURCE_DATE_EPOCH from $TCDEFS_H" >&2
+diff --git a/src/Common/Tcdefs.h b/src/Common/Tcdefs.h
+index 45e7e7a05b..9f56795fbf 100644
+--- a/Common/Tcdefs.h
++++ b/Common/Tcdefs.h
+@@ -73,7 +73,6 @@ extern unsigned short _rotl16(unsigned short value, unsigned char shift);
+ #define VERSION_NUM						0x0126
+ 
+ // Release date
+-#define TC_STR_RELEASE_DATE			L"June 8, 2026"
+ #define TC_RELEASE_DATE_YEAR			2026
+ #define TC_RELEASE_DATE_MONTH			 6
+ #define TC_RELEASE_DATE_DAY			 9
+@@ -406,7 +405,26 @@ void EraseMemory (void *memory, int size);
+ #define TC_MAX_PATH		260	/* Includes the null terminator */
+ #endif
+ 
+-#define TC_STR_RELEASED_BY L"Released by AM Crypto on " TC_STR_RELEASE_DATE
++#define TC_RELEASE_DATE_MONTH_NAME_1	L"January"
++#define TC_RELEASE_DATE_MONTH_NAME_2	L"February"
++#define TC_RELEASE_DATE_MONTH_NAME_3	L"March"
++#define TC_RELEASE_DATE_MONTH_NAME_4	L"April"
++#define TC_RELEASE_DATE_MONTH_NAME_5	L"May"
++#define TC_RELEASE_DATE_MONTH_NAME_6	L"June"
++#define TC_RELEASE_DATE_MONTH_NAME_7	L"July"
++#define TC_RELEASE_DATE_MONTH_NAME_8	L"August"
++#define TC_RELEASE_DATE_MONTH_NAME_9	L"September"
++#define TC_RELEASE_DATE_MONTH_NAME_10	L"October"
++#define TC_RELEASE_DATE_MONTH_NAME_11	L"November"
++#define TC_RELEASE_DATE_MONTH_NAME_12	L"December"
++#define TC_RELEASE_DATE_MONTH_NAME_(m)	TC_RELEASE_DATE_MONTH_NAME_##m
++#define TC_RELEASE_DATE_MONTH_NAME(m)	TC_RELEASE_DATE_MONTH_NAME_(m)
++
++#define TC_RELEASE_DATE_WSTR2(x)		L##x
++#define TC_RELEASE_DATE_WSTR1(x)		TC_RELEASE_DATE_WSTR2(#x)
++#define TC_RELEASE_DATE_WSTR(x)		TC_RELEASE_DATE_WSTR1(x)
++
++#define TC_STR_RELEASED_BY L"Released by AM Crypto on " TC_RELEASE_DATE_MONTH_NAME(TC_RELEASE_DATE_MONTH) L" " TC_RELEASE_DATE_WSTR(TC_RELEASE_DATE_DAY) L", " TC_RELEASE_DATE_WSTR(TC_RELEASE_DATE_YEAR)
+ 
+ #define MAX_URL_LENGTH	2084 /* Internet Explorer limit. Includes the terminating null character. */
