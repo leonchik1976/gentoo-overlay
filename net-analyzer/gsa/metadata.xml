@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Greenbone Security Assistant is the web interface for Greenbone
+		Vulnerability Management. It connects to Greenbone Vulnerability
+		Manager and provides a user interface for vulnerability management.
+	</longdescription>
+	<upstream>
+		<bugs-to>https://github.com/greenbone/gsa/issues</bugs-to>
+		<remote-id type="github">greenbone/gsa</remote-id>
+	</upstream>
+</pkgmetadata>
