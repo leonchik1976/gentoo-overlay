@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		LM Studio is a proprietary Electron desktop application for discovering,
+		downloading, and running large language models locally. It includes a chat
+		interface, local inference runtimes, and an OpenAI-compatible API server.
+	</longdescription>
+	<upstream>
+		<doc>https://lmstudio.ai/docs/</doc>
+		<bugs-to>mailto:bugs@lmstudio.ai</bugs-to>
+	</upstream>
+</pkgmetadata>
