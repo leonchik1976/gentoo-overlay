@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Kustomize provides declarative customization of Kubernetes resource
+		configuration without requiring templates.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">kubernetes-sigs/kustomize</remote-id>
+	</upstream>
+</pkgmetadata>
