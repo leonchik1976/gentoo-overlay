@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		DbGate is a cross-platform database client for MySQL, PostgreSQL,
+		SQL Server, Oracle, MongoDB, Redis, SQLite, DuckDB, Firebird, and
+		other SQL and NoSQL databases. It includes data and schema editors,
+		query tools, import and export, charts, and database comparison.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">dbgate/dbgate</remote-id>
+	</upstream>
+</pkgmetadata>
