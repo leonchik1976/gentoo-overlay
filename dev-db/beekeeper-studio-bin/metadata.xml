@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Beekeeper Studio is a cross-platform SQL editor and database manager
+		for PostgreSQL, MySQL, SQLite, SQL Server, MariaDB, Redis, ClickHouse,
+		CockroachDB, and other databases. It includes table and data editors,
+		query history, import and export, and SSH tunneling.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">beekeeper-studio/beekeeper-studio</remote-id>
+	</upstream>
+</pkgmetadata>
