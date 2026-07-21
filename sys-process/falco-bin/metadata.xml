@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Falco observes runtime events from the Linux kernel and plugins,
+		evaluates them against security rules, and generates alerts for
+		unexpected behavior in hosts, containers, and cloud-native workloads.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">falcosecurity/falco</remote-id>
+	</upstream>
+</pkgmetadata>

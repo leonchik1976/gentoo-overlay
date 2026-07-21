@@ -1,0 +1,4 @@
+# Extra options passed to Falco.
+# The default configuration uses the modern eBPF driver. To use a kernel
+# module instead, set FALCO_OPTS="-o engine.kind=kmod" after installing it.
+FALCO_OPTS=""

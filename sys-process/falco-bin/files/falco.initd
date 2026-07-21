@@ -1,0 +1,23 @@
+#!/sbin/openrc-run
+# Copyright 2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+name="Falco"
+description="Cloud Native Runtime Security"
+
+supervisor=supervise-daemon
+command="/usr/bin/falco"
+command_args="${FALCO_OPTS}"
+
+extra_started_commands="reload"
+
+depend() {
+	after net
+	use logger
+}
+
+reload() {
+	ebegin "Reloading ${RC_SVCNAME} configuration"
+	supervise-daemon "${RC_SVCNAME}" --signal HUP
+	eend $? "Failed to reload ${RC_SVCNAME} configuration"
+}
