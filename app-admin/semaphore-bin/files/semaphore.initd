@@ -1,0 +1,19 @@
+#!/sbin/openrc-run
+# Copyright 2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+name="Semaphore UI"
+description="Web UI and API for running automation tools"
+export HOME="/var/lib/semaphore"
+
+supervisor=supervise-daemon
+command="/usr/bin/semaphore"
+command_args="server --config ${SEMAPHORE_CONFIG} ${SEMAPHORE_OPTS}"
+command_user="semaphore:semaphore"
+directory="/var/lib/semaphore"
+required_files="${SEMAPHORE_CONFIG}"
+umask=0027
+
+depend() {
+	need net
+}

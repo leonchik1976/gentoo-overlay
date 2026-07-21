@@ -1,0 +1,5 @@
+# Path to the Semaphore UI configuration file.
+SEMAPHORE_CONFIG="/var/lib/semaphore/config.json"
+
+# Additional arguments passed to `semaphore server`.
+SEMAPHORE_OPTS=""

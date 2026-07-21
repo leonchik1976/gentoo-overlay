@@ -1,0 +1,19 @@
+[Unit]
+Description=Semaphore UI
+Documentation=https://docs.semaphoreui.com/
+Wants=network-online.target
+After=network-online.target
+ConditionPathExists=/var/lib/semaphore/config.json
+
+[Service]
+User=semaphore
+Group=semaphore
+WorkingDirectory=/var/lib/semaphore
+Environment=HOME=/var/lib/semaphore
+ExecStart=/usr/bin/semaphore server --config /var/lib/semaphore/config.json
+Restart=on-failure
+RestartSec=3
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target
