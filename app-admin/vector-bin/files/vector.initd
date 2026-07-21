@@ -1,0 +1,44 @@
+#!/sbin/openrc-run
+# Copyright 2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+name="Vector"
+description="Observability data pipeline"
+
+supervisor=supervise-daemon
+command="/usr/bin/vector"
+command_args="${VECTOR_OPTS}"
+command_user="vector:vector"
+directory="/var/lib/vector"
+required_files="${VECTOR_CONFIG}"
+
+extra_started_commands="reload"
+
+export VECTOR_CONFIG VECTOR_LOG_FORMAT VECTOR_DANGEROUSLY_ALLOW_ENV_VAR_INTERPOLATION
+
+depend() {
+	need net
+}
+
+validate_config() {
+	ebegin "Validating ${RC_SVCNAME} configuration"
+	su -m -s /bin/sh -g vector vector -c '
+		cd /var/lib/vector || exit 1
+		HOME=/var/lib/vector
+		export HOME
+		exec /usr/bin/vector validate "${VECTOR_CONFIG}"
+	'
+	eend $? "Invalid ${RC_SVCNAME} configuration"
+}
+
+start_pre() {
+	validate_config
+}
+
+reload() {
+	validate_config || return 1
+
+	ebegin "Reloading ${RC_SVCNAME} configuration"
+	supervise-daemon "${RC_SVCNAME}" --signal HUP
+	eend $? "Failed to reload ${RC_SVCNAME} configuration"
+}

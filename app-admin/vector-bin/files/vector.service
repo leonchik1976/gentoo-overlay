@@ -1,0 +1,22 @@
+[Unit]
+Description=Vector observability data pipeline
+Documentation=https://vector.dev/docs/
+Wants=network-online.target
+After=network-online.target
+ConditionPathExists=/etc/vector/vector.yaml
+
+[Service]
+User=vector
+Group=vector
+WorkingDirectory=/var/lib/vector
+Environment=HOME=/var/lib/vector
+ExecStartPre=/usr/bin/vector validate /etc/vector/vector.yaml
+ExecStart=/usr/bin/vector --config /etc/vector/vector.yaml
+ExecReload=/usr/bin/vector validate /etc/vector/vector.yaml
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+RestartSec=3
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+[Install]
+WantedBy=multi-user.target

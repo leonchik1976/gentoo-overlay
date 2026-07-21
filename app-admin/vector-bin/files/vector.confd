@@ -1,0 +1,12 @@
+# Path to the Vector configuration file.
+VECTOR_CONFIG="/etc/vector/vector.yaml"
+
+# Logging format: text or json.
+VECTOR_LOG_FORMAT="text"
+
+# Environment-variable interpolation is disabled by default since Vector 0.57.
+# Enabling it can expose environment secrets to the Vector configuration.
+# VECTOR_DANGEROUSLY_ALLOW_ENV_VAR_INTERPOLATION="true"
+
+# Additional arguments passed to Vector by the OpenRC service.
+VECTOR_OPTS=""
