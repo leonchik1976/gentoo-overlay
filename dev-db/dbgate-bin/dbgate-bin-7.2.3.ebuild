@@ -99,6 +99,9 @@ src_prepare() {
 	local oracle_release=${modules}/oracledb/build/Release
 	local oracle_version=6.10.0
 
+	# Remove a build-time node-gyp symlink to upstream's CI environment.
+	rm -r "${modules}/better-sqlite3/build/node_gyp_bins" || die
+
 	# Keep only the Oracle module built for the selected Linux architecture.
 	rm \
 		"${oracle_release}/oracledb-${oracle_version}-darwin-arm64.node" \
