@@ -1,0 +1,131 @@
+#!/bin/sh
+
+if [ -r /etc/conf.d/sonarqube ]; then
+	# shellcheck disable=SC1091
+	. /etc/conf.d/sonarqube
+fi
+
+export SONAR_APP_JAVA_OPTS
+
+java_error() {
+	printf '%s\n' "SonarQube requires a full JDK running Java 21 or Java 25." >&2
+	printf '%s\n' "Set SONAR_JAVA_PATH in /etc/conf.d/sonarqube to the full path" >&2
+	printf '%s\n' "of a supported Gentoo-managed Java executable." >&2
+	exit 1
+}
+
+jdk_error() {
+	printf '%s\n' \
+		"${java_path} provides supported Java ${java_major}, but it is not a full JDK." \
+		"SonarQube requires the jdk.compiler module and a working javac executable." \
+		"Set SONAR_JAVA_PATH in /etc/conf.d/sonarqube to the java executable from a full Gentoo JDK 21 or 25." >&2
+	exit 1
+}
+
+read_kernel_value() {
+	setting=$1
+	path=$2
+	value=$(cat "${path}" 2>/dev/null) || {
+		printf 'Cannot read %s from %s; SonarQube startup was refused.\n' \
+			"${setting}" "${path}" >&2
+		return 1
+	}
+	case ${value} in
+		''|*[!0-9]*)
+			printf 'Invalid %s value %s in %s; SonarQube startup was refused.\n' \
+				"${setting}" "${value}" "${path}" >&2
+			return 1
+			;;
+	esac
+	printf '%s\n' "${value}"
+}
+
+if [ -n "${SONAR_JAVA_PATH:-}" ]; then
+	java_path=${SONAR_JAVA_PATH}
+else
+	gentoo_vm=$(
+		/usr/bin/depend-java-query \
+			--get-vm '|| ( virtual/jdk:25 virtual/jdk:21 )' 2>/dev/null
+	) || java_error
+	[ -n "${gentoo_vm}" ] || java_error
+
+	java_path=$(
+		/usr/bin/java-config --select-vm="${gentoo_vm}" --java 2>/dev/null
+	) || java_error
+fi
+
+if [ ! -f "${java_path}" ] || [ ! -x "${java_path}" ]; then
+	printf "Configured Java executable is not an executable file: %s\n" \
+		"${java_path}" >&2
+	java_error
+fi
+
+java_path=$(readlink -f -- "${java_path}") || java_error
+java_details=$("${java_path}" -XshowSettings:properties -version 2>&1) || java_error
+java_major=$(
+	printf '%s\n' "${java_details}" |
+		sed -n 's/^[[:space:]]*java\.specification\.version = \([0-9][0-9]*\).*$/\1/p' |
+		sed -n '1p'
+)
+
+case ${java_major} in
+	21|25) ;;
+	*)
+		printf "Unsupported Java major version '%s' from: %s\n" \
+			"${java_major:-unknown}" "${java_path}" >&2
+		java_error
+		;;
+esac
+
+java_home=$(
+	printf '%s\n' "${java_details}" |
+		sed -n 's/^[[:space:]]*java\.home = \(.*\)$/\1/p' |
+		sed -n '1p'
+)
+java_modules=$("${java_path}" --list-modules 2>/dev/null) || jdk_error
+printf '%s\n' "${java_modules}" | grep -q '^jdk\.compiler@' || jdk_error
+[ -n "${java_home}" ] || jdk_error
+javac_path=${java_home}/bin/javac
+[ -x "${javac_path}" ] || jdk_error
+"${javac_path}" -version >/dev/null 2>&1 || jdk_error
+
+vm_max_map_count=$(read_kernel_value vm.max_map_count /proc/sys/vm/max_map_count) || exit 1
+fs_file_max=$(read_kernel_value fs.file-max /proc/sys/fs/file-max) || exit 1
+
+if [ "${vm_max_map_count}" -lt 524288 ]; then
+	printf '%s\n' \
+		"vm.max_map_count is ${vm_max_map_count}; SonarQube requires at least 524288." \
+		"Load /etc/sysctl.d/90-sonarqube.conf or reboot before starting SonarQube." >&2
+	exit 1
+fi
+
+if [ "${fs_file_max}" -lt 131072 ]; then
+	printf '%s\n' \
+		"fs.file-max is ${fs_file_max}; SonarQube requires at least 131072." \
+		"Increase fs.file-max manually before starting SonarQube; the package does not change this host-wide limit." >&2
+	exit 1
+fi
+
+if [ "${1:-}" = --check ]; then
+	printf "Using Java %s: %s\n" "${java_major}" "${java_path}"
+	printf "Kernel settings accepted: vm.max_map_count=%s, fs.file-max=%s\n" \
+		"${vm_max_map_count}" "${fs_file_max}"
+	exit 0
+fi
+
+runtime_dir=${PIDDIR:-/run/sonarqube}
+if [ ! -d "${runtime_dir}" ] || [ ! -w "${runtime_dir}" ]; then
+	printf "SonarQube runtime directory is not writable: %s\n" \
+		"${runtime_dir}" >&2
+	exit 1
+fi
+
+# The upstream launcher expands its command line as shell words. Route Java
+# through a no-space runtime symlink so an administrator's path may contain
+# spaces without changing the upstream script.
+ln -snf -- "${java_path}" "${runtime_dir}/java" || exit 1
+PATH=${runtime_dir}:${PATH}
+export PATH
+unset SONAR_JAVA_PATH
+
+exec /opt/sonarqube/bin/linux/sonar.sh "$@"

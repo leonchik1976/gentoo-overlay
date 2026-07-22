@@ -1,0 +1,25 @@
+[Unit]
+Description=SonarQube Community Build
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=sonarqube
+Group=sonarqube
+WorkingDirectory=/opt/sonarqube
+Environment=PIDDIR=/run/sonarqube
+ExecStartPre=/usr/libexec/sonarqube/sonarqube-launcher --check
+ExecStart=/usr/libexec/sonarqube/sonarqube-launcher console
+RuntimeDirectory=sonarqube
+RuntimeDirectoryMode=0750
+LimitNOFILE=131072
+LimitNPROC=8192
+TimeoutStopSec=300
+Restart=on-failure
+RestartSec=10
+SuccessExitStatus=143
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target

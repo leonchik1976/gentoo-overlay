@@ -1,0 +1,8 @@
+# Optional path to a JDK 21 or JDK 25 Java executable. When empty, the service
+# selects a suitable Gentoo-managed VM without changing the global Java VM.
+# Quotes permit paths containing spaces, for example:
+# SONAR_JAVA_PATH="/opt/Java 25/bin/java"
+SONAR_JAVA_PATH=
+
+# Additional options for the SonarQube application JVM.
+SONAR_APP_JAVA_OPTS=

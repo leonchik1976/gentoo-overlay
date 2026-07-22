@@ -1,0 +1,35 @@
+#!/sbin/openrc-run
+# Copyright 2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+name="SonarQube Community Build"
+description="Self-managed code quality and security analysis platform"
+
+: "${SONAR_JAVA_PATH:=}"
+: "${SONAR_APP_JAVA_OPTS:=}"
+: "${rc_ulimit:=-n 131072 -u 8192}"
+
+export PIDDIR=/run/sonarqube
+export SONAR_JAVA_PATH
+export SONAR_APP_JAVA_OPTS
+
+command=/usr/libexec/sonarqube/sonarqube-launcher
+command_args=console
+command_user=sonarqube:sonarqube
+command_background=true
+directory=/opt/sonarqube
+pidfile=/run/sonarqube/SonarQube.pid
+output_log=/var/log/sonarqube/console.log
+error_log=/var/log/sonarqube/console.log
+retry="TERM/300/KILL/10"
+start_stop_daemon_args="--wait 300"
+
+depend() {
+	need net
+	after postgresql
+}
+
+start_pre() {
+	/usr/libexec/sonarqube/sonarqube-launcher --check || return 1
+	checkpath -d -m 0750 -o sonarqube:sonarqube /run/sonarqube
+}

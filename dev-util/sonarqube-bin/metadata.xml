@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		SonarQube Community Build is a self-managed platform for continuously
+		inspecting source code quality and security. This binary package installs
+		the official upstream distribution with Gentoo-managed Java, service
+		files, configuration, and persistent state directories.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">SonarSource/sonarqube</remote-id>
+		<doc>https://docs.sonarsource.com/sonarqube-community-build/</doc>
+		<bugs-to>https://community.sonarsource.com/c/sq/10</bugs-to>
+	</upstream>
+</pkgmetadata>
