@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Amazon Corretto is a no-cost, multiplatform, production-ready
+		distribution of the Open Java Development Kit (OpenJDK).
+	</longdescription>
+	<use>
+		<flag name="headless-awt">Do not install the X backend for AWT</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">corretto/corretto-26</remote-id>
+		<bugs-to>https://github.com/corretto/corretto-26/issues</bugs-to>
+		<doc>https://docs.aws.amazon.com/corretto/latest/corretto-26-ug/</doc>
+	</upstream>
+</pkgmetadata>
