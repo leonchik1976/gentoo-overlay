@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Mountpoint for Amazon S3 is a high-throughput file client for mounting an
+		Amazon S3 bucket as a local file system. It translates file operations
+		into S3 object API calls. Mountpoint is optimized for high-throughput
+		access to large objects and does not implement all POSIX file-system
+		semantics.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">awslabs/mountpoint-s3</remote-id>
+		<bugs-to>https://github.com/awslabs/mountpoint-s3/issues</bugs-to>
+	</upstream>
+</pkgmetadata>
