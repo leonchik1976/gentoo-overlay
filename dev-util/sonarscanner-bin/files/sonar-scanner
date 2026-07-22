@@ -1,0 +1,27 @@
+#!/bin/sh
+
+set -eu
+
+scanner_home=${SONAR_SCANNER_HOME:-/usr/share/sonar-scanner}
+
+if [ -z "${JAVA_HOME:-}" ]; then
+	java_depend='>=virtual/jre-21:*'
+	if ! java_vm=$(depend-java-query --get-vm "${java_depend}"); then
+		echo "Unable to find a Gentoo Java VM satisfying ${java_depend}." >&2
+		exit 1
+	fi
+	case ${java_vm} in
+		''|None)
+			echo "Unable to find a Gentoo Java VM satisfying ${java_depend}." >&2
+			exit 1
+			;;
+	esac
+
+	if ! JAVA_HOME=$(java-config --select-vm="${java_vm}" --jre-home); then
+		echo "Unable to determine JAVA_HOME for Gentoo Java VM ${java_vm}." >&2
+		exit 1
+	fi
+	export JAVA_HOME
+fi
+
+exec "${scanner_home}/bin/sonar-scanner" "$@"

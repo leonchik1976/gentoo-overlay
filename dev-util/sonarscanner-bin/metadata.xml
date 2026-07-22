@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		SonarScanner CLI runs source-code analysis for SonarQube Server and
+		SonarQube Cloud when no build-system-specific scanner is available.
+		This package uses the upstream architecture-neutral distribution and a
+		Gentoo-managed Java runtime instead of an upstream bundled JRE.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">SonarSource/sonar-scanner-cli</remote-id>
+		<doc>https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/scanners/sonarscanner/</doc>
+		<bugs-to>https://sonarsource.atlassian.net/jira/software/c/projects/SCANCLI/issues</bugs-to>
+	</upstream>
+</pkgmetadata>
