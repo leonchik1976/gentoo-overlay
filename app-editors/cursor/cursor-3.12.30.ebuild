@@ -10,7 +10,7 @@ CHROMIUM_LANGS="af am ar bg bn ca cs da de el en-GB es es-419 et fa fi fil fr gu
 inherit chromium-2 desktop pax-utils unpacker xdg optfeature shell-completion
 
 # curl -sL "https://www.cursor.com/api/download?platform=linux-x64&releaseTrack=latest" | jq -r '.commitSha'
-BUILD_ID="23b9fb205fe595ea2be29da7214e19762d037fc3"
+BUILD_ID="63a2996a10d9e476b6c28e951dd7691d9c0cf480"
 DESCRIPTION="Cursor App - AI-first coding environment"
 HOMEPAGE="https://www.cursor.com/"
 SRC_URI="
@@ -25,7 +25,7 @@ SRC_URI="
 "
 S="${WORKDIR}"
 
-LICENSE="cursor"
+LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="-* ~amd64 ~arm64"
 IUSE="egl kerberos wayland"
@@ -99,7 +99,7 @@ src_install() {
 	cp -ar "${CURSOR_HOME}/." "${D}/opt/cursor/" || die
 
 	fperms 4711 /opt/cursor/chrome-sandbox
-	pax-mark m /opt/cursor/cursor
+	pax-mark m "${ED}/opt/cursor/cursor"
 	dosym ../cursor/bin/cursor /opt/bin/cursor
 
 	local EXEC_EXTRA_FLAGS=()
