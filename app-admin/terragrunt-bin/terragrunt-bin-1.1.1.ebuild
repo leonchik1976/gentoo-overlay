@@ -23,6 +23,7 @@ S="${WORKDIR}"
 LICENSE="Apache-2.0 BSD BSD-2 imagemagick MIT MPL-2.0 Unicode-DFS-2016"
 SLOT="0"
 KEYWORDS="-* ~amd64 ~arm64"
+RESTRICT="strip"
 
 QA_PREBUILT="usr/bin/terragrunt"
 

@@ -13,6 +13,7 @@ HOMEPAGE="
 	https://github.com/localstack/localstack-python-client/
 	https://pypi.org/project/localstack-client/
 "
+S="${WORKDIR}/${PN}-${PV}"
 
 LICENSE="Apache-2.0"
 SLOT="0"

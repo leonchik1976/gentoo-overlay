@@ -33,7 +33,7 @@ RDEPEND="
 		dev-python/boto3[${PYTHON_USEDEP}]
 	)
 	ollama? (
-		>=dev-python/ollama-python-0.5.1[${PYTHON_USEDEP}]
+		>=dev-python/ollama-python-0.6.0[${PYTHON_USEDEP}]
 	)
 "
 BDEPEND="

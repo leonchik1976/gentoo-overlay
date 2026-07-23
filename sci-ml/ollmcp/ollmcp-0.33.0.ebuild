@@ -27,8 +27,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
 RDEPEND="
-	<dev-python/any-llm-sdk-1.20.0[ollama,${PYTHON_USEDEP}]
-	>=dev-python/any-llm-sdk-1.19.0[ollama,${PYTHON_USEDEP}]
+	<dev-python/any-llm-sdk-1.22.0[ollama,${PYTHON_USEDEP}]
+	>=dev-python/any-llm-sdk-1.21.0[ollama,${PYTHON_USEDEP}]
 	<dev-python/mcp-1.29[${PYTHON_USEDEP}]
 	>=dev-python/mcp-1.25[${PYTHON_USEDEP}]
 	<dev-python/prompt-toolkit-3.1[${PYTHON_USEDEP}]
@@ -51,6 +51,11 @@ EPYTEST_IGNORE=(
 )
 
 distutils_enable_tests pytest
+
+python_test() {
+	local -x TERM=xterm
+	epytest --import-mode=importlib
+}
 
 pkg_postinst() {
 	optfeature "local Ollama service" sci-ml/ollama
