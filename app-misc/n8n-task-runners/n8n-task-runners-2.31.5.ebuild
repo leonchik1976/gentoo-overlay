@@ -8,7 +8,6 @@ PYTHON_COMPAT=( python3_13 )
 inherit go-module multiprocessing n8n-task-runners-pnpm-deps python-single-r1 systemd
 
 LAUNCHER_VERSION="1.4.7"
-N8N_COMMIT="1e2d027d6d239a55fc95598179e2a25d47e78c9b"
 PNPM_VERSION="10.32.1"
 
 DESCRIPTION="Native external JavaScript and Python task runners for n8n"
@@ -66,7 +65,11 @@ go-module_set_globals
 SRC_URI+=" ${EGO_SUM_SRC_URI}"
 S="${WORKDIR}/n8n-source"
 
-LICENSE="Sustainable-Use-1.0 n8n-Enterprise MIT Apache-2.0 BSD BSD-2 ISC 0BSD AFL-2.1 Unlicense"
+LICENSE="
+	Sustainable-Use-1.0 n8n-Enterprise
+	|| ( AFL-2.1 BSD )
+	0BSD Apache-2.0 BlueOak-1.0.0 BSD BSD-2 ISC MIT PSF-2 Unlicense
+"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 REQUIRED_USE="elibc_glibc ${PYTHON_REQUIRED_USE}"

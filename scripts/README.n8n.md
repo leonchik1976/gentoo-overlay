@@ -1,7 +1,8 @@
 # Updating n8n
 
 1. Download and verify the exact stable upstream tag, then update `PV` by
-   copying the ebuild and changing `N8N_COMMIT` and `PNPM_VERSION` as needed.
+   copying the ebuild and changing `PNPM_VERSION` and other version-specific
+   artifact metadata as needed.
 2. Extract the tag under `/tmp/codex/app-misc/n8n-<version>`.
 3. Regenerate the locked artifact list:
 
@@ -33,10 +34,11 @@ to version-specific filenames. The version guard prevents silent use of the
 wrong closure; it does not allow multiple n8n versions to coexist with one
 shared eclass.
 
-The 2.30.7 closure is roughly 1.9 GiB of distfiles.  Allow at least 15 GiB on
+The 2.31.5 Manifest covers 2,156,082,043 bytes (about 2.01 GiB) of distfiles,
+and its measured build completed 64 workspace tasks. Allow at least 15 GiB on
 the Portage build filesystem and 2 GiB on `/usr`; native compilation and the
-64-package workspace build can take several minutes.  Re-audit every `.node`,
-ELF, Mach-O, and PE file after each update.  In particular, confirm that the
+workspace build can take several minutes. Re-audit every `.node`, ELF, Mach-O,
+and PE file after each update. In particular, confirm that the
 architecture-aware pruning still keeps only the glibc `agent-browser` binary
 for `${ARCH}`, that the three locally built addons still load, and that no new
 prebuilt matrix or native compilation intermediates enter the image.

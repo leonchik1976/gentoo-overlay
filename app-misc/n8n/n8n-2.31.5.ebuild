@@ -8,7 +8,6 @@ PYTHON_COMPAT=( python3_{11..15} )
 inherit check-reqs multiprocessing n8n-pnpm-deps python-any-r1 systemd wrapper
 
 N8N_TAG="n8n@${PV}"
-N8N_COMMIT="1e2d027d6d239a55fc95598179e2a25d47e78c9b"
 PNPM_VERSION="10.32.1"
 
 DESCRIPTION="Extensible workflow automation platform"
@@ -23,9 +22,20 @@ SRC_URI="
 n8n_pnpm_deps_add_src_uri "${PV}"
 S="${WORKDIR}/source"
 
-LICENSE="Sustainable-Use-1.0 n8n-Enterprise"
+LICENSE="
+	Sustainable-Use-1.0 n8n-Enterprise
+	|| ( AFL-2.1 BSD )
+	|| ( Apache-2.0 UPL-1.0 )
+	|| ( BSD-2 MIT Apache-2.0 )
+	MIT BSD
+	MIT ZLIB
+	|| ( MIT EUPL-1.2 )
+	|| ( MIT GPL-3+ )
+	|| ( MIT WTFPL-2 )
+	0BSD Apache-2.0 BlueOak-1.0.0 BSD-2 BSD ISC MIT MIT-0 MPL-2.0 PSF-2 Unlicense
+"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64"
+KEYWORDS="-* ~amd64 ~arm64"
 REQUIRED_USE="elibc_glibc"
 
 RESTRICT="bindist mirror"

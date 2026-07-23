@@ -35,8 +35,8 @@ accelerators. No upstream prebuilt executable or native addon is installed.
 The launcher carries a small Gentoo patch that binds its otherwise
 unauthenticated health listener explicitly to loopback.
 
-For 2.30.7, expect approximately 1.7 GiB of distfiles, 4.2 GiB of peak Portage
-package-tree space, a 293 MiB installed image as reported by Portage, and at
-least 8 GiB of available memory. Upstream's production deploy needs a 7168 MiB
-Node heap. The validated 16-job amd64 build took a few minutes after distfiles
-were present; slower arm64 systems may take longer.
+The 2.31.5 Manifest covers 973,142,879 bytes (about 928 MiB) of distfiles. On
+arm64, Portage reported a 1,428,076 KiB final build directory and a 299,644 KiB
+installed image. Keep at least 8 GiB of available memory: upstream's production
+deploy needs a 7168 MiB Node heap. Build time varies with architecture,
+hardware, and the selected job count.

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import posixpath
+import re
 from collections import deque
 from pathlib import Path
 
@@ -30,6 +31,12 @@ SPECIAL_DISTFILES = {
 def registry_uri(name: str, version: str) -> str:
     basename = name.rsplit("/", 1)[-1]
     return f"https://registry.npmjs.org/{name}/-/{basename}-{version}.tgz"
+
+
+def distfile(name: str, version: str) -> str:
+    safe_name = re.sub(r"[^A-Za-z0-9+_.-]", "-", name.lstrip("@"))
+    safe_version = re.sub(r"[^A-Za-z0-9+_.-]", "-", version)
+    return f"n8n-pnpm-{safe_name}-{safe_version}.tgz"
 
 
 def base_locator(locator: str) -> str:
@@ -102,16 +109,26 @@ def main() -> None:
     args = parser.parse_args()
     lock = yaml.safe_load(args.lockfile.read_text(encoding="utf-8"))
     artifacts, workspace = derive_closure(lock)
-    entries = []
+    entries: list[tuple[str, str, str]] = []
+    seen_distfiles: dict[str, str] = {}
     for locator in sorted(artifacts):
         package = lock["packages"][locator]
         name, version = locator.rsplit("@", 1)
         uri = package.get("resolution", {}).get("tarball") or registry_uri(name, version)
-        entries.append((locator, uri))
+        if name == "wa-sqlite":
+            filename = distfile(name, "779219540f66cecaa159da32b3b8936697ba10a7")
+        elif name == "xlsx":
+            filename = distfile(name, "0.20.2")
+        else:
+            filename = distfile(name, version)
+        if filename in seen_distfiles and seen_distfiles[filename] != uri:
+            raise RuntimeError(f"distfile collision: {filename}")
+        seen_distfiles[filename] = uri
+        entries.append((locator, uri, filename))
 
     aliases = {
-        locator: f"n8n-runner-js-{index:06d}.tgz"
-        for index, (locator, _) in enumerate(entries, 1)
+        locator: filename
+        for locator, _, filename in entries
     }
     missing_special = set(SPECIAL_DISTFILES.values()) - aliases.keys()
     if missing_special:
@@ -127,11 +144,11 @@ def main() -> None:
         "N8N_TASK_RUNNERS_PNPM_SRC_URI=(",
     ]
     lines.extend(
-        f'\t"{uri} -> n8n-runner-js-{index:06d}.tgz"'
-        for index, (_, uri) in enumerate(entries, 1)
+        f'\t"{uri} -> {filename}"'
+        for _, uri, filename in entries
     )
     lines.extend((")", "", "N8N_TASK_RUNNERS_PNPM_PACKAGE_IDS=("))
-    lines.extend(f'\t"{locator}"' for locator, _ in entries)
+    lines.extend(f'\t"{locator}"' for locator, _, _ in entries)
     lines.extend(
         (
             ")",
