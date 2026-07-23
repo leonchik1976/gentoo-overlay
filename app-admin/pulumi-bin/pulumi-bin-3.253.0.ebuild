@@ -30,19 +30,25 @@ KEYWORDS="-* ~amd64 ~arm64"
 QA_PREBUILT="usr/bin/pulumi*"
 
 src_install() {
+	local completion_timeout=60s
 	local -x HOME="${T}"
 	local -x PULUMI_DISABLE_CI_DETECTION=true
 	local -x PULUMI_HOME="${T}"/pulumi-home
 	local -x PULUMI_SKIP_UPDATE_CHECK=true
 	local -x PULUMI_SUPPRESS_NEO_LINK=true
 
+	# The arm64 binary is significantly slower under Portage's sandbox tracer.
+	[[ ${ARCH} == arm64 ]] && completion_timeout=300s
+
 	dobin pulumi pulumi-language-* pulumi-resource-* pulumi-watch
 
-	timeout 60s ./pulumi gen-completion bash > "${T}"/pulumi.bash-completion ||
+	timeout "${completion_timeout}" ./pulumi gen-completion bash \
+		> "${T}"/pulumi.bash-completion ||
 		die "Cannot generate bash completions"
 	newbashcomp "${T}"/pulumi.bash-completion pulumi
 
-	timeout 60s ./pulumi gen-completion zsh > "${T}"/pulumi.zsh-completion ||
+	timeout "${completion_timeout}" ./pulumi gen-completion zsh \
+		> "${T}"/pulumi.zsh-completion ||
 		die "Cannot generate zsh completions"
 	newzshcomp "${T}"/pulumi.zsh-completion _pulumi
 }
