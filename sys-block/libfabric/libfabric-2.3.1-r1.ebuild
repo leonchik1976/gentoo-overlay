@@ -12,7 +12,7 @@ LICENSE="BSD GPL-2"
 
 SRC_URI="https://github.com/ofiwg/${PN}/releases/download/v${PV}/${P}.tar.bz2"
 # Local arm64-only revision; amd64 should use ::gentoo.
-KEYWORDS="~armd"
+KEYWORDS="~arm64"
 
 # SONAME
 SLOT="0/1"
