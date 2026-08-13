@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 import argparse
+import base64
+import hashlib
 import posixpath
 import re
 from collections import deque
@@ -31,10 +33,15 @@ def registry_uri(name: str, version: str) -> str:
     return f"https://registry.npmjs.org/{name}/-/{basename}-{version}.tgz"
 
 
-def distfile(name: str, version: str) -> str:
+def distfile(name: str, version: str, uri: str) -> str:
+    """Compact only long aliases so EAPI 8's exported A remains executable."""
     safe_name = re.sub(r"[^A-Za-z0-9+_.-]", "-", name.lstrip("@"))
     safe_version = re.sub(r"[^A-Za-z0-9+_.-]", "-", version)
-    return f"n8n-pnpm-{safe_name}-{safe_version}.tgz"
+    legacy = f"n8n-pnpm-{safe_name}-{safe_version}.tgz"
+    if len(legacy) <= 50:
+        return legacy
+    digest = base64.urlsafe_b64encode(hashlib.sha256(uri.encode()).digest()[:9]).decode()
+    return f"n8n-p-{digest}.tgz"
 
 
 def base_locator(locator: str) -> str:
@@ -114,13 +121,17 @@ def main() -> None:
         name, version = locator.rsplit("@", 1)
         uri = package.get("resolution", {}).get("tarball") or registry_uri(name, version)
         if name == "wa-sqlite":
-            filename = distfile(name, "779219540f66cecaa159da32b3b8936697ba10a7")
+            filename = distfile(name, "779219540f66cecaa159da32b3b8936697ba10a7", uri)
         else:
-            filename = distfile(name, version)
+            filename = distfile(name, version, uri)
         if filename in seen_distfiles and seen_distfiles[filename] != uri:
             raise RuntimeError(f"distfile collision: {filename}")
         seen_distfiles[filename] = uri
         entries.append((locator, uri, filename))
+
+    aliases_size = sum(len(filename) + 1 for _, _, filename in entries)
+    if aliases_size >= 125_000:
+        raise RuntimeError(f"generated distfile aliases are too large for EAPI 8 A: {aliases_size}")
 
     aliases = {
         locator: filename

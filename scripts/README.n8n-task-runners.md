@@ -19,6 +19,10 @@ used directly by the ebuild (`moment` and `wa-sqlite`). These names
 are derived from package identity; maintainers must not refer to numbered
 aliases directly from the ebuild.
 
+Distfile aliases longer than 50 characters use the same compact SHA-256 URI
+prefix as the full n8n closure. This keeps EAPI 8's exported `A` environment
+variable below Linux's per-string `execve()` limit.
+
 The launcher currently uses the deprecated `EGO_SUM` compatibility mode until
 `n8n-task-runner-launcher-1.4.7-deps.tar.xz` has an authorized stable hosting
 location. Generate the replacement module-cache archive from the launcher

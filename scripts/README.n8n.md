@@ -27,6 +27,11 @@ with another n8n version's closure. The ebuild derives pnpm's local registry
 metadata cache from that same mapping so legacy `pnpm deploy` can resolve
 locked peer ranges without network access.
 
+Generated distfile aliases longer than 50 characters use a compact SHA-256 URI
+prefix. Keep aliases short: in EAPI 8 Portage exports the complete `A` value to
+every phase, and a single environment string longer than Linux permits makes
+phase startup fail with `E2BIG` before the ebuild runs.
+
 This overlay supports only one n8n ebuild and generated dependency closure at
 a time. Before regenerating the shared eclass for a new version, remove the
 previous n8n ebuild or convert the generated eclasses and their inherit calls
