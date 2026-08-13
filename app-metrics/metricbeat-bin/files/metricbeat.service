@@ -1,0 +1,13 @@
+[Unit]
+Description=Metricbeat lightweight metrics shipper
+Documentation=https://www.elastic.co/docs/reference/beats/metricbeat/
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/metricbeat --path.home /usr/share/metricbeat --path.config /etc/metricbeat --path.data /var/lib/metricbeat --path.logs /var/log/metricbeat -c metricbeat.yml
+Restart=on-failure
+WorkingDirectory=/usr/share/metricbeat
+
+[Install]
+WantedBy=multi-user.target

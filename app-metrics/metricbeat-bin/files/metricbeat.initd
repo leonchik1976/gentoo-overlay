@@ -1,0 +1,46 @@
+#!/sbin/openrc-run
+# Copyright 1999-2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+METRICBEAT_USER="${METRICBEAT_USER:-root}"
+METRICBEAT_GROUP="${METRICBEAT_GROUP:-root}"
+METRICBEAT_CONFIG="${METRICBEAT_CONFIG:-/etc/metricbeat/metricbeat.yml}"
+METRICBEAT_DATADIR="${METRICBEAT_DATADIR:-/var/lib/metricbeat}"
+METRICBEAT_LOGDIR="${METRICBEAT_LOGDIR:-/var/log/metricbeat}"
+METRICBEAT_OPTS="${METRICBEAT_OPTS:-}"
+
+command="/usr/bin/metricbeat"
+command_args="--path.home /usr/share/metricbeat
+	--path.config ${METRICBEAT_CONFIG%/*}
+	--path.data ${METRICBEAT_DATADIR}
+	--path.logs ${METRICBEAT_LOGDIR}
+	-c ${METRICBEAT_CONFIG##*/} ${METRICBEAT_OPTS}"
+command_background="true"
+command_user="${METRICBEAT_USER}:${METRICBEAT_GROUP}"
+pidfile="/run/metricbeat.pid"
+retry="TERM/30/KILL/5"
+start_stop_daemon_args="--chdir /usr/share/metricbeat"
+
+extra_commands="checkconfig"
+
+depend() {
+	need net
+	after elasticsearch
+}
+
+checkconfig() {
+	if [ ! -f "${METRICBEAT_CONFIG}" ]; then
+		eerror "Configuration file ${METRICBEAT_CONFIG} does not exist"
+		return 1
+	fi
+
+	ebegin "Checking Metricbeat configuration"
+	"${command}" ${command_args} test config
+	eend $?
+}
+
+start_pre() {
+	checkpath -d -o "${METRICBEAT_USER}:${METRICBEAT_GROUP}" -m 0750 \
+		"${METRICBEAT_DATADIR}" "${METRICBEAT_LOGDIR}"
+	checkconfig
+}

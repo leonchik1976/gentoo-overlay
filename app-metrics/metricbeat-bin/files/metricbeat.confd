@@ -1,0 +1,13 @@
+# Run Metricbeat under this user and group. Some system metrics require root.
+#METRICBEAT_USER="root"
+#METRICBEAT_GROUP="root"
+
+# Configuration file.
+#METRICBEAT_CONFIG="/etc/metricbeat/metricbeat.yml"
+
+# State and log directories.
+#METRICBEAT_DATADIR="/var/lib/metricbeat"
+#METRICBEAT_LOGDIR="/var/log/metricbeat"
+
+# Additional arguments passed to Metricbeat.
+#METRICBEAT_OPTS=""
