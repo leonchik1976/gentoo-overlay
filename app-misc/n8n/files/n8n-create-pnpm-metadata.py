@@ -92,9 +92,13 @@ for name, record in sorted(metadata.items()):
             encoding="utf-8",
         )
 
-# pnpm's legacy deploy resolves this workspace dependency as a range.  Keep a
-# regression check for the exact metadata entry that exposed the missing-cache
-# bug, in both cache layouts consumed by pnpm 10.32.1.
+# pnpm's legacy deploy resolves this workspace dependency as a range. Keep a
+# regression check for the metadata entry that exposed the missing-cache bug,
+# but derive its versions from this release's lockfile rather than pinning a
+# version from an older n8n release.
+expected_cohere_versions = set(
+    metadata.get("@ai-sdk/cohere", {}).get("versions", {})
+)
 for cache_format in ("metadata-v1.3", "metadata-ff-v1.3"):
     output = (
         cache_root
@@ -104,5 +108,5 @@ for cache_format in ("metadata-v1.3", "metadata-ff-v1.3"):
         / "cohere.json"
     )
     cohere = json.loads(output.read_text(encoding="utf-8"))
-    if "3.0.36" not in cohere["versions"]:
+    if not expected_cohere_versions.issubset(cohere["versions"]):
         raise RuntimeError(f"incomplete pnpm metadata cache: {output}")
