@@ -103,7 +103,7 @@ src_configure() {
 }
 
 src_install() {
-	newicon -s 512 usr/share/icons/hicolor/0x0/apps/logseq.png logseq.png
+	newicon -s 512 usr/share/icons/hicolor/512x512/apps/logseq.png logseq.png
 
 	rm -r .DirIcon AppRun usr || die
 	rm logseq.desktop logseq.png || die
