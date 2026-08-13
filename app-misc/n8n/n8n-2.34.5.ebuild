@@ -207,7 +207,6 @@ src_compile() {
 	export COREPACK_HOME="${T}/corepack"
 	export npm_config_cache="${T}/npm-cache"
 	export npm_config_store_dir="${T}/pnpm-store"
-	export N8N_XLSX_DISTFILE="${DISTDIR}/n8n-pnpm-xlsx-0.20.2.tgz"
 	export N8N_PNPM_METADATA_HELPER="${FILESDIR}/n8n-create-pnpm-metadata.py"
 	export N8N_PYTHON="${PYTHON}"
 	export N8N_DISTDIR="${DISTDIR}"

@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_13 )
+PYTHON_COMPAT=( python3_{13..15} )
 
 inherit go-module multiprocessing n8n-task-runners-pnpm-deps python-single-r1 systemd
 
@@ -191,18 +191,11 @@ src_compile() {
 	export PATH="${WORKDIR}/pnpm/package/bin:${PATH}"
 	ln -sf pnpm.cjs "${WORKDIR}/pnpm/package/bin/pnpm" || die
 	runner_pnpm --filter '@n8n/task-runner...' run build
-	replace_literal packages/nodes-base/package.json \
-		"https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz" \
-		"file:${DISTDIR}/${N8N_TASK_RUNNERS_XLSX_DISTFILE}"
-	replace_literal packages/@n8n/instance-ai/package.json \
-		"https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz" \
-		"file:${DISTDIR}/${N8N_TASK_RUNNERS_XLSX_DISTFILE}"
 	replace_literal packages/frontend/editor-ui/package.json \
 		"github:rhashimoto/wa-sqlite#779219540f66cecaa159da32b3b8936697ba10a7" \
 		"file:${DISTDIR}/${N8N_TASK_RUNNERS_WA_SQLITE_DISTFILE}"
 	while IFS= read -r -d '' manifest; do
 		if grep -Fq \
-			-e "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz" \
 			-e "github:rhashimoto/wa-sqlite#779219540f66cecaa159da32b3b8936697ba10a7" \
 			"${manifest}"; then
 			die "unreplaced direct dependency in ${manifest}"

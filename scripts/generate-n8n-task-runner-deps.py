@@ -16,11 +16,9 @@ ROOT_IMPORTER = "packages/@n8n/task-runner"
 EXTRA_PACKAGES = {
     "moment@2.30.1",
     "wa-sqlite@https://codeload.github.com/rhashimoto/wa-sqlite/tar.gz/779219540f66cecaa159da32b3b8936697ba10a7",
-    "xlsx@https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz",
 }
 SPECIAL_DISTFILES = {
     "N8N_TASK_RUNNERS_MOMENT_DISTFILE": "moment@2.30.1",
-    "N8N_TASK_RUNNERS_XLSX_DISTFILE": "xlsx@https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz",
     "N8N_TASK_RUNNERS_WA_SQLITE_DISTFILE": (
         "wa-sqlite@https://codeload.github.com/rhashimoto/wa-sqlite/tar.gz/"
         "779219540f66cecaa159da32b3b8936697ba10a7"
@@ -117,8 +115,6 @@ def main() -> None:
         uri = package.get("resolution", {}).get("tarball") or registry_uri(name, version)
         if name == "wa-sqlite":
             filename = distfile(name, "779219540f66cecaa159da32b3b8936697ba10a7")
-        elif name == "xlsx":
-            filename = distfile(name, "0.20.2")
         else:
             filename = distfile(name, version)
         if filename in seen_distfiles and seen_distfiles[filename] != uri:

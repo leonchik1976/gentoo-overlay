@@ -8,14 +8,14 @@ scripts/generate-n8n-task-runner-deps.py VERSION /path/to/pnpm-lock.yaml eclass/
 ```
 
 The generator starts at `packages/@n8n/task-runner`, follows workspace links
-and locked external snapshots, and adds the upstream `moment`, SheetJS and
-wa-sqlite compatibility artifacts. Review the counts and regenerate the
+and locked external snapshots, and adds the upstream `moment` and wa-sqlite
+compatibility artifacts. Review the counts and regenerate the
 Manifest. Before replacing the shared eclass for a new release, remove the old
 ebuild or adopt version-specific eclass filenames; the version guard prevents
 silent misuse but does not support concurrent versions.
 
 The generated eclass also publishes stable variables for special artifacts
-used directly by the ebuild (`moment`, SheetJS, and `wa-sqlite`). These names
+used directly by the ebuild (`moment` and `wa-sqlite`). These names
 are derived from package identity; maintainers must not refer to numbered
 aliases directly from the ebuild.
 

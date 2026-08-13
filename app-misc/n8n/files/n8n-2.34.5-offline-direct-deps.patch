@@ -1,23 +1,10 @@
 --- a/scripts/build-n8n.mjs
 +++ b/scripts/build-n8n.mjs
-@@ -200,7 +200,29 @@ if (generateLicenses) {
+@@ -200,7 +200,16 @@ if (generateLicenses) {
  	process.env.npm_config_shamefully_hoist = 'true';
  }
  
 -await $`cd ${config.rootDir} && NODE_ENV=production DOCKER_BUILD=true pnpm --filter=n8n --prod --legacy deploy --no-optional ./compiled`;
-+// Gentoo supplies direct-URL dependencies as Portage distfiles. Legacy pnpm
-+// deploy otherwise performs a HEAD request even in offline mode.
-+if (process.env.N8N_XLSX_DISTFILE) {
-+	for (const packageDir of ['packages/nodes-base', 'packages/@n8n/instance-ai']) {
-+		const packagePath = path.join(config.rootDir, packageDir, 'package.json');
-+		const packageJson = JSON.parse(await fs.readFile(packagePath, 'utf8'));
-+		if (packageJson.dependencies?.xlsx) {
-+			packageJson.dependencies.xlsx = `file:${process.env.N8N_XLSX_DISTFILE}`;
-+			await fs.writeFile(packagePath, JSON.stringify(packageJson, null, 2));
-+		}
-+	}
-+}
-+
 +// Workspace pnpm scripts may clear the registry metadata cache. Recreate
 +// both pnpm 10 layouts from the lockfile immediately before legacy deploy.
 +const seedGentooPnpmMetadata = async () => {
