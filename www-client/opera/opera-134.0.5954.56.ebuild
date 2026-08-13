@@ -21,14 +21,13 @@ MY_PN=${PN}-stable
 # Does not _need_ to be updated for every new version of Opera, only when it breaks.
 CHROMIUM_VERSION="150"
 SRC_URI="
-	amd64? ( https://deb.opera.com/opera-stable/pool/non-free/o/${MY_PN}/${MY_PN}_${PV}_amd64.deb )
 	arm64? ( https://deb.opera.com/opera-stable/pool/non-free/o/${MY_PN}/${MY_PN}_${PV}_arm64.deb )
 "
 S=${WORKDIR}
 
 LICENSE="OPERA-2018"
 SLOT="0"
-KEYWORDS="-* ~amd64 ~arm64"
+KEYWORDS="-* ~arm64"
 IUSE="+ffmpeg-chromium +proprietary-codecs +suid qt6"
 RESTRICT="bindist mirror strip"
 
@@ -84,7 +83,6 @@ src_install() {
 
 	local libdir
 	case ${ARCH} in
-		amd64) libdir=x86_64-linux-gnu ;;
 		arm64) libdir=aarch64-linux-gnu ;;
 		*) die "unsupported architecture: ${ARCH}" ;;
 	esac
