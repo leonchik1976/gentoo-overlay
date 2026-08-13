@@ -195,7 +195,7 @@ src_configure() {
 }
 
 src_compile() {
-	local addon agent_binary package package_name pattern source_native target
+	local addon agent_binary jobs package package_name pattern source_native target
 	local -a deployed=()
 	python_setup
 	export CI=true
@@ -210,6 +210,9 @@ src_compile() {
 	export N8N_PNPM_METADATA_HELPER="${FILESDIR}/n8n-create-pnpm-metadata.py"
 	export N8N_PYTHON="${PYTHON}"
 	export N8N_DISTDIR="${DISTDIR}"
+	jobs=$(get_makeopts_jobs)
+	(( jobs > 4 )) && jobs=4
+	export N8N_TURBO_CONCURRENCY=${jobs}
 	export PATH="${WORKDIR}/pnpm/package/bin:${PATH}"
 
 	ln -sf pnpm.cjs "${WORKDIR}/pnpm/package/bin/pnpm" || die

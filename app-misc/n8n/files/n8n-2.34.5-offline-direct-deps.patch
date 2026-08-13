@@ -1,5 +1,10 @@
 --- a/scripts/build-n8n.mjs
 +++ b/scripts/build-n8n.mjs
+@@ -104 +104,3 @@ try {
+-	const buildProcess = $`cd ${config.rootDir} && pnpm build --summarize`;
++	const concurrency = process.env.N8N_TURBO_CONCURRENCY ?? '1';
++	const buildProcess =
++		$`cd ${config.rootDir} && pnpm exec turbo run build --summarize --concurrency=${concurrency}`;
 @@ -200,7 +200,16 @@ if (generateLicenses) {
  	process.env.npm_config_shamefully_hoist = 'true';
  }
