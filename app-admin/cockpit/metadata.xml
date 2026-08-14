@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription>Cockpit provides a browser-based interface for administering Linux servers through systemd and privileged helper processes.</longdescription>
+	<use>
+		<flag name="cockpit-client">Install the experimental GTK 4 desktop client and its desktop integration.</flag>
+		<flag name="kdump">Install the kernel crash dump management page.</flag>
+		<flag name="sosreport">Install the diagnostic report page backed by <pkg>app-admin/sosreport</pkg>.</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">cockpit-project/cockpit</remote-id>
+	</upstream>
+</pkgmetadata>

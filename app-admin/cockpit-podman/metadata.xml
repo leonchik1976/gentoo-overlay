@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription>Cockpit Podman provides a browser interface for managing Podman containers, images, pods, services, and related resources.</longdescription>
+	<upstream>
+		<remote-id type="github">cockpit-project/cockpit-podman</remote-id>
+	</upstream>
+</pkgmetadata>

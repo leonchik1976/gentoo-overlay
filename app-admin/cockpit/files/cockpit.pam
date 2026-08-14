@@ -1,0 +1,8 @@
+#%PAM-1.0
+auth       include      system-auth
+auth       optional     pam_ssh_add.so
+account    required     pam_listfile.so item=user sense=deny file=/etc/cockpit/disallowed-users onerr=succeed
+account    include      system-auth
+password   include      system-auth
+session    optional     pam_ssh_add.so
+session    include      system-auth

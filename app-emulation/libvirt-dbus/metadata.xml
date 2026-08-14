@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription>libvirt-dbus exposes selected libvirt virtualization management APIs through a system D-Bus service for applications such as Cockpit Machines.</longdescription>
+	<upstream>
+		<remote-id type="github">libvirt/libvirt-dbus</remote-id>
+	</upstream>
+</pkgmetadata>

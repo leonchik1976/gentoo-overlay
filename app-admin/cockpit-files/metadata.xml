@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription>Cockpit Files provides browser-based file browsing, editing, permission management, uploading, and downloading.</longdescription>
+	<upstream>
+		<remote-id type="github">cockpit-project/cockpit-files</remote-id>
+	</upstream>
+</pkgmetadata>

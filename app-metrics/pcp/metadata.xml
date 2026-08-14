@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<upstream>
+		<remote-id type="github">performancecopilot/pcp</remote-id>
+	</upstream>
+	<use>
+		<flag name="discovery">Build network service discovery support</flag>
+		<flag name="infiniband">Build InfiniBand metric collection support</flag>
+		<flag name="json">Build the JSON PMDA</flag>
+		<flag name="nutcracker">Build the NutCracker PMDA</flag>
+		<flag name="perfevent">Build hardware performance counter support</flag>
+	</use>
+</pkgmetadata>

@@ -1,0 +1,42 @@
+--- a/configure
++++ b/configure
+@@ -6573,4 +6573,11 @@
+ { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking if USDT probes should be used" >&5
+ printf %s "checking if USDT probes should be used... " >&6; }
++if test "x$do_probes" = "xno"
++then :
++  result=0
++  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
++printf "%s\n" "no" >&6; }
++  printf "%s\n" "#define HAVE_STATIC_PROBES $result" >>confdefs.h
++else
+ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+@@ -6607,6 +6614,7 @@
+ fi
+ rm -f core conftest.err conftest.$ac_objext conftest.beam \
+     conftest$ac_exeext conftest.$ac_ext
++fi
+ 
+ if test "x$use_gperftools" != "xno"
+ then :
+--- a/configure.ac
++++ b/configure.ac
+@@ -805,5 +805,10 @@
+ 
+ AC_MSG_CHECKING([if USDT probes should be used])
++AS_IF([test "x$do_probes" = "xno"], [
++result=0
++AC_MSG_RESULT(no)
++AC_DEFINE_UNQUOTED(HAVE_STATIC_PROBES, $result, [Static probes (USDT)])
++], [
+ AC_LINK_IFELSE([AC_LANG_SOURCE([
+ #include "vendor/github.com/libbpf/usdt/usdt.h"
+ void main() { USDT(pcp, check, 1); }])], [
+@@ -819,5 +824,6 @@
+ AC_DEFINE_UNQUOTED(HAVE_STATIC_PROBES, $result, [Static probes (USDT)])],
+ [AC_MSG_RESULT(no)])
++])
+ 
+ dnl Check for gperftools
+ AS_IF([test "x$use_gperftools" != "xno"], [
