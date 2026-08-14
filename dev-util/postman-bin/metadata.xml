@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Postman is a collaboration platform for API development. The desktop
+		application can send REST, SOAP, GraphQL, and other API requests.
+	</longdescription>
+	<upstream>
+		<bugs-to>https://github.com/postmanlabs/postman-app-support/issues</bugs-to>
+		<doc>https://learning.postman.com/</doc>
+	</upstream>
+</pkgmetadata>
