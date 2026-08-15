@@ -6,7 +6,7 @@ EAPI=8
 # python3_15 is supported by upstream and dependencies, but is untested here.
 PYTHON_COMPAT=( python3_{11..15} )
 
-inherit optfeature pam python-single-r1 tmpfiles
+inherit optfeature pam python-single-r1 tmpfiles xdg
 
 DESCRIPTION="Web-based graphical interface for servers"
 HOMEPAGE="https://cockpit-project.org/"
@@ -116,6 +116,7 @@ src_install() {
 	local -x PIP_ROOT_USER_ACTION=ignore
 
 	emake DESTDIR="${D}" install
+	python_optimize
 
 	newpamd "${FILESDIR}/cockpit.pam" cockpit
 
@@ -133,15 +134,31 @@ src_install() {
 	rm -rf "${ED}/usr/share/cockpit/packagekit" \
 		"${ED}/usr/share/cockpit/apps" \
 		"${ED}/usr/share/cockpit/playground" || die
+	rm -rf \
+		"${ED}/usr/share/cockpit/branding/arch" \
+		"${ED}/usr/share/cockpit/branding/centos" \
+		"${ED}/usr/share/cockpit/branding/debian" \
+		"${ED}/usr/share/cockpit/branding/fedora" \
+		"${ED}/usr/share/cockpit/branding/opensuse" \
+		"${ED}/usr/share/cockpit/branding/rhel" \
+		"${ED}/usr/share/cockpit/branding/ubuntu" || die
+	rm -f \
+		"${ED}/etc/motd.d/cockpit" \
+		"${ED}/etc/issue.d/cockpit.issue" || die
 
 	find "${ED}" -type f -name '*.la' -delete || die
 }
 
 pkg_postinst() {
 	tmpfiles_process cockpit-ws.conf
+	xdg_pkg_postinst
 
 	optfeature "historical performance metrics" app-metrics/pcp
 	optfeature "firewall management" net-firewall/firewalld
 	optfeature "performance profile management" sys-apps/tuned
 	optfeature "sudo-based privilege escalation" app-admin/sudo
+}
+
+pkg_postrm() {
+	xdg_pkg_postrm
 }
