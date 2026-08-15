@@ -7,7 +7,7 @@ EAPI=8
 PYTHON_COMPAT=( python3_{11..15} )
 DISTUTILS_USE_PEP517=setuptools
 
-inherit distutils-r1 optfeature
+inherit distutils-r1 optfeature tmpfiles
 
 MY_PN=sos
 MY_P=${MY_PN}-${PV}
@@ -42,11 +42,15 @@ python_test() {
 python_install_all() {
 	distutils-r1_python_install_all
 
-	# setup.py installs this into a literal config/ directory, while sos uses
-	# /etc/sos/sos.conf as its default configuration path.
 	insinto /etc/sos
 	doins sos.conf
-	rm -rf "${ED}/config" || die
+
+	newtmpfiles tmpfiles/tmpfilesd-sos-rh.conf sos.conf
+
+	rm -rf \
+		"${ED}/usr/config" \
+		"${ED}/usr/share/doc/sos" \
+		"${ED}/usr/share/licenses/sos" || die
 }
 
 pkg_postinst() {
