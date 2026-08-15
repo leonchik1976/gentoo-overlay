@@ -24,22 +24,22 @@ RDEPEND="
 BDEPEND="${PHP_DEPEND}"
 
 src_unpack() {
-	cp "${DISTDIR}/${P}.phar" composer.phar || die
+	cp "${DISTDIR}/${P}.phar" composer || die
 }
 
 src_compile() {
-	php composer.phar completion bash > composer.bash || die
+	php composer completion bash > composer.bash || die
 }
 
 src_test() {
 	local output
 
-	output=$(php composer.phar --no-interaction --version) || die
+	output=$(php composer --no-interaction --version) || die
 	[[ ${output} == *"Composer version ${PV} "* ]] ||
 		die "Composer reported an unexpected version: ${output}"
 }
 
 src_install() {
-	newbin composer.phar composer
+	dobin composer
 	newbashcomp composer.bash composer
 }
