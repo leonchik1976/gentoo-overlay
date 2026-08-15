@@ -24,6 +24,10 @@ LICENSE="GPL-2-with-Universal-FOSS-exception"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
+PATCHES=(
+	"${FILESDIR}/${P}-drop-license-classifier.patch"
+)
+
 DOCS=(
 	"${WORKDIR}/${P}"/{CHANGES.txt,README.rst,README.txt}
 )

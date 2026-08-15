@@ -1,0 +1,16 @@
+Remove the deprecated license Trove classifier to avoid a setuptools
+QA warning during installation.
+
+The existing license= metadata is retained unchanged. This patch is
+Gentoo-specific and has not been submitted upstream.
+
+--- a/setup.py
++++ b/setup.py
+@@ -127,7 +127,6 @@ def main() -> None:
+             "Development Status :: 5 - Production/Stable",
+             "Intended Audience :: Developers",
+             "Intended Audience :: Education",
+-            "License :: OSI Approved :: GNU General Public License (GPL)",
+             "Operating System :: MacOS :: MacOS X",
+             "Operating System :: Microsoft :: Windows",
+             "Operating System :: POSIX :: Linux",
