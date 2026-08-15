@@ -1,0 +1,26 @@
+--- a/src/bashrc/pcp_completion.sh
++++ b/src/bashrc/pcp_completion.sh
+@@ -211,3 +211,3 @@ _pcp_complete()
+     fi
+ }
+-complete -F _pcp_complete -o default pcp2elasticsearch pcp2graphite pcp2influxdb pcp2json pcp2spark pcp2xlsx pcp2xml pcp2zabbix pmclient pmdumplog pmdumptext pmevent pmfind pmie pmie2col pmiectl pminfo pmjson pmlc pmlogcheck pmlogctl pmlogdump pmlogextract pmlogger pmloglabel pmlogpaste pmlogreduce pmlogsize pmlogsummary pmprobe pmrep pmseries pmstat pmstore pmval
++complete -F _pcp_complete -o default pcp2arrow pcp2elasticsearch pcp2graphite pcp2influxdb pcp2json pcp2openmetrics pcp2opentelemetry pcp2spark pcp2xlsx pcp2xml pcp2zabbix pmclient pmclient_fg pmdumplog pmdumptext pmevent pmfind pmie pmie2col pmiectl pminfo pmjson pmlc pmlogcheck pmlogctl pmlogdump pmlogextract pmlogger pmloglabel pmlogpaste pmlogreduce pmlogsize pmlogsummary pmprobe pmrep pmseries pmstat pmstore pmval
+--- a/src/python/setup.py
++++ b/src/python/setup.py
+@@ -30,5 +30,5 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+ 
+ setup(name = 'pcp',
+-    version = '7.0',
++    version = '7.2.1',
+     description = 'Performance Co-Pilot collector, monitor and instrumentation APIs',
+     long_description = long_description,
+--- a/src/pmlogger/GNUmakefile
++++ b/src/pmlogger/GNUmakefile
+@@ -159,5 +159,5 @@ crontab.daily_report : crontab.daily_report.in
+ 	$(SED) <$< > $@ \
+-	    -e 's;@user@;'$(CRONTAB_USER)';'
+-	    -e 's;@path@;'$(PCP_BINADM_DIR)';'
++	    -e 's;@user@;'$(CRONTAB_USER)';' \
++	    -e 's;@path@;'$(PCP_BINADM_DIR)';' \
+ 	    -e 's;@sapath@;'$(PCP_SA_DIR)';' \
+ 	# END

@@ -6,7 +6,12 @@ EAPI=8
 # python3_15 is supported by upstream and dependencies, but is untested here.
 PYTHON_COMPAT=( python3_{12..15} )
 
-inherit optfeature python-single-r1 qt-utils tmpfiles
+DISTUTILS_EXT=1
+DISTUTILS_OPTIONAL=1
+DISTUTILS_SINGLE_IMPL=1
+DISTUTILS_USE_PEP517=setuptools
+
+inherit distutils-r1 optfeature qt-utils shell-completion tmpfiles xdg
 
 DESCRIPTION="System-level performance monitoring and management framework"
 HOMEPAGE="https://pcp.io/ https://github.com/performancecopilot/pcp"
@@ -15,7 +20,7 @@ SRC_URI="https://github.com/performancecopilot/pcp/archive/refs/tags/${PV}.tar.g
 LICENSE="GPL-2+ LGPL-2.1+"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
-IUSE="discovery infiniband json nutcracker perfevent qt6 selinux snmp"
+IUSE="infiniband json nutcracker perfevent qt6 selinux snmp"
 # The SELinux integration is intentionally untested.
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 RESTRICT="test"
@@ -32,7 +37,6 @@ RDEPEND="
 	sys-apps/systemd
 	sys-libs/ncurses:=
 	virtual/zlib
-	discovery? ( net-dns/avahi[dbus] )
 	infiniband? ( sys-cluster/rdma-core )
 	json? (
 		$(python_gen_cond_dep '
@@ -54,9 +58,9 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}"
 BDEPEND="
+	${DISTUTILS_DEPS}
 	app-alternatives/awk
 	dev-lang/perl
-	$(python_gen_cond_dep 'dev-python/setuptools[${PYTHON_USEDEP}]')
 	sys-devel/bison
 	sys-devel/flex
 	virtual/pkgconfig
@@ -64,7 +68,10 @@ BDEPEND="
 "
 IDEPEND="virtual/tmpfiles"
 
-PATCHES=( "${FILESDIR}/${P}-honor-without-static-probes.patch" )
+PATCHES=(
+	"${FILESDIR}/${P}-honor-without-static-probes.patch"
+	"${FILESDIR}/${P}-python-and-completion-metadata.patch"
+)
 
 pkg_setup() {
 	python-single-r1_pkg_setup
@@ -83,9 +90,9 @@ src_configure() {
 		--with-group=pcp
 		--with-perl=yes
 		--with-python3="${EPYTHON}"
-		--with-python-prefix="${EPREFIX}/usr"
+		--with-python_prefix="${EPREFIX}/usr"
 		--with-secure-sockets=yes
-		--with-sysconfigdir="${EPREFIX}/etc/conf.d"
+		--with-sysconfigdir="${EPREFIX}/etc/pcp/sysconfig"
 		--with-systemd=yes
 		--with-threads=yes
 		--with-transparent-decompression=yes
@@ -102,7 +109,6 @@ src_configure() {
 		--without-sanitizer
 		--without-static-probes
 		--without-x
-		$(use_with discovery)
 		$(use_with infiniband)
 		$(use_with json pmdajson)
 		$(use_with nutcracker pmdanutcracker)
@@ -121,12 +127,48 @@ src_compile() {
 
 src_install() {
 	emake DIST_ROOT="${ED}" install
+
+	local python_source_dir=${S}/src/python
+	local -x CFLAGS="${CFLAGS} -I${S}/src/include -I${S}/src/include/pcp"
+	local -x LDFLAGS="${LDFLAGS} -L${S}/src/libpcp/src -L${S}/src/libpcp_pmda/src -L${S}/src/libpcp_gui/src -L${S}/src/libpcp_archive/src -L${S}/src/libpcp_import/src -L${S}/src/libpcp_mmv/src"
+	local BUILD_DIR=${WORKDIR}/${P}-python-wheel
+	local python_sitedir=$(python_get_sitedir)
+	local python_image_dir=${ED}${python_sitedir#${EPREFIX}}
+	rm -rf \
+		"${python_image_dir}/pcp" \
+		"${python_image_dir}"/cmmv.* \
+		"${python_image_dir}"/cpmapi.* \
+		"${python_image_dir}"/cpmda.* \
+		"${python_image_dir}"/cpmgui.* \
+		"${python_image_dir}"/cpmi.* \
+		"${python_image_dir}"/pcp-*.egg-info || die
+	pushd "${python_source_dir}" > /dev/null || die
+	distutils_pep517_install "${D}"
+	popd > /dev/null || die
 	python_optimize
+
+	local bashcompdir=$(get_bashcompdir)
+	bashcompdir=${ED}${bashcompdir#${EPREFIX}}
+	rm -rf "${bashcompdir}" || die
+	newbashcomp src/bashrc/pcp_completion.sh pmstat
+	bashcomp_alias pmstat \
+		pcp2arrow pcp2elasticsearch pcp2graphite pcp2influxdb pcp2json \
+		pcp2openmetrics pcp2opentelemetry pcp2spark pcp2xlsx pcp2xml \
+		pcp2zabbix pmclient pmclient_fg pmdumplog pmdumptext pmevent \
+		pmfind pmie pmie2col pmiectl pminfo pmjson pmlc pmlogcheck \
+		pmlogctl pmlogdump pmlogextract pmlogger pmloglabel pmlogpaste \
+		pmlogreduce pmlogsize pmlogsummary pmprobe pmrep pmseries pmstore \
+		pmval
 
 	find "${ED}" -type f \( -name '*.a' -o -name '*.la' \) -delete || die
 	find "${ED}/usr/share/man" -type f -name '*.bz2' -exec bunzip2 {} + || die
 
 	dotmpfiles "${FILESDIR}/pcp.conf"
+	keepdir \
+		/var/lib/pcp/config/pmda \
+		/var/lib/pcp/config/pmie \
+		/var/lib/pcp/pmcd \
+		/var/lib/pcp/pmdas/opentelemetry/config.d
 
 	if [[ -d ${ED}/usr/share/doc/pcp-doc/html ]]; then
 		dodir "/usr/share/doc/${PF}"
@@ -142,6 +184,7 @@ src_install() {
 
 pkg_postinst() {
 	tmpfiles_process pcp.conf
+	xdg_pkg_postinst
 	optfeature "ActiveMQ metric collection" dev-perl/libwww-perl
 	optfeature "BIND metric collection" dev-perl/File-Slurp dev-perl/libwww-perl dev-perl/XML-LibXML
 	optfeature "InfluxDB metric export" dev-python/requests
@@ -152,4 +195,8 @@ pkg_postinst() {
 	optfeature "PostgreSQL metric collection" dev-python/psycopg:2
 	optfeature "XLSX metric export" dev-python/openpyxl
 	einfo "Enable pmcd and pmlogger to collect local performance metrics."
+}
+
+pkg_postrm() {
+	xdg_pkg_postrm
 }
