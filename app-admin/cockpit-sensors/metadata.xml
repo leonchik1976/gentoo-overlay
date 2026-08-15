@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription>Cockpit Sensors displays temperature, fan, voltage, and other hardware monitoring data reported by lm-sensors in the Cockpit web interface.</longdescription>
+	<upstream>
+		<remote-id type="github">ocristopfer/cockpit-sensors</remote-id>
+	</upstream>
+</pkgmetadata>
