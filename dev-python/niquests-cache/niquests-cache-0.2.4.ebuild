@@ -1,0 +1,35 @@
+# Copyright 1999-2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+DISTUTILS_USE_PEP517=hatchling
+PYTHON_COMPAT=( python3_{12..14} )
+
+inherit distutils-r1 pypi
+
+DESCRIPTION="Cached niquests sessions with pluggable storage backends"
+HOMEPAGE="
+	https://github.com/Tatsh/niquests-cache/
+	https://pypi.org/project/niquests-cache/
+"
+
+LICENSE="MIT"
+SLOT="0"
+KEYWORDS="~amd64 ~arm64"
+
+RDEPEND="
+	>=dev-python/aiosqlite-0.22.1[${PYTHON_USEDEP}]
+	>=dev-python/anyio-4.13.0[${PYTHON_USEDEP}]
+	>=dev-python/niquests-3.18.6[${PYTHON_USEDEP}]
+	>=dev-python/platformdirs-4.9.6[${PYTHON_USEDEP}]
+	>=dev-python/typing-extensions-4.15.0[${PYTHON_USEDEP}]
+"
+BDEPEND+="
+	test? (
+		dev-python/mock[${PYTHON_USEDEP}]
+	)
+"
+
+EPYTEST_PLUGINS=( pytest-asyncio pytest-mock )
+distutils_enable_tests pytest

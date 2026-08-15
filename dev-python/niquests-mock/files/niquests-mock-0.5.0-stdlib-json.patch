@@ -1,0 +1,56 @@
+From: Gentoo
+Subject: Use the standard library JSON implementation
+
+Avoid the deprecated orjson dependency.  The public API only requires basic
+JSON serialization and deserialization.
+
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -25,7 +25,6 @@ classifiers = [
+ 
+ dependencies = [
+     "niquests>=3.17.0",
+-    "orjson>=3.10.18",
+ ]
+ 
+ [project.urls]
+--- a/src/niquests_mock/matchers.py
++++ b/src/niquests_mock/matchers.py
+@@ -1,11 +1,11 @@
++import json as jsonlib
+ import re
+ from collections.abc import Mapping, Sequence
+ from dataclasses import dataclass, field
+ from re import Pattern
+ from typing import Any, cast, overload
+ from urllib.parse import parse_qs, urljoin, urlparse
+ 
+-import orjson
+ from niquests.models import PreparedRequest
+ 
+ from niquests_mock.models import UNSET, UnsetType
+@@ -237,8 +237,8 @@ def _match_json(expected: JSONMatcher | UnsetType, request: PreparedRequest) ->
+     if actual is None:
+         return False
+     try:
+-        payload = orjson.loads(actual)
+-    except orjson.JSONDecodeError:
++        payload = jsonlib.loads(actual)
++    except jsonlib.JSONDecodeError:
+         return False
+     if callable(expected):
+         return bool(cast("Any", expected)(payload))
+--- a/src/niquests_mock/responses.py
++++ b/src/niquests_mock/responses.py
+@@ -5 +5 @@
+-import orjson
++import json as jsonlib
+@@ -17,7 +17,7 @@ def _response_bytes(
+     json: Any | UnsetType,
+ ) -> tuple[bytes | None, str | None]:
+     if json is not UNSET:
+-        return orjson.dumps(json), "application/json"
++        return jsonlib.dumps(json, separators=(",", ":")).encode(), "application/json"
+     if text is not None:
+         return text.encode("utf-8"), "text/plain; charset=utf-8"
+     if isinstance(content, str):
