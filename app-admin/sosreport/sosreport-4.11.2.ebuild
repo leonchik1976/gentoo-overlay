@@ -54,6 +54,8 @@ python_install_all() {
 }
 
 pkg_postinst() {
+	tmpfiles_process sos.conf
+
 	optfeature "automatic archive content type detection" dev-python/python-magic
 	optfeature "HTTP(S) archive uploads" dev-python/requests
 	optfeature "Amazon S3 archive uploads" dev-python/boto3
