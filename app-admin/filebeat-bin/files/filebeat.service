@@ -1,0 +1,13 @@
+[Unit]
+Description=Filebeat lightweight log shipper
+Documentation=https://www.elastic.co/docs/reference/beats/filebeat/
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/filebeat --path.home /usr/share/filebeat --path.config /etc/filebeat --path.data /var/lib/filebeat --path.logs /var/log/filebeat -c filebeat.yml
+Restart=on-failure
+WorkingDirectory=/usr/share/filebeat
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,14 @@
+# Run Filebeat under this user and group. Reading protected log files
+# typically requires root.
+#FILEBEAT_USER="root"
+#FILEBEAT_GROUP="root"
+
+# Configuration file.
+#FILEBEAT_CONFIG="/etc/filebeat/filebeat.yml"
+
+# State and log directories.
+#FILEBEAT_DATADIR="/var/lib/filebeat"
+#FILEBEAT_LOGDIR="/var/log/filebeat"
+
+# Additional arguments passed to Filebeat.
+#FILEBEAT_OPTS=""
