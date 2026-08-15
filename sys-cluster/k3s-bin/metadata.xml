@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		K3s is a fully compliant, lightweight Kubernetes distribution packaged
+		as a single binary. It bundles its own containerd, runc, and CNI
+		plugins, and can run as either a server (control-plane) or an agent
+		node.
+	</longdescription>
+	<use>
+		<flag name="kubectl-symlink">Install a "kubectl" symlink to the bundled k3s kubectl</flag>
+		<flag name="crictl-symlink">Install a "crictl" symlink to the bundled k3s crictl</flag>
+		<flag name="ctr-symlink">Install a "ctr" symlink to the bundled k3s ctr</flag>
+	</use>
+	<upstream>
+		<bugs-to>https://github.com/k3s-io/k3s/issues</bugs-to>
+		<changelog>https://github.com/k3s-io/k3s/releases</changelog>
+		<doc>https://docs.k3s.io/</doc>
+		<remote-id type="github">k3s-io/k3s</remote-id>
+	</upstream>
+</pkgmetadata>

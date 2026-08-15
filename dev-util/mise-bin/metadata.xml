@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		mise is a tool for managing runtime versions ("dev tools"; e.g. node,
+		python), environment variables, and tasks, similar in scope to asdf,
+		nvm, pyenv, direnv, and make combined. This package installs
+		upstream's prebuilt glibc release binary.
+	</longdescription>
+	<upstream>
+		<bugs-to>https://github.com/jdx/mise/issues</bugs-to>
+		<changelog>https://github.com/jdx/mise/releases</changelog>
+		<doc>https://mise.jdx.dev</doc>
+		<remote-id type="github">jdx/mise</remote-id>
+	</upstream>
+</pkgmetadata>
