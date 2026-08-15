@@ -79,8 +79,20 @@ BDEPEND="
 	)
 "
 
+PATCHES=( "${FILESDIR}/${P}-install-legal-files-once.patch" )
+
 pkg_setup() {
 	python-single-r1_pkg_setup
+}
+
+src_prepare() {
+	default
+
+	local po
+	for po in po/*.po; do
+		printf '%s\n' "${po##*/}"
+	done > po/LINGUAS || die
+	sed -i -e 's/\.po$//' po/LINGUAS || die
 }
 
 src_configure() {
@@ -97,6 +109,9 @@ src_configure() {
 }
 
 src_install() {
+	local -x PIP_NO_CACHE_DIR=1
+	local -x PIP_ROOT_USER_ACTION=ignore
+
 	emake DESTDIR="${D}" install
 
 	newpamd "${FILESDIR}/cockpit.pam" cockpit
@@ -112,7 +127,7 @@ src_install() {
 	use selinux || rm -r "${ED}/usr/share/cockpit/selinux" || die
 	use sosreport || rm -r "${ED}/usr/share/cockpit/sosreport" || die
 	use udisks || rm -r "${ED}/usr/share/cockpit/storaged" || die
-	rm -r "${ED}/usr/share/cockpit/packagekit" \
+	rm -rf "${ED}/usr/share/cockpit/packagekit" \
 		"${ED}/usr/share/cockpit/apps" \
 		"${ED}/usr/share/cockpit/playground" || die
 
