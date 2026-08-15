@@ -1,6 +1,6 @@
 --- a/Makefile.in
 +++ b/Makefile.in
-@@ -5852,7 +5852,7 @@
+@@ -5852,8 +5852,8 @@
  	$(V_BUNDLE) cd $(srcdir) && NODE_ENV='$(NODE_ENV)' ./build.js
  install-bundles:
  	cd $(srcdir)/dist; find */* -type f ! -name '*.LEGAL.txt' -a ! -path 'playground/*' -exec install -D -m 644 '{}' '$(abspath $(DESTDIR)$(datadir))/cockpit/{}' \;
@@ -9,14 +9,4 @@
  uninstall-bundles:
  	rm -rf $(DESTDIR)$(datadir)/cockpit
  
---- a/pkg/Makefile.am
-+++ b/pkg/Makefile.am
-@@ -38,7 +38,7 @@
- INSTALL_DATA_LOCAL_TARGETS += install-bundles
- install-bundles:
- 	cd $(srcdir)/dist; find */* -type f ! -name '*.LEGAL.txt' -a ! -path 'playground/*' -exec install -D -m 644 '{}' '$(abspath $(DESTDIR)$(datadir))/cockpit/{}' \;
--	find $(srcdir)/dist -name '*.LEGAL.txt' -exec install --target-directory '$(abspath $(DESTDIR)$(docdir))/legal' '{}' -D -m 644 '{}'  \;
-+	find $(srcdir)/dist -name '*.LEGAL.txt' -exec install --target-directory '$(abspath $(DESTDIR)$(docdir))/legal' -D -m 644 '{}' \;
- 
- UNINSTALL_LOCAL_TARGETS += uninstall-bundles
- uninstall-bundles:
+ # Extract translate attribute, Glade style, angular-gettext HTML translations

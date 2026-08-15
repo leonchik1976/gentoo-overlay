@@ -93,6 +93,9 @@ src_prepare() {
 		printf '%s\n' "${po##*/}"
 	done > po/LINGUAS || die
 	sed -i -e 's/\.po$//' po/LINGUAS || die
+	# The release tarball ships a prebuilt web bundle.  Keep this generated
+	# input older than its stamp so that make does not try to rebuild dist/.
+	touch -r package-lock.json po/LINGUAS || die
 }
 
 src_configure() {
