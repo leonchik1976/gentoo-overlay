@@ -28,7 +28,7 @@ RDEPEND="app-accessibility/at-spi2-core:2
 	app-arch/bzip2:0=
 	dev-libs/glib:2
 	net-libs/webkit-gtk:4.1
-	x11-libs/gtk+:3"
+	x11-libs/gtk+:3[wayland,X]"
 # The DCV viewer subprocess (dcvviewer) and its embedded CEF browser are
 # launched via the bundled usr/lib/x86_64-linux-gnu/workspacesclient/
 # workspacesclientdcv wrapper script, which points LD_LIBRARY_PATH,
@@ -224,6 +224,13 @@ src_prepare() {
 
 	# x11-libs/pango disables libthai
 	edo patchelf --remove-needed libthai.so.0 usr/lib/x86_64-linux-gnu/workspacesclient/libpango-1.0.so.0
+
+	# media-libs/jbigkit's DT_SONAME is libjbig.so (its libjbig.so.0 is
+	# only an install-time compat filename, not what Portage registers as
+	# the soname provider), so the bundled libtiff.so.6's NEEDED entry on
+	# libjbig.so.0 is otherwise left unresolved. Same-ABI retarget.
+	edo patchelf --replace-needed libjbig.so.0 libjbig.so \
+		usr/lib/x86_64-linux-gnu/workspacesclient/libtiff.so.6
 }
 
 src_install() {
