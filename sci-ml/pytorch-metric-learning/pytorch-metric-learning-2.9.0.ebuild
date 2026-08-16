@@ -20,6 +20,10 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
+PATCHES=(
+	"${FILESDIR}/${P}-license-metadata.patch"
+)
+
 # scipy is not in upstream's install_requires (setup.py), but
 # losses/__init__.py unconditionally imports large_margin_softmax_loss.py
 # (scipy.special), and nearly every loss/miner/reducer/trainer module
