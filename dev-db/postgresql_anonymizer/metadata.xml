@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		An extension to mask or replace personally identifiable information (PII)
+		or commercially sensitive data from a PostgreSQL database.
+		The project is aiming toward a declarative approach of anonymization.
+		This means we're trying to extend PostgreSQL Data Definition Language (DDL)
+		in order to specify the anonymization strategy inside the
+		table definition itself.
+	</longdescription>
+	<upstream>
+		<remote-id type="gitlab">dalibo/postgresql_anonymizer</remote-id>
+	</upstream>
+</pkgmetadata>

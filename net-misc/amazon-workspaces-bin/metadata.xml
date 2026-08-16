@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Amazon WorkSpaces plays nice with everyone. Access your personal
+		environment on Android, iOS, Fire, Mac, PC, Chromebook, and Linux devices.
+	</longdescription>
+</pkgmetadata>
