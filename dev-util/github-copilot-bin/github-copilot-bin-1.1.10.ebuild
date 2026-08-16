@@ -24,7 +24,9 @@ S="${WORKDIR}"
 LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
-RESTRICT="bindist mirror"
+# Preserve the vendor's prebuilt ELF objects rather than applying Portage's
+# automatic stripping; the intentional RPATH correction is documented below.
+RESTRICT="bindist mirror strip"
 
 # Verified by extracting both the amd64 and arm64 v1.1.10 .deb assets
 # directly (dpkg-deb -x/-e) rather than assuming an Electron-style
@@ -68,6 +70,18 @@ RESTRICT="bindist mirror"
 # optional appindicator USE flag) but is listed as a hard Depends in both
 # .deb control files, so it is kept unconditional here rather than
 # USE-gated, matching upstream's own declared requirement.
+#
+# gtk+:3 is requested with both X and wayland because usr/bin/github
+# directly imports backend-specific GDK symbols on both architectures,
+# confirmed via `readelf -Ws` on the v1.1.10 amd64 and arm64 binaries:
+# gdk_wayland_display_get_wl_display, gdk_wayland_display_set_startup_
+# notification_id, gdk_wayland_window_get_wl_surface, gdk_x11_display_
+# set_startup_notification_id, gdk_x11_window_get_xid (both arches), and
+# gdk_x11_window_foreign_new_for_display (amd64 only). This is an upstream
+# binary runtime requirement, not a convention borrowed from elsewhere;
+# net-im/forkgram-bin in ::guru uses the same unconditional [X,wayland]
+# form for its own -bin package and is secondary repository precedent
+# for the packaging pattern, not the basis for the dependency itself.
 RDEPEND="
 	>=app-accessibility/at-spi2-core-2.46.0
 	dev-libs/glib:2
@@ -82,11 +96,29 @@ RDEPEND="
 	sys-libs/glibc
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf:2
-	x11-libs/gtk+:3
+	x11-libs/gtk+:3[X,wayland]
 	x11-libs/pango
 "
+BDEPEND="dev-util/patchelf"
 
 QA_PREBUILT="*"
+
+src_prepare() {
+	default
+
+	# Verified independently with `readelf -d` on both v1.1.10 release
+	# assets: upstream's own dynamic section for this one bundled library
+	# carries a corrupted RUNPATH/RPATH string with a malformed numeric
+	# component spliced directly onto the first "$ORIGIN" component, no
+	# separator -- amd64: RUNPATH=15814ORIGIN:$ORIGIN, arm64:
+	# RPATH=10535ORIGIN:$ORIGIN. The second "$ORIGIN" component is the
+	# valid upstream entry and is what allows lookup of this library's
+	# own adjacent bundled libraries at runtime. Setting the RPATH to
+	# '$ORIGIN' removes the malformed component while retaining that
+	# valid one.
+	patchelf --set-rpath '$ORIGIN' \
+		"usr/lib/GitHub Copilot/Microsoft.AI.Foundry.Local.Core.so" || die
+}
 
 src_install() {
 	insinto /opt/${MY_PN}
