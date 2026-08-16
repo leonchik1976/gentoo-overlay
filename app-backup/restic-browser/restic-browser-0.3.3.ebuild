@@ -226,18 +226,24 @@ REQUIRED_USE="elibc_glibc"
 
 # Actual link-time/runtime libraries pulled in by the built Tauri binary
 # (confirmed via `readelf -d` NEEDED entries against a real build image;
-# see scripts/README.restic-browser.md). Neither an X server nor a specific
-# GTK display backend is linked in -- GTK/WebKitGTK select their backend
-# (X11 or Wayland) at runtime from whichever the installed gtk+:3/
-# webkit-gtk were built with (see their own REQUIRED_USE), so this ebuild
-# must not force either one.
+# see scripts/README.restic-browser.md). `readelf -d` only shows the
+# shared-library SONAMEs the binary links against (libgdk-3.so.0, etc.),
+# not which of gtk+'s backend-specific ABIs it actually calls into. A
+# real `ebuild ... install` run's Portage QA scan (scanelf-based, finer
+# grained than NEEDED entries) reports the built binary directly
+# referencing *both* Gtk's X11-specific and Wayland-specific ABI symbols
+# ("QA Notice: binaries depend on Gtk's wayland-specific/x11-specific ABI
+# without USE dep"), so gtk+:3 must be built with both backends enabled,
+# not just "whichever one is installed" as previously assumed here. This
+# does not require an X server: the X USE flag only pulls in gtk+'s
+# client-side X11 ABI (Xlib/XCB linkage), not x11-base/xorg-server.
 COMMON_DEPEND="
 	dev-libs/glib:2
 	net-libs/libsoup:3.0
 	net-libs/webkit-gtk:4.1
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf:2
-	x11-libs/gtk+:3
+	x11-libs/gtk+:3[X,wayland]
 	x11-libs/pango
 "
 RDEPEND="
