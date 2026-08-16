@@ -22,13 +22,25 @@ S=${WORKDIR}/pgrx-${MY_PV}/cargo-pgrx
 LICENSE="MIT"
 # Dependent crate licenses
 LICENSE+=" Apache-2.0 BSD BZIP2 CDLA-Permissive-2.0 ISC MIT MPL-2.0 Unicode-3.0 Unicode-DFS-2016 ZLIB"
-# ring crate
+# ring crate builds its own bundled crypto C/assembly regardless; this is
+# not eliminable via a system dependency, so keep the license entry.
 LICENSE+=" openssl"
 SLOT="0"
 
 KEYWORDS="~amd64 ~arm64"
 
 RESTRICT="test" # needs custom setup
+
+# Use Gentoo's system zstd instead of letting the zstd-sys crate compile
+# its bundled copy of the zstd C sources.
+export ZSTD_SYS_USE_PKG_CONFIG=1
+
+DEPEND="
+	app-arch/zstd:=
+	dev-libs/openssl:=
+"
+RDEPEND="${DEPEND}"
+BDEPEND="virtual/pkgconfig"
 
 src_unpack() {
 	cargo_src_unpack
