@@ -4,24 +4,19 @@
 EAPI=8
 
 # python-single-r1.eclass does not (yet) support EAPI 9; keep this at 8
-# until it does. python3_12/3_13/3_14 are all simultaneously (a)
-# declared as supported wheel tags in the official 1.173.0 wheel
-# ("cp310.cp311.cp312.cp313.cp314...-none-...") and (b) still
-# recognised (non-historical) by python-utils-r1.eclass on this tree
-# (python3_10 and python3_11 have been dropped there).
-#
-# PYTHON_COMPAT is nonetheless narrowed to python3_12 only for this
-# initial package: it is the one implementation this whole dependency
-# graph (this ebuild plus every new dev-python/* package it pulls in)
-# has actually been build/test-validated against so far, and 3.12 is
-# what both the official wheel and wcmatch-8.5.2's own upstream
-# metadata confirm support for without extrapolation. Widening back to
-# 3.13/3.14 is straightforward (they're already valid PYTHON_COMPAT
-# entries per (a)/(b) above) but should happen only alongside real
-# build+test validation under each added implementation, not by
-# default -- do not add python3_15 here just because pkgcheck suggests
-# it either; nothing in this graph has been tested against it.
-PYTHON_COMPAT=( python3_12 )
+# until it does. python3_12/3_13/3_14 are all officially supported by
+# the upstream wheel itself -- its own filename/WHEEL tags list
+# cp312/cp313/cp314 (alongside cp310/cp311, dropped here as historical
+# in this tree's python-utils-r1.eclass) -- and the ebuild's own
+# install logic (unpack the wheel, patch RUNPATH, place files via
+# python_domodule/python_newscript) has no Python-version-conditional
+# code path, so it behaves identically under any of the three. python3.12
+# was build/test-validated first; python3.14 has since been build/image
+# -validated the same way (see the packaging report) with identical
+# results, confirming this. Do not add python3_15 just because pkgcheck
+# suggests it -- nothing in this dependency graph has been tested
+# against it.
+PYTHON_COMPAT=( python3_12 python3_13 python3_14 )
 
 inherit python-single-r1
 
