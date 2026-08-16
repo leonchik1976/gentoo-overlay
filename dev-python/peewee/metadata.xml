@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Small Python ORM. Pinned at 3.19.0 (upstream's latest 3.x release)
+		solely to satisfy dev-util/semgrep-bin's peewee~=3.14 runtime
+		requirement; not intended as a general-purpose replacement for the
+		newer dev-python/peewee slot-0 4.x version already in ::gentoo.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">coleifer/peewee</remote-id>
+		<remote-id type="pypi">peewee</remote-id>
+	</upstream>
+</pkgmetadata>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Pure-python utilities in the same spirit as the standard library.
+		Pinned at 21.0.0 (upstream's only 21.x release) solely to satisfy
+		dev-util/semgrep-bin's boltons~=21.0 runtime requirement; not
+		intended as a general-purpose replacement for the newer
+		dev-python/boltons slot-0 version already in ::gentoo.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">mahmoud/boltons</remote-id>
+		<remote-id type="pypi">boltons</remote-id>
+	</upstream>
+</pkgmetadata>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Shared web/HTTP semantic-convention helpers for OpenTelemetry
+		Python instrumentation packages. Packaged as a direct dependency
+		of dev-python/opentelemetry-instrumentation-requests, itself
+		required by dev-util/semgrep-bin.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">open-telemetry/opentelemetry-python-contrib</remote-id>
+		<remote-id type="pypi">opentelemetry-util-http</remote-id>
+	</upstream>
+</pkgmetadata>

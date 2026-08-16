@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Backport of PEP 654 (exception groups). Pinned at 1.2.2 solely
+		to satisfy dev-util/semgrep-bin's exceptiongroup~=1.2.0 runtime
+		requirement; not intended as a general-purpose replacement for
+		the newer dev-python/exceptiongroup slot-0 1.3.x version
+		already in ::gentoo.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">agronholm/exceptiongroup</remote-id>
+		<remote-id type="pypi">exceptiongroup</remote-id>
+	</upstream>
+</pkgmetadata>

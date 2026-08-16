@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Wildcard/glob file name matcher. Pinned at 8.5.2 (upstream's
+		latest 8.x release) solely to satisfy dev-util/semgrep-bin's
+		wcmatch~=8.3 runtime requirement; not intended as a
+		general-purpose replacement for the newer dev-python/wcmatch
+		slot-0 version already in ::gentoo.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">facelessuser/wcmatch</remote-id>
+		<remote-id type="pypi">wcmatch</remote-id>
+	</upstream>
+</pkgmetadata>

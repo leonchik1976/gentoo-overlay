@@ -1,0 +1,27 @@
+Local patch (not from upstream): tests/conftest.py's pytest_ignore_collect()
+hook uses the pre-pytest-7 hookspec signature "(path, config)", where "path"
+was a legacy py.path.local. Current pytest (verified against pytest-9.1.1)
+has fully removed that parameter from the hookspec -- only
+"(collection_path: pathlib.Path, config)" remains -- and pytest now raises
+PluginValidationError at collection time for any hookimpl declaring a
+parameter absent from the hookspec, so this fails to even collect otherwise.
+Swap in the modern parameter name/type; collection_path.name is pathlib's
+equivalent of the old path.basename attribute.
+
+--- a/tests/conftest.py
++++ b/tests/conftest.py
+@@ -5,12 +5,12 @@
+ _VERSION_MARKER = re.compile(r'_py(?P<major_version>\d)(?P<minor_version>\d)?')
+
+
+-def pytest_ignore_collect(path, config):
++def pytest_ignore_collect(collection_path, config):
+     """
+     Ignore tests that end with _pyX, where X does not equal this
+     interpreter's major version.
+     """
+-    filename = path.basename
++    filename = collection_path.name
+     modulename = filename.split('.', 1)[0]
+     match = _VERSION_MARKER.search(modulename)
+     if not match:

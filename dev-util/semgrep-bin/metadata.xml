@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Semgrep is a fast, lightweight static analysis tool for finding bugs,
+		enforcing code standards, and detecting security vulnerabilities in
+		many languages using pattern-based rules that look like the source
+		code itself.
+
+		This package installs Semgrep from the official prebuilt PyPI
+		wheel, including the Python CLI, native semgrep-core engine, and
+		bundled shared libraries. The ebuild repairs the binary RUNPATH
+		and integrates the wheel into Gentoo's Python installation. It
+		does not build semgrep-core from OCaml source, and it does not
+		depend on a separate semgrep-core package.
+
+		Cross-overlay dependency notice: this ebuild's dependency graph
+		relies on several packages that exist only in ::guru, not
+		::gentoo, namely dev-python/opentelemetry-exporter-otlp-proto-http,
+		dev-python/opentelemetry-instrumentation,
+		dev-python/opentelemetry-instrumentation-threading,
+		dev-python/httpx-sse, and dev-python/sse-starlette (the last two
+		via dev-python/mcp). None of these are copied into this
+		package's own RDEPEND; they are pulled in transitively through
+		the packages that actually declare them. A plain local-repository
+		pkgcheck scan (pkgcheck scan --repo &lt;this overlay&gt;) reports
+		several of them as nonexistent/nonsolvable because it does not
+		evaluate the full enabled repository set (::gentoo + ::guru +
+		this overlay); they were independently confirmed resolvable
+		against the live Portage database, repo-qualified per package.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">semgrep/semgrep</remote-id>
+		<remote-id type="pypi">semgrep</remote-id>
+		<bugs-to>https://github.com/semgrep/semgrep/issues</bugs-to>
+	</upstream>
+</pkgmetadata>

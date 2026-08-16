@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		A command-line application framework (and CLI parser). Packaged
+		as a direct runtime dependency of dev-python/glom, which is in
+		turn required by dev-util/semgrep-bin.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">mahmoud/face</remote-id>
+		<remote-id type="pypi">face</remote-id>
+	</upstream>
+</pkgmetadata>
