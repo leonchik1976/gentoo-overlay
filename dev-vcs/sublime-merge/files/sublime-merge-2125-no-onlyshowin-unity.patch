@@ -1,0 +1,14 @@
+The key "OnlyShowIn" is deprecated inside "Desktop Action" groups (see
+https://bugs.freedesktop.org/show_bug.cgi?id=66712) and is simply ignored
+there by spec-compliant implementations -- it does not hide the action
+outside Unity. Remove it to silence the resulting desktop-entry QA
+notice, matching ::gentoo's equivalent app-editors/sublime-text patch
+(sublime-text-4_p4107-remove-deprecated-key-onlyshowin-from-launcher.patch).
+
+--- a/sublime_merge.desktop
++++ b/sublime_merge.desktop
+@@ -15,4 +15,3 @@
+ [Desktop Action new-window]
+ Name=New Window
+ Exec=/opt/sublime_merge/sublime_merge --launch-or-new-window
+-OnlyShowIn=Unity;
