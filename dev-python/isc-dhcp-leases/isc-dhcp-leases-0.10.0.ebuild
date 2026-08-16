@@ -19,6 +19,10 @@ SRC_URI="
 "
 S=${WORKDIR}/python-${P}
 
+PATCHES=(
+	"${FILESDIR}/${P}-setup-metadata.patch"
+)
+
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"

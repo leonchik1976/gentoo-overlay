@@ -1,0 +1,16 @@
+--- a/setup.cfg
++++ b/setup.cfg
+@@ -1,2 +1,2 @@
+ [metadata]
+-description-file = README.rst
++description_file = README.rst
+--- a/setup.py
++++ b/setup.py
+@@ -52,7 +52,6 @@
+     classifiers=[
+         'Development Status :: 5 - Production/Stable',
+         'Intended Audience :: Developers',
+-        'License :: OSI Approved :: MIT License',
+         'Operating System :: OS Independent',
+         'Topic :: Software Development',
+         'Programming Language :: Python :: 2',
