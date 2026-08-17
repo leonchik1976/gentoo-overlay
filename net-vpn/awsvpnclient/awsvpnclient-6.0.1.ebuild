@@ -144,7 +144,7 @@ src_install() {
 
 	newicon opt/awsvpnclient/resources/app.png awsvpnclient.png
 	make_desktop_entry "${basedir}/launch-vpn-client.sh" "AWS VPN Client" \
-		awsvpnclient "Network;VPN;"
+		awsvpnclient "Network;"
 
 	systemd_dounit etc/systemd/system/aws-client-vpn-daemon.service
 
@@ -161,8 +161,4 @@ src_install() {
 pkg_postinst() {
 	xdg_pkg_postinst
 	readme.gentoo_print_elog
-}
-
-pkg_prerm() {
-	xdg_pkg_prerm
 }

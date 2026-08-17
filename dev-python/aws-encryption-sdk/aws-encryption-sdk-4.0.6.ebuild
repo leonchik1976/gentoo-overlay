@@ -24,3 +24,37 @@ RDEPEND="
 	dev-python/cryptography[${PYTHON_USEDEP}]
 	dev-python/wrapt[${PYTHON_USEDEP}]
 "
+
+EPYTEST_PLUGINS=( pytest-mock )
+distutils_enable_tests pytest
+
+BDEPEND+="
+	test? (
+		dev-python/mock[${PYTHON_USEDEP}]
+	)
+"
+
+EPYTEST_IGNORE=(
+	# Require network access and AWS credentials.
+	test/integration
+
+	# Require the unpackaged aws-cryptographic-material-providers.
+	test/mpl
+
+	# Integration examples requiring AWS services or MPL.
+	examples/test
+)
+
+python_prepare_all() {
+	# Obsolete for Python 3-only packages and deprecated by wheel.
+	sed -i -e '/^\[wheel\]$/,+1d' setup.cfg || die
+
+	distutils-r1_python_prepare_all
+}
+
+python_test() {
+	# Prevent boto3 from probing EC2 instance metadata for credentials.
+	export AWS_EC2_METADATA_DISABLED=true
+
+	distutils-r1_python_test
+}
