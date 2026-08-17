@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		draw.io (diagrams.net) is a diagramming web application. This
+		package installs the official prebuilt server WAR distribution
+		for self-hosting under a servlet container such as Tomcat. It is
+		a distinct product from the Electron-based desktop application
+		(packaged elsewhere as drawio-desktop, e.g. app-office/drawio-desktop-bin
+		in the Gentoo main tree).
+	</longdescription>
+	<upstream>
+		<remote-id type="github">jgraph/drawio</remote-id>
+	</upstream>
+</pkgmetadata>

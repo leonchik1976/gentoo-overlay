@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		aws-vault is a tool to securely store and access AWS credentials.
+		This packages the ByteNess/aws-vault fork, the maintained
+		successor to the original, now-abandoned 99designs/aws-vault.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">ByteNess/aws-vault</remote-id>
+	</upstream>
+</pkgmetadata>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Official AWS Client VPN GUI, CLI, and background daemon for Linux,
+		distributed by AWS as a prebuilt amd64-only .deb (Ubuntu LTS is
+		the only officially supported target). No arm64 build is
+		published upstream. Version 6.0.1 replaced the previous .NET
+		CoreCLR-based service architecture with a single
+		aws-client-vpn-daemon binary and an Electron-based GUI.
+	</longdescription>
+</pkgmetadata>
