@@ -7,7 +7,7 @@ DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{12..15} )
 PYTHON_REQ_USE="sqlite"
 
-inherit distutils-r1 optfeature pypi
+inherit distutils-r1 optfeature pypi xdg
 
 DESCRIPTION="Terminal spreadsheet multitool for discovering and arranging data"
 HOMEPAGE="
@@ -34,6 +34,8 @@ EPYTEST_DESELECT=(
 )
 
 pkg_postinst() {
+	xdg_pkg_postinst
+
 	optfeature "integration with yaml" dev-python/pyyaml
 	optfeature "integration with png" dev-python/pypng
 	optfeature "integration with http" dev-python/requests
