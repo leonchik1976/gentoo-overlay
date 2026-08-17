@@ -49,6 +49,11 @@ python_prepare_all() {
 	# Obsolete for Python 3-only packages and deprecated by wheel.
 	sed -i -e '/^\[wheel\]$/,+1d' setup.cfg || die
 
+	# Setuptools expects the license declaration instead of classifiers.
+	sed -i \
+		-e '/License :: OSI Approved :: Apache Software License/d' \
+		setup.py || die
+
 	distutils-r1_python_prepare_all
 }
 
