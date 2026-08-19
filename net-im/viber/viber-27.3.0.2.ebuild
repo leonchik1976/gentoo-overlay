@@ -42,6 +42,7 @@ RDEPEND="
 	dev-libs/openssl:0=
 	elibc_glibc? ( sys-libs/glibc )
 	media-libs/alsa-lib
+	media-libs/jbigkit
 	media-libs/libglvnd[X]
 	media-libs/libpulse
 	media-libs/mesa[gbm(+)]
@@ -64,6 +65,9 @@ RDEPEND="
 	x11-libs/xcb-util-renderutil
 	x11-libs/xcb-util-wm
 "
+BDEPEND="
+	dev-util/patchelf
+"
 
 QA_PREBUILT="opt/viber/*"
 
@@ -80,6 +84,26 @@ pkg_nofetch() {
 	ewarn
 	ewarn "If the site now serves a version newer than ${PV}, this ebuild's"
 	ewarn "Manifest will reject it -- check for a newer ebuild version first."
+}
+
+src_prepare() {
+	default
+
+	# Viber's bundled libtiff.so.5 is NEEDED-linked against libjbig.so.2.1,
+	# a build-time SONAME string from upstream jbigkit's own raw Makefile
+	# convention. media-libs/jbigkit-2.1 (Gentoo) builds the identical,
+	# unpatched upstream jbigkit 2.1 source (only Gentoo's build-system
+	# patch differs, and it never touches jbig.c/jbig_ar.c/headers) under
+	# the SONAME "libjbig.so" instead. All 10 symbols libtiff.so.5 actually
+	# imports from it (jbg_dec_free, jbg_dec_getimage, jbg_dec_getsize,
+	# jbg_dec_in, jbg_dec_init, jbg_enc_free, jbg_enc_init, jbg_enc_out,
+	# jbg_newlen, jbg_strerror) are unversioned (no .gnu.version_r entry
+	# for the jbig NEEDED entry at all) and are exported by name from
+	# Gentoo's libjbig.so -- confirmed against the real .deb and the real
+	# installed library, not assumed from the "2.1" in both names.
+	patchelf --replace-needed \
+		libjbig.so.2.1 libjbig.so \
+		opt/viber/lib/libtiff.so.5 || die
 }
 
 src_install() {
