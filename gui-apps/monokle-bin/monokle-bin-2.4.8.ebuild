@@ -35,6 +35,9 @@ S="${WORKDIR}"
 # LICENSE.electron.txt and LICENSES.chromium.html installed alongside it).
 LICENSE="MIT"
 SLOT="0"
+# Upstream's 2.4.8 arm64 archive contains an x86-64 node-pty addon.
+# The main application works on arm64, but its integrated terminal does not.
+# TODO: rebuild node-pty-0.11.0-beta11 for Electron 28.2.4's arm64 ABI.
 KEYWORDS="-* ~amd64 ~arm64"
 REQUIRED_USE="elibc_glibc"
 RESTRICT="bindist mirror strip"
@@ -92,6 +95,12 @@ src_prepare() {
 	popd > /dev/null || die
 
 	gunzip usr/share/doc/monokle/changelog.gz || die
+
+	# Remove node-gyp's bundled Python build helper. The compiled node-pty
+	# addon does not use it at runtime.
+	rm -r \
+		"opt/${MY_PN}/resources/app.asar.unpacked/node_modules/node-pty/build/node_gyp_bins" \
+		|| die
 
 	# Launch via the stable command in PATH, independent of the /opt layout.
 	sed -i -e "/^Exec=/c Exec=monokle %U" \
