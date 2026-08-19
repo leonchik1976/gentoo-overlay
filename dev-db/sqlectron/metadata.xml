@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Sqlectron is a simple and lightweight SQL client with support for
+		MySQL, PostgreSQL, SQLite, SQL Server, Cassandra and other
+		databases. This package installs the official prebuilt Electron
+		binary; a from-source build (via npm + electron-builder) is not
+		provided by this ebuild but would be the path to arm64 support.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">sqlectron/sqlectron</remote-id>
+	</upstream>
+</pkgmetadata>

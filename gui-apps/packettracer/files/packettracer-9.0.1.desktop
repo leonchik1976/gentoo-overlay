@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Cisco Packet Tracer 9.0.1
+Comment=Cisco's packet tracer
+Exec=/opt/pt/packettracer %f
+Icon=packettracer
+Terminal=false
+StartupNotify=true
+Categories=Education;
+MimeType=application/x-pkt;application/x-pka;application/x-pkz;application/x-pks;application/x-pksz;

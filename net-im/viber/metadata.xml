@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Viber for Desktop is the companion application for the proprietary
+		Viber messaging and VoIP calling service, syncing contacts,
+		messages and call history with a paired mobile device. This
+		package installs the official Qt6-based prebuilt amd64 .deb,
+		which bundles its own private copy of Qt6, ffmpeg and ICU.
+	</longdescription>
+</pkgmetadata>

@@ -1,0 +1,26 @@
+--- a/src/meson.build
++++ b/src/meson.build
+@@ -50,11 +50,18 @@
+   install_dir: bindir,
+   depends: resources,
+   command: [
+-    'env',
+-    cargo_env,
+-    cargo, 'build',
++    # custom_target() commands are exec'd directly, never through a shell,
++    # so the literal '&&' below was never a shell operator: it was passed
++    # straight to `cargo build` as a bogus CLI argument, which cargo
++    # rejects outright. Route the whole build+copy step through `sh -c`
++    # instead so the chain actually executes as intended.
++    'sh', '-c',
++    'CARGO_HOME_ARG="$1"; CARGO_BIN="$2"; shift 2; ' +
++      'env "$CARGO_HOME_ARG" "$CARGO_BIN" build "$@" && ' +
++      'cp "' + ('src' / rust_target / meson.project_name()) + '" "@OUTPUT@"',
++    'sh',
++    cargo_env[0],
++    cargo,
+     cargo_options,
+-    '&&',
+-    'cp', 'src' / rust_target / meson.project_name(), '@OUTPUT@',
+   ]
+ )

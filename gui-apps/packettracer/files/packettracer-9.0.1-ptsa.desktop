@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Cisco Packet Tracer 9.0.1 (PTSA)
+Comment=Cisco Packet Tracer Skills Assessment URI handler
+Exec=/opt/pt/packettracer -uri=%u
+Icon=packettracer
+Terminal=false
+StartupNotify=true
+NoDisplay=true
+Categories=Education;
+MimeType=x-scheme-handler/pttp;

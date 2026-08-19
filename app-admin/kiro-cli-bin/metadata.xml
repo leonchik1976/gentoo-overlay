@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Kiro CLI is the command-line interface for Kiro, an AI-powered IDE
+		and coding agent from AWS. It provides a chat-based agent, a
+		terminal/pty helper, and shell integrations from a single binary
+		distribution.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">kirodotdev/Kiro</remote-id>
+	</upstream>
+</pkgmetadata>

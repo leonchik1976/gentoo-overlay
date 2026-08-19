@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<upstream>
+		<remote-id type="github">dottorblaster/cauldron</remote-id>
+		<!-- article_scraper (GIT_CRATES workspace dependency, not on crates.io) -->
+		<remote-id type="gitlab">news-flash/article_scraper</remote-id>
+	</upstream>
+</pkgmetadata>
