@@ -4,7 +4,7 @@
 # cmake.eclass only supports EAPI 8; xdg.eclass supports up to 8 as well.
 EAPI=8
 
-inherit cmake xdg
+inherit cmake udev xdg
 
 DESCRIPTION="User-friendly tool for creating bootable media for Raspberry Pi devices"
 HOMEPAGE="
@@ -140,4 +140,21 @@ src_install() {
 	# udev rules) is already installed by cmake_src_install above.
 	insinto /usr/share/polkit-1/actions
 	doins "${WORKDIR}/${P}/debian/com.raspberrypi.rpi-imager.policy"
+}
+
+# Upstream's CMake install rules install /usr/lib/udev/rules.d/99-rpiboot.rules
+# (src/linux/PlatformPackaging.cmake) directly, without going through
+# udev_dorules -- inheriting udev.eclass here is only for udev_reload, not
+# for installing the rule itself. Defining these phase functions overrides
+# xdg.eclass's own EXPORT_FUNCTIONS-provided pkg_postinst/pkg_postrm, so
+# xdg_pkg_postinst/xdg_pkg_postrm must be called explicitly to still get
+# desktop/icon/mime database updates.
+pkg_postinst() {
+	xdg_pkg_postinst
+	udev_reload
+}
+
+pkg_postrm() {
+	xdg_pkg_postrm
+	udev_reload
 }
