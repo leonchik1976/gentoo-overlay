@@ -108,6 +108,7 @@ src_install() {
 
 	sed -e "s|^Exec=/.*/kiro|Exec=kiro|" \
 		-e "s|^Icon=.*|Icon=kiro|" \
+		-e "s|^Categories=.*|Categories=TextEditor;Development;IDE;|" \
 		usr/share/applications/kiro.desktop >"${T}/kiro.desktop" || die
 	domenu "${T}/kiro.desktop"
 
