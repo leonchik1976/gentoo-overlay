@@ -1,0 +1,15 @@
+# Copyright 2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+# Leonid Kopylov <leonchik1976@gmail.com> (2026-08-19)
+# Requires gtk4-rs 0.11.x (gtk4-sys/gsk4-sys 0.11.1), whose gsk4 bindings
+# pkg-config-check for gtk4 >= 4.21. GNOME's 4.21.x is the unstable
+# development series (odd minor); ::gentoo's gui-libs/gtk currently tops out
+# at 4.20.4 (stable/testing), and there is no live/9999 ebuild either. This
+# is a real, external toolchain gap confirmed against an actual build
+# (pkg-config exited with status code 1: "The system library `gtk4` ...
+# was not found" while requesting 'gtk4 >= 4.21'), not a packaging bug.
+# Unmask once ::gentoo ships gui-libs/gtk-4.21 or newer (expected once the
+# 4.22 stable series lands). See gui-apps/cauldron-0.9.6 for a version that
+# builds against currently-available GTK4.
+=gui-apps/cauldron-1.0.0
