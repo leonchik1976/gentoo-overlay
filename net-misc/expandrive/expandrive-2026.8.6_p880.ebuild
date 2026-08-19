@@ -73,6 +73,38 @@ pkg_nofetch() {
 	ewarn "Manifest will reject it -- check for a newer ebuild version first."
 }
 
+src_prepare() {
+	default
+
+	# 7zip-bin (a transitive dep of electron-builder-squirrel-windows, a
+	# Windows-only build-time tool that ended up in the packaged
+	# node_modules) bundles linux/{arm,arm64,ia32} and mac/* 7za helpers.
+	# This package is amd64-only: the main ExpanDrive binary is
+	# x86-64, and 7zip-bin/index.js resolves path7za to
+	# linux/${process.arch}/7za, i.e. linux/x64/7za on this arch --
+	# confirmed against the real .deb, not assumed from "arm64" appearing
+	# in a bundled path. Verified nothing in ExpanDrive's own dist/*.js
+	# ever calls path7za itself (every real reference traces back to
+	# electron-builder-squirrel-windows/builder-util's own Windows
+	# packaging code, never required by ExpanDrive's runtime), so this
+	# strips what's definitely unreachable while leaving the one file
+	# that would be selected if anything ever did call it.
+	local sevenzip_dir="opt/ExpanDrive/resources/app.asar.unpacked/node_modules/7zip-bin"
+
+	rm -r \
+		"${sevenzip_dir}/linux/arm" \
+		"${sevenzip_dir}/linux/arm64" \
+		"${sevenzip_dir}/linux/ia32" \
+		"${sevenzip_dir}/mac" \
+		|| die
+
+	# Docker/p7zip-source-compile scripts used only by 7zip-bin's own
+	# upstream maintainers to rebuild the bundled 7za binary; not
+	# referenced anywhere at runtime (confirmed: no reference to either
+	# filename anywhere else in the packaged app).
+	rm "${sevenzip_dir}/linux/x64/build.sh" "${sevenzip_dir}/linux/x64/do-build.sh" || die
+}
+
 src_install() {
 	insinto /opt/ExpanDrive
 	doins -r opt/ExpanDrive/*
@@ -85,7 +117,8 @@ src_install() {
 		/opt/ExpanDrive/libGLESv2.so \
 		/opt/ExpanDrive/libvk_swiftshader.so \
 		/opt/ExpanDrive/libvulkan.so.1 \
-		/opt/ExpanDrive/SharedSupport/exfs
+		/opt/ExpanDrive/SharedSupport/exfs \
+		/opt/ExpanDrive/resources/app.asar.unpacked/node_modules/7zip-bin/linux/x64/7za
 	fowners root:root /opt/ExpanDrive/chrome-sandbox
 	fperms 4711 /opt/ExpanDrive/chrome-sandbox
 
