@@ -51,6 +51,16 @@ pkg_nofetch() {
 	ewarn "Manifest will reject it -- check for a newer ebuild version first."
 }
 
+src_prepare() {
+	default
+
+	sed -i \
+		-e '/^Encoding=/d' \
+		-e 's/^Categories=.*/Categories=GNOME;Network;/' \
+		usr/share/applications/muse-sounds-manager.desktop ||
+		die "failed to fix desktop entry"
+}
+
 src_install() {
 	insinto /opt/muse-sounds-manager
 	doins opt/muse-sounds-manager/lib*.so
