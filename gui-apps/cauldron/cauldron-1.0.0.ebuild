@@ -371,6 +371,13 @@ declare -A GIT_CRATES=(
 	[article_scraper]="https://gitlab.com/news-flash/article_scraper;7383973bb86e4b9c02ede3c030989be61315f9a5;article_scraper-%commit%/article_scraper"
 )
 
+# Highest rust-version declared across this version's full resolved crate
+# graph (checked via crates.io metadata for every entry in CRATES, not
+# assumed): relm4/relm4-css/relm4-macros@0.11.0 declare 1.93, one higher
+# than gui-apps/cauldron-0.9.6's 1.92 -- do not assume these match across
+# versions. Every other crate here declares 1.92 or lower.
+RUST_MIN_VER="1.93"
+
 inherit cargo gnome2-utils meson xdg
 
 # Requires builder-provided Instapaper application credentials;
