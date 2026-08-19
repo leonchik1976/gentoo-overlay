@@ -86,8 +86,17 @@ pkg_nofetch() {
 }
 
 src_unpack() {
-	# Unpacks the outer .deb (control.tar.* + data.tar.*) via unpacker.eclass.
-	default
+	# Defining our own src_unpack() means unpacker.eclass's EXPORT_FUNCTIONS
+	# src_unpack (which would call unpacker_src_unpack -> unpack_deb, fully
+	# extracting data.tar.* too) never takes effect -- an ebuild-defined
+	# phase function always overrides an eclass-exported one. Calling plain
+	# `default` here instead invokes Portage's own native .deb handling
+	# (portage/bin phase-helpers.sh), which per PMS only runs `ar x` on the
+	# outer container and leaves control.tar.*/data.tar.* sitting in WORKDIR
+	# unextracted -- opt/pt/packettracer.AppImage never actually appears.
+	# Call unpacker.eclass's real .deb unpacker explicitly instead, which
+	# decompresses and extracts data.tar.* too.
+	unpack_deb "${A}"
 
 	# The .deb only contains opt/pt/packettracer.AppImage; extract its
 	# squashfs payload to get a normal installable tree (icons, .desktop
