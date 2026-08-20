@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		TFLint is a Terraform linter focused on finding possible errors (like
+		invalid instance types), warning about deprecated syntax and unused
+		declarations, and enforcing best practices and naming conventions.
+
+		This package installs upstream's prebuilt binary release rather than
+		building from source. app-admin/tflint (::guru) builds from source but
+		requires a maintainer-provided Go module vendor tarball hosted outside
+		of upstream infrastructure; that host has gone stale on repeated
+		occasions, leaving the ebuild unbuildable for extended periods
+		(bugs.gentoo.org/969525).
+	</longdescription>
+	<upstream>
+		<remote-id type="github">terraform-linters/tflint</remote-id>
+	</upstream>
+</pkgmetadata>
