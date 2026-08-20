@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription>
+		Battleship-TUI is a terminal implementation of the classic Battleship
+		game written in C#. Upstream publishes self-contained, NativeAOT,
+		single-file executables for Linux amd64 and arm64 via GitHub
+		Releases, built by their own public tag-triggered CI; this package
+		installs those binaries as-is rather than building from source.
+		It is an unrelated, independent implementation from
+		games-misc/tui-battleship (the Bash TUI Battleship game).
+	</longdescription>
+	<upstream>
+		<remote-id type="github">reflectd/Battleship-TUI</remote-id>
+	</upstream>
+</pkgmetadata>
