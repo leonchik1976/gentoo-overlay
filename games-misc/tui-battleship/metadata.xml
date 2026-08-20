@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription>
+		tui-battleship is a single-player, single-file Bash implementation of
+		the classic Battleship pen-and-paper game, played in the terminal
+		against the computer. Ship placement can be automatic or manual,
+		fleet composition and key bindings are configurable, and optional
+		desktop notifications are shown via notify-send. Per-user
+		configuration, game log, and high scores are kept under the XDG
+		config/state directories rather than the read-only package assets.
+	</longdescription>
+	<upstream>
+		<remote-id type="gitlab">christosangel/tui-battleship</remote-id>
+	</upstream>
+</pkgmetadata>
