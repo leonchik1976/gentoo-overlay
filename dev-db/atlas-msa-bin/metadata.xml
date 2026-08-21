@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Atlas is a schema-as-code tool for managing database schemas with
+		declarative HCL or SQL migrations, drift detection, and CI/CD
+		integration.
+
+		This package installs Ariga's default prebuilt "atlas" binary: the
+		proprietary build (OSS plus closed-source code, licensed under
+		Ariga's Master License and Services Agreement) that is not buildable
+		from the public ariga/atlas GitHub repository. It is a superset of
+		dev-db/atlas-bin (the Apache-2.0 Community Edition, also a prebuilt
+		binary): it adds advanced migration commands, migration/schema
+		linting, declarative "schema plan"/"schema validate" workflows, drift
+		detection, Atlas Registry integration, and drivers for SQL Server,
+		ClickHouse, Redshift, and other engines beyond
+		MySQL/PostgreSQL/SQLite/MariaDB. Some of those features additionally
+		require an "atlas login" session against a paid Atlas Cloud
+		subscription (Pro/Enterprise); this package only provides the local
+		CLI binary, not a subscription.
+
+		Named after its license (there is no crisp official one-word name
+		for this edition upstream) to disambiguate it from dev-db/atlas-bin,
+		which now means "Community Edition, prebuilt" to match the usual
+		Gentoo foo/foo-bin convention.
+	</longdescription>
+	<use>
+		<flag name="extended">
+			Install Ariga's "extended" binary variant instead of the default
+			one. This is a local overlay convenience flag, not a Gentoo
+			policy convention: it swaps which upstream-prebuilt binary is
+			fetched, adding beta database drivers (Oracle, Snowflake,
+			Spanner, Databricks) on top of the default binary's feature set,
+			at the cost of a substantially larger download. Same
+			Atlas-MSA-20260701 license either way.
+		</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">ariga/atlas</remote-id>
+	</upstream>
+</pkgmetadata>

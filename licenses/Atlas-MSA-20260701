@@ -1,0 +1,543 @@
+MASTER LICENSE AND SERVICES AGREEMENT
+
+Source: https://ariga.io/legal/msa/msa-20260701.pdf (retrieved 2026-08-21)
+
+This Master License and Services Agreement (the "Agreement") constitutes a legally binding agreement by and between
+Ariga Technologies USA Inc. (the "Company") and the individual, company, or other legal entity that (a) is identified in
+the Order Form (as defined below); or (b) downloads, installs, accesses, and/or uses the Software (as defined below) and/or
+otherwise subscribes to, accesses, or uses the Cloud Connected Services and accepts this Agreement (collectively, the
+"Customer"). For the avoidance of doubt, the term Customer includes any individual installing, accessing, or using the
+Software on such individual's own behalf or, if the Software or Cloud Connected Services are accessed or used by such
+individual on behalf of an organization, then the term Customer includes such organization. Each of the Customer and the
+Company may be referred to herein as a "Party" and collectively as the "Parties."
+
+This Agreement applies regardless of whether Customer accesses or uses the Software or Cloud Connected Services on a
+self-serve basis, under an online subscription plan, or pursuant to an ordering document that references this Agreement (the
+"Order Form"). In the event of any conflict between this Agreement and an Order Form, the Order Form shall control
+solely to the extent of such conflict.
+
+BY ACCEPTING THIS AGREEMENT, EXECUTING AN ORDER FORM THAT REFERENCES THIS
+AGREEMENT, OR OTHERWISE DOWNLOADING, INSTALLING, ACCESSING, OPERATING, OR USING
+THE SOFTWARE OR ANY CLOUD CONNECTED SERVICES, CUSTOMER HEREBY ACCEPTS THIS
+AGREEMENT AND AGREES TO BE LEGALLY BOUND BY ITS TERMS. IF A PERSON ACCEPTS THIS
+AGREEMENT ON BEHALF OF AN ORGANIZATION, SUCH PERSON REPRESENTS AND WARRANTS
+THAT THEY HAVE FULL AUTHORITY TO BIND THE ORGANIZATION TO THIS AGREEMENT.
+
+1. License Grant, Product Structure and Restrictions.
+
+1.1 License. Subject to the terms of this Agreement, the Company hereby grants Customer, and Customer accepts, a
+    limited, non-exclusive, non-sublicensable (except as expressly permitted herein), non-transferable and revocable (solely
+    in accordance with the terms of this Agreement) license, during the Term (as defined below), to install the Software,
+    solely in binary form, on computer systems owned or controlled by Customer and to use the Software solely for
+    Customer's internal business purposes and in accordance with the Documentation (as defined below).
+    "Software" means the commercial, on-premises distribution of the Company's proprietary Atlas software and all related
+    proprietary features, binary code, libraries, modules, tools, utilities, user interfaces, application programming interfaces
+    (APIs), visual displays, compilations, updates, upgrades, Documentation (unless the context requires otherwise), and
+    other materials made available by the Company for installation or use in connection with the foregoing, together with
+    any derivative works of, and any updates or upgrades to, any of the foregoing.
+
+1.2 Cloud Connected Services. The Company may also make available hosted, cloud-based, connected, or ancillary
+    services that interoperate with the Software and provide enhanced capabilities (the "Cloud Connected Services"). To
+    the extent Customer purchases or otherwise subscribes to any Cloud Connected Services, and subject to the terms of the
+    applicable Order Form or Subscription Plan (as defined below), the Company further grants Customer, during the
+    applicable subscription term set forth in the Subscription Plan, a limited, non-exclusive, non-sublicensable,
+    non-transferable, and fully revocable (solely in accordance with the terms herein) right to access and use the Cloud
+    Connected Services solely by remote means, in conjunction with the Software or the Atlas Open Source (as applicable)
+    and for Customer's internal business purposes.
+
+1.3 Authorized Users; Account. Customer may permit Customer's employees and consultants whose duties require access
+    to the Software and/or the Cloud Connected Services to access and use the Software and/or the Cloud Connected
+    Services on Customer's behalf solely within the scope of the rights granted under this Agreement (each, an
+    "Authorized User"). In order to access and use the Cloud Connected Services, Customer must create an account in a
+    manner instructed by the Company (the "Account"), and the Account may be accessed and/or used solely by
+    Customer's Authorized Users. Customer represents and warrants that all information provided in connection with
+    opening the Account is accurate and complete. Customer shall ensure that all Authorized Users comply with the terms
+    of this Agreement and acknowledges and agrees that Customer is responsible and liable for: (i) all acts and omissions of
+    Customer's Authorized Users; (ii) all access to and use of the Software and Cloud Connected Services using credentials
+    issued to Customer or Customer's Authorized Users; (iii) any breach of this Agreement by an Authorized User, which
+    shall be deemed a breach by Customer; (iv) keeping, and ensuring that Customer's Authorized Users keep, the Account
+    login details, access credentials, and passwords secure at all times; and (v) promptly notifying the Company in writing
+    if Customer becomes aware of any unauthorized access to or use of the Account or the Cloud Connected Services.
+
+1.4 Documentation. The Company may make available certain Documentation related to the use, installation, access,
+    deployment or integration of any portion of the Software and/or the Cloud Connected Services. Customer and
+    Customer's Authorized Users may use the Documentation solely in connection with Customer's permitted use of the
+    Software and/or the Cloud Connected Services. Unless context otherwise requires, references in this Agreement to the
+    Software or the Cloud Connected Services include the applicable Documentation.
+    "Documentation" means the Company's standard user documentation, whether in hard copy, or in any electronic form
+    or other media (generally made available by the Company to its customers), describing the use, features and operation
+    of the Software and/or the Cloud Connected Services.
+
+1.5 Prohibited Uses. Except as specifically permitted herein, without the prior written consent of the Company,
+    Customer agrees not to, directly or indirectly: (i) use, modify, incorporate into or with other software, or create a
+    derivative work of any part of the Software or the Cloud Connected Services; (ii) sell, resell, license (or sub-license),
+    lease, assign, transfer, pledge, or otherwise make available the Software or the Cloud Connected Services to any third
+    party, or permit any third party other than Authorized Users to access or use them; (iii) copy, distribute, publish or
+    reproduce the Software and/or the Cloud Connected Services; (iv) use or permit the Software or the Cloud Connected
+    Services to be used to perform services for third parties, whether on a service bureau, managed services or time sharing
+    basis or otherwise, without the express authorization of the Company; (v) disclose, publish or otherwise make publicly
+    available the results of any benchmarking or testing of the Software or the Cloud Connected Services, use such results
+    for Customer's own or any third party's competing software development activities, or use the Software or the Cloud
+    Connected Services in order to build, support, or assist a third party in building or supporting, any products or services
+    competitive with the Company; (vi) modify, disassemble, decompile, reverse engineer, revise or enhance the Software
+    and/or the Cloud Connected Services or attempt to reconstruct or discover any source code or underlying ideas or
+    algorithms of the Software or the Cloud Connected Services, except to the extent otherwise permitted under applicable
+    law; (vii) remove or otherwise alter any of the Company's trademarks, logos, copyrights, notices or other proprietary
+    notices or indicia, if any, fixed or attached to the Software or included in the Cloud Connected Services as delivered to
+    Customer; (viii) ship, transfer or export the Software into any country, or make available or use the Software or the
+    Cloud Connected Services in any manner which is in violation of applicable export control laws, restrictions or
+    regulations; (ix) bypass, circumvent, disable or otherwise interfere with any measures the Company may use to prevent
+    or restrict access to the Software or the Cloud Connected Services, or features that enforce limitations on their use; (x)
+    use any automated means, including bots, or unauthorized tokens (including use of tokens or equivalent measures not
+    for the purpose for which they are intended) to access or use the Software or the Cloud Connected Services; (xi) exceed
+    or abuse any limitations on the use of the Software or the Cloud Connected Services, including limitations relating to
+    permitted seats, environments, API calls, data volume or other usage metrics; (xii) use the Software or the Cloud
+    Connected Services in a manner that violates applicable law or infringes, misappropriates or otherwise violates any
+    rights of any third party, including privacy, confidentiality or intellectual property rights; and/or (xiii) access, store,
+    distribute or transmit during the course of use of the Software or the Cloud Connected Services any malicious code (i.e.,
+    software viruses, Trojan horses, worms, malware or other computer instructions, devices, or techniques that erase data
+    or programming, infect, disrupt, damage, disable, or shut down a computer system or any component of such computer
+    system), or any unlawful or infringing materials.
+
+1.6 Subscription Verification and Usage Data. Certain features of the Software (irrespective of whether any Cloud
+    Connected Services are used) may communicate with the Company's servers over the internet in order to verify that
+    Customer's applicable Subscription or license entitlements remain active, administer and enforce technical or
+    contractual usage limits, detect and prevent fraudulent, abusive, or unauthorized use (including circumvention of trial,
+    seat, or usage limits, whether through multiple accounts or otherwise), maintain security, deliver updates, and support
+    the operation of the Software. Notwithstanding the foregoing, where the Company makes available an offline or
+    air-gapped licensing mechanism, or otherwise expressly agrees in an Order Form, Customer's license may be verified
+    without continuous connectivity, subject to any periodic or renewal-based verification the Company reasonably
+    requires. In addition, as part of Customer's use of the Software (whether in connection with the Cloud Connected
+    Services or not), certain information relating to such use, such as license, subscription, device-related, and
+    environment identifiers, bug reports, metadata (including timestamps), configuration information, metrics, usage
+    statistics, and other hashed or diagnostic data, may be transmitted to the Company's servers. If Customer wishes to opt
+    out of certain optional telemetry, statistics, or bug reports, Customer may do so at any time using the relevant
+    functionality within the Software; provided, however, that Customer may not opt out of transmissions that are
+    reasonably necessary to authenticate active subscriptions, verify entitlements, enforce applicable usage limitations,
+    detect or prevent fraudulent or abusive use, maintain security, or provide the Software or Cloud Connected Services
+    requested by Customer. The Company may process, disclose, and use such information (and may retain it for as long as
+    reasonably necessary for these purposes) in order to provide, support, secure, monitor, and improve the Software and
+    the Cloud Connected Services and their functionality, verify compliance with this Agreement and applicable Order
+    Forms or Subscription Plans, detect and prevent fraud and abuse, develop other programs and services, and for other
+    legitimate business purposes. The Company is and shall remain the owner of any aggregated, de-identified, or otherwise
+    non-customer-identifying information derived from the foregoing.
+
+1.7 Lawful Use. Customer hereby declares and agrees that Customer shall only use the Software and the Cloud Connected
+    Services in a manner that complies with all applicable laws in the jurisdictions in which Customer uses them, including
+    applicable restrictions concerning privacy, data protection, export controls and intellectual property.
+
+1.8 Affiliates. If Customer's Affiliate (as defined below) uses the Software and/or the Cloud Connected Services, such use
+    shall be permitted only to the extent authorized under an applicable Order Form or Subscription Plan and solely for such
+    Affiliate's internal business purposes in accordance with this Agreement. Customer shall: (i) provide each such Affiliate
+    with a copy of this Agreement; (ii) ensure that each such Affiliate complies with the terms and conditions hereof; and
+    (iii) remain responsible and liable for any act or omission of any such Affiliate in connection with this Agreement.
+    Unless expressly stated otherwise in an applicable Order Form, no Affiliate shall have any independent rights against
+    the Company under this Agreement. For purposes of this Agreement, "Affiliate" means any entity that Controls, is
+    Controlled by, or is under common Control with Customer, where "Control" means ownership, directly or indirectly, of
+    fifty percent (50%) or more of the voting interest.
+
+1.9 AI Features. The Software and/or Cloud Connected Services may incorporate AI-powered features, including such that
+    enable Customer to ask questions about their operation and make other queries in connection with their use. Such
+    inputs, queries, related Customer Data and metadata may be processed on the Company's servers and through
+    third-party service providers engaged by the Company, including without limitation third-party model providers, in
+    order to generate responses and provide the relevant functionality. The Company and its third-party model providers do
+    not use Customer's inputs, queries, or outputs to train their AI models. Due to the inherent nature and limitations of
+    artificial intelligence technology, the Company does not guarantee the accuracy, completeness, reliability or
+    appropriateness of any AI-generated responses or outputs. Customer acknowledges that appropriate human review and
+    oversight should be employed when using these features, and any use of or reliance on AI-generated content is at
+    Customer's sole discretion and risk. Unless expressly permitted by the Company in writing, the AI features are not
+    designed or intended to process personal data (as defined under applicable data protection laws). Customer is solely
+    responsible for the inputs, queries, schemas, migrations, and other content it submits to the AI features and Customer
+    is strictly prohibited from uploading or including any personal data when using these features. To provide, maintain and
+    improve the AI features and for research and development purposes, the Company may retain records of queries
+    submitted through the AI features and the related outputs, subject to the privacy and data-processing provisions of this
+    Agreement. Customer may request that AI features be disabled for its Account, in which case the Company will cease
+    providing such features to Customer. By using these features, Customer understands and agrees that the generated
+    responses are intended as an assistive tool for informational purposes only and should not be considered professional
+    advice or a substitute for human judgment. Without derogating from other terms of this Agreement, the Company
+    expressly disclaims all warranties, whether express or implied, and any liability with respect to Customer's use of the
+    AI features and Customer's use of or reliance on any outputs provided by them.
+
+1.10 Upgrades; Updates. The Company may, but is not obligated to, change, update, upgrade, enhance, replace, or
+     discontinue features, functions, interfaces, or components of the Software or the Cloud Connected Services from time to
+     time in order to improve them, maintain compatibility, address security issues, comply with applicable law, reflect
+     product evolution, or serve other business purposes. For the avoidance of doubt, new versions and/or new features,
+     functionality, modules, or services of the Software and/or Cloud Connected Services, or otherwise provided by the
+     Company, may be subject to additional fees or separate terms. Some changes may require Customer to install updates,
+     patches, or supported versions of the Software, and the Company will not be responsible for issues arising from
+     Customer's failure to do so in accordance with the Documentation or the Company's reasonable instructions. The
+     Company does not guarantee that every version of the Software will support all hardware, software or operating
+     environments.
+
+1.11 Maintenance and Support. Unless otherwise expressly set forth in an applicable Order Form, Subscription Plan or
+     otherwise expressly agreed in writing by the Company, the Company has no obligation under this Agreement to provide
+     any particular support, maintenance, service levels, upgrades, modifications or new releases for the Software or the
+     Cloud Connected Services. To the extent the Company does provide support, maintenance, updates or upgrades,
+     whether voluntarily or pursuant to an applicable Order Form, Subscription Plan or otherwise, such items shall be
+     collectively referred to as "Services" and the Services shall be subject to this Agreement and any applicable
+     supplemental support terms designated by the Company.
+
+2. Customer Data; Connected Systems; and Privacy.
+
+2.1 Customer Data. Customer is solely responsible for all data, content, files, databases, prompts, inputs and other
+    information made available by or on behalf of Customer or any Authorized User through or in connection with the
+    Software or any Cloud Connected Services (collectively, "Customer Data") and for all systems, platforms,
+    applications, databases, environments, APIs and other resources, whether owned, operated or provided by Customer or
+    any third party, that Customer or any Authorized User connects to, integrates with, or uses in connection with the
+    Software or any Cloud Connected Services (collectively, "Connected Systems"). Customer represents and warrants
+    that it has and will maintain all rights, licenses, consents, permissions and authority necessary to use the Customer Data
+    and Connected Systems as contemplated by this Agreement and to authorize the Company and its service providers to
+    access and use them as permitted hereunder, and that the Customer Data and Connected Systems, and the use thereof as
+    contemplated by this Agreement, do not and will not infringe, misappropriate or otherwise violate any third-party rights.
+    To the extent that the Customer uses the Cloud Connected Services, Customer hereby grants the Company and its
+    service providers a revocable, limited, non-exclusive right during the Term to access and use the Customer Data and
+    Connected Systems solely as necessary to provide, maintain and support the Software and any Cloud Connected
+    Services and otherwise perform this Agreement. Customer is solely responsible for the accuracy, quality, legality,
+    security and means of collection of Customer Data and Connected Systems, and for installing, configuring and using the
+    Software and Cloud Connected Services in accordance with the Documentation. The Company does not control and
+    shall have no responsibility or liability for any Connected Systems or third-party platforms, products or services, or for
+    any unavailability, failure, inaccuracy, loss, corruption or security incident caused by or arising from any of the
+    foregoing. Customer may access and retrieve its Customer Data through the Cloud Connected Services only while
+    Customer maintains an active Subscription. Upon expiration or termination of the applicable Subscription, Customer's
+    access to the Account and the Cloud Connected Services will cease, and the Company shall have no obligation to retain,
+    retrieve, return, or provide access to Customer Data, and may delete or anonymize it, except to the extent retention is
+    required by applicable law or such data remains in routine backups until deleted in the ordinary course.
+
+2.2 Personal Data. The Cloud Connected Services are not intended for the processing of Personal Data (meaning any
+    information relating to an identified or identifiable natural person, or any similar term under applicable data protection
+    law), except for limited account, login, contact details, and usage or security-related data (including as described in
+    the Subscription Verification and Usage Data section) handled in accordance with the Company's Privacy Policy (as
+    detailed below) and except as otherwise expressly set forth in this Agreement. Customer shall not submit or otherwise
+    make available Personal Data in connection with the Cloud Connected Services. If, notwithstanding the foregoing, the
+    Company processes Personal Data on Customer's behalf in connection with the Cloud Connected Services, then solely
+    with respect to such processing: (i) Customer is the controller, business or equivalent, and the Company is the
+    processor, service provider or equivalent; (ii) Customer instructs the Company to process such Personal Data only to
+    provide, secure, maintain and support the Cloud Connected Services and otherwise perform this Agreement and
+    Customer's lawful documented instructions consistent with this Agreement; (iii) the Company will implement
+    appropriate technical and organizational measures, ensure that authorized personnel are subject to confidentiality
+    obligations, notify Customer without undue delay after becoming aware of a Personal Data breach affecting such
+    Personal Data, and, taking into account the nature of the processing, provide reasonable assistance with data subject
+    requests and Customer's applicable compliance obligations; (iv) the Company may engage Affiliates and subprocessors
+    subject to appropriate data protection obligations and remains responsible for their processing to the extent required by
+    applicable law; (v) the Company may process such Personal Data in jurisdictions where it or its subprocessors operate,
+    subject to applicable law and appropriate transfer safeguards where required; and (vi) upon termination or expiration of
+    the applicable Cloud Connected Services, the Company will delete, return or anonymize such Personal Data in
+    accordance with this Agreement, unless retention is required by applicable law. Customer represents and warrants that it
+    has provided all required notices and obtained all rights, consents and other legal bases necessary for such processing.
+
+2.3 Privacy Policy. The Company's collection and use of login details, account credentials, account registration
+    information, contact details and similar account administration information provided by or on behalf of Customer in
+    connection with the Software, any Account or the Cloud Connected Services shall be governed by the Company's
+    Privacy Policy available on the Company's website, as updated from time to time and incorporated herein by reference.
+
+2.4 Analytics Information. The Company may collect, generate and use aggregated, de-identified or otherwise
+    non-customer-identifying usage data, telemetry, metrics and similar information derived from the Software, the Cloud
+    Connected Services and related operations and support ("Analytics Information") for legitimate business purposes,
+    including operating, securing, supporting and improving its products and services, research and development, and
+    verifying usage and compliance, provided that such Analytics Information does not identify Customer, any Authorized
+    User or any individual and does not disclose Customer Data itself. The Company owns the Analytics Information.
+
+3. Commercial Terms; Subscription Plans.
+
+3.1 Ordering; Subscription Plans. Customer may obtain the Software and/or Cloud Connected Services either on a
+    self-serve basis through the Company's website, customer portal, or pricing page designated by the Company from time
+    to time (collectively, the "Website"), or pursuant to an applicable Order Form duly executed by the Parties that
+    references this Agreement and is subject to Customer's purchase of a subscription to the Software and/or Cloud
+    Connected Services from the Company (each, a "Subscription Plan") and Customer's payment of the applicable fees
+    set forth on the pricing page designated by the Company on the Website or in the applicable Order Form (as applicable)
+    ("Subscription Fees"). The applicable commercial terms for the Software and/or Cloud Connected Services, including
+    the scope of use, usage entitlements, technical limitations, support levels, subscription term, billing cycle, Subscription
+    Fees, and any usage-based charges, shall be as set forth on the Website at the time Customer purchases the applicable
+    Subscription Plan or in the applicable Order Form, as applicable, and are hereby incorporated into this Agreement by
+    reference. Customer's access to and use of the Software and the Cloud Connected Services shall be subject to this
+    Agreement and the applicable commercial terms set forth on the Website or in the applicable Order Form. In connection
+    with opening an Account and purchasing any Subscription Plan, Customer hereby represents and warrants that all
+    information it provides to the Company, including account registration, contact, billing, and payment information, is
+    true, complete, current, and accurate, and Customer shall promptly update such information or notify the Company of
+    any changes thereto.
+
+3.2 Free Offerings. The Company may make the Software available in executable form without charge and may offer the
+    Cloud Connected Services, or certain features or functionality thereof, on a free, trial, beta, evaluation or promotional
+    basis (collectively, "Free Offerings"). The availability, scope, duration and limitations of any Free Offerings will be as
+    described on the Website or in the applicable Order Form, if any, and may be modified, suspended or discontinued by
+    the Company at any time, with or without notice, to the fullest extent permitted by applicable law. Notwithstanding
+    anything to the contrary in this Agreement, Free Offerings are provided on an "as is" and "as available" basis, without
+    any express, implied, statutory, or other warranty, and without any maintenance, support, service level, indemnity,
+    liability, or other obligation, except to the extent such disclaimer is prohibited by applicable law.
+
+3.3 Subscription Term and Renewal. Unless otherwise set forth on the Website or in the applicable Order Form, each
+    Subscription Plan will begin on the date in which it is purchased and will continue for the initial subscription term
+    specified on the Website or in the applicable Order Form (the "Subscription Term"). Each Subscription Plan will
+    automatically renew for successive renewal terms equal to the expiring Subscription Term unless either Party gives
+    notice of non-renewal or Customer cancels the applicable Subscription Plan before the start of the next renewal term in
+    accordance with the Website, the applicable Order Form or any instructions made available by the Company.
+
+3.4 Fees; Billing; Payment. Unless otherwise set forth on the Website or in the applicable Order Form, each Subscription
+    Plan is billed on a recurring basis and all Subscription Fees and other applicable fees are due and payable in advance at
+    the beginning of each billing cycle using the payment method designated by Customer. If the applicable Order Form
+    provides for invoicing and does not specify a payment due date, invoiced amounts are due within thirty (30) days after
+    the invoice date. Customer authorizes the Company and its payment processors to charge Customer's designated
+    payment method for all applicable fees on each billing date and renewal date, including any applicable usage-based or
+    overage charges. If Customer's payment information is not provided, becomes invalid, cannot be processed, or any
+    amount remains overdue, the Company may suspend Customer's access to the affected Software and/or Cloud
+    Connected Services until all past-due amounts are paid in full. Except as expressly set forth in this Agreement or the
+    applicable Order Form, payment obligations are non-cancellable and fees are non-refundable, and all amounts payable
+    under this Agreement shall be paid without set-off or deduction. All amounts payable under this Agreement are
+    exclusive of sales, use, value-added, withholding and other taxes and duties, and Customer will pay all such taxes and
+    duties assessed in connection with this Agreement, other than taxes based on the Company's net income. The Company
+    may change Subscription Fees or other recurring charges for any renewal term or subsequent billing cycle upon prior
+    notice to Customer. If Customer does not agree to the pricing change, Customer may elect not to renew or may cancel
+    the affected Subscription Plan before the new pricing takes effect, in which case the pricing change will not apply to the
+    then-current Subscription Term. Customer's renewal or continued use of the affected Software or Cloud Connected
+    Services after the effective date of the pricing change constitutes acceptance of the updated pricing.
+
+3.5 Online Payment Processors. The Company may use third-party payment processors to process payments under this
+    Agreement ("Online Payment Processors"). Customer authorizes the Company to provide relevant billing, payment
+    and account information to the applicable Online Payment Processors and authorizes such Online Payment Processors
+    to charge Customer's designated payment method for all amounts due in accordance with this Agreement, the Website
+    and any applicable Order Form. Use of any Online Payment Processor is subject to its applicable terms and privacy
+    policy, and the Company is not responsible for the acts or omissions of any Online Payment Processor except to the
+    extent required by applicable law.
+
+4. Title, Ownership and Feedback.
+
+4.1 Intellectual Property. The Software, the Services, the Cloud Connected Services, and the related Documentation are
+    licensed, not sold. Except for the limited rights expressly granted to Customer under this Agreement, the Company and
+    its licensors retain all right, title, and interest in and to the Software, the Services, the Cloud Connected Services, the
+    underlying software and technology used to provide the Cloud Connected Services, the related Documentation, and the
+    Company Confidential Information, including all intellectual property rights therein and thereto, as well as in any
+    derivatives, updates, or upgrades of the foregoing. This Agreement does not convey to Customer any ownership interest
+    in the Software, the Cloud Connected Services, or the related Documentation, but only a limited, revocable right to use
+    them in accordance with this Agreement. Nothing in this Agreement constitutes a waiver of any of the Company's
+    intellectual property rights under applicable law.
+
+4.2 Third Party Software. The Software, Cloud Connected Services, and related offerings may include, be based on,
+    interoperate with, or otherwise use third-party software, services, files, libraries, and other components, including
+    open-source components (collectively, "Third Party Components"). Customer's use of Third Party Components is
+    subject to any applicable acknowledgements, attribution notices, and license terms accompanying such Third Party
+    Components or otherwise made available by the Company. In the event of a conflict between the terms applicable to a
+    Third Party Component and this Agreement, the terms applicable to that Third Party Component will govern solely with
+    respect to that Third Party Component. Third Party Components will be identified in the Software, Documentation,
+    Website, or another location designated by the Company, as updated from time to time. To the extent an applicable
+    license requires the Company to make source code for a Third Party Component available, the Company will do so in
+    the manner and for the period required by such license and may charge no more than the cost of physically performing
+    the distribution, if permitted by such license. Requests relating to source code availability under applicable third-party
+    or open-source licenses may be sent to hello@ariga.io. Notwithstanding anything to the contrary in this Agreement, all
+    Third Party Components are provided "AS IS," and the Company makes no representations, warranties, conditions, or
+    commitments of any kind, whether express, implied, statutory, or otherwise, with respect to any Third Party
+    Components. Without limiting the foregoing, the Software is based on and includes the "Ariga Atlas" open-source
+    project available at https://github.com/ariga/atlas (the "Atlas Open Source"). Atlas Open Source is made available
+    under the Apache License, Version 2.0, and Customer may obtain a copy of the applicable open-source license and, to
+    the extent required thereunder, the corresponding source code through that repository. Customer acknowledges and
+    agrees that its rights in and to the Atlas Open Source are governed solely by the Apache License, Version 2.0, and not
+    by this Agreement.
+
+4.3 Feedback. If Customer or any Authorized User provides the Company with any feedback, suggestions, enhancement
+    requests, or recommendations regarding the Software and/or the Cloud Connected Services (collectively, "Feedback"),
+    such Feedback shall be deemed non-confidential, and Customer hereby grants the Company a non-exclusive,
+    worldwide, royalty-free, fully paid-up, perpetual and irrevocable license to use, reproduce, modify, incorporate, disclose
+    and otherwise exploit such Feedback in connection with the Software, the Cloud Connected Services and any of the
+    Company's current or future products or services, without Customer's approval and without any further compensation
+    or accounting to Customer.
+
+4.4 Confidentiality. In connection with this Agreement, each Party (the "Receiving Party") may receive or have access to
+    non-public or proprietary information of the other Party (the "Disclosing Party"), in any form or media, including trade
+    secrets, software, technology, product plans, security information, business and marketing plans, pricing information,
+    Documentation, Customer Data, and any other information that a reasonable person should understand to be
+    confidential under the circumstances of disclosure (collectively, "Confidential Information"). The Receiving Party
+    shall protect the Disclosing Party's Confidential Information using at least reasonable care and no less than the care it
+    uses to protect its own information of a similar nature, shall use such Confidential Information solely as necessary to
+    exercise its rights or perform its obligations under this Agreement, and shall not disclose such Confidential Information
+    to any third party except to its Affiliates, employees, contractors, professional advisers and service providers who have
+    a need to know such information for purposes of this Agreement and who are bound by confidentiality obligations at
+    least as protective as those set forth herein. The foregoing obligations shall not apply to information that the Receiving
+    Party can demonstrate: (i) is or becomes publicly available through no breach of this Agreement; (ii) was already
+    lawfully known to the Receiving Party without restriction before receipt from the Disclosing Party; (iii) is lawfully
+    received from a third party without breach of any obligation owed to the Disclosing Party; or (iv) is independently
+    developed by the Receiving Party without use of or reference to the Disclosing Party's Confidential Information. The
+    Receiving Party may disclose Confidential Information to the extent required by applicable law, regulation or valid
+    legal process, provided that, to the extent legally permitted, it gives the Disclosing Party prompt notice and reasonable
+    cooperation to seek confidential treatment or other protective relief. Each party retains all right, title and interest in and
+    to its Confidential Information. Each party acknowledges that unauthorized use or disclosure of the other party's
+    Confidential Information may cause irreparable harm for which monetary damages may be inadequate, and that the
+    Disclosing Party may seek equitable relief in addition to any other remedies available at law or in equity. To the extent
+    the parties have entered into a separate non-disclosure or confidentiality agreement applicable to the subject matter of
+    this Agreement (an "NDA"), the provisions of such NDA shall continue to apply to disclosures made under this
+    Agreement; provided, however, that if there is any inconsistency between the NDA and this Agreement, this Agreement
+    shall control to the extent of the inconsistency. If the term of the NDA expires before the expiration or termination of
+    this Agreement, the confidentiality obligations under the NDA shall be deemed extended for so long as this Agreement
+    remains in effect and thereafter for the period specified in the NDA.
+
+5. Warranties and Disclaimers.
+
+5.1 Mutual Warranties. Each party represents and warrants (a) that it is duly organized, validly existing and in good
+    standing under the laws of its jurisdiction of incorporation or organization; and (b) that the execution and performance
+    of this Agreement will not conflict with any obligations it has towards third parties, or violate any provision of any
+    applicable law.
+
+5.2 Disclaimer. EXCEPT FOR THE EXPRESS WARRANTIES SET FORTH IN THIS AGREEMENT, AND TO THE
+    FULLEST EXTENT PERMITTED BY APPLICABLE LAW, THE SOFTWARE, THE SERVICES, THE CLOUD
+    CONNECTED SERVICES, AND THE DOCUMENTATION ARE PROVIDED ON AN "AS IS" AND "AS
+    AVAILABLE" BASIS. WITHOUT LIMITING THE FOREGOING, THE COMPANY DOES NOT WARRANT THAT
+    THE SOFTWARE, THE SERVICES, THE CLOUD CONNECTED SERVICES, OR THE DOCUMENTATION WILL
+    MEET CUSTOMER'S REQUIREMENTS OR THAT THEIR OPERATION WILL BE SECURE, UNINTERRUPTED,
+    ERROR-FREE, OR FREE OF VIRUSES, BUGS, WORMS, OTHER HARMFUL COMPONENTS, OR OTHER
+    PROGRAM LIMITATIONS. TO THE EXTENT PERMITTED BY LAW, THE COMPANY EXPRESSLY
+    DISCLAIMS ALL EXPRESS, IMPLIED, AND STATUTORY WARRANTIES AND CONDITIONS, INCLUDING,
+    WITHOUT LIMITATION, ANY IMPLIED WARRANTIES OR CONDITIONS OF MERCHANTABILITY, TITLE,
+    NON-INTERFERENCE, NON-INFRINGEMENT, FITNESS FOR A PARTICULAR PURPOSE, SATISFACTORY
+    QUALITY, AND ANY WARRANTIES ARISING OUT OF A COURSE OF DEALING OR USAGE OF TRADE.
+
+6. Limitation of Liability.
+
+6.1 TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL THE COMPANY OR
+    ITS AFFILIATES, AND THEIR DIRECTORS, OFFICERS, EMPLOYEES, SHAREHOLDERS, LICENSORS,
+    SUPPLIERS, SERVICE PROVIDERS, DISTRIBUTORS OR RESELLERS AND THEIR SUCCESSORS AND
+    ASSIGNS (COLLECTIVELY, THE "REPRESENTATIVES") BE LIABLE, WHETHER IN CONTRACT, TORT
+    (INCLUDING NEGLIGENCE), STRICT LIABILITY OR OTHERWISE, TO CUSTOMER, ANY AUTHORIZED
+    USER OR ANY THIRD PARTY FOR ANY INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, PUNITIVE OR
+    CONSEQUENTIAL DAMAGES, OR FOR ANY LOSS OF PROFITS, REVENUE, BUSINESS, GOODWILL,
+    ANTICIPATED SAVINGS, USE, DATA OR DOCUMENTATION, OR COST OF COVER OR SUBSTITUTE
+    GOODS OR SERVICES, ARISING OUT OF OR RELATING TO THIS AGREEMENT OR THE SOFTWARE, THE
+    SERVICES, THE CLOUD CONNECTED SERVICES OR THE DOCUMENTATION, EVEN IF ADVISED OF THE
+    POSSIBILITY OF SUCH DAMAGES AND EVEN IF A LIMITED REMEDY FAILS OF ITS ESSENTIAL
+    PURPOSE.
+
+6.2 TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, THE TOTAL AGGREGATE LIABILITY OF
+    THE COMPANY, ITS AFFILIATES AND THEIR REPRESENTATIVES ARISING OUT OF OR RELATING TO
+    THIS AGREEMENT, THE SOFTWARE, THE SERVICES, THE CLOUD CONNECTED SERVICES OR THE
+    DOCUMENTATION, WHETHER IN CONTRACT, TORT (INCLUDING NEGLIGENCE), STRICT LIABILITY OR
+    OTHERWISE, SHALL NOT EXCEED THE TOTAL AMOUNTS PAID BY CUSTOMER TO THE COMPANY
+    UNDER THIS AGREEMENT FOR THE AFFECTED SOFTWARE, SERVICES AND/OR CLOUD CONNECTED
+    SERVICES DURING THE TWELVE (12) MONTH PERIOD IMMEDIATELY PRECEDING THE FIRST EVENT
+    GIVING RISE TO THE CLAIM. NOTWITHSTANDING THE FOREGOING, IF THE CLAIM ARISES OUT OF OR
+    RELATES TO ANY FREE OFFERINGS, THE TOTAL AGGREGATE LIABILITY OF THE COMPANY, ITS
+    AFFILIATES AND THEIR REPRESENTATIVES SHALL NOT EXCEED ONE HUNDRED U.S. DOLLARS
+    (US$100). THE EXISTENCE OF MORE THAN ONE CLAIM SHALL NOT ENLARGE THIS LIMIT. THE
+    LIMITATIONS IN THIS SECTION 6 APPLY NOTWITHSTANDING THE FAILURE OF ESSENTIAL PURPOSE
+    OF ANY LIMITED REMEDY.
+
+7. Indemnification. Customer shall defend, indemnify and hold harmless the Company, its Affiliates, and their
+   Representatives (collectively, the "Indemnified Parties") from and against any third-party claim, action, suit or
+   proceeding, and any related damages, liabilities, judgments, settlements, penalties, fines, costs and expenses (including
+   reasonable attorneys' fees), arising out of or relating to: (i) Customer's or any Authorized User's access to or use of the
+   Software or the Cloud Connected Services in breach of this Agreement, any applicable Order Form, the Documentation
+   or applicable law; or (ii) any Customer Data, Connected Systems, or other data, materials, content or information
+   submitted, transmitted, stored, processed or otherwise made available by or on behalf of Customer or any Authorized
+   User in connection with the Software or the Cloud Connected Services, including any claim that any of the foregoing
+   infringes, misappropriates or otherwise violates any third-party right or that any required notice, consent, permission or
+   other legal basis was not obtained.
+
+8. Term; Suspension and Termination.
+
+8.1 Term. This Agreement is effective upon the earliest of: (i) Customer clicking to accept this Agreement; (ii) Customer's
+    execution of an Order Form that references this Agreement; or (iii) Customer downloading, installing, accessing,
+    operating or otherwise using the Software or any Cloud Connected Services. This Agreement will remain in force until
+    the earliest of: (a) termination in accordance with its terms; (b) unless otherwise expressly set forth in an applicable
+    Order Form or other written agreement of the Parties, the expiration or termination of all Subscription Plans and Order
+    Forms, if Customer does not then have any other valid subscription or license entitlement in effect for the Software or
+    any Cloud Connected Services; or (c) Customer's closure of its Account, if any, together with Customer's cessation of
+    all access to and use of the Software and the Cloud Connected Services (the "Term").
+
+8.2 Termination. Either Party may terminate this Agreement or any affected Order Form or Subscription Plan upon written
+    notice if the other party materially breaches this Agreement and fails to cure such breach within thirty (30) days after
+    receiving written notice thereof, except that the Company may terminate this Agreement immediately upon written
+    notice if Customer materially breaches any restrictions on use, confidentiality obligations, payment obligations, or any
+    provision relating to the Company's intellectual property rights, or if such breach is incapable of cure. In addition, the
+    Company may suspend or terminate Customer's access to the Software and/or the Cloud Connected Services
+    immediately upon written notice if: (i) Customer's use poses a security risk to the Software, the Cloud Connected
+    Services, the Company or any third party; (ii) Customer violates applicable law, export control laws or sanctions; (iii)
+    fees when due remain unpaid following notice and a reasonable opportunity to cure; or (iv) it becomes unlawful for the
+    Company to continue providing the Software or Cloud Connected Services. Customer may terminate a Subscription
+    Plan by providing notice of cancellation prior to the next renewal or billing cycle in accordance with the applicable
+    Subscription Plan, in which case termination will be effective at the end of the then-current paid Subscription Term
+    unless otherwise expressly provided in the applicable Order Form or Subscription Plan.
+
+8.3 Effect of Termination. Upon termination or expiration of this Agreement or any applicable Order Form or Subscription
+    Plan: (a) the licenses and rights granted hereunder shall immediately terminate; (b) Customer shall discontinue all
+    further use of the affected Software and Cloud Connected Services and promptly remove or delete the affected Software
+    from Customer's systems and destroy all copies of the Software and Documentation in Customer's possession or
+    control; (c) upon the Company's written request, Customer shall certify such removal, deletion and destruction within
+    ten (10) business days; (d) the Company may delete or anonymize Customer Data, except that the Company may retain
+    such data to the extent required by applicable law, or as reasonably necessary for security, fraud and abuse prevention,
+    enforcement of usage limits, backup and disaster recovery, or as otherwise permitted under the Customer Data or
+    Analytics Information sections, in each case until deleted in the ordinary course; and (e) any sums accrued or
+    payable by Customer through the effective date of termination or expiration shall remain due and payable, and except as
+    expressly stated in this Agreement, all fees paid or payable are non-cancellable and non-refundable. Termination or
+    expiration shall not limit either Party from pursuing any other remedies available to it under applicable law or equity.
+    The provisions of this Agreement that by their nature should survive termination or expiration, shall so survive.
+
+9. Miscellaneous.
+
+9.1 Export Controls and Sanctions. Customer represents and warrants that neither it, its Affiliates, nor its Authorized
+    Users, nor any person acting on its behalf in connection with this Agreement, is subject to any applicable sanctions,
+    embargoes, restricted party designations, or similar trade restrictions, or located, organized, resident, or ordinarily
+    conducting business in any sanctioned country or territory. Customer shall comply with all applicable export control and
+    sanctions laws and regulations in connection with its access to and use of the Software and Cloud Connected Services
+    and shall not directly or indirectly export, re-export, transfer, provide access to, or otherwise make available the
+    Software or Cloud Connected Services in violation of such laws or regulations. If Customer violates this paragraph, or
+    if continued performance under this Agreement would violate applicable export control laws or sanctions, the Company
+    may immediately suspend or terminate this Agreement, any Order Form, and/or Customer's access to the Software or
+    Cloud Connected Services upon written notice.
+
+9.2 Reference Customer. Customer agrees that the Company may identify Customer as a customer or user of the Software
+    and/or Cloud Connected Services and use Customer's name, trade name, trademarks, and logo in the Company's sales,
+    marketing, and promotional materials, customer lists, press releases, on the Website, and in a brief customer profile, in
+    each case subject to any reasonable written trademark usage guidelines provided by Customer. Any goodwill arising
+    from such use shall inure solely to Customer's benefit.
+
+9.3 Governing Law; Jurisdiction. This Agreement, and any dispute arising out of or relating to this Agreement, the
+    Software, or the Cloud Connected Services, shall be governed by the laws of the State of New York, U.S.A., without
+    regard to its conflict of laws principles. The state and federal courts located in New York County, New York shall have
+    exclusive jurisdiction over any such dispute, and each Party irrevocably consents to the personal jurisdiction and venue
+    of those courts. The United Nations Convention on Contracts for the International Sale of Goods does not apply to this
+    Agreement.
+
+9.4 Entire Agreement; Order of Precedence; Amendments. This Agreement, together with any applicable Order Form,
+    Subscription Plan and any policies or terms expressly incorporated by reference, constitutes the complete and exclusive
+    agreement between the Parties with respect to its subject matter and supersedes all prior or contemporaneous
+    agreements, proposals, and communications relating to that subject matter. Except as otherwise expressly provided in an
+    Order Form, the Company may modify this Agreement upon prior notice by posting an updated version on the Website,
+    through the Software or Cloud Connected Services, by email, or by other reasonable means, and such modification will
+    take effect upon Customer's next renewal, purchase, Order Form, or continued use of the affected Software or Cloud
+    Connected Services after the effective date stated in the notice.
+
+9.5 Waiver; Severability; Assignment; Relationship of the Parties; Force Majeure; Notices; Counterparts. No failure
+    or delay by either Party in exercising any right, power, or remedy under this Agreement will operate as a waiver thereof.
+    If any provision of this Agreement is held to be invalid, illegal, or unenforceable, that provision will be enforced to the
+    maximum extent permitted and the remaining provisions will remain in full force and effect. Customer may not assign
+    or transfer this Agreement, by operation of law or otherwise, without the Company's prior written consent. The
+    Company may assign or transfer this Agreement, in whole or in part, without restriction, including in connection with a
+    merger, reorganization, corporate transaction, or sale of assets. The Parties are independent contractors, and this
+    Agreement does not create any partnership, joint venture, agency, fiduciary, franchise, or employment relationship
+    between them. Neither Party shall be liable for any delay or failure to perform under this Agreement to the extent
+    caused by circumstances beyond its reasonable control; provided that nothing in the foregoing relieves Customer of its
+    payment obligations. Notices under this Agreement must be in writing and may be given to the addresses or contact
+    details provided by the Parties, including by email where permitted by the Company or specified in an Order Form, and
+    will be deemed given upon receipt or, if sent by email, when transmitted absent notice of delivery failure. This
+    Agreement may be executed in counterparts, including by electronic signature, click-through acceptance, or other
+    electronic means, each of which will be deemed an original and all of which together will constitute one and the same
+    instrument.
+
+9.6 Direct Marketing and Service Communications. Customer agrees that the Company may use the contact details
+    provided by or on behalf of Customer in connection with the Software or Cloud Connected Services to send
+    administrative, operational, transactional, billing, renewal, security, and other service-related communications relating
+    to Customer's account, subscriptions, or this Agreement. To the extent permitted by applicable law, the Company may
+    also use such contact details to send marketing communications regarding the Company's products and services.
+    Customer may opt out of marketing communications at any time by following the unsubscribe instructions in the
+    applicable message or by sending written notice to the contact address listed on the Website; provided that Customer
+    may not opt out of non-promotional service or transactional communications.
+
+BY ACCEPTING THIS AGREEMENT, EXECUTING AN ORDER FORM THAT REFERENCES THIS
+AGREEMENT, OR OTHERWISE DOWNLOADING, INSTALLING, ACCESSING, OPERATING, OR USING
+THE SOFTWARE OR ANY CLOUD CONNECTED SERVICES, CUSTOMER HEREBY ACCEPTS THIS
+AGREEMENT AND AGREES TO BE LEGALLY BOUND BY ITS TERMS.
+
+---
+
+Note: the source PDF numbers the "Term; Suspension and Termination" and
+"Miscellaneous" headings as "5." and "6." respectively while their
+sub-clauses continue the "7.x"/"8.x" numbering from the preceding sections
+(an apparent drafting artifact in the original document). This copy
+renumbers only the top-level section headings (5→8, 6→9) for readability
+while preserving all substantive text verbatim; no wording was altered.

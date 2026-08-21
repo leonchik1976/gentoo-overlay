@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Atlas is a schema-as-code tool for managing database schemas with
+		declarative HCL or SQL migrations, drift detection, and CI/CD
+		integration for MySQL, PostgreSQL, SQLite, and MariaDB.
+
+		This package installs Ariga's officially distributed prebuilt
+		Community Edition binary, built from the ariga/atlas GitHub
+		repository under the Apache-2.0 license. It is a reduced feature
+		set compared to dev-db/atlas-msa-bin: no advanced
+		migration commands (checkpoint, down, rebase, edit, rm), no
+		migration/schema linting, no declarative "schema plan"/"schema
+		validate" workflows, no drift detection, no Atlas Registry, and no
+		additional database drivers (SQL Server, ClickHouse, Redshift,
+		Oracle, Snowflake, etc.). See https://atlasgo.io/community-edition
+		for the authoritative feature comparison.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">ariga/atlas</remote-id>
+	</upstream>
+</pkgmetadata>
