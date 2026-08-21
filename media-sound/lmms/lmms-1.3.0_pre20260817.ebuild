@@ -51,10 +51,9 @@ SRC_URI="
 "
 S="${WORKDIR}/lmms-${MY_COMMIT}"
 
-# Full bundled-source license/compatibility audit, and the gig/stk
-# arm64-constraint investigation below, are documented in detail in
-# docs/lmms-license-audit.md at the repo root (kept out of the ebuild body
-# since it's long). Summary: LMMS core + carla/resid/weakjack headers are
+# Full bundled-source license/compatibility audit is documented in detail
+# in docs/lmms-license-audit.md at the repo root (kept out of the ebuild
+# body since it's long). Summary: LMMS core + carla/resid/weakjack headers are
 # GPL-2+; game-music-emu is LGPL-2.1; adplug is LGPL-2.1+; exprtk is MIT;
 # hiir is WTFPL; ringbuffer is GPL-3+ (statically linked into lmmsobjs,
 # which every plugin links against via BUILD_PLUGIN's
@@ -68,13 +67,15 @@ LICENSE="GPL-2+ LGPL-2.1 LGPL-2.1+ MIT WTFPL GPL-3+"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 # media-libs/libgig and media-libs/stk both lack any arm64 keyword in
-# ::gentoo; REQUIRED_USE below blocks USE=gig/USE=stk on arm64 with a clear
-# error instead of an opaque dependency-masking failure. Verified with real
-# `emerge --pretend` runs on both arches (see docs/lmms-license-audit.md).
-# Note: pkgcheck's NonsolvableDeps* checks don't account for REQUIRED_USE
-# and will keep flagging this combination regardless -- that's expected.
+# ::gentoo as of 2026-08-21 (neither has even a ~arm64 entry). USE=gig and
+# USE=stk have been build-tested successfully on arm64 by this ebuild
+# (confirmed with a real build+install, see docs/lmms-validation-log.md),
+# but a user enabling either on arm64 currently needs to accept those two
+# packages' missing keywords themselves (e.g. via package.accept_keywords),
+# same as for any other dependency ::gentoo hasn't keyworded yet on a
+# given arch. That's a normal Portage workflow, not a defect in this
+# ebuild.
 IUSE="alsa carla fluidsynth gig jack lv2 mp3 ogg portaudio pulseaudio sdl sid sndio soundio stk test vst"
-REQUIRED_USE="arm64? ( !gig !stk )"
 RESTRICT="!test? ( test )"
 
 # Upstream no longer publishes stable release tarballs that build with

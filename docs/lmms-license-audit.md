@@ -111,26 +111,30 @@ and `stk` USE flags) both lack any `arm64` keyword in `::gentoo` (verified
 2026-08-21: `KEYWORDS="amd64 ~ppc ~x86"` and similar — no `arm64` at all,
 not even `~arm64`).
 
-`REQUIRED_USE="arm64? ( !gig !stk )"` was added and empirically verified
-with real `emerge --pretend --oneshot media-sound/lmms` runs (using an
-isolated `PORTAGE_CONFIGROOT` pointed at both the real `::gentoo` tree and
-this overlay, so no live-system config was touched, and no actual
-merge/build was performed):
+**2026-08-21 update**: an earlier revision of this ebuild carried
+`REQUIRED_USE="arm64? ( !gig !stk )"`, added and verified (via
+`emerge --pretend` under an isolated `PORTAGE_CONFIGROOT`) to actively
+reject `USE="gig stk"` on arm64 with an explicit error. That constraint
+has since been **removed**: the maintainer independently built
+`media-libs/libgig-4.4.1` and `media-libs/stk-4.6.2` on arm64 after
+locally accepting their missing keywords, and confirmed a full
+`media-sound/lmms` build with `USE="gig stk"` enabled succeeds end-to-end
+on arm64 (real build+install, both plugins present, `lmms --version`
+runs, no unresolved libraries — see `docs/lmms-validation-log.md` for the
+exact run). `gig`/`stk` have therefore been build-tested successfully on
+arm64 by this ebuild; a user enabling either just needs to accept
+`libgig`'s/`stk`'s
+missing `::gentoo` keywords themselves first (e.g. via
+`package.accept_keywords`), the same as for any other not-yet-keyworded
+dependency — this is normal Portage usage, not a defect or an
+unsupported configuration.
 
-- **arm64**: `USE="gig stk"` is correctly rejected with an explicit
-  `REQUIRED_USE flag constraints are unsatisfied: arm64? ( !gig !stk )`
-  error, before Portage ever attempts to resolve `media-libs/libgig`.
-- **amd64** (server01): `USE="gig stk"` resolves normally; `libgig-4.4.1`
-  and `stk-4.6.2` both pull in cleanly with their existing stable/testing
-  `amd64` keywords, and `REQUIRED_USE` does not interfere.
-
-Caveat found during testing: `pkgcheck scan`'s own
-`NonsolvableDepsInDev`/`NonsolvableDepsInStable` checks do **not** take
-`REQUIRED_USE` into account when generating their USE-combination test
-matrix — the same four arm64 findings persist in `pkgcheck` output even
-with `REQUIRED_USE` in place and verified working at the real
-Portage/emerge level. This is a known characteristic of that specific
-pkgcheck check, not a sign the fix doesn't work. Do not read a clean
-`pkgcheck scan` as a precondition for this fix being correct — verify with
-`emerge --pretend` instead, or treat these four specific findings as
-expected/explained rather than blocking.
+`pkgcheck scan` still reports four `NonsolvableDepsInDev`/
+`NonsolvableDepsInStable` findings for this exact combination (checked
+2026-08-21, after removing `REQUIRED_USE`) — these are unrelated to
+`REQUIRED_USE` (which pkgcheck's dependency-solvability check never
+factored in regardless, confirmed in earlier testing) and simply reflect
+that `::gentoo`'s own tree hasn't keyworded `libgig`/`stk` on arm64 yet.
+This is expected and does not indicate a problem with the ebuild; treat
+`pkgcheck scan` output for this package as "four known findings", not
+"clean".
