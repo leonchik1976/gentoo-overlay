@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Nimbalyst is an Electron-based visual workspace for the Claude Code,
+		Codex, and OpenCode coding agents. It lets you run multiple agents in
+		parallel and edit their work visually in markdown, mockups, and
+		diagrams, with built-in task tracking. Nimbalyst's own code is
+		MIT-licensed, but the packaged binary bundles a proprietary
+		(all-rights-reserved) copy of Anthropic's Claude Agent SDK/CLI
+		alongside it; see LICENSE for details.
+	</longdescription>
+	<use>
+		<flag name="appindicator">Symlink the bundled tray icon support against dev-libs/libayatana-appindicator for system tray integration</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">nimbalyst/nimbalyst</remote-id>
+	</upstream>
+</pkgmetadata>
