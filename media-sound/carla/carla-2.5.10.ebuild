@@ -44,6 +44,10 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 BDEPEND="virtual/pkgconfig"
 
+PATCHES=(
+	"${FILESDIR}/${P}-fix-eel2-strict-aliasing.patch"
+)
+
 src_prepare() {
 	default
 

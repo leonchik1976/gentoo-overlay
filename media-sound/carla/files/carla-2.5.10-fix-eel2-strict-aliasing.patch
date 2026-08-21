@@ -1,0 +1,36 @@
+From: Leonid Kopylov <leonchik1976@gmail.com>
+Subject: [PATCH] Fix strict-aliasing undefined behaviour in bundled WDL EEL2
+
+Use memcpy for the inverse-square-root bit conversions instead of
+dereferencing incompatible pointer types.  uint32_t makes the intended
+32-bit representation explicit, while the compile-time assertion rejects
+targets whose float representation has a different size.
+
+--- a/source/modules/ysfx/thirdparty/WDL/source/WDL/eel2/glue_port.h
++++ b/source/modules/ysfx/thirdparty/WDL/source/WDL/eel2/glue_port.h
+@@ -1,6 +1,9 @@
+ #ifndef _EEL_GLUE_PORTABLE_H_
+ #define _EEL_GLUE_PORTABLE_H_
+ 
++#include <stdint.h>
++#include <string.h>
++
+ 
+ #define DECL_ASMFUNC(x) 
+ #define GLUE_JMP_TYPE int
+@@ -842,8 +845,13 @@ static void GLUE_CALL_CODE(INT_PTR bp, INT_PTR cp, INT_PTR *stat, EEL_F **wtp,
+       case EEL_BC_INVSQRT:
+         {
+           float y = (float)fp_top;
+-          int i  = 0x5f3759df - ( (* (int *) &y) >> 1 );
+-          y  = *(float *) &i;
++          uint32_t i;
++          typedef char eel_float_must_be_32_bits[
++            sizeof(float) == sizeof(uint32_t) ? 1 : -1];
++
++          memcpy(&i, &y, sizeof(i));
++          i = (uint32_t)0x5f3759df - (i >> 1);
++          memcpy(&y, &i, sizeof(y));
+           fp_top  = y * ( 1.5F - ( (fp_top * 0.5) * y * y ) );
+         }
+       break;
