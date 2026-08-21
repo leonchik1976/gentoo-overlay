@@ -26,12 +26,12 @@
 	<use>
 		<flag name="carla">Enable the Carla plugin host bridge via <pkg>media-sound/carla</pkg></flag>
 		<flag name="fluidsynth">Enable the SoundFont2 (SF2) player plugin via <pkg>media-sound/fluidsynth</pkg></flag>
-		<flag name="gig">Enable the GIG sample player plugin via <pkg>media-libs/libgig</pkg> (that dependency has no ~arm64 keyword in ::gentoo yet, so arm64 users currently need to accept its missing keyword locally, e.g. via package.accept_keywords)</flag>
+		<flag name="gig">Enable the GIG sample player plugin via <pkg>media-libs/libgig</pkg></flag>
 		<flag name="lv2">Enable LV2 plugin hosting support</flag>
 		<flag name="sid">Enable the SID chiptune instrument</flag>
 		<flag name="sndio">Enable sndio audio backend support</flag>
 		<flag name="soundio">Enable libsoundio audio backend support</flag>
-		<flag name="stk">Enable the STK Mallet instrument via <pkg>media-libs/stk</pkg> (that dependency has no ~arm64 keyword in ::gentoo yet, so arm64 users currently need to accept its missing keyword locally, e.g. via package.accept_keywords)</flag>
+		<flag name="stk">Enable the STK Mallet instrument via <pkg>media-libs/stk</pkg></flag>
 		<flag name="vst">Enable hosting Windows VST plugins through Wine</flag>
 	</use>
 	<upstream>
