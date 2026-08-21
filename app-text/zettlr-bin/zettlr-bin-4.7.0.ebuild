@@ -133,6 +133,7 @@ src_install() {
 
 	dodir /opt/zettlr
 	cp -a . "${ED}/opt/zettlr/" || die
+	find "${ED}/opt/zettlr" -type d -exec chmod 0755 {} + || die
 
 	fowners root:root /opt/zettlr/chrome-sandbox
 	fperms 4711 /opt/zettlr/chrome-sandbox
