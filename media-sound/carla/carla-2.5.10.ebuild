@@ -2,9 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-PYTHON_COMPAT=( python3_{12..15} )
-
-inherit python-single-r1
 
 MY_PN="Carla"
 MY_P="${MY_PN}-${PV}"
@@ -19,8 +16,6 @@ SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 IUSE="+alsa fluidsynth +jack osc +pulseaudio sdl +sndfile X"
 
-REQUIRED_USE="${PYTHON_REQUIRED_USE}"
-
 # NOTE: Carla's standalone Qt/Python GUI (the "carla", "carla-rack",
 # "carla-patchbay" launchers) requires dev-python/pyqt5, which no longer
 # exists in ::gentoo or any overlay configured on this system (treeclean'd
@@ -30,7 +25,6 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 # are unavailable); Carla remains usable headless or as an LV2 plugin
 # inside another host.
 RDEPEND="
-	${PYTHON_DEPS}
 	sys-apps/file
 	alsa? ( media-libs/alsa-lib )
 	fluidsynth? ( media-sound/fluidsynth )
@@ -47,13 +41,6 @@ BDEPEND="virtual/pkgconfig"
 PATCHES=(
 	"${FILESDIR}/${P}-fix-eel2-strict-aliasing.patch"
 )
-
-src_prepare() {
-	default
-
-	sed -i -e "s|exec \$PYTHON|exec ${PYTHON}|" \
-		data/carla-single || die
-}
 
 carla_emake_args() {
 	myemakeargs=(
@@ -96,4 +83,7 @@ src_install() {
 	carla_emake_args
 
 	emake DESTDIR="${D}" "${myemakeargs[@]}" install
+
+	# carla-single requires resources installed only when HAVE_PYQT=true.
+	rm -v "${ED}/usr/bin/carla-single" || die
 }
