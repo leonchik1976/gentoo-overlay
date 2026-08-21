@@ -148,6 +148,15 @@ src_install() {
 		"${D}/opt/nimbalyst/resources/app.asar.unpacked/node_modules/@img/sharp-libvips-linuxmusl-x64" || die
 	rm -f "${D}/opt/nimbalyst/resources/node_modules/better-sqlite3/prebuilds/linuxmusl-x64.node" || die
 
+	# `cp -ar` preserves the AppImage's extracted directory modes, which are
+	# 0700 root:root (squashfs stores upstream's build-time permissions
+	# verbatim). Left as-is, ordinary users can't traverse /opt/nimbalyst at
+	# all, so even the correctly-executable main binary is unreachable via
+	# the /opt/bin/nimbalyst symlink. Normalize to world-readable/traversable
+	# before the chrome-sandbox setuid correction below (which must stay
+	# root:4711, not swept up by this).
+	fperms -R a+rX /opt/nimbalyst
+
 	fowners root /opt/nimbalyst/chrome-sandbox
 	fperms 4711 /opt/nimbalyst/chrome-sandbox
 	pax-mark m "${ED}/opt/nimbalyst/${NIMBALYST_BIN}"
