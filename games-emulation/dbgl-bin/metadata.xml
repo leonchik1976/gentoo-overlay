@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		DBGL (DOSBox Game Launcher) is a free frontend for DOSBox and its
+		variants (DOSBox Staging, DOSBox-X, DOSBox ECE) that manages game
+		profiles, per-game DOSBox configurations, screenshots, and
+		metadata lookups.
+
+		This package installs Ronald Blankendaal's officially distributed
+		prebuilt Linux release, which bundles a prebuilt SWT native
+		binding for x86_64 only; no linux-arm64 build is currently
+		published upstream.
+
+		DBGL itself does not bundle a DOSBox emulator on Linux; a
+		DOSBox-compatible emulator (games-emulation/dosbox or
+		games-emulation/dosbox-staging) must be installed and configured
+		within DBGL to actually launch games.
+	</longdescription>
+</pkgmetadata>

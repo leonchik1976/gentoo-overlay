@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		LMMS is a cross-platform music production application. This
+		package's ZynAddSubFx instrument plugin is not built and is not
+		available: upstream's own ZynAddSubFx COPYING/README state it is
+		licensed under GNU GPL version 2 only (no "or later" grant), while
+		every LMMS plugin -- including ZynAddSubFx -- links against the
+		"lmms" executable target, which statically links a GPL-3-or-later
+		vendored ringbuffer library. That combination is a real GPL-2-only
+		vs. GPL-3-or-later conflict, not a false alarm, so the ZynAddSubFx
+		plugin is excluded from the build entirely (see
+		docs/lmms-license-audit.md in this overlay's repository for the
+		full evidence trail). No other plugin is excluded by this change;
+		this exclusion is specific to ZynAddSubFx. Not every other plugin
+		has actually been build-tested with its USE flag enabled, though
+		-- see docs/lmms-validation-log.md for exactly which USE
+		combinations have real build evidence versus which remain
+		untested.
+	</longdescription>
+	<use>
+		<flag name="carla">Enable the Carla plugin host bridge via <pkg>media-sound/carla</pkg></flag>
+		<flag name="fluidsynth">Enable the SoundFont2 (SF2) player plugin via <pkg>media-sound/fluidsynth</pkg></flag>
+		<flag name="gig">Enable the GIG sample player plugin via <pkg>media-libs/libgig</pkg> (no ~arm64 keyword for that dependency in ::gentoo yet, so this flag is currently amd64-only)</flag>
+		<flag name="lv2">Enable LV2 plugin hosting support</flag>
+		<flag name="sid">Enable the SID chiptune instrument</flag>
+		<flag name="sndio">Enable sndio audio backend support</flag>
+		<flag name="soundio">Enable libsoundio audio backend support</flag>
+		<flag name="stk">Enable the STK Mallet instrument via <pkg>media-libs/stk</pkg> (no ~arm64 keyword for that dependency in ::gentoo yet, so this flag is currently amd64-only)</flag>
+		<flag name="vst">Enable hosting Windows VST plugins through Wine</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">LMMS/lmms</remote-id>
+		<remote-id type="sourceforge">lmms</remote-id>
+	</upstream>
+</pkgmetadata>

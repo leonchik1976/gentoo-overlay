@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription>
+		Carla is a fully-featured modular audio plugin host, with support for
+		many audio drivers and plugin formats. This ebuild builds only the
+		audio engine, LV2/VST plugin-hosting backend and command-line/bridge
+		tools; the standalone Qt/Python GUI frontend cannot currently be built
+		because it requires dev-python/pyqt5, which has been removed from the
+		Gentoo ebuild repository (and is not provided by any overlay
+		configured on this system). Carla remains usable headless and as an
+		LV2 plugin inside another host (e.g. a DAW) without the GUI.
+	</longdescription>
+	<use>
+		<flag name="fluidsynth">Enable SoundFont (SF2/SF3) instrument support via media-sound/fluidsynth</flag>
+		<flag name="jack">Enable the JACK Audio Connection Kit audio/MIDI driver</flag>
+		<flag name="sdl">Enable the SDL2 audio driver backend</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">falkTX/Carla</remote-id>
+		<remote-id type="sourceforge">carla</remote-id>
+		<bugs-to>https://github.com/falkTX/Carla/issues</bugs-to>
+	</upstream>
+</pkgmetadata>
