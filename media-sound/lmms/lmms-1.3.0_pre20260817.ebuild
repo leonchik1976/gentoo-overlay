@@ -122,6 +122,10 @@ BDEPEND="dev-qt/qttools:6[linguist]"
 
 DOCS=( README.md )
 
+PATCHES=(
+	"${FILESDIR}/${PN}-1.3.0-cmake-minimums.patch"
+)
+
 _place_submodule() {
 	local extracted=$1 dest=$2
 	rm -rf "${S}/${dest}" || die

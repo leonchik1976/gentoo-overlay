@@ -9,6 +9,94 @@ compiler output) were kept at `/tmp/claude/lmms-arm64-build.log` and
 of this run; that location is ephemeral (`/tmp/claude`), so treat this
 file as the durable record and re-run to regenerate raw logs if needed.
 
+## 2026-08-21 — CMake 4 minimums and unused `CMAKE_C_FLAGS` notice
+
+The arm64 build originally emitted three CMake QA notices: CMake 4 had
+removed compatibility with the bundled ringbuffer minimum `2.8` and
+game-music-emu minimum `2.6`, and the native VST bridge's nested CMake
+configuration reported `CMAKE_C_FLAGS` as unused.
+
+Exact pinned-source inspection found the minimums at
+`src/3rdparty/ringbuffer/CMakeLists.txt` and
+`plugins/FreeBoy/game-music-emu/CMakeLists.txt`.  Patch
+`lmms-1.3.0-cmake-minimums.patch`, applied through the global `PATCHES`
+array by the normal `cmake_src_prepare` call, raises both to 3.10.  CMake
+4.3.4 configured and built the complete package successfully on both
+architectures with those policy settings; no `CMAKE_POLICY_VERSION_MINIMUM`
+or `CMAKE_QA_COMPAT_SKIP` workaround is used.
+
+The unused-variable notice was investigated from the generated command,
+not suppressed.  `cmake.eclass` automatically initializes top-level
+`CMAKE_C_FLAGS` in `gentoo_toolchain.cmake`; LMMS's top-level
+`project(lmms)` enables the default C and CXX languages and also reads
+that variable in its own CMake files.  The actual notice instead came
+from `NativeLinuxRemoteVstPlugin64.cmake`, whose `ExternalProject_Add`
+explicitly supplied `-DCMAKE_C_FLAGS=-DNATIVE_LINUX_VST` to
+`RemoteVstPlugin/CMakeLists.txt`.  That nested project declares only
+`LANGUAGES CXX`, and its target consists solely of C++ sources; the same
+definition was already in `CMAKE_CXX_FLAGS`.  The patch therefore removes
+only the dead C-flags argument.  Enabling C would be semantically wrong,
+and `CMAKE_WARN_UNUSED_CLI=no` was not retained because it would not fix
+the nested invocation and would hide unrelated command-line mistakes.
+
+### Upstream and Gentoo searches
+
+- CMake 4.0 release documentation confirms removal of compatibility below
+  3.5; current documentation also marks compatibility below 3.10 deprecated.
+- LMMS issue https://github.com/LMMS/lmms/issues/7822 tracks CMake 4
+  failures in bundled submodules.  Current LMMS still has a 3.13 top-level
+  minimum.  Current ringbuffer has raised its minimum to 3.5; its issue and
+  pull-request searches found no closer matching report.  Current
+  game-music-emu uses `3.3...3.10`; issue
+  https://github.com/libgme/game-music-emu/issues/128 and pull request
+  https://github.com/libgme/game-music-emu/pull/92 are relevant prior work.
+- Gentoo Bugzilla trackers https://bugs.gentoo.org/951350 (CMake 4
+  breakage) and https://bugs.gentoo.org/964405 (future removal of
+  compatibility below 3.10) were both `CONFIRMED`.  A Bugzilla REST
+  quicksearch for `lmms cmake` returned no package-specific result; that
+  statement is limited to this search.
+
+### Final build/install-image validation
+
+Both runs used CMake 4.3.4 and stopped at `ebuild ... install`; neither
+image was merged or installed.
+
+| | arm64 | amd64 |
+|---|---|---|
+| Host | `gentoo` | `server01` |
+| Effective USE | `alsa arm64 carla elibc_glibc fluidsynth gig jack kernel_linux lv2 mp3 ogg portaudio pulseaudio sdl sid sndio soundio stk vst` | `abi_x86_64 alsa amd64 carla elibc_glibc fluidsynth gig jack kernel_linux lv2 mp3 ogg portaudio pulseaudio sdl sid sndio soundio stk vst` |
+| Command | `USE="carla fluidsynth gig lv2 portaudio sid sndio soundio stk vst" ebuild media-sound/lmms/lmms-1.3.0_pre20260817.ebuild clean unpack prepare configure compile install` | same, from `/tmp/codex/media-sound/lmms-1.3.0_pre20260817/overlay`; no server01 repository file was changed |
+| Raw log | `/tmp/codex/media-sound/lmms-1.3.0_pre20260817/gentoo-arm64-final-build.log` | `/tmp/codex/media-sound/lmms-1.3.0_pre20260817/server01-amd64-build.log` on `server01` |
+| Phase result | exit 0; patch applied without fuzz; configure, compile and install-image completed | exit 0; patch applied without fuzz; configure, compile and install-image completed |
+| Targeted notice scan | no compatibility, `CMAKE_C_FLAGS`, CMake policy, or severe QA notice | same |
+| Image `lmms --version` | exit 0: `LMMS 1.3.0-alpha (Linux arm64, Qt 6.11.2, GCC 16.2.0)` | exit 0: `LMMS 1.3.0-alpha (Linux x86_64, Qt 6.11.2, GCC 16.2.0)` |
+| Installed ELFs checked with image plugin path | 60; no unresolved libraries | 61; no unresolved libraries |
+| Expected artifacts | GIG, STK, Carla, LV2, SID and native VST bridge files present | same; additionally the amd64 Wine VST helper was present |
+| Zyn exclusions | `libzynaddsubfx.so`, `RemoteZynAddSubFx`, and `presets/ZynAddSubFX` all absent | same |
+
+The builds still print pre-existing non-policy CMake warnings about Wine
+layout detection, locale generation, and extra Qt paths passed to the
+nested VST configure.  They do not reproduce the three notices addressed
+here and did not generate a severe QA notice.  Runtime coverage remains
+limited to the non-GUI `--version` check; no audio/MIDI hardware, GUI,
+Wine-hosted plugin, Carla, GIG sample, LV2 host, or STK instrument session
+was exercised.
+
+`pkgdev manifest media-sound/lmms` printed exactly `manifests are up to
+date` and exited 0.  `pkgcheck scan media-sound/lmms` exited 0 with exactly:
+
+```text
+media-sound/lmms
+  NonsolvableDepsInDev: version 1.3.0_pre20260817: nonsolvable depset(depend) keyword(~arm64) dev profile (default/linux/arm64/23.0/hardened) (18 total): solutions: [ media-libs/libgig, media-libs/stk ]
+  NonsolvableDepsInDev: version 1.3.0_pre20260817: nonsolvable depset(rdepend) keyword(~arm64) dev profile (default/linux/arm64/23.0/hardened) (18 total): solutions: [ media-libs/libgig, media-libs/stk ]
+  NonsolvableDepsInStable: version 1.3.0_pre20260817: nonsolvable depset(depend) keyword(~arm64) stable profile (default/linux/arm64/23.0) (24 total): solutions: [ media-libs/libgig, media-libs/stk ]
+  NonsolvableDepsInStable: version 1.3.0_pre20260817: nonsolvable depset(rdepend) keyword(~arm64) stable profile (default/linux/arm64/23.0) (24 total): solutions: [ media-libs/libgig, media-libs/stk ]
+```
+
+The Manifest did not change: this repository uses thin Manifests, so the
+new local patch is not represented there.  The package is not
+pkgcheck-clean because the four known keyword findings remain.
+
 ## 2026-08-21 — ZynAddSubFx excluded via PLUGIN_LIST, corrected LICENSE=, metadata.xml note
 
 (This section originally also covered a `REQUIRED_USE="arm64? ( !gig

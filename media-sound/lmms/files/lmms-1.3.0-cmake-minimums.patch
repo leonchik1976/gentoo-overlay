@@ -1,0 +1,30 @@
+From: Gentoo
+Subject: [PATCH] Update bundled CMake setup for CMake 4
+
+CMake 4 removed compatibility with CMake versions older than 3.5, so the
+historic 2.x declarations now prevent configuration.  Use 3.10 for both
+bundled projects after testing their configuration and the complete LMMS
+build with CMake 4.
+
+The native VST bridge is explicitly a C++-only project.  Do not pass it a
+CMAKE_C_FLAGS definition: the same NATIVE_LINUX_VST definition is already
+passed through CMAKE_CXX_FLAGS, while the C-only variable can never affect
+any target and causes CMake's unused-command-line-variable warning.
+
+--- a/src/3rdparty/ringbuffer/CMakeLists.txt
++++ b/src/3rdparty/ringbuffer/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 2.8)
++cmake_minimum_required(VERSION 3.10)
+ 
+ # settings
+ project(ringbuffer)
+--- a/plugins/FreeBoy/game-music-emu/CMakeLists.txt
++++ b/plugins/FreeBoy/game-music-emu/CMakeLists.txt
+@@ -12 +12 @@
+-cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
++cmake_minimum_required(VERSION 3.10)
+--- a/plugins/VstBase/NativeLinuxRemoteVstPlugin64.cmake
++++ b/plugins/VstBase/NativeLinuxRemoteVstPlugin64.cmake
+@@ -10 +9,0 @@
+-			"-DCMAKE_C_FLAGS=-DNATIVE_LINUX_VST"
