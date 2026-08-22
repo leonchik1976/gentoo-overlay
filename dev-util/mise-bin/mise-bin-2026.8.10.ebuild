@@ -32,6 +32,7 @@ LICENSE+="
 "
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
+REQUIRED_USE="elibc_glibc"
 
 # The release binary is dynamically linked only against glibc and libgcc_s
 # (verified via readelf -d); openssl/zstd/xz are statically embedded, so no
@@ -49,7 +50,7 @@ RDEPEND="
 		llvm-runtimes/libgcc
 		sys-devel/gcc:*
 	)
-	sys-libs/glibc
+	elibc_glibc? ( sys-libs/glibc )
 "
 
 QA_PREBUILT="usr/bin/${MY_PN}"
