@@ -39,6 +39,16 @@ BDEPEND="
 	)
 "
 
+# Drops the deprecated setup.py 'tests_require' key (setuptools QA warning
+# "Unknown distribution option: 'tests_require'"; test deps are declared in
+# BDEPEND and tests are run directly via twisted.trial, not via setuptools'
+# own test command) and replaces the deprecated free-text license
+# classifier with SPDX 'license_expression' metadata (matches
+# LICENSE="GPL-2" above). extras_require['test'] is left untouched.
+PATCHES=(
+	"${FILESDIR}/${P}-setuptools-qa.patch"
+)
+
 DOC_CONTENTS="The \"buildbot\" user and the \"buildbot_worker\" init script has been added
 to support starting buildbot_worker through Gentoo's init system. To use this,
 execute \"emerge --config =${CATEGORY}/${PF}\" to create a new instance.

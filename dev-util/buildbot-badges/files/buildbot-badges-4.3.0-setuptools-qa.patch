@@ -1,0 +1,15 @@
+Update buildbot-badges-4.3.0's setup.py for modern setuptools metadata handling:
+ - replace the deprecated free-text license classifier with the
+   'license_expression' SPDX key ("License classifiers are deprecated")
+
+Upstream status: not submitted.
+
+--- a/setup.py
++++ b/setup.py
+@@ -47,5 +47,5 @@
+         [buildbot.www]
+         badges = buildbot_badges:ep
+     """,
+-    classifiers=['License :: OSI Approved :: GNU General Public License v2 (GPLv2)'],
++    license_expression='GPL-2.0-only',
+ )

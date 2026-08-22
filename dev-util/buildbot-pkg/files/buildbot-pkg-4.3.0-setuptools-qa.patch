@@ -1,0 +1,15 @@
+Update buildbot-pkg-4.3.0's setup.py for modern setuptools metadata handling:
+ - replace the deprecated free-text license classifier with the
+   'license_expression' SPDX key ("License classifiers are deprecated")
+
+Upstream status: not submitted.
+
+--- a/setup.py
++++ b/setup.py
+@@ -29,5 +29,5 @@
+     install_requires=[
+         "setuptools >= 21.2.1",
+     ],
+-    classifiers=['License :: OSI Approved :: GNU General Public License v2 (GPLv2)'],
++    license_expression='GPL-2.0-only',
+ )

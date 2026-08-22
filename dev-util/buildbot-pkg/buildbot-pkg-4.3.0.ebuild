@@ -26,6 +26,13 @@ RESTRICT="test"
 
 RDEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
 
+# Replaces the deprecated free-text license classifier with SPDX
+# 'license_expression' metadata (matches LICENSE="GPL-2" above; setuptools
+# QA warning "License classifiers are deprecated").
+PATCHES=(
+	"${FILESDIR}/${P}-setuptools-qa.patch"
+)
+
 src_prepare() {
 	sed -e "/version/s/=.*$/=\"${PV/_p/.post}\",/" -i setup.py || die
 	distutils-r1_src_prepare

@@ -1,0 +1,32 @@
+Update buildbot-worker-4.3.0's setup.py for modern setuptools metadata handling:
+ - replace the deprecated free-text license classifier with the
+   'license_expression' SPDX key ("License classifiers are deprecated")
+ - remove the obsolete 'tests_require' key
+   ("Unknown distribution option: 'tests_require'")
+
+Upstream status: not submitted.
+
+--- a/setup.py
++++ b/setup.py
+@@ -76,11 +76,11 @@
+     'maintainer': "Dustin J. Mitchell",
+     'maintainer_email': "dustin@v.igoro.us",
+     'url': "http://buildbot.net/",
++    'license_expression': "GPL-2.0-only",
+     'classifiers': [
+         'Development Status :: 5 - Production/Stable',
+         'Environment :: No Input/Output (Daemon)',
+         'Intended Audience :: Developers',
+-        'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
+         'Topic :: Software Development :: Build Tools',
+         'Topic :: Software Development :: Testing',
+         'Programming Language :: Python :: 3',
+@@ -153,8 +153,6 @@
+     'psutil',
+ ]
+ 
+-setup_args['tests_require'] = test_deps
+-
+ setup_args['extras_require'] = {
+     'test': test_deps,
+ }

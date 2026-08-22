@@ -1,0 +1,16 @@
+Update buildbot-console-view-4.3.0's setup.py for modern setuptools metadata
+handling:
+ - replace the deprecated free-text license classifier with the
+   'license_expression' SPDX key ("License classifiers are deprecated")
+
+Upstream status: not submitted.
+
+--- a/setup.py
++++ b/setup.py
+@@ -45,5 +45,5 @@
+         [buildbot.www]
+         console_view = buildbot_console_view:ep
+     """,
+-    classifiers=['License :: OSI Approved :: GNU General Public License v2 (GPLv2)'],
++    license_expression='GPL-2.0-only',
+ )

@@ -22,3 +22,10 @@ KEYWORDS="~amd64 ~arm64"
 
 RDEPEND="~dev-util/buildbot-www-${PV}[${PYTHON_USEDEP}]"
 BDEPEND="~dev-util/buildbot-pkg-${PV}[${PYTHON_USEDEP}]"
+
+# Replaces the deprecated free-text license classifier with SPDX
+# 'license_expression' metadata (matches LICENSE="GPL-2" above; setuptools
+# QA warning "License classifiers are deprecated").
+PATCHES=(
+	"${FILESDIR}/${P}-setuptools-qa.patch"
+)

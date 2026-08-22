@@ -1,0 +1,16 @@
+Update buildbot-grid-view-4.3.0's setup.py for modern setuptools metadata
+handling:
+ - replace the deprecated free-text license classifier with the
+   'license_expression' SPDX key ("License classifiers are deprecated")
+
+Upstream status: not submitted.
+
+--- a/setup.py
++++ b/setup.py
+@@ -39,5 +39,5 @@
+         [buildbot.www]
+         grid_view = buildbot_grid_view:ep
+     """,
+-    classifiers=['License :: OSI Approved :: GNU General Public License v2 (GPLv2)'],
++    license_expression='GPL-2.0-only',
+ )
