@@ -27,6 +27,16 @@ KEYWORDS="~amd64 ~arm64"
 IUSE="crypt docker examples irc test"
 RESTRICT="!test? ( test )"
 
+# Drops the deprecated setup.py 'tests_require' key (setuptools QA warning
+# "Unknown distribution option: 'tests_require'"; test deps are declared in
+# BDEPEND and tests are run directly via twisted.trial, not via setuptools'
+# own test command) and replaces the deprecated free-text license
+# classifier with SPDX 'license_expression' metadata (matches
+# LICENSE="GPL-2" above). extras_require['test'] is left untouched.
+PATCHES=(
+	"${FILESDIR}/${P}-setuptools-qa.patch"
+)
+
 RDEPEND="
 	acct-user/buildbot
 	>=dev-python/alembic-1.6.0[${PYTHON_USEDEP}]
