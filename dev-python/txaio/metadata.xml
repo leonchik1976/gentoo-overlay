@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Compatibility API between asyncio, Twisted and Trollius. Re-added to
+		this overlay as a hard dependency of dev-python/autobahn after
+		::gentoo removed it (bug #967367) over general upstream
+		development-process quality concerns rather than a specific
+		reproducible defect.
+	</longdescription>
+	<upstream>
+		<remote-id type="pypi">txaio</remote-id>
+		<remote-id type="github">crossbario/txaio</remote-id>
+	</upstream>
+</pkgmetadata>

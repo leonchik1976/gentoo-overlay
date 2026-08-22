@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+	Buildbot grid-view web UI plugin (React frontend).
+
+	Re-added to this overlay after ::gentoo removed it (bug #952430,
+	2026-08-21) for lack of a maintainer and Python 3.13 support.
+	</longdescription>
+	<upstream>
+		<maintainer>
+			<email>devel@buildbot.net</email>
+			<name>Developers List</name>
+		</maintainer>
+		<remote-id type="pypi">buildbot-grid-view</remote-id>
+		<remote-id type="github">buildbot/buildbot</remote-id>
+	</upstream>
+</pkgmetadata>

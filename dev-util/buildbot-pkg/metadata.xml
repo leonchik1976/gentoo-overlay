@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+	Build-time helper module used by the setup.py of the various
+	dev-util/buildbot-* www plugin packages (buildbot-www,
+	buildbot-console-view, buildbot-grid-view, buildbot-waterfall-view,
+	buildbot-wsgi-dashboards, buildbot-badges). It is not imported by any
+	of their installed runtime code, only by their setup.py at build time.
+
+	Re-added to this overlay after ::gentoo removed it (bug #952430,
+	2026-08-21) for lack of a maintainer and Python 3.13 support.
+	</longdescription>
+	<upstream>
+		<maintainer>
+			<email>devel@buildbot.net</email>
+			<name>Developers List</name>
+		</maintainer>
+		<remote-id type="pypi">buildbot-pkg</remote-id>
+		<remote-id type="github">buildbot/buildbot</remote-id>
+	</upstream>
+</pkgmetadata>

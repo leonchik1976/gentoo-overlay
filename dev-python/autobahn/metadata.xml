@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		WebSocket client &amp; server library and WAMP real-time framework for
+		Twisted and asyncio. Re-added to this overlay as a hard dependency of
+		dev-util/buildbot and dev-util/buildbot-worker after ::gentoo removed
+		it (bug #967367) over general upstream development-process quality
+		concerns rather than a specific reproducible defect.
+	</longdescription>
+	<upstream>
+		<remote-id type="pypi">autobahn</remote-id>
+		<remote-id type="github">crossbario/autobahn-python</remote-id>
+	</upstream>
+</pkgmetadata>
