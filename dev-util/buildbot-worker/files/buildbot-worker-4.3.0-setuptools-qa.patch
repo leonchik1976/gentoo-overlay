@@ -1,8 +1,11 @@
-Update buildbot-worker-4.3.0's setup.py for modern setuptools metadata handling:
+Update buildbot-worker-4.3.0's setup.py/setup.cfg for modern setuptools:
  - replace the deprecated free-text license classifier with the
    'license_expression' SPDX key ("License classifiers are deprecated")
  - remove the obsolete 'tests_require' key
    ("Unknown distribution option: 'tests_require'")
+ - remove the deprecated [bdist_wheel] universal=1 setting
+   ("bdist_wheel.universal is deprecated"); Buildbot Worker 4.3.0 is
+   Python 3-only, so a universal (py2.py3) wheel tag is wrong regardless
 
 Upstream status: not submitted.
 
@@ -30,3 +33,15 @@ Upstream status: not submitted.
  setup_args['extras_require'] = {
      'test': test_deps,
  }
+--- a/setup.cfg
++++ b/setup.cfg
+@@ -1,9 +1,6 @@
+ [aliases]
+ test = trial -m buildbot_worker
+ 
+-[bdist_wheel]
+-universal = 1
+-
+ [egg_info]
+ tag_build = 
+ tag_date = 0

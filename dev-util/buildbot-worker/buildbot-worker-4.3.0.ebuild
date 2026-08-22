@@ -39,12 +39,14 @@ BDEPEND="
 	)
 "
 
-# Drops the deprecated setup.py 'tests_require' key (setuptools QA warning
-# "Unknown distribution option: 'tests_require'"; test deps are declared in
-# BDEPEND and tests are run directly via twisted.trial, not via setuptools'
-# own test command) and replaces the deprecated free-text license
-# classifier with SPDX 'license_expression' metadata (matches
-# LICENSE="GPL-2" above). extras_require['test'] is left untouched.
+# Fixes three modern-setuptools QA warnings: replaces the deprecated
+# free-text license classifier with SPDX 'license_expression' metadata
+# (matches LICENSE="GPL-2" above); drops the deprecated setup.py
+# 'tests_require' key (test deps are declared in BDEPEND and tests are run
+# directly via twisted.trial, not via setuptools' own test command;
+# extras_require['test'] is left untouched); and removes the deprecated
+# [bdist_wheel] universal=1 setting in setup.cfg (this package is Python
+# 3-only, so a universal py2.py3 wheel tag was always wrong).
 PATCHES=(
 	"${FILESDIR}/${P}-setuptools-qa.patch"
 )
