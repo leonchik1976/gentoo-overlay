@@ -14,4 +14,9 @@
 	<use>
 		<flag name="kerberos">Enable Kerberos authentication support (bundled Node native module)</flag>
 	</use>
+	<upstream>
+		<bugs-to>https://github.com/kirodotdev/Kiro/issues</bugs-to>
+		<doc>https://kiro.dev/docs/</doc>
+		<remote-id type="github">kirodotdev/Kiro</remote-id>
+	</upstream>
 </pkgmetadata>

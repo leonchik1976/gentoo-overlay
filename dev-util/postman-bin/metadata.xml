@@ -12,5 +12,6 @@
 	<upstream>
 		<bugs-to>https://github.com/postmanlabs/postman-app-support/issues</bugs-to>
 		<doc>https://learning.postman.com/</doc>
+		<remote-id type="github">postmanlabs/postman-app-support</remote-id>
 	</upstream>
 </pkgmetadata>

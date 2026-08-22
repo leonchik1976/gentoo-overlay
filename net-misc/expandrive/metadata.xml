@@ -5,4 +5,7 @@
 		<email>leonchik1976@gmail.com</email>
 		<name>Leonid Kopylov</name>
 	</maintainer>
+	<upstream>
+		<doc>https://docs.expandrive.com/</doc>
+	</upstream>
 </pkgmetadata>

@@ -5,4 +5,9 @@
 		<email>leonchik1976@gmail.com</email>
 		<name>Leonid Kopylov</name>
 	</maintainer>
+	<upstream>
+		<bugs-to>https://github.com/sublimehq/sublime_merge/issues</bugs-to>
+		<doc>https://www.sublimemerge.com/docs/</doc>
+		<remote-id type="github">sublimehq/sublime_merge</remote-id>
+	</upstream>
 </pkgmetadata>

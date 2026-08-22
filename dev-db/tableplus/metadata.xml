@@ -5,4 +5,8 @@
 		<email>leonchik1976@gmail.com</email>
 		<name>Leonid Kopylov</name>
 	</maintainer>
+	<upstream>
+		<doc>https://docs.tableplus.com/</doc>
+		<remote-id type="github">TablePlus/TablePlus</remote-id>
+	</upstream>
 </pkgmetadata>

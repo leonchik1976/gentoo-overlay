@@ -11,6 +11,7 @@
 		interface, local inference runtimes, and an OpenAI-compatible API server.
 	</longdescription>
 	<upstream>
+		<changelog>https://lmstudio.ai/changelog</changelog>
 		<doc>https://lmstudio.ai/docs/</doc>
 		<bugs-to>mailto:bugs@lmstudio.ai</bugs-to>
 	</upstream>

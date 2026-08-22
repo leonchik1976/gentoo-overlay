@@ -12,5 +12,6 @@
 	</longdescription>
 	<upstream>
 		<doc>https://docs.cursor.com/</doc>
+		<remote-id type="github">cursor/cursor</remote-id>
 	</upstream>
 </pkgmetadata>

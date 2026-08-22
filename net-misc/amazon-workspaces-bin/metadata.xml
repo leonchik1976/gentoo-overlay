@@ -9,4 +9,7 @@
 		Amazon WorkSpaces plays nice with everyone. Access your personal
 		environment on Android, iOS, Fire, Mac, PC, Chromebook, and Linux devices.
 	</longdescription>
+	<upstream>
+		<doc>https://docs.aws.amazon.com/workspaces/latest/userguide/amazon-workspaces-linux-client.html</doc>
+	</upstream>
 </pkgmetadata>

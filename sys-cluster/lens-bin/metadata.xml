@@ -13,5 +13,6 @@
 	<upstream>
 		<bugs-to>https://github.com/lensapp/lens/issues</bugs-to>
 		<doc>https://docs.k8slens.dev/</doc>
+		<remote-id type="github">lensapp/lens</remote-id>
 	</upstream>
 </pkgmetadata>

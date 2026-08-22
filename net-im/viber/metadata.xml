@@ -12,4 +12,7 @@
 		package installs the official Qt6-based prebuilt amd64 .deb,
 		which bundles its own private copy of Qt6, ffmpeg and ICU.
 	</longdescription>
+	<upstream>
+		<doc>https://help.viber.com/hc/en-us/categories/8730232747037-Rakuten-Viber-for-desktop</doc>
+	</upstream>
 </pkgmetadata>

@@ -12,5 +12,6 @@
 	</longdescription>
 	<upstream>
 		<doc>https://docs.cursor.com/en/cli</doc>
+		<remote-id type="github">cursor/cursor</remote-id>
 	</upstream>
 </pkgmetadata>

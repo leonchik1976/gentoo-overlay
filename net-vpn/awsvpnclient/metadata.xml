@@ -13,4 +13,8 @@
 		CoreCLR-based service architecture with a single
 		aws-client-vpn-daemon binary and an Electron-based GUI.
 	</longdescription>
+	<upstream>
+		<changelog>https://docs.aws.amazon.com/vpn/latest/clientvpn-user/client-vpn-connect-linux-release-notes.html</changelog>
+		<doc>https://docs.aws.amazon.com/vpn/latest/clientvpn-user/client-vpn-connect-linux.html</doc>
+	</upstream>
 </pkgmetadata>
