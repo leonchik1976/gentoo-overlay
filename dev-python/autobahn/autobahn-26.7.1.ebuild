@@ -9,6 +9,7 @@
 
 EAPI=8
 
+DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=hatchling
 PYTHON_COMPAT=( python3_{11..14} )
 
@@ -67,6 +68,20 @@ BDEPEND="
 		dev-python/pytest-aiohttp[${PYTHON_USEDEP}]
 	)
 "
+
+python_prepare_all() {
+	# pyproject.toml's [project.scripts] installs the FlatBuffers compiler
+	# wrapper as a bare "flatc" console script, colliding with the real
+	# flatc provided by other packages (e.g. dev-libs/flatbuffers). Rename
+	# only that entry point; leave autobahn's own private, bundled
+	# src/autobahn/_flatc/bin/flatc binary (which the wrapper execs, and
+	# which is not shipped by the sdist anyway - see below) untouched.
+	sed -e 's/^flatc = /autobahn-flatc = /' -i pyproject.toml || die
+	grep -q '^autobahn-flatc = "autobahn[.]_flatc:main"$' pyproject.toml ||
+		die "Failed to rename the bundled flatc entry point"
+
+	distutils-r1_python_prepare_all
+}
 
 # Building the NVX CFFI accelerator invokes a git submodule check for
 # deps/flatbuffers (not shipped in the sdist) purely for a best-effort
