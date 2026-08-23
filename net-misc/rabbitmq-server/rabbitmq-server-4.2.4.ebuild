@@ -25,7 +25,7 @@ ACCT_DEPEND="
 "
 # See https://www.rabbitmq.com/which-erlang.html for Erlang version
 ERLANG_DEPEND="
-	>=dev-lang/erlang-26.0[ssl] <dev-lang/erlang-28
+	>=dev-lang/erlang-26.0[ssl] <dev-lang/erlang-29
 "
 RDEPEND="
 	${ACCT_DEPEND}
