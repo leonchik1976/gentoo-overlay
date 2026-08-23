@@ -1,13 +1,33 @@
 # media-sound/lmms validation log
 
 Concise, factual record of real build/install validation actually
-performed for `media-sound/lmms-1.3.0_pre20260817` (this overlay never
+performed for `media-sound/lmms` snapshots (this overlay never
 runs `emerge`/`merge`/`qmerge` — validation stops at `ebuild ... install`,
 per this repo's CLAUDE.md). Full raw build logs (~4900 lines each,
 compiler output) were kept at `/tmp/claude/lmms-arm64-build.log` and
 `/tmp/claude/lmms-amd64-build.log` on their respective hosts at the time
 of this run; that location is ephemeral (`/tmp/claude`), so treat this
 file as the durable record and re-run to regenerate raw logs if needed.
+
+## 2026-08-23 — `1.3.0_pre20260823` snapshot validation
+
+The snapshot at LMMS commit
+`c6683775e57d9f9bce5871bb9e4c02413a98f88a` was built from the current
+ebuild on both supported architectures.  Both commands stopped after
+creating a binary package; neither package was merged or installed.
+
+| | arm64 | amd64 |
+|---|---|---|
+| Host | `gentoo` | `server01` |
+| Command | `sudo env PKGDIR=/tmp/codex/binpkgs ebuild media-sound/lmms/lmms-1.3.0_pre20260823.ebuild clean package` | `sudo env PKGDIR=/tmp/codex/media-sound/lmms-1.3.0_pre20260823/binpkgs ebuild media-sound/lmms/lmms-1.3.0_pre20260823.ebuild clean package`, from `/tmp/codex/media-sound/lmms-1.3.0_pre20260823/repo` |
+| Result | exit 0; 916 compile steps; `>>> Completed installing`; `>>> Creating binpkg`; `>>> Done.` | exit 0; 924 compile steps; `>>> Completed installing`; `>>> Creating binpkg`; `>>> Done.` |
+| Installed-image size | 40.7 MiB | 42.0 MiB |
+
+The amd64 image included the Wine VST helper
+`/usr/lib64/lmms/RemoteVstPlugin64.exe.so`; both images included the GIG
+and STK plugins.  Tests were disabled by `RESTRICT=test`.  This entry
+records build/install-image coverage only; GUI, audio/MIDI hardware, and
+plugin runtime behavior were not exercised.
 
 ## 2026-08-21 — CMake 4 minimums and unused `CMAKE_C_FLAGS` notice
 

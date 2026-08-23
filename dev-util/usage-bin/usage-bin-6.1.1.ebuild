@@ -17,7 +17,7 @@ SRC_URI="
 			-> ${P}-arm64.tar.gz
 	)
 "
-S="${WORKDIR}"
+S="${WORKDIR}/normalized"
 
 LICENSE="MIT"
 # Licenses of crates statically linked into the release binary (derived from
@@ -48,6 +48,14 @@ RDEPEND="
 "
 
 QA_PREBUILT="usr/bin/${MY_PN}"
+
+src_unpack() {
+	default
+
+	mkdir "${S}" || die
+	cp --no-preserve=ownership -- "${WORKDIR}/${MY_PN}" "${S}" || die
+	cp --no-preserve=ownership -- "${WORKDIR}/${MY_PN}.1" "${S}" || die
+}
 
 src_install() {
 	dobin "${MY_PN}"
