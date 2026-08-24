@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		AWS CloudFormation Guard (cfn-guard) is a policy-as-code tool. It
+		provides a domain-specific language to write rules and validate
+		JSON- or YAML-formatted structured data -- CloudFormation templates,
+		Kubernetes configuration, and Terraform JSON plans/configuration --
+		against those rules.
+
+		This package installs the statically linked binaries published in
+		upstream releases.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">aws-cloudformation/cloudformation-guard</remote-id>
+	</upstream>
+</pkgmetadata>
