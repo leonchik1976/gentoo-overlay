@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription>
+		gitstatus is a fast, standalone daemon that reports git repository
+		status over a small binary protocol. It can be sourced directly as
+		a minimal git prompt for bash or zsh via the files installed under
+		/usr/share/gitstatus.
+
+		This package builds gitstatusd from source against the exact
+		patched libgit2 fork upstream pins for this release. The upstream
+		project has stated that gitstatusd and its shell integration files
+		(gitstatus.plugin.zsh, etc.) must come from the same release, since
+		there is no stable API between them: any package depending on this
+		one for a matched daemon should pin an exact version, not a range.
+
+		app-shells/powerlevel10k does not use this package: it bundles an
+		untagged gitstatus commit that does not match any of gitstatus's
+		own tagged releases (confirmed by diffing it against this
+		package's v1.5.4 and against the v1.5.5 tag), so it builds that
+		bundled copy itself instead of depending on this package.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">romkatv/gitstatus</remote-id>
+	</upstream>
+</pkgmetadata>

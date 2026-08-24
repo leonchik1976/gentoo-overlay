@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription>
+		Powerlevel10k is a Zsh theme that emphasizes speed, flexibility, and
+		out-of-the-box experience. This package builds the exact gitstatus
+		commit this powerlevel10k release bundles (not any of gitstatus's
+		own tagged releases, which do not match it -- see the ebuild for the
+		diff that proved this) and installs it alongside the theme files at
+		the location powerlevel10k looks for by default, so no extra shell
+		configuration is needed beyond sourcing the theme itself. It does
+		not depend on app-shells/gitstatus, which tracks gitstatus's real
+		releases independently and is not guaranteed to match what any
+		given powerlevel10k release bundles.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">romkatv/powerlevel10k</remote-id>
+	</upstream>
+</pkgmetadata>

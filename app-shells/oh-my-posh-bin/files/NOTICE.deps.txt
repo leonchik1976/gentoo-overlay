@@ -1,0 +1,79 @@
+oh-my-posh v30.6.5 - embedded (statically linked) third-party Go module licenses
+Determined via: go list -deps (main package only, GOOS=linux GOARCH=amd64/arm64,
+CGO_ENABLED=0, -tags netgo,osusergo,static_build,timetzdata matching upstream's
+.goreleaser.yml release build) against the v30.6.5 gomodcache-deps.tar.xz module
+cache, fully offline (GOPROXY=off).
+
+Module                                                              Version                                                    License
+-------------------------------------------------------------------------------------------------------------------------------------------------
+dario.cat/mergo                                                     v1.0.2                                                     BSD (3-clause)
+github.com/go-git/gcfg                                              v1.5.1-0.20230307220236-3a3c6141e376                       BSD (3-clause)
+github.com/go-git/go-billy/v5                                       v5.9.0                                                     Apache-2.0
+github.com/go-git/go-git/v5                                         v5.19.2                                                    Apache-2.0
+github.com/google/uuid                                              v1.6.0                                                     BSD (3-clause)
+github.com/gookit/color                                             v1.6.1                                                     MIT
+github.com/huandu/xstrings                                          v1.5.0                                                     MIT
+github.com/jbenet/go-context                                        v0.0.0-20150711004518-d14ea06fba99                         MIT
+github.com/klauspost/cpuid/v2                                       v2.3.0                                                     MIT
+github.com/lucasb-eyer/go-colorful                                  v1.4.1                                                     MIT
+github.com/Masterminds/goutils                                      v1.1.1                                                     Apache-2.0
+github.com/Masterminds/semver/v3                                    v3.4.0                                                     MIT
+github.com/Masterminds/sprig/v3                                     v3.3.0                                                     MIT
+github.com/mitchellh/copystructure                                  v1.2.0                                                     MIT
+github.com/mitchellh/reflectwalk                                    v1.0.2                                                     MIT
+github.com/pelletier/go-toml/v2                                     v2.4.3                                                     MIT
+github.com/pjbgf/sha1cd                                              v0.6.0                                                     Apache-2.0
+github.com/shirou/gopsutil/v4                                       v4.26.7                                                    BSD (3-clause)
+github.com/shopspring/decimal                                       v1.4.0                                                     MIT
+github.com/spf13/cast                                                v1.10.0                                                    MIT
+github.com/tklauser/go-sysconf                                       v0.3.16                                                    BSD (3-clause)
+github.com/tklauser/numcpus                                          v0.11.0                                                    Apache-2.0
+github.com/wayneashleyberry/terminal-dimensions                      v1.1.0                                                     MIT
+github.com/xo/terminfo                                               v0.0.0-20220910002029-abceb7e1c41e                        MIT
+golang.org/x/crypto                                                   v0.53.0                                                    BSD (3-clause)
+golang.org/x/net                                                      v0.56.0                                                    BSD (3-clause)
+golang.org/x/sys                                                      v0.47.0                                                    BSD (3-clause)
+golang.org/x/text                                                     v0.40.0                                                    BSD (3-clause)
+gopkg.in/warnings.v0                                                  v0.1.2                                                     BSD-2 (2-clause)
+go.yaml.in/yaml/v3                                                    v3.0.5                                                     MIT (libyaml-ported files: apic.go,
+                                                                                                                                  emitterc.go, parserc.go, readerc.go,
+                                                                                                                                  scannerc.go, writerc.go, yamlh.go,
+                                                                                                                                  yamlprivateh.go) + Apache-2.0 (all
+                                                                                                                                  other files; upstream NOTICE text
+                                                                                                                                  preserved verbatim in this package's
+                                                                                                                                  installed docs, see
+                                                                                                                                  NOTICE.go.yaml.in-yaml-v3)
+
+Top-level project (github.com/jandedobbeleer/oh-my-posh): MIT (COPYING file)
+
+Consolidated Gentoo LICENSE= identifiers actually needed:
+  Apache-2.0  BSD  BSD-2  MIT
+
+Note: gentoo::licenses has no "BSD-3" identifier. The 3-clause BSD text
+(with the "neither the name of ... may be used to endorse or promote"
+clause) corresponds to Gentoo's license file simply named "BSD".
+The 2-clause variant (no endorsement clause) corresponds to "BSD-2".
+Both verified present in /var/db/repos/gentoo/licenses/.
+
+Excluded from the compiled set (present in go.sum / go.mod but not
+linked into the actual Linux amd64/arm64 binary):
+  - github.com/Azure/go-ansiterm (go.mod direct require) - Windows-only
+    console ANSI translation helper; not reachable from any file with
+    linux build constraints, confirmed absent from `go list -deps .`
+    output for GOOS=linux (both amd64 and arm64).
+  - github.com/alecthomas/assert, alecthomas/colour, alecthomas/repr,
+    github.com/davecgh/go-spew, github.com/pmezard/go-difflib,
+    github.com/sergi/go-diff, github.com/stretchr/testify,
+    github.com/stretchr/objx, gopkg.in/yaml.v3 (old fork),
+    github.com/bahlo/generic-list-go, github.com/buger/jsonparser,
+    github.com/ebitengine/purego, github.com/invopop/jsonschema,
+    github.com/pb33f/ordered-map/v2, go.yaml.in/yaml/v4,
+    github.com/mattn/go-isatty, github.com/go-ole/go-ole,
+    github.com/lufia/plan9stats, github.com/power-devops/perfstat,
+    github.com/yusufpapurcu/wmi
+    - these are test-only tooling, or transitively required only by
+      other-OS build-tagged code paths / test helper packages (e.g.
+      src/runtime/mock, which imports testify but is itself only
+      reachable from _test.go files, not from `.` / package main), and
+      do not appear in `go list -deps .` for the actual `oh-my-posh`
+      binary target.

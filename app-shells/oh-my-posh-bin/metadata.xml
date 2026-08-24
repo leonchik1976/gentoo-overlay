@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription>
+		oh-my-posh is a prompt theme engine for any shell, written in Go.
+		This package installs upstream's own prebuilt per-architecture
+		binaries rather than building from source: a source build is also
+		practical (upstream publishes a vendored Go module cache tarball
+		alongside each release), but -bin was kept for simplicity now that
+		the packaged binaries' full embedded dependency tree has been
+		audited (see files/NOTICE.deps.txt) -- 30 compiled-in third-party
+		Go modules, all MIT, Apache-2.0, or BSD, none copyleft. The
+		Apache-2.0 NOTICE text from go.yaml.in/yaml/v3 (formerly
+		Canonical's go-yaml) is preserved and installed verbatim as
+		NOTICE.go.yaml.in-yaml-v3.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">JanDeDobbeleer/oh-my-posh</remote-id>
+	</upstream>
+</pkgmetadata>
