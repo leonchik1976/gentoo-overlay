@@ -8,8 +8,14 @@ inherit unpacker xdg
 DESCRIPTION="ChatGPT desktop application for Linux"
 HOMEPAGE="https://learn.chatgpt.com/docs/linux/linux-app"
 SRC_URI="
-	amd64? ( https://persistent.oaistatic.com/codex-app-prod/linux/deb/pool/main/c/chatgpt/chatgpt_${PV}_amd64.deb -> ${P}-amd64.deb )
-	arm64? ( https://persistent.oaistatic.com/codex-app-prod/linux/deb/pool/main/c/chatgpt/chatgpt_${PV}_arm64.deb -> ${P}-arm64.deb )
+	amd64? (
+		https://persistent.oaistatic.com/codex-app-prod/linux/deb/pool/main/c/chatgpt/chatgpt_${PV}_amd64.deb
+		-> ${P}-amd64.deb
+	)
+	arm64? (
+		https://persistent.oaistatic.com/codex-app-prod/linux/deb/pool/main/c/chatgpt/chatgpt_${PV}_arm64.deb
+		-> ${P}-arm64.deb
+	)
 "
 
 S="${WORKDIR}"
@@ -30,8 +36,8 @@ RDEPEND="
 	media-libs/mesa[gbm(+)]
 	net-print/cups
 	sys-apps/dbus
-	sys-apps/xdg-utils
 	virtual/libudev
+	x11-misc/xdg-utils
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf:2
 	x11-libs/gtk+:3
