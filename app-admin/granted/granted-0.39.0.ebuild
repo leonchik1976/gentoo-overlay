@@ -262,7 +262,7 @@ KEYWORDS="~amd64 ~arm64"
 BDEPEND=">=dev-lang/go-1.25.7:="
 
 src_compile() {
-	ego build -ldflags="-s -w" -o "${PN}" ./cmd/granted
+	ego build -o "${PN}" ./cmd/granted
 }
 
 src_install() {

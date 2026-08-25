@@ -275,7 +275,7 @@ src_prepare() {
 }
 
 src_compile() {
-	ego build -ldflags="-s -w" -o bin/${PN} ./cmd/aws-iam-authenticator/
+	ego build -o bin/${PN} ./cmd/aws-iam-authenticator/
 }
 
 src_install() {

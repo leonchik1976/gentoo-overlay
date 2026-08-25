@@ -251,10 +251,10 @@ SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
 src_compile() {
-	ego build -ldflags="-s -w" -o "${PN}" .
+	ego build -o "${T}/${PN}" .
 }
 
 src_install() {
-	dobin "${PN}"
+	dobin "${T}/${PN}"
 	dodoc README.md
 }

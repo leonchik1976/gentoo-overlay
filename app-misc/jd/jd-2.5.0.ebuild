@@ -42,7 +42,7 @@ RDEPEND="!www-client/jd"
 
 src_compile() {
 	cd v2/jd || die
-	ego build -ldflags="-s -w" -o "${S}"/jd .
+	ego build -o "${S}"/jd .
 }
 
 src_install() {
