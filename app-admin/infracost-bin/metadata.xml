@@ -6,19 +6,41 @@
 		<name>Leonid Kopylov</name>
 	</maintainer>
 	<longdescription lang="en">
-		Infracost shows cloud cost estimates for Terraform, Terragrunt,
-		CloudFormation, and AWS CDK before changes are deployed, in the
-		terminal, in editors, and in pull requests.
+		Infracost shows cloud cost estimates for Terraform, Terragrunt, and
+		CloudFormation before changes are deployed, in the terminal, in
+		editors, and in pull requests.
 
-		Default operation (`infracost breakdown`) requires an Infracost
-		Cloud Pricing API key (free registration via `infracost auth
-		login`); a self-hosted Cloud Pricing API is available as a
-		separate upstream project for fully offline use.
+		This is the v2 CLI (github.com/infracost/cli), a from-scratch
+		rewrite of the original infracost/infracost project. `infracost
+		scan` and `infracost ci setup` require an Infracost Cloud
+		organization (`infracost auth login` or `infracost setup`); a
+		static `INFRACOST_CLI_PRICING_API_KEY` against a self-hosted
+		Cloud Pricing API disables login, dashboard, and telemetry
+		communication with Infracost Cloud. This does not by itself make
+		operation fully offline: plugin downloads from
+		releases.infracost.io and the background CLI version check
+		(below) still occur unless separately disabled.
 
-		This package installs the statically linked binaries published in
-		upstream releases.
+		The CLI downloads and auto-updates parser/provider plugins at
+		runtime into "${XDG_CACHE_HOME:-$HOME/.cache}"/infracost (set
+		INFRACOST_CLI_PLUGIN_AUTO_UPDATE=false to stop plugin
+		auto-updates; missing plugins are still fetched on first use).
+		Login state and other configuration are stored separately under
+		"${XDG_CONFIG_HOME:-$HOME/.config}"/infracost. Every invocation,
+		including plain --version/--help, fires a non-blocking background
+		check against releases.infracost.io for a newer CLI version
+		(cached for 24h; set INFRACOST_SKIP_UPDATE_CHECK to disable).
+
+		The CLI has its own `infracost update` self-updater, which is
+		unaware of Portage and will overwrite this package's
+		/usr/bin/infracost in place (falling back to a sudo-elevated copy
+		if not run as root) -- do not run it on a Portage-managed
+		install; use Portage to upgrade this package instead.
+
+		This package installs the binaries published in upstream
+		releases.
 	</longdescription>
 	<upstream>
-		<remote-id type="github">infracost/infracost</remote-id>
+		<remote-id type="github">infracost/cli</remote-id>
 	</upstream>
 </pkgmetadata>
