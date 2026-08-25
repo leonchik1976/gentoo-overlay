@@ -801,7 +801,8 @@ src_compile() {
 	# pip/setuptools/wheel implementations declared in BDEPEND.  The pip
 	# environment variables and options make network access impossible.
 	PIP_NO_INDEX=1 PIP_NO_CACHE_DIR=1 PIP_NO_INPUT=1 \
-	PIP_DISABLE_PIP_VERSION_CHECK=1 \
+	PIP_DISABLE_PIP_VERSION_CHECK=1 PIP_ROOT_USER_ACTION=ignore \
+	PIP_PROGRESS_BAR=off \
 	"${EPYTHON}" -m pip wheel \
 		--no-index --no-deps --no-build-isolation \
 		--wheel-dir "${antlr_wheel_dir}" \
@@ -852,7 +853,9 @@ src_install() {
 	# pre-resolved by scripts/generate-open-webui-wheel-deps.py, so this
 	# performs no network access and no dependency resolution of its own.
 	#
-	PIP_NO_CACHE_DIR=1 PIP_NO_INPUT=1 PIP_DISABLE_PIP_VERSION_CHECK=1 \
+	PIP_NO_INDEX=1 PIP_NO_CACHE_DIR=1 PIP_NO_INPUT=1 \
+	PIP_DISABLE_PIP_VERSION_CHECK=1 PIP_ROOT_USER_ACTION=ignore \
+	PIP_PROGRESS_BAR=off \
 	"${EPYTHON}" -m pip install \
 		--no-index --no-deps --no-compile \
 		--target "${sitedir}" \
