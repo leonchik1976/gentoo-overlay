@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		jd is a command-line tool and Go library for diffing and patching
+		JSON, YAML and other structured data. Not to be confused with the
+		unrelated www-client/jd (a 2ch browser); both install a binary
+		named "jd".
+	</longdescription>
+	<upstream>
+		<remote-id type="github">josephburnett/jd</remote-id>
+	</upstream>
+</pkgmetadata>

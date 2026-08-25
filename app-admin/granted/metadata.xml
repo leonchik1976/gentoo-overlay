@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		granted is a command line tool that manages the retrieval and
+		rotation of short-term AWS credentials, letting you assume AWS
+		IAM roles and switch between them without dealing with
+		long-lived static credentials. It ships as fwdcloudsec/granted,
+		the current continuation of the project formerly hosted at
+		common-fate/granted.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">fwdcloudsec/granted</remote-id>
+	</upstream>
+</pkgmetadata>

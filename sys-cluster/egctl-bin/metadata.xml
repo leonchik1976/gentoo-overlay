@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		egctl is the command-line utility for Envoy Gateway, a Kubernetes
+		Gateway API implementation powered by Envoy Proxy. It is built from
+		the same monorepo as the Envoy Gateway control plane
+		(envoyproxy/gateway), but this package installs only the egctl
+		binary from upstream's published release archives, not the control
+		plane itself.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">envoyproxy/gateway</remote-id>
+	</upstream>
+</pkgmetadata>

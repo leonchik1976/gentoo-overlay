@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Infracost shows cloud cost estimates for Terraform, Terragrunt,
+		CloudFormation, and AWS CDK before changes are deployed, in the
+		terminal, in editors, and in pull requests.
+
+		Default operation (`infracost breakdown`) requires an Infracost
+		Cloud Pricing API key (free registration via `infracost auth
+		login`); a self-hosted Cloud Pricing API is available as a
+		separate upstream project for fully offline use.
+
+		This package installs the statically linked binaries published in
+		upstream releases.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">infracost/infracost</remote-id>
+	</upstream>
+</pkgmetadata>

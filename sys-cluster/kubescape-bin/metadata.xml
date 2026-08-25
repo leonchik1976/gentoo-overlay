@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Kubescape is a Kubernetes security platform. Its CLI scans clusters,
+		YAML manifests, and Helm charts for misconfigurations, RBAC issues,
+		image vulnerabilities, and compliance against frameworks such as
+		NSA-CISA and MITRE ATT&amp;CK.
+
+		This package installs the statically linked binary published in
+		upstream releases. The upstream go.sum for v4.0.12 is 2649 lines
+		(pulling in anchore/grype, anchore/syft, sigstore/cosign,
+		moby/buildkit, docker/cli, and multiple cloud SDKs) -- too large
+		to reasonably build and maintain from source in this overlay.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">kubescape/kubescape</remote-id>
+	</upstream>
+</pkgmetadata>
