@@ -1,0 +1,27 @@
+#!/sbin/openrc-run
+
+description="Self-hosted web interface for LLM backends"
+
+command="/usr/bin/open-webui"
+command_args="serve --host ${OPEN_WEBUI_HOST:-127.0.0.1} --port ${OPEN_WEBUI_PORT:-8080}"
+command_user="open-webui:open-webui"
+directory="/var/lib/open-webui"
+supervisor="supervise-daemon"
+output_log="/var/log/open-webui/open-webui.log"
+error_log="/var/log/open-webui/open-webui.log"
+
+respawn_delay=5
+respawn_max=5
+respawn_period=60
+
+export DATA_DIR WEBUI_SECRET_KEY OLLAMA_BASE_URL OPENAI_API_BASE_URL OPENAI_API_KEY
+
+depend() {
+	need net
+	use logger
+}
+
+start_pre() {
+	checkpath --directory --mode 0750 --owner open-webui:open-webui /var/lib/open-webui
+	checkpath --directory --mode 0750 --owner open-webui:open-webui /var/log/open-webui
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		OpenClaw is a personal AI assistant gateway that runs on your own
+		devices and connects AI models and tools to messaging platforms you
+		already use, through a local multi-channel gateway.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">openclaw/openclaw</remote-id>
+	</upstream>
+</pkgmetadata>

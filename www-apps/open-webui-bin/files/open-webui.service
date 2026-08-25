@@ -1,0 +1,21 @@
+[Unit]
+Description=Self-hosted web interface for LLM backends
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=open-webui
+Group=open-webui
+WorkingDirectory=/var/lib/open-webui
+Environment="DATA_DIR=/var/lib/open-webui"
+ExecStart=/usr/bin/open-webui serve --host 127.0.0.1 --port 8080
+Restart=on-failure
+RestartSec=5s
+RuntimeDirectory=open-webui
+RuntimeDirectoryMode=0750
+StateDirectory=open-webui
+StateDirectoryMode=0750
+
+[Install]
+WantedBy=multi-user.target

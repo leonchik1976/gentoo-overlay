@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Open WebUI is a self-hosted, extensible chat interface for local and
+		remote LLM backends (Ollama, OpenAI-compatible APIs, and others),
+		with support for retrieval-augmented generation, tool/plugin
+		integrations, and multiple vector-database and storage backends.
+
+		This package installs the official prebuilt PyPI wheel (which
+		already bundles the compiled Svelte/Vite frontend) together with
+		its full pinned runtime dependency closure, vendored as individual
+		files.pythonhosted.org wheels -- see
+		scripts/generate-open-webui-wheel-deps.py. No compilation or
+		network access happens at build time.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">open-webui/open-webui</remote-id>
+		<remote-id type="pypi">open-webui</remote-id>
+	</upstream>
+</pkgmetadata>
