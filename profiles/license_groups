@@ -1,0 +1,8 @@
+# Local additions to license groups defined by the parent repositories.
+# Portage merges same-named groups across all configured repositories, so
+# this only adds to (never replaces) upstream ::gentoo's definitions.
+#
+# Serverless-Customer-Agreement-20251201: proprietary Serverless Inc. EULA
+# governing app-admin/serverless-bin. Gate it behind ACCEPT_LICENSE like any
+# other EULA so installation requires explicit acceptance.
+EULA Serverless-Customer-Agreement-20251201

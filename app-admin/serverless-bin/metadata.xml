@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Serverless Framework is a command-line tool for building and
+		deploying applications on AWS Lambda and other managed cloud
+		services, defined by a serverless.yml/serverless.compose.yml
+		configuration file.
+
+		This package installs upstream's own prebuilt, versioned
+		distribution archive (the same JavaScript bundle produced by
+		upstream's release pipeline and normally fetched by upstream's
+		"serverless" npm installer stub or install.sh launcher at first
+		run) and runs it directly with the system Node.js interpreter,
+		instead of running either of those upstream installers. No npm
+		install, dependency resolution, or network access happens during
+		any ebuild phase, and nothing in this package downloads or
+		replaces the installed CLI at runtime.
+
+		Serverless Framework v4 is proprietary software distributed under
+		the Serverless Customer Agreement, not an open-source license; only
+		a subset of its own dependencies (e.g. @serverless/framework) are
+		separately MIT-licensed. Actually running most commands (beyond
+		--version/--help) requires either a Serverless License Key or
+		authentication against Serverless's SaaS Dashboard, and the
+		Agreement mandates telemetry sharing unless a License Key permits
+		disabling it; this package does not patch, disable, or work around
+		any of that. "Free User" eligibility is defined in Section 1.9 of
+		the Agreement, which also requires the classification to be
+		reassessed monthly rather than checked once. Determining and
+		maintaining eligibility, and completing authentication, are the
+		user's responsibility.
+	</longdescription>
+	<upstream>
+		<bugs-to>https://github.com/serverless/serverless/issues</bugs-to>
+		<remote-id type="github">serverless/serverless</remote-id>
+		<doc>https://www.serverless.com/framework/docs</doc>
+	</upstream>
+</pkgmetadata>

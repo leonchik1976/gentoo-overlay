@@ -1,0 +1,851 @@
+Serverless Customer Agreement
+
+Last updated: December 1st, 2025
+
+Source: https://serverless-aws-marketplace-assets.s3.amazonaws.com/serverless-customer-agreement.pdf
+(referenced as the repository LICENSE file at the `sf-core@4.41.0` tag of
+https://github.com/serverless/serverless)
+
+Transcribed verbatim from the PDF for local Gentoo license-acceptance
+purposes (ACCEPT_LICENSE / package.license). Section numbering below,
+including the apparent duplicate/reused numbers in the On-Premise/SaaS
+license sections, reproduces the source document as published; it has not
+been corrected or renumbered.
+
+================================================================================
+
+This Customer Agreement (this "Agreement") is a legal agreement between you
+("Customer") and Serverless Inc., with a business address at 522 San Anselmo
+Avenue, San Anselmo, CA 94960, United States ("Serverless"), effective as of
+the last date of acceptance (the "Effective Date"). Customer and Serverless
+are each referred to herein individually as a "Party" and collectively as
+the "Parties." This Agreement specifies the terms under which Customer may
+access and use the Services (as defined below).
+
+PLEASE READ THIS AGREEMENT CAREFULLY BEFORE ACCESSING OR USING THE SERVICES.
+BY CLICKING "I AGREE" BELOW OR OTHERWISE MANIFESTING YOUR ASSENT TO THESE
+TERMS OF USE, CUSTOMER AGREES TO BE BOUND BY THE TERMS OF THIS AGREEMENT. IF
+YOU ACCEPT THIS AGREEMENT ON BEHALF OF AN ENTITY, YOU WARRANT AND REPRESENT
+THAT YOU HAVE THE AUTHORITY TO BIND THAT ENTITY TO THIS AGREEMENT.
+
+1. Definitions
+
+1.1 "Affiliate" means, with respect to any entity, any other entity that,
+directly or indirectly, through one or more intermediaries, controls, is
+controlled by, or is under common control with, such entity. The term
+"control" means the possession, directly or indirectly, of the power to
+direct or cause the direction of the management and policies of an entity,
+whether through the ownership of voting securities, by contract, or
+otherwise.
+
+1.2 "Applicable Law" means, with respect to any Party, any federal, state,
+or local statute, law, ordinance, rule, administrative interpretation,
+regulation, order, writ, injunction, directive, judgment, decree, or other
+requirement of any international, federal, state, or local court,
+administrative agency, or commission or other governmental or regulatory
+authority or instrumentality, domestic or foreign, applicable to such Party
+or any of its properties, assets, or business operations.
+
+1.3 "Applications" means applications developed by Customer using the
+Services.
+
+1.4 "Authorized User" means Customer's employees, contractors, or agents
+authorized by Customer to access and use the Services pursuant to the terms
+and conditions of this Agreement; provided, however, that any contractors'
+or agents' access to and use of the Services will be limited to their
+provision of services to Customer. Customer is responsible for the acts and
+omissions of its Authorized Users and any other person who accesses and uses
+the Services using any Authorized Users' access credentials.
+
+1.5 "Confidential Information" means: (i) with respect to Serverless, the
+Services, and any and all source code relating thereto and any other
+non-public information or material regarding Serverless's or any of its
+Affiliate's legal or business affairs, financing, organizations, properties,
+pricing, or data; (ii) with respect to Customer, the Customer Data and any
+non-public information or material regarding Customer's legal or business
+affairs, financing, employees, organizations, properties, or data; and (iii)
+with respect to each Party, the terms and conditions of this Agreement.
+Notwithstanding any of the foregoing, Confidential Information does not
+include information which: (a) is or becomes public knowledge without any
+action by, or involvement of, the Party to which the Confidential
+Information is disclosed (the "Receiving Party"); (b) is documented as being
+known to the Receiving Party prior to its disclosure by the other Party (the
+"Disclosing Party"); (c) is independently developed by the Receiving Party
+without reference or access to the Confidential Information of the
+Disclosing Party and is so documented; or (d) is obtained by the Receiving
+Party without restrictions on use or disclosure from a third party.
+
+1.6 "Customer Data" means any data that Customer or any Authorized Users
+provide to Serverless or submit through the SaaS Software.
+
+1.7 "Data Subject" means an individual whose Personal Data is processed
+under this Agreement.
+
+1.8 "Documentation" means the manuals, specifications, and other materials
+describing the functionality, features, and operating characteristics, and
+use of the Services, as provided or made available by Serverless to
+Customer, whether in a written or electronic form.
+
+1.9 "Free User" means an organization that has earned $2 million USD or less
+in its last fiscal year, or an individual not conducting work on behalf of
+an organization that has earned more than $2 million USD in the same
+period. "Free User" does not include (i) organizations with a parent
+organization with over 75% ownership of it that has earned more than $2M USD
+in the parent organization's last fiscal year; or (ii) any government,
+governmental subdivision, regulatory or administrative body, entity owned or
+controlled by the government, entity created by law or decree, entity funded
+by the government, or any department, agency, or instrumentality of a public
+international organization; or (iii) non-profits; or (iv) academic
+institutions, except when the Services are used directly by students for
+educational purposes. Free User status is determined at the time of use,
+purchase or renewal and must be reassessed by the Customer on a monthly
+basis, with the Customer responsible for honoring this classification.
+Serverless reserves the right to determine if an individual or organization
+is considered a Free User.
+
+1.10 "Harmful Code" means computer code, programs, or programming devices
+that are intentionally designed to disrupt, modify, access, delete, damage,
+deactivate, disable, harm, or otherwise impede in any manner, including
+aesthetic disruptions or distortions, the operation of the SaaS Software or
+On-Premise Software, or any other associated software, firmware, hardware,
+computer system, or network (including, without limitation, "Trojan
+horses," "viruses," "worms," "time bombs," "time locks," "devices,"
+"traps," "access codes," or "drop dead" or "trap door" devices) or any other
+harmful, malicious, or hidden procedures, routines or mechanisms that would
+cause the SaaS Software or On-Premise Software to cease functioning or to
+damage or corrupt data, storage media, programs, equipment, or
+communications, or otherwise interfere with the operations of the SaaS
+Software or On-Premise Software.
+
+1.11 "On-Premise Software" means the Serverless Framework Command Line
+Interface (CLI), and all other software owned by Serverless hosted by the
+Customer.
+
+1.12 "Order Form" means an order form for the Services mutually executed by
+the Parties that references this Agreement and sets forth, among other
+things, the term of the Order Form, the applicable fees, and any special
+terms agreed upon by the Parties. By default, an Order Form is available
+within the SaaS Software user interface for the Customer's organization.
+However, an Order Form can also be a separate signed agreement between the
+Parties.
+
+1.13 "Order Form Term" means the duration of time during which Customer is
+permitted to access and use the Services, as set forth in this Agreement or
+applicable Order Form.
+
+1.14 "Personal Data" means any information relating to an identified or
+identifiable natural person as defined under Applicable Law.
+
+1.15 "Processing" means any operation or set of operations performed on
+Personal Data, as defined under Applicable Law, including collection,
+recording, organization, structuring, storage, adaptation, alteration,
+retrieval, consultation, use, disclosure, dissemination, alignment,
+combination, restriction, erasure, or destruction.
+
+1.16 "Professional User" means any organization that does not meet the
+definition of Free User.
+
+1.17 "SaaS Software" means the Serverless Framework Dashboard and all other
+software offered as a service owned and hosted by Serverless.
+
+1.18 "Services" means the SaaS Software, On-Premise Software, and any other
+services or products provided by Serverless as specified in this Agreement
+or an Order Form.
+
+1.19 "Subscription Credits" mean a unit of value that can be applied to the
+On-Premise Software or SaaS Software, as set forth in Section 3.3 and
+Section 5 below.
+
+1.20 "Sub-processor" means any third party engaged by Serverless to process
+Personal Data on behalf of Customer in connection with the Services.
+
+2. On-Premise Software License
+
+2.1 Acceptance: By utilizing the On-Premise Software, the Customer agrees to
+all provisions set forth in this Agreement. If you are accessing the
+Software on behalf of an organization, you confirm you have the authority to
+bind that organization to this Agreement, and references to "Customer" will
+apply to the organization.
+
+2.2 License Grant: Subject to the terms of this Agreement, Serverless grants
+Customer a non-exclusive, non-transferable, non-sublicensable right to use,
+copy, and distribute the On-Premise Software solely for internal business
+purposes, and to create derivative works or modifications ("Modified
+Versions") of the On-Premise Software, provided such modifications are made
+for internal testing, evaluation, and integration purposes. Modified
+Versions may not be publicly distributed or used for commercial purposes
+without express written consent from Serverless.
+
+  * Free Users: Free Users are permitted to use the On-Premise Software
+    without charge, subject to the restrictions, limitations and other
+    terms and conditions of this Agreement.
+  * Professional Users: Professional Users are required to execute an Order
+    Form to use the On-Premise Software. However, they are granted a 45-day
+    trial period during which they may use the On-Premise Software without
+    charge. After the trial period, continued use requires payment of
+    applicable fees as outlined in the Order Form.
+
+2.3 Limitations and Obligations: Customer will not use the On-Premise
+Software or any Modified Versions without either (i) a valid license key
+provided by Serverless (the "License Key"), or (ii) authorization through
+Serverless's SaaS Software. Customer agrees to adhere to any limitations
+specified by Serverless regarding the use of the License Key or SaaS
+authorization. All information provided to obtain a License Key or SaaS
+authorization must be accurate and complete at the time of submission.
+
+  * License Keys and SaaS authorization credentials must be kept
+    confidential and may only be shared with Customer's affiliates,
+    contractors, or agents who agree to abide by the confidentiality
+    obligations in this Agreement and use the License Key or SaaS
+    credentials solely on Customer's behalf. Customer will be responsible
+    for any actions taken by such parties as if they were performed by
+    Customer.
+  * Customer acknowledges that the On-Premise Software may be subject to
+    export or import control laws and agrees to comply with all such
+    applicable laws and regulations.
+
+2.4 Telemetry and Compliance: Customer acknowledges that the On-Premise
+Software and any Modified Versions may collect and share telemetry data
+with Serverless. Customer agrees not to operate the On-Premise Software
+without sharing telemetry data unless Serverless has provided a License Key
+that permits disabling telemetry, and Customer chooses to disable it.
+
+The On-Premise Software may include technical measures designed to enforce
+the terms of this Agreement, such as License Key validation and telemetry
+requirements ("Protective Measures"). Customer agrees not to circumvent,
+disable, or modify these Protective Measures, and must include all such
+measures in any Modified Versions.
+
+[The following sub-sections are numbered 1.1/1.2/1.3 in the source PDF,
+continuing directly after Section 2.4 above; reproduced as published.]
+
+1.1 Third-Party Software: The On-Premise Software may include or be bundled
+with third-party software ("Third-Party Components"), which shall consist
+solely of open-source software. While these components are provided
+"as-is," Provider warrants that it has the right to use and distribute all
+Third-Party Components and will indemnify Customer against any claims
+alleging otherwise. Provider reserves the right to update or replace
+Third-Party Components as needed to maintain Software functionality, with
+reasonable notice to Customer.
+
+1.2 No Other Rights: Except for the specific licenses expressly granted in
+this Agreement, Serverless grants no other rights or licenses to Customer in
+relation to the On-Premise Software.
+
+1.3 Termination: Customer's license to the On-Premise Software will
+automatically terminate if Customer breaches any term or condition of this
+Agreement. If the breach is curable and Customer remedies it within 15 days
+to Serverless's satisfaction, the license may be reinstated retroactively.
+However, intentional or repeated breaches will result in the permanent
+termination of the license.
+
+2. SaaS Software License
+
+2.1 SaaS Software Overview. The SaaS Software is an extension of the
+On-Premise Software and provides additional features and functionalities
+hosted by Serverless. The SaaS Software is made available through a Free
+Tier and a Paid Subscription plan, based on the usage and features accessed
+by the Customer, and as further described in Section 3.3 below.
+
+  * The Free Users and Professional Users classifications, as defined
+    elsewhere in this Agreement, do not apply to the SaaS Software. Instead,
+    the SaaS Software is governed by the terms of the Free Tier and Paid
+    Subscription plan described in Section 3.3 below.
+
+2.2 License Grant. Subject to the terms and conditions of this Agreement,
+Serverless grants Customer a non-exclusive, non-sublicensable,
+non-transferable license, during the Subscription Term, to access and use
+the SaaS Software for internal business purposes. The SaaS Software may only
+be used in conjunction with the On-Premise Software and is not available as
+a standalone product. Customers who utilize the SaaS Software beyond the
+Free Tier will be charged according to the applicable Order Form.
+
+2.3 Free Tier. The "Free Tier" includes a certain amount of Subscription
+Credits, as listed on the pricing page at serverless.com/pricing which
+Customer can use at no cost. Usage beyond these included Subscription
+Credits or other limitations will require a paid subscription as set forth
+in an Order Form (the "Paid Subscription"). Serverless reserves the right to
+modify the terms of the Free Tier at any time, including Subscription
+Credit limits, usage limits and feature availability.
+
+2.4 Restrictions on Use. Customer agrees that neither it nor its Authorized
+Users will:
+
+  * Allow anyone other than Authorized Users to access or use the SaaS
+    Software;
+  * Allow an Authorized User to share their Credentials (as defined below)
+    with any third party;
+  * Reverse engineer, decompile, disassemble, or otherwise attempt to
+    discern the source code of the SaaS Software;
+  * Modify or adapt the SaaS Software or create derivative works based on
+    it;
+  * Resell, distribute, or sublicense the SaaS Software for the benefit of
+    any third party;
+  * Remove or modify any proprietary markings or restrictive legends on the
+    SaaS Software;
+  * Use the SaaS Software in violation of any Applicable Law.
+
+Serverless reserves the right to monitor compliance with these restrictions
+and to take appropriate action, including the suspension or termination of
+the Customer's access to the SaaS Software.
+
+2.5 Onboarding of Authorized Users. Authorized Users must register for
+access to the SaaS Software under the Customer's account. During
+registration, each Authorized User will create a Sign-In Name, Password,
+and provide any additional required information (the "Credentials").
+Customer is responsible for ensuring that Authorized Users maintain the
+confidentiality of their Credentials and for any use or misuse of the SaaS
+Software via those Credentials.
+
+Serverless reserves the right to delete or change any Authorized User's
+Credentials at any time, for any reason, including but not limited to
+security concerns or violations of this Agreement.
+
+2.6 Modifications. Serverless reserves the right to modify the Services by
+adding, deleting, or adjusting features and functionalities to improve the
+user experience or for other business purposes. Serverless may also
+discontinue certain features at any time during the Term, provided that
+such modifications do not materially reduce the overall functionality of
+the Services.
+
+2.7 Beta Features. From time to time, Serverless may invite Customers to
+try, at no charge, certain "beta" or "unstable" features or functionalities
+of the Services that are not yet generally available for production use
+("Beta Offerings"). Serverless will identify Beta Offerings as such upon
+invitation, and Customer will have the option, in its sole discretion, to
+use or not use the Beta Offerings. These Beta Offerings are provided for
+evaluation purposes only, and Serverless makes no warranties related to
+their performance or availability. Serverless may discontinue Beta
+Offerings at any time, and will not be liable for any harm or damages
+resulting from their use.
+
+3. Prohibited Content and Actions
+
+3.1 Prohibited Content. Customer agrees that neither it nor its Authorized
+Users will display, process, or transmit any content through the Services
+that:
+
+  * Infringes or misappropriates any third-party rights, including
+    intellectual property rights.
+  * Contains excessively profane, hate-related, or violent material.
+  * Advocates or promotes racial or ethnic intolerance, hacking, or
+    cracking.
+  * Relates to gambling, illegal activities, drug paraphernalia, phishing,
+    or malicious content.
+  * Violates any Applicable Law.
+
+3.2 Prohibited Actions. Customer agrees that neither it nor its Authorized
+Users will:
+
+  * Generate or facilitate unsolicited commercial emails ("spam").
+  * Distribute viruses, worms, or any other harmful code.
+  * Conduct or promote pyramid schemes, phishing, or transmit malicious
+    content.
+  * Impersonate others or misrepresent the source of any communication.
+  * Violate the legal rights of others or promote illegal activities.
+  * Perform significant load testing of the SaaS Software without
+    Serverless's prior written consent.
+  * Exploit the Services for unauthorized commercial purposes.
+  * Reverse engineer any portion of the Services or remove any proprietary
+    rights notices.
+  * Use the Services for peer-to-peer file sharing or cryptocurrency
+    mining.
+  * Display any hate-related or violent content or modify Serverless's
+    logos or branding.
+  * Use the Services as an open proxy or for unauthorized web scraping.
+
+Customer is solely responsible for the content and applications it creates,
+transmits, or displays while using the Services, and for the consequences
+of its actions (including any loss or damage which Serverless may suffer)
+by doing so. Serverless reserves the right to remove any content that it
+reasonably believes violations the terms of this Agreement, including,
+without limitation, the terms of this Section 4.
+
+4. Fees and Payment
+
+4.1 Fees. The Services are made available in accordance with the terms of
+this Agreement and an applicable Order Form. Order Forms are priced via
+Subscription Credits, which the Customer must purchase to cover metered
+usage of the On-Premise Software and the SaaS Software. A Subscription
+Credit for the On-Premise Software License can be redeemed for one
+Serverless Framework Service Instance as defined by a serverless.yml
+configuration file in a deployed state for more than 5 days in a current
+month within a specific "stage" and "region". A Subscription Credit for the
+SaaS Software License can be redeemed for a single Serverless Framework
+Instance with the same definition above that is shown within the Dashboard,
+or 50 thousand Traces, or 4 million Metrics for the Serverless Framework
+Dashboard's Observability features. Additional fees may apply for
+additional services or features specified in an Order Form. The Services
+charge $4 USD per Subscription Credit used each month. Charges are based on
+total Subscription Credits used within a month. This is the default billing
+method. Customers can reserve Subscription Credits for longer periods at a
+discount. In such cases, Customers are charged for reserved Subscription
+Credits as per the Order Form, plus $4 USD for each additional Credit used.
+
+4.2 On-Premise Software Fees. Free Users are permitted to use the
+On-Premise Software without charge, subject to the restrictions,
+limitations and other terms and conditions of this Agreement. Professional
+Users are required to execute an Order Form to use the On-Premise Software.
+However, Professional Users are granted a 45-day trial period during which
+they may use the On-Premise Software without charge. After the trial
+period, continued use requires payment by Professional Users of the
+applicable fees as outlined in the Order Form. If a Free User no longer
+meets the requirements of a "Free User" as defined in this Agreement, they
+will be reclassified as a Professional User, and applicable fees will apply
+from the date of reclassification.
+
+4.3 SaaS Software Fees. For the SaaS Software, the Free User and
+Professional User classifications do not apply. If a Customer has exceeded
+the Free Tier, they can increase their usage by purchasing a Paid
+Subscription via an Order Form and shall pay the applicable fees for the
+Paid Subscription.
+
+4.4 Taxes. Fees and other charges described in the Order Form are in
+addition to and do not include any federal, provincial, or local sales,
+PST, GST, HST, VAT, foreign withholding, use, property, excise, service, or
+similar transaction taxes ("Taxes") now or hereafter levied, all of which
+will be for Customer's account. Any applicable direct pay permits or valid
+tax-exempt certificates must be provided to Serverless after the execution
+of this Agreement. If Serverless is required to collect and remit Taxes on
+Customer's behalf, Serverless will invoice Customer for such Taxes, and
+Customer will pay Serverless for such amounts in accordance with the
+payment terms set forth in the Order Form. For the avoidance of doubt,
+Serverless will be responsible for taxes related to Serverless's income,
+property, franchise, and employees.
+
+4.5 Payment Terms. Serverless will invoice Customer within a reasonable
+time following the end of each calendar month during the Order Form Term,
+for the Services provided during such calendar month, including any
+overages incurred under dynamic pricing plans, or per the terms defined
+within an applicable Order Form. Invoices shall be sent electronically (via
+email and/or through the SaaS Software). All invoices, including those for
+overages on dynamic pricing plans, shall be paid within thirty (30) days of
+the date of the invoice. If Customer has provided valid credit card
+information, then payments will be charged automatically via Customer's
+credit card on file or through a Partner or Reseller.
+
+4.6 Late Payments. In the event that any invoiced amount remains unpaid by
+the payment due date, and Customer fails to cure such default within thirty
+(30) days of such due date, then, unless otherwise set forth in the Order
+Form, without limiting Serverless's rights and remedies, Serverless may:
+(i) charge interest at 1.5% per month (or the highest rate permitted by
+law, if lower) on the outstanding balance (ii) condition future
+subscription renewals and additional Order Forms on payment terms shorter
+than those specified in the applicable Order Form; (iii) suspend the
+Services until such payment is received; and/or (iv) terminate this
+Agreement in accordance with Section 4.2.
+
+4.7 Non-Refundable. Unless otherwise expressly provided for in this
+Agreement or the applicable Order Form, (i) all fees are based on Services
+purchased and not on actual use; and (ii) all fees paid under this
+Agreement are non-refundable.
+
+4.8 Purchases through Marketplace or Reseller. If Customer purchases the
+Services through a marketplace or reseller, Customer agrees to pay all fees
+according to the standard Services price list at the marketplace or
+reseller, including any charges for usage in excess of authorizations. The
+price list excludes customs, duties, taxes, and similar levies imposed by
+any authority. Customer will pay the applicable marketplace or reseller
+instead of paying Serverless directly. Customer's acceptance of the
+marketplace or reseller pricing and terms binds Customer to the obligations
+of this Agreement and any applicable Order Form. If purchasing through a
+marketplace or reseller, Customer is responsible for full payment of the
+fees, regardless of usage, payment, or billing terms between Customer and
+the marketplace or reseller.
+
+4.9 Auto-Renewal of Orders. All Orders will automatically renew at the end
+of their term unless Customer provides written notice of non-renewal to
+Serverless at least thirty (30) days prior to the renewal date, or as
+specified otherwise in the applicable Order Form. If the Customer does not
+wish to renew, they must provide written notice to Serverless prior to the
+renewal date, as specified in the Order Form.
+
+5. Support
+
+5.1 Standard Support. Standard support is available to all Customers.
+Support is provided on a commercially reasonable-effort basis, and while
+Serverless endeavors to respond to requests typically within a few hours
+and no longer than a few days, responses are not guaranteed. Issues and
+feature requests submitted by Customers within public repositories of the
+Serverless Framework are treated with priority. Support requests should be
+directed to support@serverless.com or through the in-app chat feature in
+the SaaS Software.
+
+5.2 Premium Support and Service Level Agreement (SLA). If Premium Support is
+purchased as specified in an Order Form, the following SLA terms will
+apply, covering Error Reporting and Response, Priority 1/2/3 Error
+resolution windows, and Service Levels including remediation and
+termination-for-repeated-failures/refund provisions. See the source PDF for
+the full text of Sections 5.2.1-5.3.3.
+
+6. Termination and Suspension
+
+6.1 Term. The term of this Agreement commences on the Effective Date, and
+will continue in effect thereafter until terminated in accordance with
+Section 7.2 below. Each Order Form Term will be set forth in the applicable
+Order Form.
+
+6.2 Termination. Either Party may terminate this Agreement on written
+notice to the other Party at any time when there are no Order Forms then in
+effect. Customer may terminate any Order Form on written notice to
+Serverless at any time; however, if such termination occurs before the end
+of the Order Form Term, Customer will owe the remaining balance for the
+entire Order Form Term immediately, and no refunds shall be issued for
+pre-paid fees. Either Party may terminate this Agreement or any Order Form
+(i) upon the other Party's breach of this Agreement or any Order Form if
+such breach is not cured within thirty (30) days after the non-breaching
+Party notifies the breaching Party of such breach; (ii) immediately upon
+notice, if the other Party becomes the subject of a petition in bankruptcy
+or any other proceeding relating to insolvency, liquidation, or assignment
+for the benefit of creditors; or (iii) as otherwise expressly set forth
+herein. Serverless reserves the right to disable or suspend Customer's and
+its Users' access to the Serverless Services for any failure to pay due
+invoices. All payment inquiries should be directed to support@serverless.com.
+
+6.3 Effect of Termination. Upon termination of this Agreement as set forth
+in Section 7.2, Serverless will stop providing the applicable Services, and
+Customer will immediately cease, and cause its Authorized Users to cease,
+all access to and use of the SaaS Software and On-Premise Software.
+Termination for cause or failure to cure defaults as specified in Section
+7.2 will also result in the permanent revocation of any licenses granted
+under this Agreement. The following provisions will survive termination of
+this Agreement: Section 1 ("Definitions"), Section 5 ("Fees and Payment")
+until Customer has paid all fees and applicable Taxes due, this Section 7.3
+("Effect of Termination"), Section 8 ("Confidentiality"), Section 10
+("Intellectual Property"), Section 11.3 ("Disclaimers"), Section 12
+("Limitation of Liability"), Section 13 ("Indemnification"), and Section 14
+("Miscellaneous").
+
+7. Confidentiality
+
+7.1 Confidentiality. At all times the Receiving Party will protect and
+preserve the Confidential Information of the Disclosing Party as
+confidential, using no less care than that with which it protects and
+preserves its own confidential and proprietary information (but in no
+event less than a reasonable degree of care), and will not use the
+Confidential Information for any purpose except to perform its obligations
+and exercise its rights under this Agreement or as otherwise expressly
+permitted in this Agreement. The Receiving Party may disclose, distribute,
+or disseminate the Disclosing Party's Confidential Information to any of
+its officers, directors, members, managers, partners, employees,
+contractors or agents (its "Representatives"), provided that the Receiving
+Party reasonably believes that its Representatives have a need to know and
+such Representatives are bound by confidentiality obligations at least as
+restrictive as those contained herein. The Receiving Party will not
+disclose, distribute, or disseminate the Confidential Information to any
+third party, other than its Representatives, without the prior written
+consent of the Disclosing Party. The Receiving Party will at all times
+remain responsible for any violations of this Agreement by any of its
+Representatives. If the Receiving Party is legally compelled to disclose
+any of the Disclosing Party's Confidential Information, the Receiving Party
+will provide the Disclosing Party prompt prior written notice of such
+requirement so that the Disclosing Party may seek a protective order or
+other appropriate remedy and/or waive compliance with the terms of this
+Section. If such protective order or other remedy is not obtained or the
+Disclosing Party waives compliance with the provisions of this Section, the
+Receiving Party may furnish only that portion of the Confidential
+Information which it is advised by its counsel is legally required to be
+disclosed, and will use its best efforts to insure that confidential
+treatment will be afforded such disclosed portion of the Confidential
+Information.
+
+7.2 Specific Performance and Injunctive Relief. The Receiving Party
+acknowledges that in the event of a breach of Section 5.1 by the Receiving
+Party or its Representatives, substantial injury could result to the
+Disclosing Party and money damages will not be a sufficient remedy for such
+breach. Therefore, in the event that the Receiving Party or its
+Representatives engage in, or threaten to engage in any act which violates
+Section 5.1, the Disclosing Party will be entitled to seek, in addition to
+all other remedies which may be available to it under law, injunctive
+relief (including, without limitation, temporary restraining orders, or
+preliminary or permanent injunctions) and specific enforcement of the terms
+of Section 5.1. The Disclosing Party will not be required to post a bond or
+other security in connection with the granting of any such relief.
+
+8. Data Protection and Privacy
+
+8.1 Compliance with Data Protection Laws. Each Party shall comply with all
+Applicable Laws relating to data protection and privacy in connection with
+its Processing of Personal Data under this Agreement.
+
+8.2 Roles of the Parties. With respect to the Processing of Personal Data
+under this Agreement, Customer is the Data Controller and Serverless is the
+Data Processor.
+
+8.3 Processing of Personal Data. (a) Instructions. Serverless shall Process
+Personal Data only on documented instructions from Customer, including with
+regard to transfers of Personal Data to a third country or an international
+organization, unless required to do otherwise by Applicable Law. (b)
+Purpose Limitation. Serverless shall not Process Personal Data in a manner
+that is incompatible with the purposes outlined in this Agreement or as
+otherwise instructed by Customer.
+
+8.4 Obligations of Serverless as Processor, covering confidentiality,
+security measures (encryption in transit/at rest, access control, logging
+and monitoring, regular security assessments) and breach notification
+within 24 hours. See the source PDF for the complete text.
+
+8.5 Sub-processors. Serverless may engage Sub-processors subject to the
+same data protection obligations, will maintain an up-to-date list
+available on request, and will inform Customer of intended changes.
+
+8.6 Assistance to Customer with Data Subject rights requests and Data
+Protection Impact Assessments.
+
+8.7 Data Location. Customer acknowledges and agrees that Personal Data may
+be processed in the United States.
+
+8.8 Return and Deletion of Personal Data. Upon termination of this
+Agreement, Serverless shall, at Customer's choice, delete or return all
+Personal Data to Customer, unless retention is required by Applicable Law.
+
+9. Intellectual Property
+
+9.1 Serverless Intellectual Property. As between the Parties, all right,
+title, and interest in and to the Services, the Usage Data (as defined
+below), and the Aggregate Data (as defined below), and all intellectual
+property rights therein, are and will remain the sole and exclusive
+property of Serverless.
+
+9.2 Customer Intellectual Property. As between the Parties, all right,
+title, and interest in and to Customer Data, and all intellectual property
+rights therein, are and will remain the sole and exclusive property
+Customer. Customer hereby grants Serverless a non-exclusive, worldwide,
+fully paid-up, royalty-free right and license, with the right to grant
+sublicenses through multiple tiers to vendors providing services to
+Serverless (such as hosting providers), to reproduce, execute, use, store,
+archive, modify, perform, display, and distribute the Customer Data only
+for the purpose of providing the Services hereunder. Upon expiration or
+termination of the Agreement, Serverless may retain an archival copy of the
+Customer Data kept in the normal course of business or for purposes of
+complying with Applicable Law.
+
+9.3 Aggregated Data. Serverless monitors the performance and use of the
+Services by Customer and Authorized Users, and Serverless collects data in
+connection therewith, including, without limitation, date and time that
+Customer and Authorized Users access the SaaS Software or On-Premise
+Software, the portions or pages of the SaaS Software or On-Premise Software
+visited or used, the frequency and number of times such pages are accessed,
+and other usage data (the "Usage Data"). Serverless may combine this Usage
+Data with other data (including Customer Data), and use such combined
+data, or a subset thereof, in an aggregate and anonymous manner (the
+"Aggregate Data"). Aggregate Data does not identify Customer or any
+Authorized User. Customer hereby agrees that Serverless and its successors
+and assigns may collect, use, publish, disseminate, sell, transfer, and
+otherwise exploit such Aggregate Data in any way that Serverless (or its
+successors or assigns) sees fit. Serverless's collection, processing,
+storage, transfer, and use of Customer Data, Usage Data and Aggregate Data
+shall at all times comply with Applicable Laws.
+
+10. Representations and Warranties; Disclaimers
+
+10.1 Mutual Representations and Warranties. Each Party represents and
+warrants to the other Party that: (i) it is duly organized, validly
+existing, and in good standing under its jurisdiction of organization and
+has the right to enter into this Agreement; (ii) the execution, delivery,
+and performance of this Agreement, and the consummation of the
+transactions contemplated hereby, are within the corporate powers of such
+Party and have been duly authorized by all necessary corporate action on
+the part of such Party, and constitute a valid and binding agreement of
+such Party; (iii) it has the full power, authority, and right to perform
+its obligations and grant the rights it grants hereunder; and (iv) its
+performance under this Agreement shall comply with all Applicable Laws.
+
+10.2 Customer's Representations and Warranties. In addition to the above,
+Customer represents and warrants to Serverless that it has the full right,
+power, and authority to collect, process, store, and transmit the Customer
+Data, and to grant the licenses and rights to use Customer Data as set
+forth herein. Without limiting the generality of the foregoing, Customer
+represents and warrants that it has obtained all necessary consents from
+the individuals to whom any Customer Data relates to collect, process,
+store, transmit, and sublicense the Customer Data, as required under
+Applicable Laws, including, without limitation applicable privacy and data
+protection laws, rules, and regulations.
+
+10.3 Disclaimers. EXCEPT AS EXPRESSLY SET FORTH IN SECTION 8.1 AND SECTION
+8.2 ABOVE, THE SERVICES, ANY BETA FEATURES, THEIR COMPONENTS, ANY
+DOCUMENTATION, AND ANY OTHER MATERIALS PROVIDED BY SERVERLESS HEREUNDER ARE
+PROVIDED "AS IS" AND "AS AVAILABLE," AND SERVERLESS DOES NOT MAKE ANY
+REPRESENTATIONS OR WARRANTIES WITH RESPECT TO THE SAME OR OTHERWISE IN
+CONNECTION WITH THIS AGREEMENT, AND SERVERLESS HEREBY DISCLAIMS ANY AND ALL
+EXPRESS, IMPLIED, OR STATUTORY WARRANTIES, INCLUDING, WITHOUT LIMITATION,
+ANY WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE, AVAILABILITY, ERROR-FREE OR UNINTERRUPTED OPERATION,
+AND ANY WARRANTIES ARISING FROM A COURSE OF DEALING, COURSE OF PERFORMANCE,
+OR USAGE OF TRADE. TO THE EXTENT THAT SERVERLESS MAY NOT AS A MATTER OF
+APPLICABLE LAW DISCLAIM ANY IMPLIED WARRANTY, THE SCOPE AND DURATION OF
+SUCH WARRANTY WILL BE THE MINIMUM PERMITTED UNDER SUCH LAW.
+
+11. Limitation of Liability
+
+11.1 EXCEPT IN CONNECTION WITH SUBSCRIBER'S FAILURE TO PAY ANY AMOUNTS DUE
+AND OWING HEREUNDER, OR A PARTY'S GROSS NEGLIGENCE OR WILLFUL MISCONDUCT:
+(I) IN NO EVENT WILL EITHER PARTY BE LIABLE TO THE OTHER PARTY OR ANY THIRD
+PARTY FOR ANY INCIDENTAL, INDIRECT, CONSEQUENTIAL, SPECIAL, EXEMPLARY, OR
+PUNITIVE DAMAGES OF ANY KIND (INCLUDING, BUT NOT LIMITED TO, LOST REVENUES
+OR PROFITS) ARISING FROM OR RELATING TO THIS AGREEMENT, REGARDLESS OF
+WHETHER SUCH PARTY WAS ADVISED, HAD OTHER REASON TO KNOW, OR IN FACT KNEW
+OF THE POSSIBILITY THEREOF; AND (II) EACH PARTY'S AGGREGATE LIABILITY FOR
+DIRECT DAMAGES UNDER THIS AGREEMENT WILL NOT EXCEED THE FEES PAID BY
+CUSTOMER HEREUNDER DURING THE TWELVE (12) MONTHS PRIOR TO THE EVENT GIVING
+RISE TO THE CLAIM.
+
+12. Indemnification
+
+12.1 Indemnification by Customer. Customer will indemnify, defend, and hold
+Serverless and its Affiliates, and its and their respective
+Representatives harmless from and against any and all losses, damages,
+costs and expenses (including, without limitation, reasonable attorneys'
+fees) (collectively, "Losses") incurred by any of the foregoing in
+connection with any action, claim, or proceeding brought by a third party
+(each, a "Claim") against any of the foregoing arising from (i) any
+Customer Data, when used by Serverless as permitted in this Agreement; (ii)
+any Applications; or (iii) the gross negligence or willful misconduct of
+Customer or any Authorized User.
+
+12.2 Indemnification by Serverless. Serverless will indemnify, defend, and
+hold Customer and its Affiliates, and its and their respective
+Representatives harmless from and against any and all Losses incurred by
+any of the foregoing in connection with any Claim arising from (i)
+Serverless's gross negligence or willful misconduct, or (ii) the
+infringement or misappropriation of any third-party intellectual property
+rights by the SaaS Software or the On-Premise Software. In the event that
+the SaaS Software or On-Premise Software is subject to a Claim under
+subsection (ii) above, or if Serverless reasonably determines that the SaaS
+Software of On-Premise Software is likely to be the subject of such a
+Claim, Serverless shall, at its own expense: (a) procure for Customer the
+right to continue to use the SaaS Software or On-Premise Software as
+provided in this Agreement; (b) replace the infringing components of the
+SaaS Software or On-Premise Software with other components with equivalent
+functionality; or (c) suitably modify the SaaS Software or On-Premise
+Software so that it is non-infringing and functionally equivalent. If none
+of the foregoing options are available to Serverless on commercially
+reasonable terms, Serverless may terminate the applicable Order Form(s) or
+this Agreement without further liability to Customer, and Serverless will
+provide Customer with a pro-rata refund of any pre-paid but unearned fees.
+Notwithstanding the foregoing, Serverless is excused from its indemnity
+obligations to the extent that any Claim arises from or is based upon (1)
+use of the SaaS Software or On-Premise Software other than in accordance
+with this Agreement; (2) any Customer Data or Applications; (3) any
+modifications, alterations, or implementations of the SaaS Software or
+On-Premise Software made by or on behalf of Customer (other than by
+Serverless), including, without limitation, Modified Versions; (4) breach
+by Customer of the terms this Agreement; or (5) use of the SaaS Software or
+On-Premise Software in combination with unauthorized modules, apparatus,
+hardware, software, or services not supplied or specified in writing by
+Serverless. This Section 10.2 states Customer's sole and exclusive remedy,
+and Serverless's sole and exclusive liability, regarding any intellectual
+property infringement Claim.
+
+12.3 Procedure. The indemnification obligations set forth in Section 10.1
+and Section 10.2 above are subject to the indemnified Party: (i) promptly
+notifying the indemnifying Party of the Claim, provided, however, that
+failure to provide such notice will not relieve the indemnifying Party of
+its indemnity obligations hereunder unless it is materially prejudiced by
+such failure; (ii) providing the indemnifying Party, at its sole cost and
+expense, with reasonable cooperation in the defense of the Claim; and (iii)
+providing the indemnifying Party with sole control over the defense and
+negotiations for a settlement or compromise of the Claim, provided that the
+indemnifying Party may not make any admission of liability on behalf of the
+indemnified Party without the indemnified Party's approval.
+
+13. Miscellaneous
+
+13.1 Feedback. During the Term, Customer may elect to provide Serverless
+with feedback, comments, and suggestions with respect to the SaaS Software,
+or the Services ("Feedback"). Customer agrees that Serverless may, and
+hereby grants Serverless the right to, use, reproduce, disclose, and
+otherwise exploit any and all such Feedback without compensation or
+attribution to Customer or any third party.
+
+13.2 Third-Party Content. The Services may include hyperlinks to other
+websites or content or resources provided by third parties. Serverless has
+no control over any such external sites or resources. Customer
+acknowledges and agrees that Serverless is not responsible for the
+availability of any such external sites or resources and does not endorse
+any advertising, products, or other materials on or available from such
+websites or resources. Customer acknowledges and agrees that Serverless is
+not liable for any loss or damage which may be incurred by Customer or its
+Authorized Users as a result of the availability of those external sites
+or resources or as a result of any reliance placed by Customer on the
+completeness, accuracy, or existence of any advertising, products, or
+other materials on or available from such websites or resources.
+
+13.3 Relationship of the Parties. The relationship of the Parties is one of
+independent contractors. This Agreement does not create, between Serverless
+and Customer, the relationship of principal and agent, employer and
+employee, joint venturers, co-partners, or any such other relationship, the
+existence of which is expressly denied. Neither Party has the authority to
+hold itself out as having the authority to speak for, represent, obligate
+or legally bind the other Party in any way.
+
+13.4 Severability. If and to the extent that any court or tribunal of
+competent jurisdiction holds any provision of this Agreement to be
+unenforceable in a final non-appealable order, such unenforceable provision
+shall be stricken and the remainder of this Agreement shall not be
+affected thereby. The Parties shall in good faith attempt to replace any
+unenforceable provision with a provision that is enforceable and that
+comes close as possible to expressing the intention of the original
+provision.
+
+13.5 Waiver; Remedies. A waiver of rights under this Agreement will not be
+effective unless it is in writing and signed by an authorized
+representative of the Party that is waiving the rights. Except as expressly
+stated herein, all remedies specified in this Agreement shall be cumulative
+and in addition to any other rights or remedies available at law or in
+equity.
+
+13.6 Headings. Headings are for convenience of reference only and shall in
+no way affect interpretation of the Agreement.
+
+13.7 Assignment. Neither Party may assign or otherwise transfer any of its
+rights or obligations under this Agreement without the prior, written
+consent of the other Party; provided, however, that a Serverless may, upon
+written notice to Customer and without the consent of Customer, assign or
+otherwise transfer this Agreement: (i) to any of its Affiliates; or (ii) in
+connection with a change of control transaction (whether by merger,
+consolidation, sale of equity interests, sale of all or substantially all
+assets, or otherwise). Any assignment or other transfer in violation of
+this Section will be null and void. Subject to the foregoing, this
+Agreement will be binding upon and inure to the benefit of the Parties
+hereto and their permitted successors and assigns.
+
+13.8 Notices. Any notices to be provided pursuant to this Agreement shall
+be made by either (i) registered mail, (ii) hand delivery or (iii) e-mail
+transmission, as long as, in the case of (iii), accompanied by regular
+mail. The notice shall be effective five (5) days after posting in regular
+mail, if accompanied by e-mail, or the day delivered, if by hand delivery
+or registered mail, as the case may be. Such notices are to be sent to the
+Parties' respective addresses set forth above, or to such other address as
+notified by a Party in accordance with this section. Alternatively,
+Serverless may send notices to Customer through the SaaS Software, which
+notices will be deemed received within 1 business day from the date sent
+by Serverless.
+
+13.9 Governing Law. This Agreement, and any and all disputes directly or
+indirectly arising out of or relating to this Agreement, will be governed
+by and construed in accordance with the laws of the State of California,
+without reference to the choice of law rules thereof. Each of the Parties
+hereby irrevocably consents and submits to the exclusive jurisdiction of
+the state and federal courts located in San Francisco, California for any
+such disputes, and waives any objections to the laying of venue in such
+courts.
+
+13.10 Expiration of Unsigned Agreement. If this Agreement is signed by only
+one Party and remains unsigned by the other Party for a period exceeding
+twenty (20) days, the Agreement shall automatically become null and void,
+and neither Party shall have any obligations or rights under its terms.
+
+13.11 Entire Agreement. This Agreement, together with the Order Forms, sets
+forth the entire agreement of the Parties as to its subject matter and
+supersedes all prior agreements, negotiations, representations, and
+promises between the Parties with respect to the subject matter hereof.
+Unless there is a signed Order Form, Serverless may modify this Agreement
+at any time by providing notice to the Customer, including by posting a
+revised version on the Serverless website or through the Services. By
+continuing to access or use the Services after the effective date, the
+Customer agrees to be bound by the modified Agreement.
+
+================================================================================
+
+End of transcription.

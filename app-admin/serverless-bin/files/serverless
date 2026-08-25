@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /usr/bin/node /usr/libexec/serverless-bin/dist/sf-core.js "$@"
