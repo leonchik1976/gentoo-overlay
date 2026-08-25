@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		The official ChatGPT desktop application for Linux, repackaged from
+		OpenAI's prebuilt Debian packages. It provides ChatGPT projects, local
+		file access, and Codex integration.
+	</longdescription>
+	<upstream>
+		<doc>https://learn.chatgpt.com/docs/linux/linux-app</doc>
+	</upstream>
+</pkgmetadata>
