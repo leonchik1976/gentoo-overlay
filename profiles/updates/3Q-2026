@@ -1,0 +1,1 @@
+move sys-cluster/aws-iam-authenticator sys-cluster/aws-iam-authenticator-bin
