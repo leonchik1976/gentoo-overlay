@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Claude Desktop is Anthropic's official desktop client for Claude.ai,
+		bundling the Chat, Cowork, and Claude Code experiences (parallel
+		sessions, visual diff review, an integrated terminal/editor, and
+		live app preview) in one Electron application. Repackaged here from
+		Anthropic's own Debian/Ubuntu .deb, since no upstream tarball or
+		source build is offered.
+	</longdescription>
+	<use>
+		<flag name="suid">Install chrome-sandbox setuid root (upstream's own
+			Debian package default), so Chromium's sandbox still works if
+			unprivileged user namespaces are unavailable. Disabled by
+			default, since most Gentoo kernels enable unprivileged userns
+			and that alone is normally enough; enable this flag if your
+			kernel config or an admin-set sysctl disables it instead.</flag>
+	</use>
+	<upstream>
+		<doc>https://code.claude.com/docs/en/desktop-linux</doc>
+	</upstream>
+</pkgmetadata>
