@@ -360,6 +360,8 @@ CRATES="
 	zerovec@0.10.4
 "
 
+RUST_MIN_VER="1.75.0"
+
 inherit cargo
 
 DESCRIPTION="Modern watch command with a TUI, diff highlighting, and time-travel playback"
