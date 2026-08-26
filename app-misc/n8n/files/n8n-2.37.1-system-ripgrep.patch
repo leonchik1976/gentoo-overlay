@@ -1,0 +1,22 @@
+--- a/pnpm-workspace.yaml
++++ b/pnpm-workspace.yaml
+@@ -479,7 +479,7 @@
+   '@sentry/node-cpu-profiler': false
+   '@sentry/node-native-stacktrace': false
+   '@swc/core': false
+-  '@vscode/ripgrep': true
++  '@vscode/ripgrep': false
+   agent-browser: false
+   bufferutil: false
+   core-js: false
+--- a/packages/@n8n/computer-use/src/tools/shell/sandbox.ts
++++ b/packages/@n8n/computer-use/src/tools/shell/sandbox.ts
+@@ -61,7 +61,7 @@
+ 	}
+ 
+ 	const { SandboxManager } = await import('@anthropic-ai/sandbox-runtime');
+-	const { rgPath } = await import('@vscode/ripgrep');
++	const rgPath = '/usr/bin/rg';
+ 
+ 	if (!SandboxManager.isSupportedPlatform()) {
+ 		return {

@@ -22,7 +22,12 @@ def distfile(name: str, version: str, uri: str) -> str:
     safe_name = re.sub(r"[^A-Za-z0-9+_.-]", "-", name.lstrip("@"))
     safe_version = re.sub(r"[^A-Za-z0-9+_.-]", "-", version)
     legacy = f"n8n-pnpm-{safe_name}-{safe_version}.tgz"
-    if len(legacy) <= 50:
+    # 40, not 50: at 2.37.1's closure size (3,757 artifacts) a 50-char
+    # cutoff pushes the total aliases_size just past the 125,000 guard
+    # below (125,899). Lowering the cutoff routes more names through the
+    # same existing compact-hash path already used for long names,
+    # trading some readability for headroom as the closure keeps growing.
+    if len(legacy) <= 40:
         return legacy
     digest = base64.urlsafe_b64encode(hashlib.sha256(uri.encode()).digest()[:9]).decode()
     return f"n8n-p-{digest}.tgz"
