@@ -1,0 +1,55 @@
+[Unit]
+Description=webkubectl - run kubectl in a browser-based terminal
+Documentation=https://github.com/1Panel-dev/webkubectl
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# webkubectl isolates every browser session in its own PID/mount
+# namespace (see start-session.sh) before dropping privileges to
+# "nobody" inside that namespace, so the supervising process needs
+# CAP_SYS_ADMIN (mount, unshare) and CAP_SYS_CHROOT rather than a
+# fully unprivileged service account.
+User=root
+CapabilityBoundingSet=CAP_SYS_ADMIN CAP_SYS_CHROOT CAP_SETUID CAP_SETGID CAP_CHOWN CAP_DAC_OVERRIDE
+NoNewPrivileges=false
+Environment=WELCOME_BANNER="Welcome to Web Kubectl, try kubectl --help."
+# Secure-by-default posture: bound to loopback only and no
+# per-session cluster/credential injection via URL query args. Every
+# session uses a single, administrator-provided kubeconfig at
+# /etc/webkubectl/kubeconfig (see init-kubectl.sh) -- this service
+# only ever proxies to whatever cluster(s) that file points at, and
+# init-kubectl.sh/start-session.sh no longer read any caller-supplied
+# argument at all, so re-enabling --permit-arguments here would not
+# by itself let a caller choose a different cluster or credentials;
+# that path was closed by removing the code that consumed those
+# arguments, not by this flag. --permit-arguments=false is kept
+# anyway as defense-in-depth (gotty itself has no authentication of
+# its own, so there is no reason to let any client-supplied input
+# reach the process at all, used or not) and because gotty's own
+# cache/token exchange for legitimate per-caller arguments
+# (/api/kube-config, /api/kube-token in this fork) is itself gated by
+# this same flag and is not something this package's design uses.
+# Admins who need per-caller cluster selection must build that
+# themselves (their own auth layer plus a script that assembles a
+# kubeconfig from validated input, and code to actually consume the
+# result, none of which exists here).
+#
+# --permit-write IS enabled: with caller-controlled cluster/credential
+# selection gone, the loopback bind plus the single admin-approved
+# kubeconfig are the security boundary instead of blanket input
+# blocking -- a read-only kubectl terminal cannot actually run any
+# kubectl command, which defeats the point of this package. Confirmed
+# via an actual real-time WebSocket terminal session: with
+# --permit-write off, typed input reached the server but was silently
+# dropped (webtty.go: "if !wt.permitWrite { return nil }"), so no
+# command ever ran.
+Environment=KUBECTL_INSECURE_SKIP_TLS_VERIFY=false
+Environment=SESSION_STORAGE_SIZE=10M
+Environment="GOTTY_OPTIONS=--address 127.0.0.1 --port 8080 --permit-write --permit-arguments=false"
+ExecStart=/usr/libexec/webkubectl/start-webkubectl.sh
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,32 @@
+[Unit]
+Description=Boundary - identity-based access management for dynamic infrastructure
+Documentation=https://developer.hashicorp.com/boundary/docs
+After=network-online.target
+Wants=network-online.target
+ConditionPathExists=/etc/boundary/boundary.hcl
+
+[Service]
+Type=simple
+User=boundary
+Group=boundary
+WorkingDirectory=/var/lib/boundary
+ExecStart=/usr/bin/boundary server -config=/etc/boundary/boundary.hcl
+Restart=on-failure
+# Boundary mlock()s its process memory by default to keep worker-auth
+# and other key material off swap; without CAP_IPC_LOCK (and a raised
+# memlock limit) as a non-root user it refuses to start at all --
+# confirmed by an actual failed start: "Error initializing worker:
+# Failed to lock memory: cannot allocate memory". Not disabling this
+# via disable_mlock in the shipped config, since that would silently
+# drop a real security protection instead of granting the capability
+# it actually needs.
+AmbientCapabilities=CAP_NET_BIND_SERVICE CAP_IPC_LOCK
+LimitMEMLOCK=infinity
+NoNewPrivileges=true
+ProtectSystem=strict
+PrivateTmp=true
+ProtectHome=true
+ReadWritePaths=/var/lib/boundary
+
+[Install]
+WantedBy=multi-user.target

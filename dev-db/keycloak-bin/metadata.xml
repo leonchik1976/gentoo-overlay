@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<upstream>
+		<remote-id type="github">keycloak/keycloak</remote-id>
+	</upstream>
+	<use>
+		<flag name="db-dev-file">Build against the embedded, file-based H2 database (Keycloak's own default; not recommended for anything beyond quick local testing)</flag>
+		<flag name="db-dev-mem">Build against the embedded, in-memory H2 database (data is lost on every restart; testing only)</flag>
+		<flag name="db-mariadb">Build against MariaDB (driver already bundled upstream)</flag>
+		<flag name="db-mssql">Build against Microsoft SQL Server (driver already bundled upstream)</flag>
+		<flag name="db-mysql">Build against MySQL (driver already bundled upstream)</flag>
+		<flag name="db-postgres">Build against PostgreSQL (driver already bundled upstream)</flag>
+	</use>
+</pkgmetadata>

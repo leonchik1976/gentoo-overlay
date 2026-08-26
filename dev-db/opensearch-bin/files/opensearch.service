@@ -1,0 +1,71 @@
+[Unit]
+Description=OpenSearch - distributed search and analytics engine
+Documentation=https://opensearch.org/docs/
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=opensearch
+Group=opensearch
+Environment=OPENSEARCH_HOME=/opt/opensearch-bin-0
+Environment=OPENSEARCH_PATH_CONF=/etc/opensearch
+# opensearch-security (installed by this package) requires TLS
+# certificates configured in opensearch.yml before it will start at
+# all -- confirmed by every real start performed for this package,
+# on both arm64 and amd64: without them it exits with
+# "OpenSearchException[No SSL configuration found]". The
+# demo-configuration doc page
+# (https://docs.opensearch.org/latest/security/configuration/demo-configuration/)
+# is NOT the right reference for setting that up: it walks through
+# install_demo_configuration.sh, which this package deliberately does
+# not run (see the ebuild). For an install using this package, start
+# instead from
+# https://docs.opensearch.org/latest/security/configuration/index/,
+# which covers generating your own certificates
+# (generate-certificates/), configuring the security backend
+# (configuration/), and loading it into the cluster with
+# securityadmin.sh (security-admin/) -- distinct from, and not
+# gated by, the demo-config walkthrough.
+#
+# OPENSEARCH_INITIAL_ADMIN_PASSWORD is deliberately not referenced
+# here at all: it is read only by opensearch-tar-install.sh (a
+# separate convenience installer this package does not use) to feed
+# install_demo_configuration.sh, and plays no part in the
+# certificate-based setup path above -- confirmed the same way as the
+# SSL-configuration requirement two paragraphs up.
+EnvironmentFile=-/etc/opensearch/opensearch.env
+WorkingDirectory=/var/lib/opensearch
+# OPENSEARCH_JAVA_HOME is resolved from an explicitly supported JVM
+# (this package's own RDEPEND: virtual/jdk:25 or :21), not from
+# "java-config -O" (whatever JVM is currently eselect'd system-wide,
+# which a host can easily have set to something else entirely for an
+# unrelated package -- the same class of bug already found and fixed
+# for dev-db/cassandra-bin) and not hardcoded, since the exact /opt
+# path differs by JDK provider (openjdk-bin, corretto-bin, ...).
+ExecStart=/bin/sh -c 'OPENSEARCH_JAVA_HOME="$(java-config --select-vm="$(depend-java-query --get-vm "virtual/jdk:25 virtual/jdk:21")" --jre-home)" exec /opt/opensearch-bin-0/bin/opensearch'
+Restart=on-failure
+LimitNOFILE=65535
+LimitMEMLOCK=infinity
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+# /etc/opensearch is NOT listed here: the ebuild's pkg_postinst
+# creates opensearch.keystore once, on the live filesystem (not
+# baked into the package image -- see the ebuild for why), owned
+# root:opensearch, 0640 -- read-only to the opensearch user this
+# service runs as. OpenSearch only ever writes
+# opensearch.keystore.tmp (then renames it over the real file) when
+# no keystore exists yet; with one already present and owned as
+# above, confirmed by an actual real start against a fully
+# non-writable (service user gets read+execute only, no write)
+# config directory: OpenSearch read the existing keystore with no
+# AccessDeniedException and proceeded straight to its normal
+# fail-closed SSL-configuration check. /etc/opensearch is therefore
+# entirely read-only to the opensearch user; only data and log paths
+# need to be writable.
+ReadWritePaths=/var/lib/opensearch /var/log/opensearch
+
+[Install]
+WantedBy=multi-user.target

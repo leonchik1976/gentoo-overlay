@@ -1,0 +1,21 @@
+[Unit]
+Description=Loki - a horizontally scalable log aggregation system
+Documentation=https://grafana.com/docs/loki/
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=loki
+Group=loki
+WorkingDirectory=/var/lib/loki
+ExecStart=/usr/bin/loki -config.file=/etc/loki/config.yaml
+Restart=on-failure
+NoNewPrivileges=true
+ProtectSystem=strict
+PrivateTmp=true
+ProtectHome=true
+ReadWritePaths=/var/lib/loki
+
+[Install]
+WantedBy=multi-user.target

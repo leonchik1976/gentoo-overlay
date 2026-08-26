@@ -1,0 +1,30 @@
+[Unit]
+Description=MinIO is a high-performance S3-compatible object store
+Documentation=https://min.io/docs/minio/linux/index.html
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=minio
+Group=minio
+WorkingDirectory=/var/lib/minio
+Environment=MINIO_CONFIG_ENV_FILE=/etc/minio/minio.env
+EnvironmentFile=-/etc/minio/minio.env
+# $MINIO_OPTS (documented in minio.env, e.g. to change the listen
+# address/port) is only honored because it is referenced here --
+# systemd does not expand EnvironmentFile= variables into ExecStart=
+# automatically; without this the variable is dead configuration.
+# Confirmed via systemd.service(5): a bare "$VAR" word is split at
+# whitespace into zero or more arguments, so this is a no-op when
+# MINIO_OPTS is unset.
+ExecStart=/usr/bin/minio server $MINIO_OPTS /var/lib/minio/data
+Restart=on-failure
+NoNewPrivileges=true
+ProtectSystem=strict
+PrivateTmp=true
+ProtectHome=true
+ReadWritePaths=/var/lib/minio
+
+[Install]
+WantedBy=multi-user.target

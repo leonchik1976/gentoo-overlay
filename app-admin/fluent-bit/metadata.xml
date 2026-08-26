@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<use>
+		<flag name="kafka">Enable the Kafka input/output plugins via dev-libs/librdkafka</flag>
+		<flag name="luajit">Enable Lua scripting support for filters via dev-lang/luajit</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">fluent/fluent-bit</remote-id>
+	</upstream>
+</pkgmetadata>

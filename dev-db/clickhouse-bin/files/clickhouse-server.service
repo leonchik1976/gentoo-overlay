@@ -1,0 +1,33 @@
+[Unit]
+Description=ClickHouse Server (analytic DBMS for big data)
+Documentation=https://clickhouse.com/docs
+Requires=network-online.target
+After=time-sync.target network-online.target
+Wants=time-sync.target
+
+[Service]
+Type=notify
+User=clickhouse
+Group=clickhouse
+Restart=always
+RestartSec=30
+TimeoutStopSec=infinity
+Environment=CLICKHOUSE_WATCHDOG_NO_FORWARD=1
+TimeoutStartSec=0
+RuntimeDirectory=%p
+ExecStart=/usr/bin/clickhouse-server --config=/etc/clickhouse-server/config.xml --pid-file=%t/%p/%p.pid
+EnvironmentFile=-/etc/default/%p
+EnvironmentFile=-/etc/default/clickhouse
+LimitCORE=infinity
+LimitNOFILE=500000
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_IPC_LOCK CAP_SYS_NICE CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_IPC_LOCK CAP_SYS_NICE CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+ProtectSystem=strict
+PrivateTmp=true
+ProtectHome=true
+ReadWritePaths=/var/lib/clickhouse /var/log/clickhouse-server
+
+[Install]
+# ClickHouse should not start from the rescue shell (rescue.target).
+WantedBy=multi-user.target

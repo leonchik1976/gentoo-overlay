@@ -1,0 +1,39 @@
+[Unit]
+Description=Apache Cassandra distributed database
+Documentation=https://cassandra.apache.org/doc/latest/
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=cassandra
+Group=cassandra
+Environment=CASSANDRA_CONF=/etc/cassandra
+Environment=CASSANDRA_HOME=/opt/cassandra-bin-0
+Environment=CASSANDRA_LOG_DIR=/var/log/cassandra
+WorkingDirectory=/var/lib/cassandra
+# Cassandra 5.0.x's UDF sandbox (ThreadAwareSecurityManager) still
+# calls the legacy java.security.Policy/SecurityManager API, which
+# JDK 24+ permanently disables (JEP 486) -- confirmed by an actual
+# failed start under this host's default JDK 25:
+# "UnsupportedOperationException: Setting a system-wide Policy object
+# is not supported". Without JAVA_HOME pinned here, cassandra.in.sh
+# falls back to whatever "java" is first on PATH, which is not
+# necessarily one of this package's own RDEPEND-constrained JRE
+# slots (virtual/jre:17 or :11) on a host with multiple JDKs
+# installed. Resolve and pin an actually-supported JDK explicitly
+# instead of trusting the system default.
+ExecStart=/bin/sh -c 'JAVA_HOME="$(java-config --select-vm="$(depend-java-query --get-vm "virtual/jre:17 virtual/jre:11")" --jre-home)" exec /opt/cassandra-bin-0/bin/cassandra -f'
+Restart=on-failure
+LimitNOFILE=100000
+LimitMEMLOCK=infinity
+LimitNPROC=32768
+LimitAS=infinity
+NoNewPrivileges=true
+ProtectSystem=strict
+PrivateTmp=true
+ProtectHome=true
+ReadWritePaths=/var/lib/cassandra /var/log/cassandra
+
+[Install]
+WantedBy=multi-user.target

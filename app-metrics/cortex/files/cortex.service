@@ -1,0 +1,37 @@
+[Unit]
+Description=Cortex - horizontally scalable, multi-tenant Prometheus
+Documentation=https://cortexmetrics.io/docs/
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=cortex
+Group=cortex
+WorkingDirectory=/var/lib/cortex
+# The shipped single-process example config has no real ring/cluster
+# members, so advertise the loopback interface for ring
+# self-discovery instead of upstream's default [eth0, en0] guesses,
+# which do not exist on most systemd-named-interface hosts (verified
+# by an actual failed start: "no address found for [eth0 en0]").
+# ruler.rule-path likewise defaults to the top-level /rules; point it
+# at the persistent data directory instead.
+ExecStart=/usr/bin/cortex -config.file=/etc/cortex/config.yaml \
+	-ingester.lifecycler.interface=lo \
+	-alertmanager.sharding-ring.instance-interface-names=lo \
+	-compactor.ring.instance-interface-names=lo \
+	-distributor.ring.instance-interface-names=lo \
+	-frontend.instance-interface-names=lo \
+	-querier.instance-interface-names=lo \
+	-ruler.ring.instance-interface-names=lo \
+	-store-gateway.sharding-ring.instance-interface-names=lo \
+	-ruler.rule-path=/var/lib/cortex/rule-tmp
+Restart=on-failure
+NoNewPrivileges=true
+ProtectSystem=strict
+PrivateTmp=true
+ProtectHome=true
+ReadWritePaths=/var/lib/cortex
+
+[Install]
+WantedBy=multi-user.target

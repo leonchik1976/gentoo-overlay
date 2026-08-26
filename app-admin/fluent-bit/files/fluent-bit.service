@@ -1,0 +1,23 @@
+[Unit]
+Description=Fluent Bit - fast and lightweight log/metrics processor
+Documentation=https://docs.fluentbit.io/
+Wants=network-online.target
+After=network-online.target
+ConditionPathExists=/etc/fluent-bit/fluent-bit.conf
+
+[Service]
+User=fluent-bit
+Group=fluent-bit
+WorkingDirectory=/var/lib/fluent-bit
+ExecStart=/usr/bin/fluent-bit --config=/etc/fluent-bit/fluent-bit.conf
+Restart=on-failure
+RestartSec=3
+AmbientCapabilities=CAP_DAC_READ_SEARCH
+NoNewPrivileges=true
+ProtectSystem=strict
+PrivateTmp=true
+ProtectHome=true
+ReadWritePaths=/var/lib/fluent-bit
+
+[Install]
+WantedBy=multi-user.target

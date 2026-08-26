@@ -1,0 +1,22 @@
+[Unit]
+Description=Neo4j Graph Database (Community Edition)
+Documentation=https://neo4j.com/docs/
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=neo4j
+Group=neo4j
+WorkingDirectory=/var/lib/neo4j
+ExecStart=/opt/neo4j-bin-0/bin/neo4j console
+Restart=on-failure
+LimitNOFILE=60000
+NoNewPrivileges=true
+ProtectSystem=strict
+PrivateTmp=true
+ProtectHome=true
+ReadWritePaths=/var/lib/neo4j /var/log/neo4j
+
+[Install]
+WantedBy=multi-user.target

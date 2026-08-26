@@ -1,0 +1,15 @@
+# Example static configuration for Traefik.
+# See https://doc.traefik.io/traefik/reference/install-configuration/configuration-options/
+# for the full reference.
+
+entryPoints:
+  web:
+    address: ":80"
+
+providers:
+  file:
+    directory: /etc/traefik/dynamic
+    watch: true
+
+log:
+  level: INFO

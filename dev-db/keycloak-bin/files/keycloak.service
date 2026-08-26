@@ -1,0 +1,46 @@
+[Unit]
+Description=Keycloak Identity and Access Management
+Documentation=https://www.keycloak.org/documentation
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=keycloak
+Group=keycloak
+WorkingDirectory=/var/lib/keycloak
+# "start" (production mode, as opposed to "start-dev") is Keycloak's
+# own fail-closed default: it refuses to launch at all without either
+# HTTPS key material configured or an explicit http-enabled=true
+# opt-in -- confirmed by an actual start attempt with the stock,
+# all-commented-out keycloak.conf shipped by this package: "Key
+# material not provided to setup HTTPS. Please configure your
+# keys/certificates, or ... see the http-enabled option." This
+# package deliberately ships no default that silences that check;
+# configure TLS (or http-enabled=true behind a trusted reverse proxy)
+# in /etc/keycloak/keycloak.conf before starting, plus the db
+# connection settings (db-url, db-username, db-password) for whichever
+# vendor this package was built against (see the db_* USE flags in
+# the ebuild -- the vendor itself is a build-time choice, baked in by
+# "kc.sh build --db=...", not something switchable here at runtime).
+#
+# --optimized skips Keycloak's own runtime re-augmentation (the
+# ebuild already ran "kc.sh build" once at package-build time), which
+# is required here since that step writes into the install tree's own
+# lib/quarkus/ and would otherwise fail under ProtectSystem=strict
+# below. If you change a *build-time* option (db vendor, features,
+# ...) you must rebuild (re-run "kc.sh build" as root with the new
+# option, or re-emerge with a different db_* USE flag) --
+# "start --optimized" refuses to start otherwise. Purely *runtime*
+# options (hostname, proxy, http-enabled, db-url/-username/-password,
+# ...) can still be changed freely without a rebuild.
+ExecStart=/opt/keycloak-bin-0/bin/kc.sh start --optimized
+Restart=on-failure
+NoNewPrivileges=true
+ProtectSystem=strict
+PrivateTmp=true
+ProtectHome=true
+ReadWritePaths=/var/lib/keycloak /var/log/keycloak
+
+[Install]
+WantedBy=multi-user.target
