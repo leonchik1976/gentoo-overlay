@@ -3,7 +3,24 @@
 
 EAPI=8
 
-inherit systemd
+# bin/cqlsh (this exact release) accepts Python 3.8-3.13; cqlsh.py's
+# own top-level check hard-exits for >= 3.14 (confirmed by reading
+# both bin/cqlsh and bin/cqlsh.py directly). Of that range, only
+# python3_12 and python3_13 are still live implementations in the
+# current python-utils-r1.eclass -- older ones are historical and no
+# longer selectable; verified against the eclass, not assumed.
+#
+# python-r1 (RDEPEND-only; no per-implementation build/install work
+# happens here, so no pkg_setup or python_foreach_impl is needed --
+# python-r1 doesn't even export pkg_setup, unlike python-single-r1):
+# bin/cqlsh isn't pinned to one interpreter chosen at this package's
+# own build time, it discovers a supported one itself at real runtime
+# (see src_install), so PYTHON_TARGETS' "possibly several enabled at
+# once" model fits this "just tell Portage the real requirement"
+# use better than python-single-r1's "exactly one" model.
+PYTHON_COMPAT=( python3_12 python3_13 )
+
+inherit python-r1 systemd
 
 DESCRIPTION="Highly scalable, eventually consistent, distributed NoSQL database"
 HOMEPAGE="https://cassandra.apache.org/"
@@ -52,10 +69,22 @@ ACCT_DEPEND="
 	acct-group/cassandra
 	acct-user/cassandra
 "
+# The Cassandra daemon itself (bin/cassandra, launched by the systemd
+# unit) is pure JVM and needs no Python; bin/cqlsh does, at runtime
+# only (see the comment above), so PYTHON_DEPS is RDEPEND-only -- no
+# build-time Python dependency applies here, so it's kept out of
+# BDEPEND entirely.
 RDEPEND="
 	${ACCT_DEPEND}
+	${PYTHON_DEPS}
 	|| ( virtual/jre:17 virtual/jre:11 )
 "
+# pkgcheck's RequiredUseDefaults finding for this is expected and
+# accepted: the current profile tree's own PYTHON_TARGETS default
+# (base/make.defaults: "python3_14", confirmed directly) is exactly
+# the version cqlsh.py rejects, so no supported flag can default on
+# without silently reproducing this package's original bug.
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 RESTRICT="strip"
 case ${ARCH} in
@@ -97,6 +126,25 @@ src_install() {
 	# installed as shipped by upstream.
 	cp -r bin lib tools doc pylib "${ddest}"/ || die
 	dosym -r /etc/cassandra "${dest}"/conf
+
+	# bin/cqlsh's own interpreter loop only tries generic "python3"
+	# and "python" (confirmed by reading bin/cqlsh), so it fails on a
+	# host where those resolve to an unsupported version (e.g. a
+	# system default of Python 3.14, rejected by cqlsh.py's own
+	# version check) even with a supported interpreter installed
+	# alongside it. Try named, unqualified command names first --
+	# resolved via PATH at actual cqlsh runtime on whatever machine
+	# this runs on, not a path baked in at this package's own build
+	# time -- newest supported first, falling back to upstream's
+	# original python3/python. CQLSH_PYTHON and --python, handled
+	# earlier in the script, still take priority over all of this.
+	# grep first and die loudly rather than silently ship an
+	# unmodified, still-broken loop after a future cqlsh rewrite.
+	grep -q '^    for interpreter in python3 python; do$' "${ddest}"/bin/cqlsh \
+		|| die "bin/cqlsh's default interpreter loop text not found -- update this sed"
+	sed -i \
+		-e 's|^    for interpreter in python3 python; do$|    for interpreter in python3.13 python3.12 python3 python; do|' \
+		"${ddest}"/bin/cqlsh || die
 
 	# lib/sigar-bin/ ships ~20 prebuilt native SIGAR (System
 	# Information Gatherer And Reporter) libraries, one per historical
