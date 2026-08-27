@@ -2,7 +2,7 @@
 
 set -eu
 
-liquibase_home=${LIQUIBASE_HOME:-/opt/liquibase-bin-0}
+liquibase_home=${LIQUIBASE_HOME:-/opt/liquibase}
 
 if [ -z "${JAVA_HOME:-}" ]; then
 	java_depend='>=virtual/jre-17:*'

@@ -44,12 +44,22 @@ cleanup() {
 trap cleanup EXIT
 
 mount -t tmpfs -o size="${SESSION_STORAGE_SIZE:-10M}" tmpfs "${sessiondir}"
+# /var/lib/webkubectl itself is 0711 (traversal-only, no listing) so
+# that "nobody" can reach into its own session directory below --
+# each session's own root still needs to be 0700 owned by nobody
+# itself, since the mount above replaces whatever mode mktemp gave
+# the original mountpoint with tmpfs's own default.
+chown nobody:nogroup "${sessiondir}"
+chmod 0700 "${sessiondir}"
 cd "${sessiondir}"
 echo 'PS1="> "' >> .bashrc
 echo 'alias ll="ls -la"' >> .bashrc
-mkdir -p .kube
+mkdir -m 0700 -p .kube
 
 export HOME="${sessiondir}"
+export USER=nobody
+export LOGNAME=nobody
+export SHELL=/bin/bash
 
 admin_kubeconfig=${WEBKUBECTL_KUBECONFIG:-/etc/webkubectl/kubeconfig}
 if [ ! -r "${admin_kubeconfig}" ]; then
@@ -59,6 +69,7 @@ if [ ! -r "${admin_kubeconfig}" ]; then
 	exit 1
 fi
 cp "${admin_kubeconfig}" .kube/config
+chmod 0600 .kube/config
 
 if [ "${KUBECTL_INSECURE_SKIP_TLS_VERIFY}" = "true" ]; then
 	clusters=$(kubectl config get-clusters | tail -n +2)
@@ -69,6 +80,8 @@ if [ "${KUBECTL_INSECURE_SKIP_TLS_VERIFY}" = "true" ]; then
 fi
 
 chown -R nobody:nogroup .kube
+chmod 0700 .kube
+chmod 0600 .kube/config
 
 export TMPDIR="${sessiondir}"
 
@@ -77,5 +90,19 @@ for env_name in $(env | grep '^GOTTY' | cut -d= -f1); do
 done
 unset WELCOME_BANNER PPROF_ENABLED KUBECTL_INSECURE_SKIP_TLS_VERIFY SESSION_STORAGE_SIZE WEBKUBECTL_KUBECONFIG
 
+# --preserve-environment: without it, su resets HOME/USER/LOGNAME/
+# SHELL to nobody's own /etc/passwd entry (HOME=/var/empty on this
+# system) regardless of what was exported above, which broke
+# kubectl's own default ~/.kube/config discovery -- confirmed by an
+# actual real session ("No such file or directory" against
+# /var/empty/.kube/config, while the file genuinely existed, correctly
+# owned and readable, at ${sessiondir}/.kube/config the whole time).
+# With it, su keeps every variable set above (HOME, USER, LOGNAME,
+# SHELL, TMPDIR, the explicit nobody identity) and the sanitization
+# immediately above (stripped GOTTY_*, WELCOME_BANNER, etc.) intact,
+# while still actually switching the process's real/effective uid and
+# gid to nobody -- confirmed via /proc/self/status inside an actual
+# session: Uid/Gid all 65534, CapEff all zero.
+#
 # Not exec'd: cleanup() above must still run once this returns.
-su -s /bin/bash nobody
+su --preserve-environment -s /bin/bash nobody

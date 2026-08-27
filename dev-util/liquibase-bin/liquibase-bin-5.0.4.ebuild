@@ -38,7 +38,7 @@ KEYWORDS="~amd64 ~arm64"
 RDEPEND=">=virtual/jre-17:*"
 
 src_install() {
-	local dest="/opt/${PN}-${SLOT}"
+	local dest="/opt/${PN%-bin}"
 	local ddest="${ED}/${dest#/}"
 
 	dodir "${dest}"
