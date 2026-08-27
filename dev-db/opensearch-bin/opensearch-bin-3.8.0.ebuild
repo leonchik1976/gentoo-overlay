@@ -89,10 +89,10 @@ RDEPEND="
 	|| ( virtual/jdk:25 virtual/jdk:21 )
 "
 
-QA_PRESTRIPPED="opt/${PN}-${SLOT}/.*"
+QA_PRESTRIPPED="opt/${PN%-bin}/.*"
 
 src_install() {
-	local dest="/opt/${PN}-${SLOT}"
+	local dest="/opt/${PN%-bin}"
 	local ddest="${ED}/${dest#/}"
 
 	# Use the system JDK (verified: bin/opensearch-env honors
@@ -156,7 +156,7 @@ src_install() {
 
 pkg_postinst() {
 	local keystore="${EROOT}/etc/opensearch/opensearch.keystore"
-	local opensearch_bin="${EROOT}/opt/${PN}-${SLOT}/bin/opensearch-keystore"
+	local opensearch_bin="${EROOT}/opt/${PN%-bin}/bin/opensearch-keystore"
 
 	# An existing keystore -- this install's own, or an
 	# administrator's -- is left completely alone: not upgraded, not

@@ -82,7 +82,7 @@ RESTRICT="mirror bindist strip"
 # sqlite4java.jar) are genuinely prebuilt, unmodified upstream
 # binaries, not produced by this ebuild's own (nonexistent) build
 # step.
-QA_PREBUILT="opt/${PN}-${SLOT}/DynamoDBLocal_lib/*sqlite4java-*"
+QA_PREBUILT="opt/${PN%-bin}/DynamoDBLocal_lib/*sqlite4java-*"
 
 # Only the linux .so files are ELF and therefore even examined by
 # Portage's soname/REQUIRES checks at all (the osx/win32 files are
@@ -128,7 +128,7 @@ case ${ARCH} in
 esac
 
 src_install() {
-	local dest="/opt/${PN}-${SLOT}"
+	local dest="/opt/${PN%-bin}"
 	local ddest="${ED}/${dest#/}"
 
 	dodir "${dest}"

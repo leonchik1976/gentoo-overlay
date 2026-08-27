@@ -62,7 +62,7 @@ BDEPEND="app-arch/unzip"
 RESTRICT="mirror bindist"
 
 src_install() {
-	local dest="/opt/${PN}-${SLOT}"
+	local dest="/opt/${PN%-bin}"
 	local ddest="${ED}/${dest#/}"
 
 	dodir "${dest}"

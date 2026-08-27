@@ -57,10 +57,10 @@ RDEPEND="
 "
 
 RESTRICT="strip"
-QA_PREBUILT="opt/${PN}-${SLOT}/lib/*"
+QA_PREBUILT="opt/${PN%-bin}/lib/*"
 
 src_install() {
-	local dest="/opt/${PN}-${SLOT}"
+	local dest="/opt/${PN%-bin}"
 	local ddest="${ED}/${dest#/}"
 
 	insinto /etc/neo4j

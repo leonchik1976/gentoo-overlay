@@ -8,7 +8,7 @@ Wants=network-online.target
 Type=simple
 User=opensearch
 Group=opensearch
-Environment=OPENSEARCH_HOME=/opt/opensearch-bin-0
+Environment=OPENSEARCH_HOME=/opt/opensearch
 Environment=OPENSEARCH_PATH_CONF=/etc/opensearch
 # opensearch-security (installed by this package) requires TLS
 # certificates configured in opensearch.yml before it will start at
@@ -43,7 +43,7 @@ WorkingDirectory=/var/lib/opensearch
 # unrelated package -- the same class of bug already found and fixed
 # for dev-db/cassandra-bin) and not hardcoded, since the exact /opt
 # path differs by JDK provider (openjdk-bin, corretto-bin, ...).
-ExecStart=/bin/sh -c 'OPENSEARCH_JAVA_HOME="$(java-config --select-vm="$(depend-java-query --get-vm "virtual/jdk:25 virtual/jdk:21")" --jre-home)" exec /opt/opensearch-bin-0/bin/opensearch'
+ExecStart=/bin/sh -c 'OPENSEARCH_JAVA_HOME="$(java-config --select-vm="$(depend-java-query --get-vm "virtual/jdk:25 virtual/jdk:21")" --jre-home)" exec /opt/opensearch/bin/opensearch'
 Restart=on-failure
 LimitNOFILE=65535
 LimitMEMLOCK=infinity
