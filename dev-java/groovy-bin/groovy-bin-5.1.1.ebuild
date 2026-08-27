@@ -7,7 +7,20 @@ MY_PN="groovy"
 
 DESCRIPTION="Prebuilt binary distribution of the Apache Groovy programming language"
 HOMEPAGE="https://groovy.apache.org/"
-SRC_URI="https://dlcdn.apache.org/groovy/${PV}/distribution/apache-groovy-binary-${PV}.zip -> ${P}.zip"
+# dlcdn.apache.org only ever serves the current-latest release per
+# branch and rotates older ones out without notice -- confirmed
+# directly: this exact file 404'd there once 5.1.1 superseded 5.1.0.
+# archive.apache.org is Apache's permanent release archive and keeps
+# every past release indefinitely (confirmed: 5.1.0 is still there),
+# so it's listed second as a fallback that stays valid for this
+# specific version long after dlcdn moves on to whatever comes after
+# 5.1.1. Each URI needs its own "-> ${P}.zip": per PMS, a SRC_URI
+# arrow attaches only to the one URI immediately before it, so a
+# single trailing arrow could not apply to both.
+SRC_URI="
+	https://dlcdn.apache.org/groovy/${PV}/distribution/apache-groovy-binary-${PV}.zip -> ${P}.zip
+	https://archive.apache.org/dist/groovy/${PV}/distribution/apache-groovy-binary-${PV}.zip -> ${P}.zip
+"
 
 S="${WORKDIR}/${MY_PN}-${PV}"
 
