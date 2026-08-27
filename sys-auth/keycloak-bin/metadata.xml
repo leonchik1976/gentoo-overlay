@@ -9,11 +9,8 @@
 		<remote-id type="github">keycloak/keycloak</remote-id>
 	</upstream>
 	<use>
-		<flag name="db-dev-file">Build against the embedded, file-based H2 database (Keycloak's own default; not recommended for anything beyond quick local testing)</flag>
-		<flag name="db-dev-mem">Build against the embedded, in-memory H2 database (data is lost on every restart; testing only)</flag>
-		<flag name="db-mariadb">Build against MariaDB (driver already bundled upstream)</flag>
-		<flag name="db-mssql">Build against Microsoft SQL Server (driver already bundled upstream)</flag>
-		<flag name="db-mysql">Build against MySQL (driver already bundled upstream)</flag>
-		<flag name="db-postgres">Build against PostgreSQL (driver already bundled upstream)</flag>
+		<flag name="h2-file">Build against Keycloak's embedded, file-backed H2 database; intended only for development and local testing</flag>
+		<flag name="h2-mem">Build against Keycloak's embedded, in-memory H2 database; data is lost when the server stops</flag>
+		<flag name="mariadb">Build against MariaDB using the driver bundled in the upstream distribution</flag>
 	</use>
 </pkgmetadata>

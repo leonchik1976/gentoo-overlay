@@ -20,17 +20,19 @@ WorkingDirectory=/var/lib/keycloak
 # configure TLS (or http-enabled=true behind a trusted reverse proxy)
 # in /etc/keycloak/keycloak.conf before starting, plus the db
 # connection settings (db-url, db-username, db-password) for whichever
-# vendor this package was built against (see the db_* USE flags in
-# the ebuild -- the vendor itself is a build-time choice, baked in by
-# "kc.sh build --db=...", not something switchable here at runtime).
+# vendor this package was built against (see the database USE flags
+# in the ebuild -- the vendor itself is a build-time choice, baked in
+# by "kc.sh build --db=...", not something switchable here at
+# runtime).
 #
 # --optimized skips Keycloak's own runtime re-augmentation (the
 # ebuild already ran "kc.sh build" once at package-build time), which
 # is required here since that step writes into the install tree's own
 # lib/quarkus/ and would otherwise fail under ProtectSystem=strict
 # below. If you change a *build-time* option (db vendor, features,
-# ...) you must rebuild the package with the desired db_* USE flag --
-# "start --optimized" refuses to start otherwise on a stale build.
+# ...) you must rebuild the package with the desired database USE
+# flag -- "start --optimized" refuses to start otherwise on a stale
+# build.
 # Purely *runtime* options (hostname, proxy, http-enabled,
 # db-url/-username/-password, ...) can still be changed freely
 # without a rebuild.

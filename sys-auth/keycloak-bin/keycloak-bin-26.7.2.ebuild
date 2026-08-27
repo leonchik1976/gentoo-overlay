@@ -57,42 +57,53 @@ LICENSE="Apache-2.0 BSD CC0-1.0 EPL-2.0 MIT POSTGRESQL"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
-# "db" is a build-time-only choice baked in by kc.sh build (see
-# src_install): it selects which JDBC driver/dialect Quarkus compiles
-# in, not a runtime-togglable feature, so it fits Gentoo's
+# The database is a build-time-only choice baked in by kc.sh build
+# (see src_install): it selects which JDBC driver/dialect Quarkus
+# compiles in, not a runtime-togglable feature, so it fits Gentoo's
 # alternative-implementation USE-flag model rather than PG0001's
-# optional-runtime-dependency model. All six values are backed by a
-# JDBC driver already bundled in lib/ (verified directly: postgres,
-# mysql, mariadb, and mssql each have both their driver jar and a
-# matching io.quarkus.quarkus-jdbc-*-deployment jar present;
-# dev-file/dev-mem need no driver). oracle and tidb are deliberately
-# not offered: Oracle's own redistribution terms keep its JDBC driver
-# out of this archive entirely (only the quarkus-jdbc-oracle
-# deployment jar is present, no ojdbc driver), and tidb was not
-# independently verified to work with a bundled driver.
+# optional-runtime-dependency model. mssql, mysql, and postgres are
+# existing global USE flags whose meanings match this package's use
+# directly (verified against profiles/use.desc); mariadb is not
+# global but is already established as a package-local flag name
+# elsewhere in ::gentoo. h2-file/h2-mem name Keycloak's embedded H2
+# database and its two persistence modes -- clearer to a Gentoo user
+# than upstream's own "dev-file"/"dev-mem" provider values, which
+# this ebuild still passes to kc.sh build unchanged (see src_install).
+# All six values are backed by a JDBC driver already bundled in lib/
+# (verified directly: postgres, mysql, mariadb, mssql, and h2 (used
+# by both h2-file and h2-mem) each have both their driver jar --
+# com.h2database.h2-*.jar for h2 -- and a matching
+# io.quarkus.quarkus-jdbc-*-deployment jar present; h2-file/h2-mem
+# need no external database server, unlike the other four, but they
+# still use a real bundled driver, not "no driver"). oracle and tidb
+# are deliberately not offered:
+# Oracle's own redistribution terms keep its JDBC driver out of this
+# archive entirely (only the quarkus-jdbc-oracle deployment jar is
+# present, no ojdbc driver), and tidb was not independently verified
+# to work with a bundled driver.
 #
 # Decision: no default is set, deliberately, even though that means
-# `emerge` refuses to even start building this package until a db-*
-# flag is chosen (see the RequiredUseDefaults note below). Keycloak's
-# own kc.sh build calls the dev-file default "deprecated" for the
-# production profile (confirmed by an actual build), and dev-file/
-# dev-mem are H2-backed and not durable across restarts in any
-# meaningful production sense -- an admin who ends up on one of those
-# by inaction, rather than by deliberate choice, has a real
-# data-durability problem, not just a cosmetic warning. This mirrors
-# the same choice already made for dev-db/opensearch-bin (fail
-# closed on missing TLS config rather than default to an
+# `emerge` refuses to even start building this package until one
+# database USE flag is chosen (see the RequiredUseDefaults note
+# below). Keycloak's own kc.sh build calls the dev-file default
+# "deprecated" for the production profile (confirmed by an actual
+# build), and h2-file/h2-mem are H2-backed and not durable across
+# restarts in any meaningful production sense -- an admin who ends up
+# on one of those by inaction, rather than by deliberate choice, has
+# a real data-durability problem, not just a cosmetic warning. This
+# mirrors the same choice already made for dev-db/opensearch-bin
+# (fail closed on missing TLS config rather than default to an
 # insecure/demo state): this overlay consistently prefers a build or
 # start that refuses to proceed over one that silently proceeds on a
 # vendor-deprecated or unsafe default.
-IUSE="db-dev-file db-dev-mem db-mariadb db-mssql db-mysql db-postgres"
-REQUIRED_USE="^^ ( db-dev-file db-dev-mem db-mariadb db-mssql db-mysql db-postgres )"
+IUSE="h2-file h2-mem mariadb mssql mysql postgres"
+REQUIRED_USE="^^ ( h2-file h2-mem mariadb mssql mysql postgres )"
 # pkgcheck's RequiredUseDefaults finding for this (every profile's
 # default USE state fails REQUIRED_USE, since nothing here defaults
 # on) is expected and accepted: it means `emerge` refuses to even
-# start building until db-* is set explicitly, which is the point --
-# the alternative is exactly the silent Keycloak-deprecated default
-# this flag group exists to avoid.
+# start building until a database USE flag is set explicitly, which
+# is the point -- the alternative is exactly the silent
+# Keycloak-deprecated default this flag group exists to avoid.
 
 ACCT_DEPEND="
 	acct-group/keycloak
@@ -130,17 +141,17 @@ src_install() {
 	# needs no further writes to the install tree -- confirmed by an
 	# actual start against a read-only copy of this exact tree.
 	local db_vendor
-	if use db-dev-file; then
+	if use h2-file; then
 		db_vendor=dev-file
-	elif use db-dev-mem; then
+	elif use h2-mem; then
 		db_vendor=dev-mem
-	elif use db-mariadb; then
+	elif use mariadb; then
 		db_vendor=mariadb
-	elif use db-mssql; then
+	elif use mssql; then
 		db_vendor=mssql
-	elif use db-mysql; then
+	elif use mysql; then
 		db_vendor=mysql
-	elif use db-postgres; then
+	elif use postgres; then
 		db_vendor=postgres
 	fi
 	# This step logs "Deprecated features identity-brokering-api:v1,
