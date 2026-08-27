@@ -63,12 +63,12 @@ case ${ARCH} in
 		# The only native file that survives src_install's sigar-bin
 		# trim below; a genuine prebuilt library, not built by this
 		# ebuild. Nothing under lib/ needs this on arm64 (all jars).
-		QA_PREBUILT="opt/${PN}-${SLOT}/lib/sigar-bin/libsigar-amd64-linux.so"
+		QA_PREBUILT="opt/${PN%-bin}/lib/sigar-bin/libsigar-amd64-linux.so"
 		;;
 esac
 
 src_install() {
-	local dest="/opt/${PN}-${SLOT}"
+	local dest="/opt/${PN%-bin}"
 	local ddest="${ED}/${dest#/}"
 
 	# The shipped cassandra.yaml comments out
@@ -77,7 +77,7 @@ src_install() {
 	# example text), so Cassandra falls back to its own internal
 	# default of data/* relative to its install directory -- which is
 	# read-only under this ebuild's layout. Confirmed by an actual
-	# failed start: "FSWriteError: ... /opt/cassandra-bin-0/data:
+	# failed start: "FSWriteError: ... $CASSANDRA_HOME/data:
 	# Read-only file system". Activate the exact paths this ebuild
 	# actually keepdir's/owns below instead.
 	cp -r conf "${T}"/conf || die
@@ -134,7 +134,7 @@ src_install() {
 	# line, which takes precedence over the cassandra.yaml keys
 	# uncommented above for at least some of Cassandra's own startup
 	# directory creation -- confirmed by an actual failed start that
-	# still wrote to /opt/cassandra-bin-0/data/commitlog (read-only)
+	# still wrote to $CASSANDRA_HOME/data/commitlog (read-only)
 	# despite commitlog_directory being correctly set in the deployed
 	# cassandra.yaml. Point this at the same /var/lib/cassandra tree
 	# instead, matching the keepdir layout below (commitlog/data/etc.
