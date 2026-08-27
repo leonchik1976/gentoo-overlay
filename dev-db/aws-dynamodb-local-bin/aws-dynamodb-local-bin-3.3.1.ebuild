@@ -70,13 +70,62 @@ RDEPEND=">=virtual/jre-17:*"
 # Redistribution, transfer, and modification are prohibited by the
 # license: fetch only from the official AWS URL above, do not let
 # Gentoo or overlay mirrors cache/redistribute this distfile, and do
-# not let portage's strip pass alter the shipped binaries (native
-# .so files for other Linux architectures, plus macOS/Windows
-# artifacts, are intentionally left in place unmodified rather than
-# trimmed, consistent with not altering the archive as distributed;
-# expect a benign pkgcheck/QA "unresolved soname" notice for the
-# non-target-arch libsqlite4java .so files this implies).
+# not let portage's strip pass alter the shipped binaries -- every
+# upstream file is kept, unmodified, including the native libraries
+# for architectures/platforms other than the one being built for
+# (linux-amd64, linux-i386, linux-aarch64, three osx .dylib, two
+# win32 .dll -- see DynamoDBLocal_lib/ directly).
 RESTRICT="mirror bindist strip"
+
+# All 8 bundled sqlite4java native libraries (3 linux .so, 3 osx
+# .dylib, 2 win32 .dll -- everything except the pure-Java
+# sqlite4java.jar) are genuinely prebuilt, unmodified upstream
+# binaries, not produced by this ebuild's own (nonexistent) build
+# step.
+QA_PREBUILT="opt/${PN}-${SLOT}/DynamoDBLocal_lib/*sqlite4java-*"
+
+# Only the linux .so files are ELF and therefore even examined by
+# Portage's soname/REQUIRES checks at all (the osx/win32 files are
+# Mach-O/PE and are simply not parsed as ELF). Of those three, exclude
+# by library path/file only the ones that cannot execute on the
+# architecture actually being built for -- the active architecture's
+# own library file keeps being checked normally against its real
+# libc.so.6 requirement, not blanket-excluded.
+case ${ARCH} in
+	amd64)
+		# linux-aarch64 cannot execute on amd64 at all (foreign CPU
+		# architecture), so its required libc.so.6 is never
+		# satisfiable here -- confirmed unresolved by an actual build
+		# on amd64 (server01).
+		#
+		# linux-i386 is excluded unconditionally too, NOT because it
+		# was observed unresolved on that same build: it happened to
+		# resolve there, because that particular host has 32-bit/
+		# multilib runtime libraries installed, which is host-specific
+		# and not guaranteed for every amd64 install this ebuild's
+		# ~amd64 keyword covers. Confirmed structurally instead,
+		# directly against the actual ::gentoo profile tree
+		# (profiles/arch/amd64/no-multilib/make.defaults sets
+		# MULTILIB_ABIS="amd64" only, and its use.mask masks
+		# abi_x86_32): a host on that profile builds no 32-bit glibc
+		# at all, so linux-i386's ELFCLASS32 libc.so.6 requirement
+		# (confirmed via this exact library's own recorded NEEDED
+		# entry) is unresolvable there regardless of any other
+		# package installed. Excluding it unconditionally on amd64
+		# avoids depending on which of those two real, differently-
+		# configured amd64 hosts happens to be building this package.
+		REQUIRES_EXCLUDE="*/libsqlite4java-linux-aarch64.so */libsqlite4java-linux-i386.so"
+		;;
+	arm64)
+		# Neither linux-amd64 nor linux-i386 can execute on arm64 at
+		# all (foreign CPU architecture in both cases), so neither's
+		# required libc.so.6 is ever satisfiable here -- confirmed
+		# unresolved by an actual build on arm64 (this host).
+		# linux-aarch64 itself resolves against the real, present
+		# system libc and is not excluded.
+		REQUIRES_EXCLUDE="*/libsqlite4java-linux-amd64.so */libsqlite4java-linux-i386.so"
+		;;
+esac
 
 src_install() {
 	local dest="/opt/${PN}-${SLOT}"
