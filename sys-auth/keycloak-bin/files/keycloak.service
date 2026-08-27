@@ -29,12 +29,12 @@ WorkingDirectory=/var/lib/keycloak
 # is required here since that step writes into the install tree's own
 # lib/quarkus/ and would otherwise fail under ProtectSystem=strict
 # below. If you change a *build-time* option (db vendor, features,
-# ...) you must rebuild (re-run "kc.sh build" as root with the new
-# option, or re-emerge with a different db_* USE flag) --
-# "start --optimized" refuses to start otherwise. Purely *runtime*
-# options (hostname, proxy, http-enabled, db-url/-username/-password,
-# ...) can still be changed freely without a rebuild.
-ExecStart=/opt/keycloak-bin-0/bin/kc.sh start --optimized
+# ...) you must rebuild the package with the desired db_* USE flag --
+# "start --optimized" refuses to start otherwise on a stale build.
+# Purely *runtime* options (hostname, proxy, http-enabled,
+# db-url/-username/-password, ...) can still be changed freely
+# without a rebuild.
+ExecStart=/opt/keycloak/bin/kc.sh start --optimized
 Restart=on-failure
 NoNewPrivileges=true
 ProtectSystem=strict

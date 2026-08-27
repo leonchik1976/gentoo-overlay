@@ -1,3 +1,4 @@
 move sys-cluster/aws-iam-authenticator sys-cluster/aws-iam-authenticator-bin
 move app-misc/jd app-misc/jd-bin
 move sys-cluster/stern sys-cluster/stern-bin
+move dev-db/keycloak-bin sys-auth/keycloak-bin

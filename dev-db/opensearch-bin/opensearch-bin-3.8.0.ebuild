@@ -70,7 +70,7 @@ S="${WORKDIR}/${MY_PN}-${PV}"
 # in their own sections); Jakarta annotations are EPL-2.0 (its own
 # "# Eclipse Public License - v 2.0" section); HdrHistogram is
 # dual-licensed CC0-1.0/BSD-2 (the same public-domain dedication
-# already verified for dev-db/keycloak-bin), CC0-1.0 chosen here as
+# already verified for sys-auth/keycloak-bin), CC0-1.0 chosen here as
 # the more specific of the two. JZlib's section notes its early 0.0.x
 # releases were LGPL but the version actually bundled here "switched
 # over to a BSD-style license", so no LGPL entry is added for it.

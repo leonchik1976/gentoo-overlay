@@ -58,7 +58,14 @@ RDEPEND="
 "
 
 RESTRICT="strip"
-QA_PREBUILT="opt/${PN}-${SLOT}/lib/*"
+case ${ARCH} in
+	amd64)
+		# The only native file that survives src_install's sigar-bin
+		# trim below; a genuine prebuilt library, not built by this
+		# ebuild. Nothing under lib/ needs this on arm64 (all jars).
+		QA_PREBUILT="opt/${PN}-${SLOT}/lib/sigar-bin/libsigar-amd64-linux.so"
+		;;
+esac
 
 src_install() {
 	local dest="/opt/${PN}-${SLOT}"
@@ -90,6 +97,36 @@ src_install() {
 	# installed as shipped by upstream.
 	cp -r bin lib tools doc pylib "${ddest}"/ || die
 	dosym -r /etc/cassandra "${dest}"/conf
+
+	# lib/sigar-bin/ ships ~20 prebuilt native SIGAR (System
+	# Information Gatherer And Reporter) libraries, one per historical
+	# OS/arch SIGAR 1.6.4 (bundled by this release) supported --
+	# confirmed by listing this exact distfile's own lib/sigar-bin/.
+	# None is for aarch64/arm64: SIGAR 1.6.4 never had an ARM64 build.
+	# Cassandra's own SigarLibrary treats a missing/inapplicable native
+	# library as optional, not a startup requirement -- confirmed by
+	# actual starts on both architectures against images built with
+	# this exact case statement: on arm64 (sigar-bin absent) it logs
+	# "Could not initialize SIGAR library" at INFO and the node still
+	# reaches normal CQL-ready state; on amd64 (only
+	# libsigar-amd64-linux.so present) it initializes for real,
+	# evidenced by its own resource-limit/swap check actually running
+	# (logged as a WARN about the *host's* swap being enabled, not a
+	# SIGAR failure). A real CQL create/write/read round-trip succeeded
+	# on both.
+	case ${ARCH} in
+		amd64)
+			# Keep only the one file that can ever load on this
+			# profile; the other ~19 can never execute here and would
+			# otherwise sit in the image purely as dead weight.
+			find "${ddest}"/lib/sigar-bin -mindepth 1 \
+				! -name libsigar-amd64-linux.so -delete || die
+			;;
+		arm64)
+			# No file in this directory can ever load here at all.
+			rm -r "${ddest}"/lib/sigar-bin || die
+			;;
+	esac
 
 	# bin/cassandra.in.sh hardcodes cassandra_storagedir="$CASSANDRA_HOME/data"
 	# unconditionally (no environment-variable override exists for

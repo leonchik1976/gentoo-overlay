@@ -20,7 +20,16 @@ S="${WORKDIR}/${MY_PN}-${PV}"
 # bundled component.
 #
 # Keycloak itself (LICENSE.txt at the archive root) is Apache-2.0.
-# No native (.so/.dll/.dylib) files are present in the distribution.
+# No native (.so/.dll/.dylib) files, ELF executables, or GraalVM
+# native-image output are present -- verified directly against both
+# the pristine archive and the final image this ebuild's own
+# src_install produces (every file in each checked with file(1); the
+# only non-JAR/text artifacts are bzip2-compressed docs and Quarkus's
+# own lib/quarkus/quarkus-application.dat, a serialized build cache,
+# not an ELF file). bin/kc.sh and friends are plain POSIX shell
+# scripts, not compiled launchers. No RESTRICT=strip or
+# QA_PRESTRIPPED is declared below as a result: there is nothing for
+# Portage's strip pass or the prestripped-ELF QA check to act on.
 #
 # This is a large binary bundle (471 lib/*.jar dependencies); it
 # ships no aggregated third-party notice, so its 208 jars that embed
@@ -97,11 +106,8 @@ RDEPEND="
 # package-build time, so a JDK is also needed then.
 BDEPEND="|| ( virtual/jdk:21 virtual/jdk:17 )"
 
-RESTRICT="strip"
-QA_PRESTRIPPED="opt/${PN}-${SLOT}/.*"
-
 src_install() {
-	local dest="/opt/${PN}-${SLOT}"
+	local dest="/opt/${MY_PN}"
 	local ddest="${ED}/${dest#/}"
 
 	insinto /etc/keycloak
@@ -137,6 +143,22 @@ src_install() {
 	elif use db-postgres; then
 		db_vendor=postgres
 	fi
+	# This step logs "Deprecated features identity-brokering-api:v1,
+	# twitter-broker:v1 enabled by default. Check the upgrading guide
+	# for steps to use later versions if available." -- an expected
+	# upstream Keycloak warning, not a build failure or Portage QA
+	# issue (confirmed: kc.sh build still exits 0 and completes
+	# augmentation). Per Keycloak's own upgrading guide, both remain
+	# upstream's enabled-by-default choice in 26.7.2 for backward
+	# compatibility; there is no drop-in v2 default to switch to
+	# (identity-brokering-api v2 and, for twitter-broker, a manually
+	# reconfigured generic OAuth v2 provider are opt-in migrations an
+	# administrator makes for their own realm, not something this
+	# ebuild can safely choose on their behalf). Passing
+	# --features-disabled=twitter-broker (or similar) here would
+	# deliberately remove functionality upstream still ships enabled
+	# by default, so this ebuild does not do that, and does not filter
+	# the warning out of the build log.
 	"${ddest}"/bin/kc.sh build --db="${db_vendor}" || die "kc.sh build failed"
 
 	dodoc README.md LICENSE.txt version.txt
