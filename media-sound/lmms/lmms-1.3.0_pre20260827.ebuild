@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake xdg
 
-MY_COMMIT="c6683775e57d9f9bce5871bb9e4c02413a98f88a"
+MY_COMMIT="f38353c8745ad7810bf43851d5638aeca3f42e3d"
 
 # Submodule commit pins actually required to build with this ebuild's
 # WANT_* cmake configuration below (verified against .gitmodules and
