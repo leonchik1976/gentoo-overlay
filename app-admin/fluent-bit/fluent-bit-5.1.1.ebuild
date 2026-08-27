@@ -69,6 +69,13 @@ BDEPEND="
 
 RESTRICT="test"
 
+# GCC -Wfree-nonheap-object false positive in bundled Monkey's
+# mk_stream_release(): see the patch file itself for the full
+# root-cause analysis, upstream issue reference, and validation.
+PATCHES=(
+	"${FILESDIR}"/${P}-mk_stream_release-nonheap-object.patch
+)
+
 src_configure() {
 	local mycmakeargs=(
 		-DFLB_RELEASE=Yes

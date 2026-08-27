@@ -1,0 +1,85 @@
+Targeted workaround for a GCC -Wfree-nonheap-object false positive.
+
+https://github.com/fluent/fluent-bit/issues/10510 reports the same two warnings
+against 4.0.3; auto-closed "not planned" by stale-bot with no fix, discussion, or
+linked PR, and still reproduces unmodified in 5.1.1.
+
+Diagnostic (GCC 16.2.0, -O2, no LTO):
+
+  In function 'mk_mem_free',
+      inlined from 'mk_stream_release' at mk_stream.h:255:9,
+      inlined from 'mk_http_request_free' at mk_http.c:1521:9:
+  mk_core/mk_memory.h:102:5: warning: 'free' called on pointer 'sr' with
+  nonzero offset 32 [-Wfree-nonheap-object]
+
+  In function 'mk_mem_free',
+      inlined from 'mk_stream_release' at mk_stream.h:255:9,
+      inlined from 'dummy_mk_http_request_init' at
+        flb_http_server_http1.c:53:9:
+  mk_core/mk_memory.h:102:5: warning: 'free' called on pointer 'request' with
+  nonzero offset 32 [-Wfree-nonheap-object]
+
+Both trace to the same free(ptr) inside mk_stream_release()'s
+"if (stream->dynamic == MK_TRUE) mk_mem_free(stream);" guard -- not to
+mk_http_request_free_list()'s separate "request != &cs->sr_fixed" guard (that
+one is correct and untouched; cs->request_list only ever holds
+&cs->sr_fixed._head in this codebase).
+
+struct mk_stream's "dynamic" flag is the actual heap/embedded distinction
+(mk_stream_set()): dynamic=MK_TRUE only via mk_stream_set(NULL, ...), which
+mk_stream.h's own comment says only Monkey's CGI plugin does. That plugin is
+absent from Fluent Bit's build (zero plugins/cgi references in build.ninja),
+so at the two warned call sites (&sr->stream, &request->stream -- both fields
+embedded in a caller-owned struct mk_http_request) dynamic is always
+MK_FALSE and mk_mem_free(stream) is unreachable: the runtime guard is
+correct, GCC's interprocedural points-to analysis just doesn't track
+"dynamic" across the inline, so it warns as if free() could see an interior
+pointer.
+
+Reproduces identically on every GCC installed on this host, 11.5.0 through
+16.2.0; does not reproduce under Clang 22.1.8 compiling the same translation
+unit with equivalent flags. Scoped to __GNUC__ >= 11, the verified-affected
+range's lower bound (no earlier GCC was available to test, so no claim is
+made below 11): Clang also defines __GNUC__, but pins it at 4 for
+compatibility, so it takes the unchanged "static inline" branch too.
+
+mk_stream_release() has three call sites in code Fluent Bit actually builds:
+mk_http.c:1521, flb_http_server_http1.c:53 (both warned), and
+mk_stream.c:337 (mk_channel_clean(), not warned -- there stream->dynamic is
+genuinely mixed, since mk_channel_clean() iterates a list that can hold both
+kinds of stream, so the guard does real work there and GCC evidently didn't
+inline that call). "noinline" stops GCC inlining mk_stream_release() at ALL
+of these sites, not only the two that currently warn -- it does not change
+what runs at any of them; mk_channel_clean()'s guard behaves identically
+either way. "inline" must be dropped for "noinline" to apply (GCC rejects the
+combination: "inline function ... given attribute 'noinline'
+[-Wattributes]"); "unused" is added back so a translation unit that includes
+this header without calling the function doesn't get -Wunused-function on
+the resulting plain "static" definition (the exemption "static inline"
+provided implicitly is lost with "inline" gone).
+
+--- a/lib/monkey/include/monkey/mk_stream.h
++++ b/lib/monkey/include/monkey/mk_stream.h
+@@ -233,7 +233,21 @@
+ }
+
+
+-static inline void mk_stream_release(struct mk_stream *stream)
++/* Compiler-specific workaround for a GCC false positive:
++ * https://github.com/fluent/fluent-bit/issues/10510. GCC misreads the
++ * "dynamic == MK_TRUE" guard below when this is inlined into a caller
++ * passing an embedded (non-heap) struct mk_stream, and warns
++ * -Wfree-nonheap-object on mk_mem_free(stream) as if it saw an interior
++ * pointer. Blocking inlining silences it without changing the guard.
++ * Verified needed on GCC 11.5.0-16.2.0; Clang defines __GNUC__ too but
++ * pins it at 4, so it takes the unchanged branch below.
++ */
++#if __GNUC__ >= 11
++static __attribute__((noinline, unused))
++void mk_stream_release(struct mk_stream *stream)
++#else
++static inline void mk_stream_release(struct mk_stream *stream)
++#endif
+ {
+     struct mk_list *tmp;
+     struct mk_list *head;
