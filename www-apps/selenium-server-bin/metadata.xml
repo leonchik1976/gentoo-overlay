@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription>
+		The Selenium Server jar is the single binary behind Selenium's
+		"standalone" and "Grid" WebDriver deployment modes. Run with the
+		"standalone" subcommand it exposes one machine's browsers as a
+		WebDriver remote endpoint; run as "hub"/"node" (or the split
+		router/distributor/sessionmap roles) it coordinates WebDriver
+		sessions across multiple machines and browsers.
+
+		On arm64, the Selenium Manager helper embedded in the jar (used for
+		automatic browser/driver resolution) is x86-64 only and cannot run.
+		This package depends on dev-util/selenium-manager on arm64 instead,
+		which installs a native arm64 build and an env.d entry exporting
+		SE_MANAGER_PATH, the environment variable Selenium's own
+		SeleniumManager class checks before falling back to its bundled
+		binary. That env.d entry only becomes visible in a refreshed login
+		environment: shells already running at install time do not pick it
+		up automatically, so a new login shell (or manually re-sourcing
+		/etc/profile in an existing one) is needed before SE_MANAGER_PATH
+		is actually set.
+	</longdescription>
+	<upstream>
+		<bugs-to>https://github.com/SeleniumHQ/selenium/issues</bugs-to>
+		<changelog>https://github.com/SeleniumHQ/selenium/releases</changelog>
+		<doc>https://www.selenium.dev/documentation/grid/</doc>
+		<remote-id type="github">SeleniumHQ/selenium</remote-id>
+	</upstream>
+</pkgmetadata>

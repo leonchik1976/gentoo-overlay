@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription>
+		Selenium IDE is a record-and-playback tool for authoring Selenium
+		WebDriver test scripts without writing code by hand: it records a
+		browsing session as a reusable ".side" project and can export it to
+		WebDriver code in several languages. Distributed upstream only as an
+		Electron AppImage; there has been no new upstream release since this
+		package's version (mid-2024), so the bundled Chromium/Electron
+		runtime carries whatever CVEs were fixed upstream since then.
+	</longdescription>
+	<upstream>
+		<bugs-to>https://github.com/SeleniumHQ/selenium-ide/issues</bugs-to>
+		<changelog>https://github.com/SeleniumHQ/selenium-ide/releases</changelog>
+		<remote-id type="github">SeleniumHQ/selenium-ide</remote-id>
+	</upstream>
+</pkgmetadata>

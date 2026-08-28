@@ -13,3 +13,14 @@
 # 4.22 stable series lands). See gui-apps/cauldron-0.9.6 for a version that
 # builds against currently-available GTK4.
 =gui-apps/cauldron-1.0.0
+
+# Leonid Kopylov <leonchik1976@gmail.com> (2026-08-28)
+# Upstream's last release is v4.0.1-beta.14, published 2024-07-20 -- over
+# two years old, still beta-tagged, with no newer release despite ongoing
+# commits to SeleniumHQ/selenium-ide's trunk. It bundles a same-age
+# Electron/Chromium (with a libffmpeg.so build carrying working H.264/AAC
+# decoders) that has received no security updates in that time. Masked so
+# it stays installable for anyone who explicitly accepts that exposure, but
+# is not pulled in by accident. Unmask once upstream cuts a newer release,
+# or after your own review if you're fine running the stale bundle anyway.
+dev-util/selenium-ide-bin
