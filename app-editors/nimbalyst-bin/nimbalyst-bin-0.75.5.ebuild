@@ -118,7 +118,7 @@ RDEPEND="
 
 QA_PREBUILT="*"
 
-NIMBALYST_BIN="@nimbalystelectron"
+NIMBALYST_BIN="nimbalyst"
 
 src_unpack() {
 	cp "${DISTDIR}/${P}.AppImage" "${WORKDIR}/${P}.AppImage" || die
@@ -189,7 +189,7 @@ src_install() {
 	domenu "${T}/nimbalyst.desktop"
 
 	local size
-	for size in 16 32 48 64 128 256 512 1024; do
+	for size in 16 24 32 48 64 128 256 512; do
 		newicon -s ${size} \
 			"usr/share/icons/hicolor/${size}x${size}/apps/${NIMBALYST_BIN}.png" \
 			nimbalyst.png
