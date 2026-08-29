@@ -14,17 +14,19 @@ HOMEPAGE="https://www.greenbone.net https://github.com/greenbone/gsa"
 SRC_URI="
 	https://github.com/greenbone/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/greenbone/${PN}/releases/download/v${PV}/${PN}-${MY_NODE_N}-${PV}.tar.xz
-	https://registry.npmjs.org/@rolldown/binding-linux-arm64-gnu/-/binding-linux-arm64-gnu-${ROLLDOWN_PV}.tgz
-	https://registry.npmjs.org/@rolldown/binding-linux-arm64-musl/-/binding-linux-arm64-musl-${ROLLDOWN_PV}.tgz
-	https://registry.npmjs.org/lightningcss-linux-arm64-gnu/-/lightningcss-linux-arm64-gnu-${LIGHTNINGCSS_PV}.tgz
-	https://registry.npmjs.org/lightningcss-linux-arm64-musl/-/lightningcss-linux-arm64-musl-${LIGHTNINGCSS_PV}.tgz
-	https://registry.npmjs.org/@swc/core-linux-arm64-gnu/-/core-linux-arm64-gnu-${SWC_PV}.tgz
-	https://registry.npmjs.org/@swc/core-linux-arm64-musl/-/core-linux-arm64-musl-${SWC_PV}.tgz
+	arm64? (
+		https://registry.npmjs.org/@rolldown/binding-linux-arm64-gnu/-/binding-linux-arm64-gnu-${ROLLDOWN_PV}.tgz
+		https://registry.npmjs.org/@rolldown/binding-linux-arm64-musl/-/binding-linux-arm64-musl-${ROLLDOWN_PV}.tgz
+		https://registry.npmjs.org/lightningcss-linux-arm64-gnu/-/lightningcss-linux-arm64-gnu-${LIGHTNINGCSS_PV}.tgz
+		https://registry.npmjs.org/lightningcss-linux-arm64-musl/-/lightningcss-linux-arm64-musl-${LIGHTNINGCSS_PV}.tgz
+		https://registry.npmjs.org/@swc/core-linux-arm64-gnu/-/core-linux-arm64-gnu-${SWC_PV}.tgz
+		https://registry.npmjs.org/@swc/core-linux-arm64-musl/-/core-linux-arm64-musl-${SWC_PV}.tgz
+	)
 "
 
 LICENSE="AGPL-3+ MIT"
 SLOT="0"
-KEYWORDS="~arm64"
+KEYWORDS="~amd64 ~arm64"
 # Upstream tests are not currently run in the ebuild's offline build setup.
 RESTRICT="test"
 
@@ -37,24 +39,27 @@ MY_NODE_DIR="${S}/${MY_NODE_D}"
 src_unpack() {
 	unpack "${P}.tar.gz" "${PN}-${MY_NODE_N}-${PV}.tar.xz"
 
-	# Upstream's node_modules archive was generated on amd64 and omits the
-	# arm64 optional dependencies required by Vite's native toolchain.
-	local package_name package_version target
-	while read -r package_name package_version target; do
-		unpack "${package_name}-${package_version}.tgz"
-		if [[ ${target} == */* ]]; then
-			mkdir -p "${MY_NODE_D}/${target%/*}" || die
-		fi
-		mv package "${MY_NODE_D}/${target}" ||
-			die "failed to add ${target}"
-	done <<-EOF
-		binding-linux-arm64-gnu ${ROLLDOWN_PV} @rolldown/binding-linux-arm64-gnu
-		binding-linux-arm64-musl ${ROLLDOWN_PV} @rolldown/binding-linux-arm64-musl
-		lightningcss-linux-arm64-gnu ${LIGHTNINGCSS_PV} lightningcss-linux-arm64-gnu
-		lightningcss-linux-arm64-musl ${LIGHTNINGCSS_PV} lightningcss-linux-arm64-musl
-		core-linux-arm64-gnu ${SWC_PV} @swc/core-linux-arm64-gnu
-		core-linux-arm64-musl ${SWC_PV} @swc/core-linux-arm64-musl
-	EOF
+	# Upstream generates its node_modules archive on amd64, so its bundled
+	# native dependencies are directly usable there. Only arm64 is missing
+	# these optional Rolldown, Lightning CSS, and SWC native modules.
+	if use arm64; then
+		local package_name package_version target
+		while read -r package_name package_version target; do
+			unpack "${package_name}-${package_version}.tgz"
+			if [[ ${target} == */* ]]; then
+				mkdir -p "${MY_NODE_D}/${target%/*}" || die
+			fi
+			mv package "${MY_NODE_D}/${target}" ||
+				die "failed to add ${target}"
+		done <<-EOF
+			binding-linux-arm64-gnu ${ROLLDOWN_PV} @rolldown/binding-linux-arm64-gnu
+			binding-linux-arm64-musl ${ROLLDOWN_PV} @rolldown/binding-linux-arm64-musl
+			lightningcss-linux-arm64-gnu ${LIGHTNINGCSS_PV} lightningcss-linux-arm64-gnu
+			lightningcss-linux-arm64-musl ${LIGHTNINGCSS_PV} lightningcss-linux-arm64-musl
+			core-linux-arm64-gnu ${SWC_PV} @swc/core-linux-arm64-gnu
+			core-linux-arm64-musl ${SWC_PV} @swc/core-linux-arm64-musl
+		EOF
+	fi
 }
 
 src_prepare() {
