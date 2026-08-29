@@ -20,8 +20,8 @@ RESTRICT="test"
 
 BDEPEND+=" >=dev-lang/go-1.26.0"
 RDEPEND="
-	>=sys-cluster/kubectl-1.36.0
-	<sys-cluster/kubectl-1.37.0
+	>=sys-cluster/kubectl-1.37.0
+	<sys-cluster/kubectl-1.38.0
 "
 
 QA_PRESTRIPPED="usr/bin/kubectl-convert"
