@@ -21,7 +21,7 @@ S="${WORKDIR}/clickhouse-client-${MY_PV}"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="-* ~amd64 ~arm64"
+KEYWORDS="~amd64 ~arm64"
 
 RDEPEND="~dev-db/clickhouse-common-static-bin-${PV}"
 

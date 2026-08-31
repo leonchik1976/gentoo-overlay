@@ -50,7 +50,10 @@ REQUIRED_USE="elibc_glibc"
 # external "usage" command any more (the old v2026.8.10 bash script's
 # `type -P usage` guard and error message are gone). The RDEPEND on
 # dev-util/usage-bin this overlay carried through v2026.8.10 no longer
-# applies from this version onward.
+# applies from this version onward. The v2026.8.14 -> v2026.8.15 Cargo.lock
+# diff drops only the internal "mise-cache-rustc" workspace crate (a
+# first-party 0.1.0 member, no third-party code); clap is still absent, the
+# usage-* crates are still present, and the license set is unchanged.
 RDEPEND="
 	|| (
 		llvm-runtimes/libgcc

@@ -13,10 +13,11 @@ S="${WORKDIR}"
 
 # Statically linked Go binary: LICENSE covers the project's own license
 # plus every statically-linked dependency's license.  The 7.13.4 binary
-# was audited directly with dev-go/lichen; 7.13.5 strips the Go build
-# metadata needed by lichen, but its upstream go.mod changes only versions
-# of the already-audited AWS SDK modules and introduces no modules or
-# license families: MIT (own + many,
+# was audited directly with dev-go/lichen; 7.13.5 and 7.13.6 strip the Go
+# build metadata needed by lichen, but their upstream go.mod changes only
+# versions of the already-audited AWS SDK modules (the full module-name set
+# is byte-for-byte identical between 7.13.5 and 7.13.6) and introduces no
+# modules or license families: MIT (own + many,
 # including 1Password/charmbracelet/byteness stacks), Apache-2.0
 # (aws-sdk-go-v2, opentelemetry, tetratelabs), BSD-3-Clause (-> BSD,
 # golang.org/x/*, extism/go-sdk), and BSD-2-Clause (-> BSD-2,

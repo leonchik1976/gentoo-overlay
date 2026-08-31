@@ -160,7 +160,7 @@ src_install() {
 	# upstream Keycloak warning, not a build failure or Portage QA
 	# issue (confirmed: kc.sh build still exits 0 and completes
 	# augmentation). Per Keycloak's own upgrading guide, both remain
-	# upstream's enabled-by-default choice in 26.7.2 for backward
+	# upstream's enabled-by-default choice in 26.7.3 for backward
 	# compatibility; there is no drop-in v2 default to switch to
 	# (identity-brokering-api v2 and, for twitter-broker, a manually
 	# reconfigured generic OAuth v2 provider are opt-in migrations an

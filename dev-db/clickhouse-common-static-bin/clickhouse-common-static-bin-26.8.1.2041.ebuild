@@ -42,7 +42,7 @@ S="${WORKDIR}/clickhouse-common-static-${MY_PV}"
 # gap rather than guessed at from library names.
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="-* ~amd64 ~arm64"
+KEYWORDS="~amd64 ~arm64"
 RESTRICT="strip"
 
 QA_PREBUILT="usr/bin/clickhouse"
