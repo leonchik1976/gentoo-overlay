@@ -28,16 +28,16 @@ HOMEPAGE="
 "
 
 # Immutable, hash-pinned files.pythonhosted.org URLs taken directly from
-# https://pypi.org/pypi/semgrep/1.175.0/json (verified against the
+# https://pypi.org/pypi/semgrep/1.176.0/json (verified against the
 # sha256 digests published there; see RDEPEND/comments below for the
 # rest of the provenance trail). Do NOT point this at ::nest, ::pentoo,
 # or any GitHub Actions build artifact.
 SRC_URI="
 	amd64? (
-		https://files.pythonhosted.org/packages/b9/b5/3941ba37979a5f1744c79ae47139c871bc78d5e612f1b8ac38cb76f49731/semgrep-${PV}-cp310.cp311.cp312.cp313.cp314.py310.py311.py312.py313.py314-none-manylinux_2_34_x86_64.whl
+		https://files.pythonhosted.org/packages/a3/5f/dc2f52ef4d8af70931e08ac7756577aeb49674b60cc1adc172dbe7031020/semgrep-${PV}-cp310.cp311.cp312.cp313.cp314.py310.py311.py312.py313.py314-none-manylinux_2_34_x86_64.whl
 	)
 	arm64? (
-		https://files.pythonhosted.org/packages/30/68/4160f33df10bf7001e198ee296a6c4299eba86c8e8932007cc6f8110b964/semgrep-${PV}-cp310.cp311.cp312.cp313.cp314.py310.py311.py312.py313.py314-none-manylinux_2_34_aarch64.whl
+		https://files.pythonhosted.org/packages/90/14/79805eade15ae5e3b2b71f5bfba1cc0f062c17e4526959631ed61573f726/semgrep-${PV}-cp310.cp311.cp312.cp313.cp314.py310.py311.py312.py313.py314-none-manylinux_2_34_aarch64.whl
 	)
 "
 S="${WORKDIR}"
@@ -164,8 +164,8 @@ RESTRICT="mirror strip"
 #
 # --- dependency-version audit ------------------------------------------
 # Every atom below is translated from the exact wheel's Requires-Dist
-# (see dev-util/semgrep-bin-1.175.0's PyPI METADATA; Requires-Dist is
-# byte-identical to 1.174.0), preserving
+# (see dev-util/semgrep-bin-1.176.0's PyPI METADATA; Requires-Dist is
+# byte-identical to 1.175.0), preserving
 # upstream's PEP 440 compatible-release (~=) upper bounds as Gentoo
 # range atoms instead of collapsing them to unbounded >=. ::gentoo's
 # own versions of several of these packages fall outside the range

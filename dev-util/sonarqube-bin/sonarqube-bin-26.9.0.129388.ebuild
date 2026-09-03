@@ -57,6 +57,12 @@ src_prepare() {
 	case ${ARCH} in
 		amd64)
 			rm -r elasticsearch/lib/platform/linux-aarch64 || die
+			# Upstream's Linux archive is arch-agnostic and ships only an
+			# AArch64 build of this native launcher (the amd64 path uses the
+			# JAR launcher in server-cli/). It needs ld-linux-aarch64.so.1
+			# and is unusable here, so drop it to avoid an unresolved-soname
+			# QA warning. Keep it on arm64, where it is the correct arch.
+			rm elasticsearch/lib/tools/server-launcher/server-launcher || die
 			;;
 		arm64)
 			rm -r elasticsearch/lib/platform/linux-x64 || die

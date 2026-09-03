@@ -19,5 +19,5 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
-# The 1.43.78 wheel/sdist metadata has no unconditional runtime dependency;
+# The 1.43.86 wheel/sdist metadata has no unconditional runtime dependency;
 # typing-extensions is required only for Python <3.12, outside PYTHON_COMPAT.

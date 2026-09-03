@@ -50,10 +50,14 @@ REQUIRED_USE="elibc_glibc"
 # external "usage" command any more (the old v2026.8.10 bash script's
 # `type -P usage` guard and error message are gone). The RDEPEND on
 # dev-util/usage-bin this overlay carried through v2026.8.10 no longer
-# applies from this version onward. The v2026.8.14 -> v2026.8.15 Cargo.lock
-# diff drops only the internal "mise-cache-rustc" workspace crate (a
-# first-party 0.1.0 member, no third-party code); clap is still absent, the
-# usage-* crates are still present, and the license set is unchanged.
+# applies from this version onward. The v2026.8.15 -> v2026.9.1 Cargo.lock
+# diff adds only four gix-* crates (gix-macros, gix-merge, gix-note,
+# gix-zlib) and send_wrapper as genuinely new crate names -- all
+# "MIT OR Apache-2.0" -- plus version bumps of already-vendored crates
+# (the gix/rattler/usage-* families, aws-sdk-*, mlua, tera, etc.); clap is
+# still absent, the usage-* crates are still present (6.6.1), and the
+# license set is unchanged (every new crate is covered by the MIT and
+# Apache-2.0 tokens already listed below).
 RDEPEND="
 	|| (
 		llvm-runtimes/libgcc

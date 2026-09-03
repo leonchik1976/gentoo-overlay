@@ -31,15 +31,15 @@ S="${WORKDIR}/squashfs-root"
 # license, same as net-im/discord/app-editors/cursor/app-editors/kiro in
 # this overlay. That component is why this can't be a plain MIT package.
 #
-# v0.75.5 fully re-verified (not just diffed): this host is arm64 and the
+# v0.76.2 fully re-verified (not just diffed): this host is arm64 and the
 # package is amd64-only, so the AppImage can't be self-extracted by
 # running it, but 7z reads its appended SquashFS directly without
 # executing anything, so the full audit below was redone against the real
-# v0.75.5 AppImage rather than inferred from a package-lock.json diff.
+# v0.76.2 AppImage rather than inferred from a package-lock.json diff.
 # resources/legal/THIRD_PARTY_LICENSE_AUDIT.md's "License Counts" total
 # 904 packages across the same permissive set as the previous release, plus a
 # standalone "SEE LICENSE IN README.md: 1" bucket that is just
-# @anthropic-ai/claude-agent-sdk@0.3.241 itself (its package.json's raw
+# @anthropic-ai/claude-agent-sdk@0.3.257 itself (its package.json's raw
 # license field, cross-checked against THIRD_PARTY_LICENSES.json) -- i.e.
 # the same already-declared proprietary exception, not a new package or
 # license. No new SPDX identifier is introduced; LICENSE= is unchanged.
@@ -51,7 +51,7 @@ SLOT="0"
 # (.github/workflows/electron-build.yml) only builds Linux on a single
 # ubuntu-latest/x64 matrix job -- there is no Linux arm64 job at all (unlike
 # macOS and Windows, which both get dedicated arm64 jobs). Confirmed
-# empirically too: the v0.75.5 AppImage and every native .node addon and
+# empirically too: the v0.76.2 AppImage and every native .node addon and
 # vendored CLI binary inside it (better-sqlite3, node-pty, @img/sharp,
 # claude-agent-sdk-linux-x64, codex-linux-x64, codex-acp-linux-x64) is
 # linux-x64/linuxmusl-x64 only.
@@ -71,8 +71,8 @@ REQUIRED_USE="elibc_glibc"
 # strip:   binaries are prebuilt and already stripped upstream.
 RESTRICT="bindist mirror strip"
 
-# RDEPEND re-verified 2026-08-29 with `readelf -d` against every ELF binary
-# and .so extracted from the real v0.75.5 AppImage (main binary,
+# RDEPEND re-verified 2026-09-03 with `readelf -d` against every ELF binary
+# and .so extracted from the real v0.76.2 AppImage (main binary,
 # chrome-sandbox, chrome_crashpad_handler, libEGL.so, libGLESv2.so,
 # libvk_swiftshader.so, libvulkan.so.1, libffmpeg.so, and every bundled
 # native npm addon under resources/), extracted via `7z x` against the
