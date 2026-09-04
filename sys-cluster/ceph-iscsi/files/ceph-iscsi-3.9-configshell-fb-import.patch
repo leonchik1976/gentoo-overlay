@@ -1,0 +1,30 @@
+Import from configshell, not the obsolete configshell_fb module name.
+
+gwcli.py and gwcli/node.py both still import from `configshell_fb`, the
+name of an older/downstream fork of this project. The current upstream
+project (and the package it ships as, python-configshell-fb / Gentoo's
+dev-python/configshell-fb) installs its importable module as plain
+`configshell` -- the "-fb" suffix is only part of the distribution name,
+not the Python package. Importing configshell_fb therefore fails with
+ModuleNotFoundError at runtime:
+
+    ModuleNotFoundError: No module named 'configshell_fb'
+
+--- a/gwcli.py
++++ b/gwcli.py
+@@ -11,7 +11,7 @@
+ import argparse
+ import signal
+
+-from configshell_fb import ConfigShell, ExecutionError
++from configshell import ConfigShell, ExecutionError
+ from gwcli.gateway import ISCSIRoot
+
+ import ceph_iscsi_config.settings as settings
+--- a/gwcli/node.py
++++ b/gwcli/node.py
+@@ -1,4 +1,4 @@
+-from configshell_fb import ConfigNode
++from configshell import ConfigNode
+ from gwcli.utils import console_message
+ import logging

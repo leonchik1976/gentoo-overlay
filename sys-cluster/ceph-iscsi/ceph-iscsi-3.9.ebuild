@@ -53,20 +53,31 @@ RDEPEND="
 	sys-cluster/ceph[${PYTHON_USEDEP}]
 "
 
-# The three unit-test modules kept in python_test() (and everything they
-# import transitively: client/target/discovery/alua/backstore/common/
-# settings/utils/gateway_object.py) only reach cryptography, netifaces,
-# rtslib-fb and ceph's own rados/rbd bindings -- never flask, werkzeug,
-# requests, pyopenssl, distro, configshell-fb or tcmu-runner, so BDEPEND
-# lists exactly that subset instead of reusing the whole of RDEPEND.
+# The three unit-test modules, plus the gwcli --version smoke check added
+# in python_test() below (gwcli.py -> gwcli.gateway -> gwcli.{node,
+# hostgroup,storage,client,ceph,utils} -> ceph_iscsi_config.{settings,
+# utils,target,client,lun,group,...}) only ever reach cryptography,
+# netifaces, requests, rtslib-fb, configshell-fb and ceph's own rados/rbd
+# bindings -- never flask, werkzeug, pyopenssl, distro or tcmu-runner, so
+# BDEPEND lists exactly that subset instead of reusing the whole of
+# RDEPEND.
 BDEPEND="
 	test? (
+		dev-python/configshell-fb[${PYTHON_USEDEP}]
 		dev-python/cryptography[${PYTHON_USEDEP}]
 		dev-python/netifaces[${PYTHON_USEDEP}]
+		dev-python/requests[${PYTHON_USEDEP}]
 		>=dev-python/rtslib-fb-2.2[${PYTHON_USEDEP}]
 		sys-cluster/ceph[${PYTHON_USEDEP}]
 	)
 "
+
+# Both upstreamable: a straight source fix (obsolete configshell_fb import
+# name) and a stale hardcoded version string. See each patch's own header.
+PATCHES=(
+	"${FILESDIR}/${P}-configshell-fb-import.patch"
+	"${FILESDIR}/${P}-gwcli-version.patch"
+)
 
 src_prepare() {
 	distutils-r1_src_prepare
@@ -133,6 +144,24 @@ python_test() {
 	# test_group.py is excluded -- see the RESTRICT comment above.
 	"${EPYTHON}" -m unittest -v test_chap test_common test_settings ||
 		die "tests failed under ${EPYTHON}"
+
+	# Regression guard for the configshell_fb -> configshell import fix
+	# (see files/${P}-configshell-fb-import.patch): none of the three
+	# unittest modules above import gwcli.py or gwcli/node.py, the two
+	# files that patch touches. `gwcli --version` does: gwcli.py's own
+	# top-level "from configshell import ConfigShell, ExecutionError" runs
+	# unconditionally on import, and its "from gwcli.gateway import
+	# ISCSIRoot" pulls in gwcli.node's "from configshell import
+	# ConfigNode" transitively (gateway -> node). argparse's version
+	# action then prints and exits before main() ever runs, so this needs
+	# no root, no live gateway, and no network access.
+	local out
+	out=$(gwcli --version 2>&1)
+	local ret=${?}
+	echo "${out}"
+	[[ ${ret} -eq 0 ]] || die "gwcli --version failed under ${EPYTHON}"
+	[[ ${out} == "gwcli - 3.9" ]] ||
+		die "gwcli --version printed unexpected output under ${EPYTHON}: ${out}"
 }
 
 src_install() {
