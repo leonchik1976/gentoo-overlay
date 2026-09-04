@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription>
+		ceph-iscsi provides the common logic and CLI tools for creating and
+		managing LIO iSCSI gateways backed by Ceph RBD. It installs the
+		rbd-target-api daemon (restores LIO state on gateway restart and
+		exposes a REST config API), the rbd-target-gw daemon (gateway stats
+		REST API), and the gwcli management shell, which replaces targetcli
+		for this use case. sys-cluster/ceph does not provide any of this
+		itself; the RBD-to-LIO bridging is done by sys-block/tcmu-runner's
+		rbd handler, which this package configures and manages.
+	</longdescription>
+	<upstream>
+		<bugs-to>https://tracker.ceph.com/</bugs-to>
+		<remote-id type="github">ceph/ceph-iscsi</remote-id>
+	</upstream>
+</pkgmetadata>

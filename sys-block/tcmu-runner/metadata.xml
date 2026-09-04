@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription>
+		tcmu-runner handles the userspace side of the Linux kernel LIO SCSI
+		target's TCM-User (TCMU) backstore. It lets a userspace process back
+		a LIO-exported LUN, and ships handlers for Ceph RBD, GlusterFS, qcow2,
+		zbc and plain files. It is required by sys-cluster/ceph-iscsi to
+		export Ceph RBD images as iSCSI LUNs.
+	</longdescription>
+	<use>
+		<flag name="glusterfs">Build the glfs handler, exporting GlusterFS volumes as TCMU-backed LUNs (pulls in sys-cluster/glusterfs)</flag>
+		<flag name="rbd">Build the rbd handler, exporting Ceph RBD images as TCMU-backed LUNs (pulls in sys-cluster/ceph)</flag>
+		<flag name="tcmalloc">Link against dev-util/google-perftools' tcmalloc allocator instead of the system malloc()</flag>
+	</use>
+	<upstream>
+		<bugs-to>https://github.com/open-iscsi/tcmu-runner/issues</bugs-to>
+		<remote-id type="github">open-iscsi/tcmu-runner</remote-id>
+	</upstream>
+</pkgmetadata>
