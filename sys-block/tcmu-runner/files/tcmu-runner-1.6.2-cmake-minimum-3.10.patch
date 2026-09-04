@@ -1,0 +1,17 @@
+Bump cmake_minimum_required() from 2.8 to 3.10.
+
+CMake 4 removed the ability to configure with policies older than 3.5, and
+now warns that compatibility with cmake_minimum_required() versions below
+3.10 will be removed in a future release too (see CMake's own release
+notes on removed/deprecated compatibility). Declaring 3.10 avoids both the
+hard error and the warning; nothing else in this file needs a policy newer
+than 2.8 provided, so no other change is required.
+
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required (VERSION 2.8 FATAL_ERROR)
++cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
+ project (tcmu-runner C)
+ set(VERSION 1.6.2)
+ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Werror -Wall -Wdeclaration-after-statement -std=c99")

@@ -39,6 +39,12 @@ BDEPEND="
 	virtual/pkgconfig
 "
 
+# Upstream's cmake_minimum_required(VERSION 2.8) trips CMake 4's removal of
+# support for policies below 3.5 (bug #951350) and its warning that support
+# below 3.10 will go away too. See the patch header for details; sent
+# upstream-clean (no other change) so it can be submitted as-is.
+PATCHES=( "${FILESDIR}/${P}-cmake-minimum-3.10.patch" )
+
 src_prepare() {
 	cmake_src_prepare
 
