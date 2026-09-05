@@ -2,7 +2,8 @@ Targeted workaround for a GCC -Wfree-nonheap-object false positive.
 
 https://github.com/fluent/fluent-bit/issues/10510 reports the same two warnings
 against 4.0.3; auto-closed "not planned" by stale-bot with no fix, discussion, or
-linked PR, and still reproduces unmodified in 5.1.1.
+linked PR, and still reproduces unmodified in 5.1.2. The workaround was
+successfully dry-run and build-verified against the 5.1.2 release source.
 
 Diagnostic (GCC 16.2.0, -O2, no LTO):
 

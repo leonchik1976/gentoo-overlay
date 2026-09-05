@@ -73,7 +73,7 @@ RESTRICT="test"
 # mk_stream_release(): see the patch file itself for the full
 # root-cause analysis, upstream issue reference, and validation.
 PATCHES=(
-	"${FILESDIR}"/${P}-mk_stream_release-nonheap-object.patch
+	"${FILESDIR}"/fluent-bit-mk_stream_release-nonheap-object.patch
 )
 
 src_configure() {
