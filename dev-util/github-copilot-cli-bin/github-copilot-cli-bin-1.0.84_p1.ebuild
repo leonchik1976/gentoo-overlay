@@ -12,9 +12,9 @@ HOMEPAGE="
 	https://github.com/github/copilot-cli
 "
 
-# Each v1.0.83-3 per-arch release asset is a flat tar.gz containing exactly
-# one stripped ELF executable named "copilot" (160303936 bytes for x86-64,
-# 158862080 bytes for arm64), verified via `tar tzf`/`file`/`readelf -d`.
+# Each v1.0.84-1 per-arch release asset is a flat tar.gz containing exactly
+# one stripped ELF executable named "copilot" (160500544 bytes for x86-64,
+# 160566016 bytes for arm64), verified via `tar tvf`/`file`/`readelf -d`.
 # Both link only libdl, libstdc++, libm, libgcc_s, libpthread, libc, and their
 # architecture's ld-linux -- no GTK/X11/Electron stack, unlike the desktop
 # app in app-editors/github-copilot-bin.

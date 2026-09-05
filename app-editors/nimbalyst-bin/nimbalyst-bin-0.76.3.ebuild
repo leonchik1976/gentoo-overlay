@@ -31,11 +31,11 @@ S="${WORKDIR}/squashfs-root"
 # license, same as net-im/discord/app-editors/cursor/app-editors/kiro in
 # this overlay. That component is why this can't be a plain MIT package.
 #
-# v0.76.2 fully re-verified (not just diffed): this host is arm64 and the
+# v0.76.3 fully re-verified (not just diffed): this host is arm64 and the
 # package is amd64-only, so the AppImage can't be self-extracted by
 # running it, but 7z reads its appended SquashFS directly without
 # executing anything, so the full audit below was redone against the real
-# v0.76.2 AppImage rather than inferred from a package-lock.json diff.
+# v0.76.3 AppImage rather than inferred from a package-lock.json diff.
 # resources/legal/THIRD_PARTY_LICENSE_AUDIT.md's "License Counts" total
 # 904 packages across the same permissive set as the previous release, plus a
 # standalone "SEE LICENSE IN README.md: 1" bucket that is just
@@ -51,7 +51,7 @@ SLOT="0"
 # (.github/workflows/electron-build.yml) only builds Linux on a single
 # ubuntu-latest/x64 matrix job -- there is no Linux arm64 job at all (unlike
 # macOS and Windows, which both get dedicated arm64 jobs). Confirmed
-# empirically too: the v0.76.2 AppImage and every native .node addon and
+# empirically too: the v0.76.3 AppImage and every native .node addon and
 # vendored CLI binary inside it (better-sqlite3, node-pty, @img/sharp,
 # claude-agent-sdk-linux-x64, codex-linux-x64, codex-acp-linux-x64) is
 # linux-x64/linuxmusl-x64 only.
@@ -71,8 +71,8 @@ REQUIRED_USE="elibc_glibc"
 # strip:   binaries are prebuilt and already stripped upstream.
 RESTRICT="bindist mirror strip"
 
-# RDEPEND re-verified 2026-09-03 with `readelf -d` against every ELF binary
-# and .so extracted from the real v0.76.2 AppImage (main binary,
+# RDEPEND re-verified 2026-09-05 with `readelf -d` against all 30 ELF files
+# extracted from the real v0.76.3 AppImage (main binary,
 # chrome-sandbox, chrome_crashpad_handler, libEGL.so, libGLESv2.so,
 # libvk_swiftshader.so, libvulkan.so.1, libffmpeg.so, and every bundled
 # native npm addon under resources/), extracted via `7z x` against the
@@ -84,19 +84,24 @@ RESTRICT="bindist mirror strip"
 # (libudev.so.1) but isn't listed by those two. @img/sharp's bundled
 # libvips-cpp.so.8.18.3 resolves via its own
 # $ORIGIN-relative RPATH, so unlike net-im/beeper this package does NOT
-# need a symlink to media-libs/vips.
+# need a symlink to media-libs/vips. The bundled codex-acp executable directly
+# needs libcap.so.2, libssl.so.3, libcrypto.so.3, and libz.so.1, so libcap,
+# OpenSSL, and zlib are explicit runtime dependencies.
 RDEPEND="
 	>=app-accessibility/at-spi2-core-2.46.0:2
 	dev-libs/expat
 	dev-libs/glib:2
 	dev-libs/nspr
 	dev-libs/nss
+	dev-libs/openssl
 	media-libs/alsa-lib
 	media-libs/fontconfig
 	media-libs/mesa[gbm(+)]
 	net-print/cups
 	sys-apps/dbus
 	elibc_glibc? ( sys-libs/glibc )
+	sys-libs/libcap
+	virtual/zlib
 	virtual/udev
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf:2

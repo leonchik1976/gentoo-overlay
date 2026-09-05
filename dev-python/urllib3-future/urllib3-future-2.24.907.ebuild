@@ -24,7 +24,7 @@ RDEPEND="
 	>=dev-python/jh2-5.0.3[${PYTHON_USEDEP}]
 	<dev-python/jh2-6[${PYTHON_USEDEP}]
 	>=dev-python/qh3-1.5.4[${PYTHON_USEDEP}]
-	<dev-python/qh3-2[${PYTHON_USEDEP}]
+	<dev-python/qh3-3[${PYTHON_USEDEP}]
 "
 
 # Upstream explicitly requires distribution packagers to disable its

@@ -20,17 +20,17 @@ KEYWORDS="~amd64 ~arm64"
 
 RDEPEND="
 	>=dev-python/anyio-4.14.2[${PYTHON_USEDEP}]
-	>=dev-python/bascom-0.1.3[${PYTHON_USEDEP}]
+	>=dev-python/bascom-0.2.0[${PYTHON_USEDEP}]
 	>=dev-python/beautifulsoup4-4.15.0[${PYTHON_USEDEP}]
 	>=dev-python/click-8.4.2[${PYTHON_USEDEP}]
 	>=dev-python/defusedxml-0.7.1[${PYTHON_USEDEP}]
 	>=dev-python/html5lib-1.1[${PYTHON_USEDEP}]
 	>=dev-python/keyring-25.7.0[${PYTHON_USEDEP}]
-	>=dev-python/niquests-3.20.1[${PYTHON_USEDEP}]
+	>=dev-python/niquests-3.21.0[${PYTHON_USEDEP}]
 	>=dev-python/niquests-cache-0.2.4[${PYTHON_USEDEP}]
-	>=dev-python/platformdirs-4.11.0[${PYTHON_USEDEP}]
+	>=dev-python/platformdirs-4.11.4[${PYTHON_USEDEP}]
 	>=dev-python/typing-extensions-4.16.0[${PYTHON_USEDEP}]
-	>=sys-apps/portage-3.0.81.2[${PYTHON_USEDEP}]
+	>=sys-apps/portage-3.0.82.1[${PYTHON_USEDEP}]
 "
 BDEPEND+="
 	test? (

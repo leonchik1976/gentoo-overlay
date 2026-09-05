@@ -28,16 +28,16 @@ HOMEPAGE="
 "
 
 # Immutable, hash-pinned files.pythonhosted.org URLs taken directly from
-# https://pypi.org/pypi/semgrep/1.176.0/json (verified against the
+# https://pypi.org/pypi/semgrep/1.176.1/json (verified against the
 # sha256 digests published there; see RDEPEND/comments below for the
 # rest of the provenance trail). Do NOT point this at ::nest, ::pentoo,
 # or any GitHub Actions build artifact.
 SRC_URI="
 	amd64? (
-		https://files.pythonhosted.org/packages/a3/5f/dc2f52ef4d8af70931e08ac7756577aeb49674b60cc1adc172dbe7031020/semgrep-${PV}-cp310.cp311.cp312.cp313.cp314.py310.py311.py312.py313.py314-none-manylinux_2_34_x86_64.whl
+		https://files.pythonhosted.org/packages/17/97/ee08082667af4c3f0da56ad2af4f1e4cbd0b375200235c4ea6e1095b6742/semgrep-${PV}-cp310.cp311.cp312.cp313.cp314.py310.py311.py312.py313.py314-none-manylinux_2_34_x86_64.whl
 	)
 	arm64? (
-		https://files.pythonhosted.org/packages/90/14/79805eade15ae5e3b2b71f5bfba1cc0f062c17e4526959631ed61573f726/semgrep-${PV}-cp310.cp311.cp312.cp313.cp314.py310.py311.py312.py313.py314-none-manylinux_2_34_aarch64.whl
+		https://files.pythonhosted.org/packages/8e/c9/c1a89c9bb7489199bca3cf3f4c8339c09fd28e4c58a81eed9cbb1c5edaba/semgrep-${PV}-cp310.cp311.cp312.cp313.cp314.py310.py311.py312.py313.py314-none-manylinux_2_34_aarch64.whl
 	)
 "
 S="${WORKDIR}"
@@ -163,9 +163,8 @@ RESTRICT="mirror strip"
 # ::nest); do not remove it merely to silence that warning.
 #
 # --- dependency-version audit ------------------------------------------
-# Every atom below is translated from the exact wheel's Requires-Dist
-# (see dev-util/semgrep-bin-1.176.0's PyPI METADATA; Requires-Dist is
-# byte-identical to 1.175.0), preserving
+# Every atom below is translated from the exact 1.176.1 wheel's Requires-Dist
+# metadata, preserving
 # upstream's PEP 440 compatible-release (~=) upper bounds as Gentoo
 # range atoms instead of collapsing them to unbounded >=. ::gentoo's
 # own versions of several of these packages fall outside the range
@@ -201,11 +200,11 @@ RESTRICT="mirror strip"
 # and opentelemetry-instrumentation-threading-0.65_beta0 are
 # themselves exact-pinned (via their own ~= RDEPEND) to that same
 # 1.44.0/0.65b0 release train. Pinning all four to 1.44.0/0.65b0
-# keeps the whole OTel dependency graph internally consistent -- it is
-# a deliberate downstream compatibility relaxation, not a claim that
-# semgrep has been verified to work correctly against OTel 1.44/0.65
-# instead of the 1.37/0.58 range it actually declares. Full Semgrep
-# runtime testing against this relaxed stack is still required.
+# keeps the whole OTel dependency graph internally consistent. This deliberate
+# downstream compatibility relaxation was runtime-tested with Semgrep 1.176.1
+# on arm64 and amd64: SemgrepState initialized and the requests/threading
+# instrumentors completed instrument/uninstrument cycles against OTel
+# 1.44.0/0.65b0. Upstream still declares the older 1.37/0.58 windows.
 RDEPEND="
 	${PYTHON_DEPS}
 	!dev-util/semgrep
