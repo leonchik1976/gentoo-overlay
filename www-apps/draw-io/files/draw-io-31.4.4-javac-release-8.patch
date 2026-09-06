@@ -1,0 +1,23 @@
+Build the servlet classes against the Java 8 API, matching the bytecode
+level (major 52) of upstream's own release WAR.
+
+Upstream builds their published draw.war with JDK 8
+(.github/workflows/war.yml: "Set up JDK 1.8", distribution zulu, java-version 8),
+but etc/build/build.xml passes no -source/-target/--release to <javac>, so a
+build with a newer JDK silently produces class files that will not load on
+older servlet-container JVMs. Pin the release level so the source build stays
+faithful to the release artifact regardless of the JDK used to build it.
+
+Not submitted upstream (no PRs accepted, per README.md).
+
+--- a/etc/build/build.xml
++++ b/etc/build/build.xml
+@@ -728,7 +728,7 @@
+ 	-->
+ 	<target name="javac" description="Java compilation">
+ 		<mkdir dir="${javac.dir}"/>
+-		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${javac.dir}">
++		<javac includeantruntime="false" release="8" srcdir="${src.dir}" destdir="${javac.dir}">
+ 			<classpath refid="javac.class.path" />
+ 		</javac>
+ 		<copy todir="${javac.dir}" file="${src.dir}/log4j.properties" />
