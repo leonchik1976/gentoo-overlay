@@ -1,0 +1,59 @@
+
+New installation
+
+1. Create the Cacti database:
+
+   shell> mysqladmin --password --user=root create cacti
+
+2. Import the initial schema:
+
+   shell> mysql --password --user=root cacti < ${MY_INSTALLDIR}/cacti.sql
+
+3. Populate MySQL's time-zone tables from the system zoneinfo database:
+
+   shell> mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql --password --user=root mysql
+
+   Warnings about metadata files such as iso3166.tab being skipped are normal.
+
+4. Create a dedicated account and grant it access. Replace the example
+   password with a strong, unique password:
+
+   shell> mysql --password --user=root
+   mysql> CREATE USER 'cactiuser'@'localhost' IDENTIFIED BY 'somepassword';
+   mysql> GRANT ALL PRIVILEGES ON `cacti`.* TO 'cactiuser'@'localhost';
+   mysql> GRANT SELECT ON `mysql`.`time_zone_name` TO 'cactiuser'@'localhost';
+
+   FLUSH PRIVILEGES is not required after CREATE USER or GRANT.
+
+5. Edit ${MY_INSTALLDIR}/include/config.php and set the database name, host,
+   user, and password. If Cacti is served at the virtual-host root, also set:
+
+       \$url_path = '/';
+
+6. Open http://${VHOST_HOSTNAME}/${VHOST_APPDIR}/ and complete the installer.
+   The initial login is admin/admin; Cacti requires the password to be changed.
+
+7. After template packages have been installed, make scripts/, the three
+   resource query directories, and include/vendor/csrf/csrf-secret.php
+   read-only to the web-server account. They are writable during installation
+   so Cacti can install templates. The cache/, log/, and rra/ directories must
+   remain writable.
+
+Upgrade
+
+1. Back up the database, rra/ directory, and locally modified scripts or
+   resources before upgrading.
+
+2. Confirm that ${MY_INSTALLDIR}/include/config.php still contains the correct
+   database settings.
+
+3. Open http://${VHOST_HOSTNAME}/${VHOST_APPDIR}/ and select Upgrade.
+
+Poller scheduling
+
+Add the following entry to /etc/crontab, adjusting the interval if needed:
+
+   */5 * * * * ${VHOST_SERVER_UID} /usr/bin/php ${MY_INSTALLDIR}/poller.php > /dev/null 2>&1
+
+The poller user must be able to create and update files in
+${MY_INSTALLDIR}/rra and write Cacti's log and cache directories.
