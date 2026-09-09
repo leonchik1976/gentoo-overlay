@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Cisco Webex desktop client for Linux (meetings, messaging and
+		calling), built on Qt 6 and the Chromium Embedded Framework.
+		Repackaged from Cisco's official amd64 .deb, since no source build
+		or upstream tarball is offered. Cisco ships this client only as an
+		x86-64 Linux binary, so there is no arm64 package.
+	</longdescription>
+	<upstream>
+		<doc>https://help.webex.com/en-us/article/9vstcdb/webex-app-for-linux</doc>
+		<bugs-to>https://help.webex.com/</bugs-to>
+	</upstream>
+</pkgmetadata>
