@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		argo9s is a K9s-inspired terminal user interface for monitoring Argo CD
+		Applications and their resources in real time. It can talk to a cluster
+		directly through a kubeconfig (watching Argo CD CRDs) or to the Argo CD
+		HTTP API using a server URL and bearer token.
+
+		This package installs the upstream prebuilt binary release.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">vvrnv/argo9s</remote-id>
+	</upstream>
+</pkgmetadata>
