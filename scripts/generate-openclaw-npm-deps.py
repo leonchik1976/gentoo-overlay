@@ -27,6 +27,19 @@ from pathlib import Path
 # Maps npm-shrinkwrap.json node_modules path -> Gentoo ARCH this variant
 # should be vendored for ("amd64" or "arm64"), or None to drop it.
 _LINUX_VARIANT_ARCH = {
+    'node_modules/@koromix/koffi-linux-arm64': 'arm64',
+    'node_modules/@koromix/koffi-linux-x64': 'amd64',
+    'node_modules/@openclaw/fs-safe-linux-arm64-gnu': 'arm64',
+    'node_modules/@openclaw/fs-safe-linux-arm64-musl': 'arm64',
+    'node_modules/@openclaw/fs-safe-linux-x64-gnu': 'amd64',
+    'node_modules/@openclaw/fs-safe-linux-x64-musl': 'amd64',
+    'node_modules/@trycua/cua-driver-linux-arm64-gnu': 'arm64',
+    'node_modules/@trycua/cua-driver-linux-x64-gnu': 'amd64',
+    'node_modules/@ubjs/node-linux-arm64-gnu': 'arm64',
+    'node_modules/@ubjs/node-linux-arm64-musl': 'arm64',
+    'node_modules/@ubjs/node-linux-x64-gnu': 'amd64',
+    'node_modules/@ubjs/node-linux-x64-musl': 'amd64',
+
     "node_modules/@lydell/node-pty-linux-x64": "amd64",
     "node_modules/@lydell/node-pty-linux-arm64": "arm64",
     "node_modules/sqlite-vec-linux-x64": "amd64",
@@ -36,6 +49,31 @@ _LINUX_VARIANT_ARCH = {
 # Non-Linux variant packages of the same two native-addon families: safe
 # to drop, since this overlay only ever builds for linux/amd64+arm64.
 _KNOWN_SKIP_PREFIXES = (
+    'node_modules/@koromix/koffi-darwin-arm64',
+    'node_modules/@koromix/koffi-darwin-x64',
+    'node_modules/@koromix/koffi-freebsd-arm64',
+    'node_modules/@koromix/koffi-freebsd-ia32',
+    'node_modules/@koromix/koffi-freebsd-x64',
+    'node_modules/@koromix/koffi-linux-ia32',
+    'node_modules/@koromix/koffi-linux-loong64',
+    'node_modules/@koromix/koffi-linux-riscv64',
+    'node_modules/@koromix/koffi-openbsd-ia32',
+    'node_modules/@koromix/koffi-openbsd-x64',
+    'node_modules/@koromix/koffi-win32-arm64',
+    'node_modules/@koromix/koffi-win32-ia32',
+    'node_modules/@koromix/koffi-win32-x64',
+    'node_modules/@openclaw/fs-safe-darwin-arm64',
+    'node_modules/@openclaw/fs-safe-darwin-x64',
+    'node_modules/@openclaw/fs-safe-win32-x64-msvc',
+    'node_modules/@trycua/cua-driver-darwin-arm64',
+    'node_modules/@trycua/cua-driver-darwin-x64',
+    'node_modules/@trycua/cua-driver-win32-arm64-msvc',
+    'node_modules/@trycua/cua-driver-win32-x64-msvc',
+    'node_modules/@ubjs/node-darwin-arm64',
+    'node_modules/@ubjs/node-darwin-x64',
+    'node_modules/@ubjs/node-win32-arm64-msvc',
+    'node_modules/@ubjs/node-win32-x64-msvc',
+
     "node_modules/@lydell/node-pty-darwin-",
     "node_modules/@lydell/node-pty-win32-",
     "node_modules/sqlite-vec-darwin-",

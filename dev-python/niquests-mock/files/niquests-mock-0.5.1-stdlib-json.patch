@@ -1,0 +1,55 @@
+From: Gentoo
+Subject: Use the standard library JSON implementation
+
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -29,7 +29,6 @@
+ ]
+ dependencies = [
+     "niquests>=3.17.0",
+-    "orjson>=3.10.18",
+ ]
+ 
+ [[project.authors]]
+--- a/src/niquests_mock/matchers.py
++++ b/src/niquests_mock/matchers.py
+@@ -5,7 +5,7 @@
+ from typing import Any, cast, overload
+ from urllib.parse import parse_qs, urljoin, urlsplit
+ 
+-import orjson
++import json as jsonlib
+ from niquests.models import PreparedRequest
+ 
+ from niquests_mock.models import UNSET, UnsetType
+@@ -237,8 +237,8 @@
+     if actual is None:
+         return False
+     try:
+-        payload = orjson.loads(actual)
+-    except orjson.JSONDecodeError:
++        payload = jsonlib.loads(actual)
++    except jsonlib.JSONDecodeError:
+         return False
+     if callable(expected):
+         return bool(cast("Any", expected)(payload))
+--- a/src/niquests_mock/responses.py
++++ b/src/niquests_mock/responses.py
+@@ -6,7 +6,7 @@
+ from io import BytesIO
+ from typing import Any, cast
+ 
+-import orjson
++import json as jsonlib
+ from niquests.cookies import RequestsCookieJar, cookiejar_from_dict, extract_cookies_to_jar
+ from niquests.models import AsyncResponse, PreparedRequest, Response
+ from niquests.packages import urllib3
+@@ -23,7 +23,7 @@
+     json: Any | UnsetType,
+ ) -> tuple[bytes | None, str | None]:
+     if json is not UNSET:
+-        return orjson.dumps(json), "application/json"
++        return jsonlib.dumps(json, separators=(",", ":")).encode("utf-8"), "application/json"
+     if text is not None:
+         return text.encode("utf-8"), "text/plain; charset=utf-8"
+     if isinstance(content, str):
