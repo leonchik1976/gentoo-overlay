@@ -1,0 +1,65 @@
+oh-my-posh 31.3.0 compiled dependency license inventory
+
+Modules enumerated by go version -m on the exact release binaries.
+The upstream license texts listed below are installed alongside this inventory.
+
+dario.cat/mergo@v1.0.2
+Source: https://proxy.golang.org/dario.cat/mergo/@v/v1.0.2.zip
+github.com/Masterminds/goutils@v1.1.1
+Source: https://proxy.golang.org/github.com/!masterminds/goutils/@v/v1.1.1.zip
+github.com/Masterminds/semver/v3@v3.4.0
+Source: https://proxy.golang.org/github.com/!masterminds/semver/v3/@v/v3.4.0.zip
+github.com/Masterminds/sprig/v3@v3.3.0
+Source: https://proxy.golang.org/github.com/!masterminds/sprig/v3/@v/v3.3.0.zip
+github.com/go-git/gcfg@v1.5.1-0.20230307220236-3a3c6141e376
+Source: https://proxy.golang.org/github.com/go-git/gcfg/@v/v1.5.1-0.20230307220236-3a3c6141e376.zip
+github.com/go-git/go-billy/v5@v5.9.0
+Source: https://proxy.golang.org/github.com/go-git/go-billy/v5/@v/v5.9.0.zip
+github.com/go-git/go-git/v5@v5.19.2
+Source: https://proxy.golang.org/github.com/go-git/go-git/v5/@v/v5.19.2.zip
+github.com/google/uuid@v1.6.0
+Source: https://proxy.golang.org/github.com/google/uuid/@v/v1.6.0.zip
+github.com/gookit/color@v1.6.1
+Source: https://proxy.golang.org/github.com/gookit/color/@v/v1.6.1.zip
+github.com/huandu/xstrings@v1.5.0
+Source: https://proxy.golang.org/github.com/huandu/xstrings/@v/v1.5.0.zip
+github.com/jbenet/go-context@v0.0.0-20150711004518-d14ea06fba99
+Source: https://proxy.golang.org/github.com/jbenet/go-context/@v/v0.0.0-20150711004518-d14ea06fba99.zip
+github.com/klauspost/cpuid/v2@v2.3.0
+Source: https://proxy.golang.org/github.com/klauspost/cpuid/v2/@v/v2.3.0.zip
+github.com/lucasb-eyer/go-colorful@v1.4.1
+Source: https://proxy.golang.org/github.com/lucasb-eyer/go-colorful/@v/v1.4.1.zip
+github.com/mitchellh/copystructure@v1.2.0
+Source: https://proxy.golang.org/github.com/mitchellh/copystructure/@v/v1.2.0.zip
+github.com/mitchellh/reflectwalk@v1.0.2
+Source: https://proxy.golang.org/github.com/mitchellh/reflectwalk/@v/v1.0.2.zip
+github.com/pelletier/go-toml/v2@v2.4.3
+Source: https://proxy.golang.org/github.com/pelletier/go-toml/v2/@v/v2.4.3.zip
+github.com/pjbgf/sha1cd@v0.6.0
+Source: https://proxy.golang.org/github.com/pjbgf/sha1cd/@v/v0.6.0.zip
+github.com/shirou/gopsutil/v4@v4.26.8
+Source: https://proxy.golang.org/github.com/shirou/gopsutil/v4/@v/v4.26.8.zip
+github.com/shopspring/decimal@v1.4.0
+Source: https://proxy.golang.org/github.com/shopspring/decimal/@v/v1.4.0.zip
+github.com/spf13/cast@v1.10.0
+Source: https://proxy.golang.org/github.com/spf13/cast/@v/v1.10.0.zip
+github.com/tklauser/go-sysconf@v0.3.16
+Source: https://proxy.golang.org/github.com/tklauser/go-sysconf/@v/v0.3.16.zip
+github.com/tklauser/numcpus@v0.11.0
+Source: https://proxy.golang.org/github.com/tklauser/numcpus/@v/v0.11.0.zip
+github.com/wayneashleyberry/terminal-dimensions@v1.1.0
+Source: https://proxy.golang.org/github.com/wayneashleyberry/terminal-dimensions/@v/v1.1.0.zip
+github.com/xo/terminfo@v0.0.0-20220910002029-abceb7e1c41e
+Source: https://proxy.golang.org/github.com/xo/terminfo/@v/v0.0.0-20220910002029-abceb7e1c41e.zip
+go.yaml.in/yaml/v3@v3.0.5
+Source: https://proxy.golang.org/go.yaml.in/yaml/v3/@v/v3.0.5.zip
+golang.org/x/crypto@v0.53.0
+Source: https://proxy.golang.org/golang.org/x/crypto/@v/v0.53.0.zip
+golang.org/x/net@v0.56.0
+Source: https://proxy.golang.org/golang.org/x/net/@v/v0.56.0.zip
+golang.org/x/sys@v0.48.0
+Source: https://proxy.golang.org/golang.org/x/sys/@v/v0.48.0.zip
+golang.org/x/text@v0.41.0
+Source: https://proxy.golang.org/golang.org/x/text/@v/v0.41.0.zip
+gopkg.in/warnings.v0@v0.1.2
+Source: https://proxy.golang.org/gopkg.in/warnings.v0/@v/v0.1.2.zip
