@@ -24,20 +24,20 @@ RESTRICT="test"
 # Upstream requests boto3[crt].  CRT support is intentionally omitted;
 # standard botocore HTTP and S3 transfer implementations remain available.
 #
-# Upstream pins click-8.1.8, boto3-1.43.38, tomlkit-0.15.0,
-# watchdog-4.0.2 and tzlocal-5.3.1, and requires rich>=14.3.3.
+# Upstream (1.166.2) pins click-8.1.8, boto3-1.43.83, tomlkit-0.15.1,
+# watchdog-4.0.2 and tzlocal-5.4.4, and requires rich>=14.3.3.
 # Gentoo patch/minor updates within the bounds below are intentionally
 # allowed.  The existing overlay relaxation to rich-14.2.0 is retained so
 # this package remains co-installable with sci-ml/ollmcp.  Keep cfn-lint and
 # docker within upstream's compatibility ranges.
 RDEPEND="
-	~dev-python/aws-lambda-builders-1.66.0[${PYTHON_USEDEP}]
-	~dev-python/aws-sam-translator-1.111.0[${PYTHON_USEDEP}]
-	>=dev-python/boto3-1.43.38[${PYTHON_USEDEP}]
+	~dev-python/aws-lambda-builders-1.67.0[${PYTHON_USEDEP}]
+	~dev-python/aws-sam-translator-1.113.0[${PYTHON_USEDEP}]
+	>=dev-python/boto3-1.43.83[${PYTHON_USEDEP}]
 	<dev-python/boto3-1.44[${PYTHON_USEDEP}]
 	>=dev-python/boto3-stubs-1.41.0[${PYTHON_USEDEP}]
-	>=dev-python/cfn-lint-1.51.3[${PYTHON_USEDEP}]
-	<dev-python/cfn-lint-1.53[${PYTHON_USEDEP}]
+	>=dev-python/cfn-lint-1.52.0[${PYTHON_USEDEP}]
+	<dev-python/cfn-lint-1.54[${PYTHON_USEDEP}]
 	>=dev-python/chevron-0.12[${PYTHON_USEDEP}]
 	<dev-python/chevron-1[${PYTHON_USEDEP}]
 	>=dev-python/click-8.1.8[${PYTHON_USEDEP}]
@@ -45,7 +45,7 @@ RDEPEND="
 	>=dev-python/dateparser-1.3[${PYTHON_USEDEP}]
 	<dev-python/dateparser-2[${PYTHON_USEDEP}]
 	>=dev-python/docker-7.1.0[${PYTHON_USEDEP}]
-	<dev-python/docker-7.2[${PYTHON_USEDEP}]
+	<dev-python/docker-7.3[${PYTHON_USEDEP}]
 	<dev-python/flask-3.2[${PYTHON_USEDEP}]
 	>=dev-python/jmespath-1.1.0[${PYTHON_USEDEP}]
 	<dev-python/jmespath-1.2[${PYTHON_USEDEP}]
@@ -65,7 +65,7 @@ RDEPEND="
 	dev-python/mypy-boto3-sts[${PYTHON_USEDEP}]
 	dev-python/mypy-boto3-xray[${PYTHON_USEDEP}]
 	>=dev-python/pyopenssl-25.3[${PYTHON_USEDEP}]
-	<dev-python/pyopenssl-26.4[${PYTHON_USEDEP}]
+	<dev-python/pyopenssl-26.5[${PYTHON_USEDEP}]
 	>=dev-python/python-dotenv-1.0[${PYTHON_USEDEP}]
 	<dev-python/python-dotenv-1.3[${PYTHON_USEDEP}]
 	>=dev-python/pyyaml-6.0[${PYTHON_USEDEP}]
@@ -77,11 +77,11 @@ RDEPEND="
 	<dev-python/rich-15.1.0[${PYTHON_USEDEP}]
 	>=dev-python/ruamel-yaml-0.19.1[${PYTHON_USEDEP}]
 	<dev-python/ruamel-yaml-0.20[${PYTHON_USEDEP}]
-	>=dev-python/tomlkit-0.15.0[${PYTHON_USEDEP}]
+	>=dev-python/tomlkit-0.15.1[${PYTHON_USEDEP}]
 	<dev-python/tomlkit-0.16[${PYTHON_USEDEP}]
 	>=dev-python/typing-extensions-4.4.0[${PYTHON_USEDEP}]
 	<dev-python/typing-extensions-5[${PYTHON_USEDEP}]
-	>=dev-python/tzlocal-5.3.1[${PYTHON_USEDEP}]
+	>=dev-python/tzlocal-5.4.4[${PYTHON_USEDEP}]
 	<dev-python/tzlocal-6[${PYTHON_USEDEP}]
 	>=dev-python/watchdog-4.0.2[${PYTHON_USEDEP}]
 	<dev-python/watchdog-7[${PYTHON_USEDEP}]

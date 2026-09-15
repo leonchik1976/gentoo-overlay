@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Checks CloudFormation templates for practices and behaviour
+		that could potentially be improved. This overlay carries
+		1.53.3, an older version than ::gentoo's, because ::gentoo
+		only has 1.54.0 and newer -- outside app-admin/aws-sam-cli's
+		declared "cfn-lint&gt;=1.52.0,&lt;1.54" compatibility window.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">aws-cloudformation/cfn-lint</remote-id>
+		<remote-id type="pypi">cfn-lint</remote-id>
+	</upstream>
+</pkgmetadata>

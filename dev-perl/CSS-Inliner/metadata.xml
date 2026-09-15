@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		CSS::Inliner converts CSS &lt;style&gt; blocks embedded in an HTML
+		document into inline style="" attributes, as commonly required for
+		HTML email. Packaged here because www-apps/rt-5.0.10 and later
+		require it (etc/cpanfile, sbin/rt-test-dependencies) and it was
+		previously absent from ::gentoo, ::guru, and this overlay.
+	</longdescription>
+	<upstream>
+		<remote-id type="cpan">CSS-Inliner</remote-id>
+	</upstream>
+</pkgmetadata>

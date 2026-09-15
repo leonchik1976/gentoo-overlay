@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		Badger is a Perl utility module and base Toolkit class used by
+		several projects from the badger.perl.org family. It is packaged
+		here as a transitive dependency of dev-perl/HTML-Query.
+	</longdescription>
+	<upstream>
+		<remote-id type="cpan">Badger</remote-id>
+		<remote-id type="github">abw/Badger</remote-id>
+	</upstream>
+</pkgmetadata>

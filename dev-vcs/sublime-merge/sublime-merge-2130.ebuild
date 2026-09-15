@@ -7,7 +7,7 @@ inherit desktop xdg
 
 # Upstream does not use a major.minor scheme for Sublime Merge; PV is the
 # raw build number as published at https://www.sublimemerge.com/download,
-# matching the "Build 2125" string embedded in the binary itself.
+# matching the "Build 2130" string embedded in the binary itself.
 
 DESCRIPTION="Git client from the makers of Sublime Text"
 HOMEPAGE="https://www.sublimemerge.com"
@@ -15,7 +15,7 @@ SRC_URI="
 	amd64? ( https://download.sublimetext.com/sublime_merge_build_${PV}_x64.tar.xz )
 	arm64? ( https://download.sublimetext.com/sublime_merge_build_${PV}_arm64.tar.xz )
 "
-S="${WORKDIR}/${PN}"
+S="${WORKDIR}/sublime_merge"
 
 # ::gentoo's "Sublime" license file is stale SUBLIME TEXT-only text that
 # does not name Sublime Merge and predates the "Only the Linux version...
@@ -45,19 +45,8 @@ RDEPEND="
 QA_PREBUILT="*"
 
 PATCHES=(
-	"${FILESDIR}"/${PN}-2125-no-onlyshowin-unity.patch
+	"${FILESDIR}"/${PN}-2130-no-onlyshowin-unity.patch
 )
-
-src_unpack() {
-	default
-
-	# Upstream's tar.xz top-level directory name differs per arch
-	# (sublime_merge-x64-tar / sublime_merge-arm64-tar); only one of the
-	# two SRC_URI entries is ever fetched for a given KEYWORDS-matched
-	# arch, so this glob is unambiguous. Rename it to the fixed ${S} so
-	# the rest of the ebuild does not need to branch on arch.
-	mv "${WORKDIR}"/sublime_merge-*-tar "${S}" || die
-}
 
 src_install() {
 	insinto /opt/${PN}
