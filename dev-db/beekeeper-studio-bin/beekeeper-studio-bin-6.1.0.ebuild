@@ -117,21 +117,20 @@ src_prepare() {
 		*) die "Unsupported architecture: ${ARCH}" ;;
 	esac
 
+	# msnodesqlv8 (MS SQL Server support) ships a real native Linux addon
+	# linked only against libodbc.so.2 + standard libs -- as of 6.1.0 this
+	# is true for arm64 as well as amd64 (verified by inspecting both
+	# .deb's build/Release/sqlserver.node: same ELF shape, same NEEDED
+	# list, differing only in machine type). dev-db/unixODBC is not in
+	# RDEPEND, so rather than add it just for this one optional DB
+	# backend, this addon is pruned on both architectures alike.
 	local modules="opt/Beekeeper Studio/resources/app.asar.unpacked/node_modules"
 	local msnodesqlv8="${modules}/msnodesqlv8"
 	local oracle="${modules}/oracledb/build/Release"
 	local snowflake="${modules}/snowflake-sdk/dist/lib/minicore/binaries"
-	case ${ARCH} in
-		amd64)
-			[[ -d ${msnodesqlv8} ]] ||
-				die "Expected amd64 msnodesqlv8 addon not found; upstream layout changed"
-			rm -r "${msnodesqlv8}" || die
-			;;
-		arm64)
-			[[ ! -e ${msnodesqlv8} ]] ||
-				die "Unexpected arm64 msnodesqlv8 addon found; upstream layout changed"
-			;;
-	esac
+	[[ -d ${msnodesqlv8} ]] ||
+		die "Expected ${ARCH} msnodesqlv8 addon not found; upstream layout changed"
+	rm -r "${msnodesqlv8}" || die
 	find "${oracle}" -type f -name '*.node' \
 		! -name "*-linux-${native_arch}.node" -delete || die
 	find "${snowflake}" -type f -name '*.node' \
