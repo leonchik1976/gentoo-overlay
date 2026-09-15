@@ -241,6 +241,9 @@ PATCHES=(
 	"${WORKDIR}/ceph-20.2.0-libarrow-20.0.0.patch"
 	"${FILESDIR}/ceph-20.2.1-boost-1.90-intrusive_ptr_fixes.patch"
 	"${FILESDIR}/ceph-20.2.1-rgw_error_handler.patch"
+	"${FILESDIR}/ceph-20.1.1-libcxx-exp-features.patch"
+	"${FILESDIR}/ceph-20.2.4-clang++-libcxx.patch"
+	"${FILESDIR}/ceph-20.2.1-qatzip-werror.patch"
 )
 
 check-reqs_export_vars() {
