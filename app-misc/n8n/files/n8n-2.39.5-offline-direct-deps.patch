@@ -1,0 +1,30 @@
+--- a/scripts/build-n8n.mjs
++++ b/scripts/build-n8n.mjs
+@@ -95,7 +95,7 @@
+ 
+ echo(chalk.yellow('INFO: Running pnpm install and build...'));
+ try {
+-	const installProcess = $`cd ${config.rootDir} && pnpm install --frozen-lockfile`;
++	const installProcess = $`cd ${config.rootDir} && pnpm install --frozen-lockfile --offline --ignore-scripts`;
+ 	installProcess.pipe(process.stdout);
+ 	await installProcess;
+ 
+@@ -206,7 +206,7 @@
+ 	// The closure is lockfile-derived, so a workspace package only stays out of the image by
+ 	// declaring build-time deps as devDependencies — editing manifests at build time does
+ 	// nothing here.
+-	const deployFlags = ['--prod', '--config.inject-workspace-packages=true'];
++	const deployFlags = ['--prod', '--config.inject-workspace-packages=true', '--offline', '--ignore-scripts'];
+ 
+ 	// The dedicated-lockfile deploy leaves pnpm's own files in the closure, which the
+ 	// legacy deploy did not write. They are not needed to run the closure, they point at
+@@ -222,6 +222,9 @@
+ 		for (const file of pnpmDeployFiles) await fs.remove(path.join(dir, file));
+ 	};
+ 
++	if (process.env.N8N_PYTHON && process.env.N8N_PNPM_METADATA_HELPER && process.env.N8N_DISTDIR) {
++		await $`${process.env.N8N_PYTHON} ${process.env.N8N_PNPM_METADATA_HELPER} ${path.join(config.rootDir, "pnpm-lock.yaml")} ${process.env.N8N_DISTDIR} ${path.join(process.env.HOME, ".cache/pnpm")}`;
++	}
+ 	await $`cd ${config.rootDir} && NODE_ENV=production DOCKER_BUILD=true pnpm --filter=n8n ${deployFlags} deploy --no-optional ./compiled`;
+ 	await removePnpmDeployFiles(config.compiledAppDir);
+ 

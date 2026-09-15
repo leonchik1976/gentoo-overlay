@@ -5,10 +5,10 @@ EAPI=8
 
 PYTHON_COMPAT=( python3_{13..15} )
 
-inherit go-module multiprocessing n8n-task-runners-pnpm-deps-2.38.7 python-single-r1 systemd
+inherit go-module multiprocessing n8n-task-runners-pnpm-deps-2.39.5 python-single-r1 systemd
 
 LAUNCHER_VERSION="1.4.7"
-PNPM_VERSION="11.22.0"
+PNPM_VERSION="11.25.0"
 
 DESCRIPTION="Native external JavaScript and Python task runners for n8n"
 HOMEPAGE="https://n8n.io/ https://github.com/n8n-io/n8n https://github.com/n8n-io/task-runner-launcher"

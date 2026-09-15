@@ -5,10 +5,10 @@ EAPI=8
 
 PYTHON_COMPAT=( python3_{11..15} )
 
-inherit check-reqs multiprocessing n8n-pnpm-deps-2.38.7 python-any-r1 systemd wrapper
+inherit check-reqs multiprocessing n8n-pnpm-deps-2.39.5 python-any-r1 systemd wrapper
 
 N8N_TAG="n8n@${PV}"
-PNPM_VERSION="11.22.0"
+PNPM_VERSION="11.25.0"
 
 DESCRIPTION="Extensible workflow automation platform"
 HOMEPAGE="https://n8n.io/ https://github.com/n8n-io/n8n"
@@ -67,7 +67,7 @@ RDEPEND="
 PATCHES=(
 	# Keep all package deployment scripts offline and use system ripgrep.
 	"${FILESDIR}/n8n-2.37.1-system-ripgrep.patch"
-	"${FILESDIR}/n8n-2.38.7-offline-direct-deps.patch"
+	"${FILESDIR}/n8n-2.39.5-offline-direct-deps.patch"
 )
 
 python_check_deps() {
