@@ -1,5 +1,17 @@
 # app-text/zettlr-bin-4.7.0 license audit
 
+## 4.8.0 follow-up
+
+The 4.8.0 amd64 AppImage still contains Electron's MIT text as its
+top-level `LICENSE`; its embedded `package.json` declares Zettlr 4.8.0
+under `GPL-3.0`. The bundled Pandoc binary and Chromium notices are still
+present. The surviving Hunspell dictionary license paths are unchanged
+after removing `tr-TR`: de-DE, en-GB, en-US, es-ES, fr-FR, nl-NL, ru-RU,
+and uk-UK. `asar-strip-dict.py` removed two `tr-TR` files and verified
+424 surviving file integrity hashes. These checks did not identify a
+change to the ebuild's `LICENSE` list. The arm64 AppImage still needs the
+same extraction and license check on `gentoo`.
+
 Full findings from the 2026-08-21 audit (re-verified with a second, deeper
 pass the same day) against the real v4.7.0 AppImage (extracted via
 `--appimage-extract`, plus `asar extract` on the embedded

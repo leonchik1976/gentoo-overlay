@@ -28,6 +28,7 @@ from pathlib import Path
 # should be vendored for ("amd64" or "arm64"), or None to drop it.
 _LINUX_VARIANT_ARCH = {
     'node_modules/@koromix/koffi-linux-arm64': 'arm64',
+    'node_modules/@koromix/koffi-linux-arm': None,
     'node_modules/@koromix/koffi-linux-x64': 'amd64',
     'node_modules/@openclaw/fs-safe-linux-arm64-gnu': 'arm64',
     'node_modules/@openclaw/fs-safe-linux-arm64-musl': 'arm64',
@@ -49,6 +50,8 @@ _LINUX_VARIANT_ARCH = {
 # Non-Linux variant packages of the same two native-addon families: safe
 # to drop, since this overlay only ever builds for linux/amd64+arm64.
 _KNOWN_SKIP_PREFIXES = (
+    'node_modules/@koromix/koffi-android-arm64',
+    'node_modules/@koromix/koffi-android-x64',
     'node_modules/@koromix/koffi-darwin-arm64',
     'node_modules/@koromix/koffi-darwin-x64',
     'node_modules/@koromix/koffi-freebsd-arm64',
