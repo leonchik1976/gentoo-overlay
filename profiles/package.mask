@@ -24,3 +24,10 @@
 # is not pulled in by accident. Unmask once upstream cuts a newer release,
 # or after your own review if you're fine running the stale bundle anyway.
 dev-util/selenium-ide-bin
+
+# Leonid Kopylov <leonchik1976@gmail.com> (2026-09-19)
+# Upstream marks v0.78.2 as a prerelease. Keep v0.77.5, the latest stable
+# release, as the default for ~amd64 users; unmask this version to test it.
+# Upstream provides only an amd64 Linux AppImage, so this package cannot be
+# keyworded on arm64.
+=app-editors/nimbalyst-bin-0.78.2
