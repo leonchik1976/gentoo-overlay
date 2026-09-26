@@ -19,14 +19,13 @@ MY_PN=${PN}-stable
 # Opera's changelog for 136.0.6008.22 identifies Chromium 152.0.7977.120.
 CHROMIUM_VERSION="152"
 SRC_URI="
-	amd64? ( https://deb.opera.com/opera-stable/pool/non-free/o/${MY_PN}/${MY_PN}_${PV}_amd64.deb )
 	arm64? ( https://deb.opera.com/opera-stable/pool/non-free/o/${MY_PN}/${MY_PN}_${PV}_arm64.deb )
 "
 S=${WORKDIR}
 
 LICENSE="OPERA-2020"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64"
+KEYWORDS="~arm64"
 IUSE="+ffmpeg-chromium +proprietary-codecs +suid qt6"
 RESTRICT="bindist mirror strip"
 
