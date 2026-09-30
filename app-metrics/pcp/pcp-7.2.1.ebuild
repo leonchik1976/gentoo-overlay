@@ -143,6 +143,7 @@ src_install() {
 		"${python_image_dir}"/cpmi.* \
 		"${python_image_dir}"/pcp-*.egg-info || die
 	pushd "${python_source_dir}" > /dev/null || die
+	local PYTHON_USEDEP="python_targets_${EPYTHON/./_}(-)"
 	distutils_pep517_install "${D}"
 	popd > /dev/null || die
 	python_optimize
