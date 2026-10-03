@@ -32,7 +32,7 @@ RDEPEND="
 	dev-libs/nss
 	elibc_glibc? ( sys-libs/glibc )
 	media-libs/alsa-lib
-	media-libs/mesa
+	media-libs/mesa[gbm(+)]
 	net-print/cups
 	sys-apps/dbus
 	sys-apps/util-linux

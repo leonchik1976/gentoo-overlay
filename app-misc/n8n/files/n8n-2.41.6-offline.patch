@@ -1,0 +1,40 @@
+--- a/scripts/build-n8n.mjs
++++ b/scripts/build-n8n.mjs
+@@ -95,7 +95,7 @@
+ 
+ echo(chalk.yellow('INFO: Running pnpm install and build...'));
+ try {
+-	const installFlags = ['--frozen-lockfile', ...(isCI ? ['--trust-lockfile'] : [])];
++	const installFlags = ['--frozen-lockfile', '--offline', '--ignore-scripts', ...(isCI ? ['--trust-lockfile'] : [])];
+ 	const installProcess = $`cd ${config.rootDir} && pnpm install ${installFlags}`;
+ 	installProcess.pipe(process.stdout);
+ 	await installProcess;
+@@ -211,6 +211,8 @@
+ 	// Linux already falls back to copying, so make deploy output consistent across platforms.
+ 	const deployFlags = [
+ 		'--prod',
++		'--offline',
++		'--ignore-scripts',
+ 		'--config.inject-workspace-packages=true',
+ 		'--config.package-import-method=copy',
+ 	];
+@@ -235,6 +237,9 @@
+ 		}
+ 	};
+ 
++	if (process.env.N8N_PYTHON && process.env.N8N_PNPM_METADATA_HELPER && process.env.N8N_DISTDIR) {
++		await $`${process.env.N8N_PYTHON} ${process.env.N8N_PNPM_METADATA_HELPER} ${path.join(config.rootDir, "pnpm-lock.yaml")} ${process.env.N8N_DISTDIR} ${path.join(process.env.HOME, ".cache/pnpm")}`;
++	}
+ 	await $`cd ${config.rootDir} && NODE_ENV=production DOCKER_BUILD=true pnpm --filter=n8n ${deployFlags} deploy --no-optional ./compiled`;
+ 	await verifyNoPnpmIntermediateLinks(config.compiledAppDir);
+ 	await removePnpmDeployFiles(config.compiledAppDir);
+@@ -464,6 +469,9 @@
+ 	// worth duplicating here — the closure figure they report covers the n8n image
+ 	// only, not the shipped total.
+ 	startTimer('task_runner_deploy');
++	if (process.env.N8N_PYTHON && process.env.N8N_PNPM_METADATA_HELPER && process.env.N8N_DISTDIR) {
++		await $`${process.env.N8N_PYTHON} ${process.env.N8N_PNPM_METADATA_HELPER} ${path.join(config.rootDir, "pnpm-lock.yaml")} ${process.env.N8N_DISTDIR} ${path.join(process.env.HOME, ".cache/pnpm")}`;
++	}
+ 	await $`cd ${config.rootDir} && NODE_ENV=production DOCKER_BUILD=true pnpm --filter=@n8n/task-runner ${deployFlags} deploy --no-optional ${config.compiledTaskRunnerDir}`;
+ 	await verifyNoPnpmIntermediateLinks(config.compiledTaskRunnerDir);
+ 	echo(

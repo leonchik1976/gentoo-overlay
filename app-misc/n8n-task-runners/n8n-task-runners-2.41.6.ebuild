@@ -5,10 +5,10 @@ EAPI=8
 
 PYTHON_COMPAT=( python3_{13..15} )
 
-inherit go-module multiprocessing n8n-task-runners-pnpm-deps-2.39.8 python-single-r1 systemd
+inherit go-module multiprocessing n8n-task-runners-pnpm-deps-2.41.6 python-single-r1 systemd
 
-LAUNCHER_VERSION="1.4.7"
-PNPM_VERSION="11.25.0"
+LAUNCHER_VERSION="1.5.0"
+PNPM_VERSION="12.4.2"
 
 DESCRIPTION="Native external JavaScript and Python task runners for n8n"
 HOMEPAGE="https://n8n.io/ https://github.com/n8n-io/n8n https://github.com/n8n-io/task-runner-launcher"
@@ -18,6 +18,8 @@ SRC_URI="
 	https://github.com/n8n-io/task-runner-launcher/archive/refs/tags/${LAUNCHER_VERSION}.tar.gz
 		-> ${P}-launcher-${LAUNCHER_VERSION}.tar.gz
 	https://registry.npmjs.org/pnpm/-/pnpm-${PNPM_VERSION}.tgz
+	amd64? ( https://registry.npmjs.org/@pnpm/exe.linux-x64/-/exe.linux-x64-${PNPM_VERSION}.tgz )
+	arm64? ( https://registry.npmjs.org/@pnpm/exe.linux-arm64/-/exe.linux-arm64-${PNPM_VERSION}.tgz )
 "
 n8n_task_runners_pnpm_add_src_uri "${PV}"
 
@@ -84,8 +86,17 @@ LAUNCHER_GO_PROXY_FILES=(
 	"gopkg.in/yaml.v3/@v/v3.0.1.mod|n8n-launcher-1.4.7-19.mod"
 	"gopkg.in/yaml.v3/@v/v3.0.1.zip|n8n-launcher-1.4.7-19.zip"
 	"gopkg.in/yaml.v3/@v/v3.0.1.info|n8n-launcher-1.4.7-19.info"
+	"golang.org/x/text/@v/v0.39.0.mod|n8n-launcher-1.5.0-22.mod"
+	"golang.org/x/text/@v/v0.39.0.zip|n8n-launcher-1.5.0-22.zip"
+	"golang.org/x/text/@v/v0.39.0.info|n8n-launcher-1.5.0-22.info"
 )
 SRC_URI+="
+	https://proxy.golang.org/golang.org/x/text/@v/v0.39.0.mod
+		-> n8n-launcher-1.5.0-22.mod
+	https://proxy.golang.org/golang.org/x/text/@v/v0.39.0.zip
+		-> n8n-launcher-1.5.0-22.zip
+	https://proxy.golang.org/golang.org/x/text/@v/v0.39.0.info
+		-> n8n-launcher-1.5.0-22.info
 	https://proxy.golang.org/github.com/creack/pty/@v/v1.1.9.mod
 		-> n8n-launcher-1.4.7-0.mod
 	https://proxy.golang.org/github.com/creack/pty/@v/v1.1.9.zip
@@ -222,19 +233,21 @@ RESTRICT="bindist mirror"
 
 BDEPEND+="
 	>=dev-lang/go-1.25.11
-	>=net-libs/nodejs-24.16[npm]
-	<net-libs/nodejs-25[npm]
+	>=net-libs/nodejs-24.0.0[npm]
 	$(python_gen_cond_dep '
 		dev-python/pyyaml[${PYTHON_USEDEP}]
 	')
+"
+# Native addons compile against the target Node headers and ABI.
+DEPEND+="
+	>=net-libs/nodejs-24.0.0:0=
 "
 RDEPEND="
 	${PYTHON_DEPS}
 	~app-misc/n8n-${PV}
 	acct-group/n8n-task-runners
 	acct-user/n8n-task-runners
-	>=net-libs/nodejs-24.16
-	<net-libs/nodejs-25
+	>=net-libs/nodejs-24.0.0:0=
 	$(python_gen_cond_dep '
 		~dev-python/urllib3-2.7.0[${PYTHON_USEDEP}]
 		>=dev-python/websockets-15.0.1[${PYTHON_USEDEP}]
@@ -249,7 +262,12 @@ src_unpack() {
 	mkdir "${WORKDIR}/pnpm" || die
 	pushd "${WORKDIR}/pnpm" >/dev/null || die
 	unpack "pnpm-${PNPM_VERSION}.tgz"
-	chmod +x package/bin/pnpm.cjs || die
+	case ${ARCH} in
+		amd64) unpack "exe.linux-x64-${PNPM_VERSION}.tgz" ;;
+		arm64) unpack "exe.linux-arm64-${PNPM_VERSION}.tgz" ;;
+		*) die "unsupported architecture: ${ARCH}" ;;
+	esac
+	chmod +x package/pnpm || die
 	popd >/dev/null || die
 	export GOPROXY="file://${T}/go-proxy" GOSUMDB=off GOTOOLCHAIN=local
 	for entry in "${LAUNCHER_GO_PROXY_FILES[@]}"; do
@@ -274,7 +292,7 @@ src_prepare() {
 }
 
 runner_pnpm() {
-	node "${WORKDIR}/pnpm/package/bin/pnpm.cjs" "$@" || die
+	"${WORKDIR}/pnpm/package/pnpm" "$@" || die
 }
 
 replace_literal() {
@@ -314,9 +332,10 @@ src_configure() {
 		done
 	} | "${PYTHON}" "${FILESDIR}/n8n-pnpm-11-store-aliases.py" "${store}" || die
 
+	export COREPACK_ENABLE_NETWORK=0 pnpm_config_manage_package_manager_versions=false
 	export CI=true pnpm_config_offline=true npm_config_offline=true pnpm_config_store_dir="${store}"
 	export npm_config_cache="${T}/npm-cache" PNPM_HOME="${T}/pnpm-home" COREPACK_HOME="${T}/corepack"
-	"${PYTHON}" "${FILESDIR}/n8n-task-runners-create-pnpm-metadata-11.py" \
+	"${PYTHON}" "${FILESDIR}/n8n-task-runners-create-pnpm-metadata-12.py" \
 		pnpm-lock.yaml "${T%/temp}/homedir/.cache/pnpm" || die
 	runner_pnpm install --filter '@n8n/task-runner...' --frozen-lockfile --offline --ignore-scripts --store-dir "${store}"
 	sha256sum --check "${T}/pnpm-lock.sha256" || die "pnpm modified pnpm-lock.yaml"
@@ -325,12 +344,12 @@ src_configure() {
 src_compile() {
 	local deploy="${WORKDIR}/javascript" isolated_deploy jobs manifest native_addon node_gyp npm_root
 	local venv="${WORKDIR}/python/.venv" purelib runtime_addon
+	export COREPACK_ENABLE_NETWORK=0 pnpm_config_manage_package_manager_versions=false
 	export CI=true NODE_ENV=production DOCKER_BUILD=true pnpm_config_offline=true npm_config_offline=true
 	export NODE_OPTIONS="--max-old-space-size=7168"
 	export pnpm_config_store_dir="${T}/pnpm-store" npm_config_cache="${T}/npm-cache"
 	export PNPM_HOME="${T}/pnpm-home" COREPACK_HOME="${T}/corepack"
-	export PATH="${WORKDIR}/pnpm/package/bin:${PATH}"
-	ln -sf pnpm.cjs "${WORKDIR}/pnpm/package/bin/pnpm" || die
+	export PATH="${WORKDIR}/pnpm/package:${PATH}"
 	runner_pnpm --filter '@n8n/task-runner...' run build
 	replace_literal packages/frontend/editor-ui/package.json \
 		"github:rhashimoto/wa-sqlite#779219540f66cecaa159da32b3b8936697ba10a7" \
@@ -342,7 +361,7 @@ src_compile() {
 			die "unreplaced direct dependency in ${manifest}"
 		fi
 	done < <(find packages -name package.json -print0)
-	"${PYTHON}" "${FILESDIR}/n8n-task-runners-create-pnpm-metadata-11.py" \
+	"${PYTHON}" "${FILESDIR}/n8n-task-runners-create-pnpm-metadata-12.py" \
 		pnpm-lock.yaml "${T%/temp}/homedir/.cache/pnpm" || die
 	runner_pnpm --filter=@n8n/task-runner --prod --legacy deploy --no-optional --offline --ignore-scripts "${deploy}"
 	mkdir -p "${deploy}/node_modules/moment" || die
@@ -407,7 +426,9 @@ src_install() {
 	insinto /etc/logrotate.d
 	newins "${FILESDIR}/n8n-task-runners.logrotate" n8n-task-runners
 	systemd_dounit "${FILESDIR}/n8n-task-runners.service"
-	dodoc "${FILESDIR}/README.gentoo"
+	dodoc "${FILESDIR}/README.gentoo" LICENSE.md LICENSE_EE.md
+	newdoc "${WORKDIR}/launcher/LICENSE.md" launcher-LICENSE.md
+	newdoc "${WORKDIR}/launcher/LICENSE_EE.md" launcher-LICENSE_EE.md
 }
 
 pkg_postinst() {

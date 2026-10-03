@@ -9,7 +9,7 @@
        scripts/generate-n8n-pnpm-deps.py \
          <version> \
          /tmp/codex/app-misc/n8n-<version>/source/pnpm-lock.yaml \
-         eclass/n8n-pnpm-deps.eclass
+         eclass/n8n-pnpm-deps-<version>.eclass
 
 4. Review direct-URL dependencies, upstream patches, lifecycle-script packages,
    native addons, Node requirements, licenses, and the production deployment
@@ -32,12 +32,16 @@ prefix. Keep aliases short: in EAPI 8 Portage exports the complete `A` value to
 every phase, and a single environment string longer than Linux permits makes
 phase startup fail with `E2BIG` before the ebuild runs.
 
-This overlay supports only one n8n ebuild and generated dependency closure at
-a time. Before regenerating the shared eclass for a new version, remove the
-previous n8n ebuild or convert the generated eclasses and their inherit calls
-to version-specific filenames. The version guard prevents silent use of the
-wrong closure; it does not allow multiple n8n versions to coexist with one
-shared eclass.
+Each ebuild inherits a version-specific dependency eclass, so generating a
+new closure does not alter another release. Check local dependency atoms before
+removing superseded ebuilds.
+
+pnpm 12 uses native executables from `@pnpm/exe.linux-x64` and
+`@pnpm/exe.linux-arm64`. Fetch them as declared distfiles, alongside the pnpm
+wrapper payload; never let its wrapper download a binary during an ebuild phase.
+The package-manager lockfile is the first YAML document; the workspace closure
+is the last. The store remains v11, but registry metadata now uses the encoded
+`https%3A+registry.npmjs.org` directory. Refresh metadata before deployment.
 
 The 2.34.5 dependency closure contains 3,641 external artifacts. Allow at
 least 15 GiB on the Portage build filesystem and 2 GiB on `/usr`; native

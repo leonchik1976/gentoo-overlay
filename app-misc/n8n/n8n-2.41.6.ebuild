@@ -5,10 +5,10 @@ EAPI=8
 
 PYTHON_COMPAT=( python3_{11..15} )
 
-inherit check-reqs multiprocessing n8n-pnpm-deps-2.39.8 python-any-r1 systemd wrapper
+inherit check-reqs multiprocessing n8n-pnpm-deps-2.41.6 python-any-r1 systemd wrapper
 
 N8N_TAG="n8n@${PV}"
-PNPM_VERSION="11.25.0"
+PNPM_VERSION="12.4.2"
 
 DESCRIPTION="Extensible workflow automation platform"
 HOMEPAGE="https://n8n.io/ https://github.com/n8n-io/n8n"
@@ -16,6 +16,8 @@ SRC_URI="
 	https://github.com/n8n-io/n8n/archive/refs/tags/${N8N_TAG}.tar.gz
 		-> ${P}-source.tar.gz
 	https://registry.npmjs.org/pnpm/-/pnpm-${PNPM_VERSION}.tgz
+	amd64? ( https://registry.npmjs.org/@pnpm/exe.linux-x64/-/exe.linux-x64-${PNPM_VERSION}.tgz )
+	arm64? ( https://registry.npmjs.org/@pnpm/exe.linux-arm64/-/exe.linux-arm64-${PNPM_VERSION}.tgz )
 	https://github.com/n8n-io/n8n/releases/download/n8n%40${PV}/THIRD_PARTY_LICENSES.md
 		-> ${P}-THIRD_PARTY_LICENSES.md
 "
@@ -49,16 +51,18 @@ QA_PREBUILT="
 "
 
 BDEPEND+="
-	>=net-libs/nodejs-24.16[npm]
-	<net-libs/nodejs-25[npm]
+	>=net-libs/nodejs-24.0.0[npm]
 	${PYTHON_DEPS}
 	$(python_gen_any_dep '
 		dev-python/pyyaml[${PYTHON_USEDEP}]
 	')
 "
+# Native addons compile against the target Node headers and ABI.
+DEPEND+="
+	>=net-libs/nodejs-24.0.0:0=
+"
 RDEPEND="
-	>=net-libs/nodejs-24.16
-	<net-libs/nodejs-25
+	>=net-libs/nodejs-24.0.0:0=
 	acct-group/n8n
 	acct-user/n8n
 	sys-apps/ripgrep
@@ -67,7 +71,7 @@ RDEPEND="
 PATCHES=(
 	# Keep all package deployment scripts offline and use system ripgrep.
 	"${FILESDIR}/n8n-2.37.1-system-ripgrep.patch"
-	"${FILESDIR}/n8n-2.39.5-offline-direct-deps.patch"
+	"${FILESDIR}/n8n-2.41.6-offline.patch"
 )
 
 python_check_deps() {
@@ -90,7 +94,12 @@ src_unpack() {
 	mkdir "${WORKDIR}/pnpm" || die
 	cd "${WORKDIR}/pnpm" || die
 	unpack "pnpm-${PNPM_VERSION}.tgz"
-	chmod +x package/bin/pnpm.cjs || die
+	case ${ARCH} in
+		amd64) unpack "exe.linux-x64-${PNPM_VERSION}.tgz" ;;
+		arm64) unpack "exe.linux-arm64-${PNPM_VERSION}.tgz" ;;
+		*) die "unsupported architecture: ${ARCH}" ;;
+	esac
+	chmod +x package/pnpm || die
 }
 
 src_prepare() {
@@ -99,7 +108,7 @@ src_prepare() {
 }
 
 n8n_pnpm() {
-	node "${WORKDIR}/pnpm/package/bin/pnpm.cjs" "$@" || die
+	"${WORKDIR}/pnpm/package/pnpm" "$@" || die
 }
 
 src_configure() {
@@ -134,6 +143,7 @@ src_configure() {
 		done
 	} | "${PYTHON}" "${FILESDIR}/n8n-pnpm-11-store-aliases.py" "${store}" || die
 
+	export COREPACK_ENABLE_NETWORK=0 pnpm_config_manage_package_manager_versions=false
 	export CI=true
 	export npm_config_build_from_source=true
 	export npm_config_nodedir
@@ -143,7 +153,7 @@ src_configure() {
 	export COREPACK_HOME="${T}/corepack"
 	export npm_config_cache="${T}/npm-cache"
 	export pnpm_config_store_dir="${store}"
-	"${PYTHON}" "${FILESDIR}/n8n-create-pnpm-metadata-11.py" pnpm-lock.yaml \
+	"${PYTHON}" "${FILESDIR}/n8n-create-pnpm-metadata-12.py" pnpm-lock.yaml \
 		"${DISTDIR}" "${T%/temp}/homedir/.cache/pnpm" || die
 
 	n8n_pnpm install --frozen-lockfile --offline --ignore-scripts \
@@ -182,6 +192,7 @@ src_compile() {
 	local addon agent_binary jobs package package_name pattern source_native target
 	local -a deployed=()
 	python_setup
+	export COREPACK_ENABLE_NETWORK=0 pnpm_config_manage_package_manager_versions=false
 	export CI=true
 	export npm_config_build_from_source=true
 	export npm_config_nodedir
@@ -191,15 +202,14 @@ src_compile() {
 	export COREPACK_HOME="${T}/corepack"
 	export npm_config_cache="${T}/npm-cache"
 	export pnpm_config_store_dir="${T}/pnpm-store"
-	export N8N_PNPM_METADATA_HELPER="${FILESDIR}/n8n-create-pnpm-metadata-11.py"
+	export N8N_PNPM_METADATA_HELPER="${FILESDIR}/n8n-create-pnpm-metadata-12.py"
 	export N8N_PYTHON="${PYTHON}"
 	export N8N_DISTDIR="${DISTDIR}"
 	jobs=$(get_makeopts_jobs)
 	(( jobs > 4 )) && jobs=4
 	export N8N_BUILD_CONCURRENCY=${jobs}
-	export PATH="${WORKDIR}/pnpm/package/bin:${PATH}"
+	export PATH="${WORKDIR}/pnpm/package:${PATH}"
 
-	ln -sf pnpm.cjs "${WORKDIR}/pnpm/package/bin/pnpm" || die
 	./scripts/build-n8n.mjs || die
 	for package in isolated-vm@7.0.1 sqlite3@5.1.7 @parcel+watcher@2.5.1; do
 		case ${package} in
@@ -243,6 +253,11 @@ src_compile() {
 	find compiled/node_modules/.pnpm \
 		\( -path '*/@sentry-internal/node-native-stacktrace/lib/*.node' -o \
 		-path '*/@sentry/node-native-stacktrace/lib/*.node' \) -delete || die
+
+	# Snowflake minicore only reports optional telemetry status; its loader
+	# catches missing binaries and the SDK retains its JavaScript transport.
+	find compiled/node_modules/.pnpm -type f \
+		-path "*/snowflake-sdk/dist/lib/minicore/binaries/*.node" -delete || die
 
 	# node-oracledb uses its pure-JavaScript Thin mode by default.  Its bundled
 	# addon matrix is only needed after an explicit initOracleClient() call.

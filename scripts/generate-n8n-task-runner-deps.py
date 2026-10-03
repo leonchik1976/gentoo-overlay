@@ -112,7 +112,7 @@ def main() -> None:
     parser.add_argument("lockfile", type=Path)
     parser.add_argument("output", type=Path)
     args = parser.parse_args()
-    lock = yaml.safe_load(args.lockfile.read_text(encoding="utf-8"))
+    lock = list(yaml.safe_load_all(args.lockfile.read_text(encoding="utf-8")))[-1]
     artifacts, workspace = derive_closure(lock)
     entries: list[tuple[str, str, str]] = []
     seen_distfiles: dict[str, str] = {}

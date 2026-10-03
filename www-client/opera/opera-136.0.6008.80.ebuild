@@ -16,7 +16,7 @@ HOMEPAGE="https://www.opera.com/"
 
 MY_PN=${PN}-stable
 
-# Opera's changelog for 136.0.6008.22 identifies Chromium 152.0.7977.120.
+# Opera's changelog for 136.0.6008.80 identifies Chromium 152.0.7977.120.
 CHROMIUM_VERSION="152"
 SRC_URI="
 	arm64? ( https://deb.opera.com/opera-stable/pool/non-free/o/${MY_PN}/${MY_PN}_${PV}_arm64.deb )
@@ -42,6 +42,7 @@ RDEPEND="
 	net-print/cups
 	sys-apps/dbus
 	sys-libs/glibc
+	virtual/libudev
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+:3

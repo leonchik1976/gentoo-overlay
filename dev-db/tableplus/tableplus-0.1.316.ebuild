@@ -27,15 +27,18 @@ RESTRICT="bindist mirror strip"
 
 RDEPEND="
 	arm64? ( net-nds/openldap )
+	>=app-accessibility/at-spi2-core-2.46.0:2
 	app-crypt/libsecret
 	dev-libs/glib:2
 	dev-libs/json-glib
 	dev-libs/libgee:0.8
 	elibc_glibc? ( sys-libs/glibc )
+	virtual/zlib
 	virtual/krb5
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf:2
 	x11-libs/gtk+:3
+	x11-libs/pango
 	x11-libs/gtksourceview:3.0
 "
 
