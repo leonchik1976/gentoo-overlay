@@ -5,10 +5,12 @@
 		<email>leonchik1976@gmail.com</email>
 		<name>Leonid Kopylov</name>
 	</maintainer>
-	<longdescription>Cockpit Machines provides a browser interface for managing libvirt virtual machines, storage pools, and virtual networks.</longdescription>
-	<use>
-		<flag name="spice">Enable SPICE display support in the QEMU runtime.</flag>
-	</use>
+	<longdescription>
+		Cockpit Machines provides a browser interface for managing libvirt virtual
+		machines, storage pools, and virtual networks. For virtual machines using
+		SPICE displays, enable the spice USE flag on app-emulation/qemu in
+		/etc/portage/package.use (app-emulation/qemu spice).
+	</longdescription>
 	<upstream>
 		<remote-id type="github">cockpit-project/cockpit-machines</remote-id>
 	</upstream>
