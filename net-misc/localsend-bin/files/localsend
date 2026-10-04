@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec "@EPREFIX@/opt/localsend/localsend_app" "$@"
