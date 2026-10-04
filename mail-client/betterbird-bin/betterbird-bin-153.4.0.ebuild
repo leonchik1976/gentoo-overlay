@@ -7,12 +7,16 @@ inherit desktop xdg
 
 DESCRIPTION="Betterbird is a fine-tuned version of Mozilla Thunderbird"
 HOMEPAGE="https://github.com/Betterbird/thunderbird-patches/ https://betterbird.eu/"
-SRC_URI="https://www.betterbird.eu/downloads/LinuxArchive/betterbird-${PV}esr-bb10.en-US.linux-x86_64.tar.xz"
+SRC_URI="
+	amd64? ( https://www.betterbird.eu/downloads/LinuxArchive/betterbird-${PV}esr-bb10.en-US.linux-x86_64.tar.xz )
+	arm64? ( https://www.betterbird.eu/downloads/LinuxArchive/betterbird-153-linux-aarch64-built-with-glibc-2_36/betterbird-${PV}esr-bb10.en-US.linux-aarch64.tar.xz )
+"
 
 S="${WORKDIR}"
 LICENSE="MPL-2.0"
 SLOT="0"
-KEYWORDS="-* ~amd64"
+KEYWORDS="~amd64 ~arm64"
+REQUIRED_USE="elibc_glibc"
 
 RDEPEND="
 	app-accessibility/at-spi2-core
@@ -22,10 +26,11 @@ RDEPEND="
 	media-libs/fontconfig
 	media-libs/freetype
 	sys-apps/dbus
+	arm64? ( >=sys-libs/glibc-2.28 )
 	virtual/freedesktop-icon-theme
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf:2
-	x11-libs/gtk+
+	x11-libs/gtk+:3[X,wayland]
 	x11-libs/libX11
 	x11-libs/libXcomposite
 	x11-libs/libXcursor
