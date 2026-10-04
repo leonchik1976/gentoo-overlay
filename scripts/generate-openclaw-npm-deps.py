@@ -27,6 +27,8 @@ from pathlib import Path
 # Maps npm-shrinkwrap.json node_modules path -> Gentoo ARCH this variant
 # should be vendored for ("amd64" or "arm64"), or None to drop it.
 _LINUX_VARIANT_ARCH = {
+    "node_modules/@esbuild/linux-x64": "amd64",
+    "node_modules/@esbuild/linux-arm64": "arm64",
     'node_modules/@koromix/koffi-linux-arm64': 'arm64',
     'node_modules/@koromix/koffi-linux-arm': None,
     'node_modules/@koromix/koffi-linux-x64': 'amd64',
@@ -50,6 +52,15 @@ _LINUX_VARIANT_ARCH = {
 # Non-Linux variant packages of the same two native-addon families: safe
 # to drop, since this overlay only ever builds for linux/amd64+arm64.
 _KNOWN_SKIP_PREFIXES = (
+    # esbuild ships one platform package for each OS/CPU; keep only the
+    # two native Linux variants explicitly selected above.
+    "node_modules/@esbuild/",
+    "node_modules/@koromix/koffi-openbsd-arm64",
+    "node_modules/@koromix/koffi-openbsd-x64",
+    "node_modules/@koromix/koffi-linux-ppc64",
+    "node_modules/@koromix/koffi-freebsd-ia32",
+    "node_modules/@koromix/koffi-openbsd-ia32",
+    "node_modules/@koromix/koffi-win32-ia32",
     'node_modules/@koromix/koffi-android-arm64',
     'node_modules/@koromix/koffi-android-x64',
     'node_modules/@koromix/koffi-darwin-arm64',
@@ -82,6 +93,11 @@ _KNOWN_SKIP_PREFIXES = (
     "node_modules/sqlite-vec-darwin-",
     "node_modules/sqlite-vec-windows-",
 )
+
+# npm-11.20.0.tgz ships qrcode-terminal's Apache-2.0 LICENSE and an older
+# package.json "licenses" array, which npm omits from package-lock.json.
+# Keep this exact-version exception instead of guessing missing licenses.
+_BUNDLED_LICENSE_OVERRIDES = {("qrcode-terminal", "0.12.0"): "Apache-2.0"}
 
 
 def distfile(name: str, version: str) -> str:
@@ -187,11 +203,28 @@ def main() -> None:
         arch = wanted(path, info)
         if arch is None:
             continue
+        name = path.rsplit("node_modules/", 1)[-1]
         license_ = info.get("license")
+        if license_ is None and info.get("inBundle"):
+            license_ = _BUNDLED_LICENSE_OVERRIDES.get((name, info.get("version")))
         if license_ is None:
             raise SystemExit(f"{path}@{info.get('version')}: no license field")
         text = license_ if isinstance(license_, str) else json.dumps(license_)
         validate_license(path, info.get("version"), text)
+        key = (name, info["version"])
+        prior = licenses_by_name_version.get(key)
+        if prior is not None and prior != text:
+            raise SystemExit(
+                f"{name}@{info['version']}: conflicting license text seen "
+                f"at different node_modules paths ({prior!r} vs {text!r})"
+            )
+        licenses_by_name_version[key] = text
+
+        if info.get("inBundle"):
+            # npm's published archive already contains its bundled dependencies.
+            # Preserve their license inventory without fetching or overwriting
+            # those files with separately resolved tarballs.
+            continue
         uri = info.get("resolved")
         if not uri or not uri.startswith("https://registry.npmjs.org/"):
             raise SystemExit(f"{path}: not a plain npm-registry tarball dependency")
@@ -202,14 +235,6 @@ def main() -> None:
         seen_distfiles[filename] = uri
         entries.append((path, uri, filename, arch))
 
-        key = (name, info["version"])
-        prior = licenses_by_name_version.get(key)
-        if prior is not None and prior != text:
-            raise SystemExit(
-                f"{name}@{info['version']}: conflicting license text seen "
-                f"at different node_modules paths ({prior!r} vs {text!r})"
-            )
-        licenses_by_name_version[key] = text
 
     entries.sort(key=lambda item: item[0])
 

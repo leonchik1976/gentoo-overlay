@@ -438,6 +438,17 @@ def _apply_manual_arch_package_overrides(
     return amd64_only, arm64_only
 
 
+def _allowed_wheel_uri(uri: str) -> bool:
+    # Permit only the explicitly pinned official CPU Torch artifacts in
+    # addition to PyPI. Resolving them directly avoids pip evaluating CUDA
+    # markers against the amd64 resolver host during an arm64 dry-run.
+    return uri.startswith("https://files.pythonhosted.org/") or any(
+        uri == replacement[1]
+        for replacements in MANUAL_ARCH_PACKAGE_OVERRIDES.values()
+        for replacement in replacements.values()
+    )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("version", help="open-webui version these reports were resolved for")
@@ -476,9 +487,7 @@ def main() -> None:
         ix, ia = rx[(name, version)], ra[(name, version)]
         ux = ix["download_info"]["url"]
         ua = ia["download_info"]["url"]
-        if not ux.startswith("https://files.pythonhosted.org/") or not ua.startswith(
-            "https://files.pythonhosted.org/"
-        ):
+        if not _allowed_wheel_uri(ux) or not _allowed_wheel_uri(ua):
             raise SystemExit(f"{name}=={version}: not a plain PyPI-hosted wheel/sdist")
         if ux == ua:
             filename = distfile(ux)
@@ -502,7 +511,7 @@ def main() -> None:
             continue
         item = rx[(name, version)]
         uri = item["download_info"]["url"]
-        if not uri.startswith("https://files.pythonhosted.org/"):
+        if not _allowed_wheel_uri(uri):
             raise SystemExit(f"{name}=={version}: not a plain PyPI-hosted wheel/sdist")
         amd64_only.append((name, version, uri, distfile(uri)))
     for name, version in sorted(set(ra) - set(rx)):
@@ -510,7 +519,7 @@ def main() -> None:
             continue
         item = ra[(name, version)]
         uri = item["download_info"]["url"]
-        if not uri.startswith("https://files.pythonhosted.org/"):
+        if not _allowed_wheel_uri(uri):
             raise SystemExit(f"{name}=={version}: not a plain PyPI-hosted wheel/sdist")
         arm64_only.append((name, version, uri, distfile(uri)))
 
@@ -553,7 +562,7 @@ def main() -> None:
     # the two actually differ, otherwise pkgcheck's RedundantUriRename
     # check (rightly) flags the whole block.
     def _uri_line(uri: str, filename: str) -> str:
-        return uri if uri.rsplit("/", 1)[-1] == filename else f"{uri} -> {filename}"
+        return uri if uri.rsplit("/", 1)[-1] == filename else f"{uri}\n\t\t\t-> {filename}"
 
     lines.append("OPEN_WEBUI_WHEEL_SRC_URI=\"")
     for name, version, uri, filename in common:
@@ -583,13 +592,13 @@ def main() -> None:
     # duplicate, or rename an emitted distfile differently from the arrays.
     emitted_filenames: set[str] = set()
     emitted_count = 0
-    for line in lines:
-        rendered = line.strip()
+    uri_tokens = "\n".join(lines).split()
+    for index, rendered in enumerate(uri_tokens):
         if not rendered.startswith(("https://", "http://")):
             continue
         emitted_count += 1
-        if " -> " in rendered:
-            _, filename = rendered.rsplit(" -> ", 1)
+        if index + 2 < len(uri_tokens) and uri_tokens[index + 1] == "->":
+            filename = uri_tokens[index + 2]
         else:
             filename = distfile(rendered)
         emitted_filenames.add(filename)
