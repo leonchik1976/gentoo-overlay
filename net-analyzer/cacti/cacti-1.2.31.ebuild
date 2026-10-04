@@ -23,6 +23,11 @@ RDEPEND="${RDEPEND}
 
 need_httpd
 
+src_prepare() {
+	eapply "${FILESDIR}/${P}-remove-stray-delimiter.patch"
+	default
+}
+
 src_compile() { :; }
 
 src_install() {

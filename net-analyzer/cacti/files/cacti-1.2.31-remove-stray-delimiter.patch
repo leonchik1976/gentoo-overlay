@@ -1,0 +1,12 @@
+Remove the stray client delimiter directive so statements use semicolons.
+
+--- a/cacti.sql
++++ b/cacti.sql
+@@ -25,7 +25,6 @@
+ -- Allow MySQL to handle Cacti's legacy syntax
+ --
+ 
+-DELIMITER //
+ 
+ SET @sqlmode= "";
+ SET SESSION sql_mode = @sqlmode;
