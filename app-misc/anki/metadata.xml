@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<upstream>
+		<bugs-to>https://github.com/ankitects/anki/issues</bugs-to>
+		<remote-id type="github">ankitects/anki</remote-id>
+	</upstream>
+</pkgmetadata>

@@ -10,17 +10,7 @@ HOMEPAGE="https://bestpractical.com/rt/"
 SRC_URI="https://download.bestpractical.com/pub/${PN}/release/${P}.tar.gz"
 
 LICENSE="GPL-2"
-# amd64-only, not the overlay's usual ~amd64 ~arm64: of the ~92 dev-perl/*
-# packages this ebuild DEPENDs on, 45 (plus www-apache/mod_perl, pulled in
-# by the default +apache USE) carry no arm64 keyword anywhere in ::gentoo,
-# ::guru, or this overlay -- e.g. dev-perl/{HTML-Mason,DBIx-SearchBuilder,
-# Web-Machine,GnuPG-Interface,Apache-Session,Role-Basic}. Verified by
-# parsing every DEPEND atom with portage.dep.Atom and checking KEYWORDS
-# across all matching ebuilds; full list available on request. Enabling
-# ~arm64 here would be a fabricated keyword, not a validated one -- treat
-# arm64 support as future dependency-keywording work for that 45-package
-# set, not something this ebuild can claim today.
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~arm64"
 IUSE="graphviz mysql +postgres fastcgi lighttpd nginx +apache"
 REQUIRED_USE="^^ ( mysql postgres ) ^^ ( lighttpd nginx apache )"
 

@@ -39,6 +39,8 @@ RDEPEND="app-accessibility/at-spi2-core:2
 # only the sonames that are genuinely absent from both directories and so
 # must come from the system, as verified by inspecting the DT_NEEDED
 # entries of every ELF object in the .deb against the files it ships.
+# Bundled libgio requires libselinux.so.1 even when SELinux is disabled;
+# libselinux itself pulls in libsepol.
 RDEPEND+="
 	app-arch/brotli:0=
 	app-arch/libdeflate:0=

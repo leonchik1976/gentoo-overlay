@@ -7,7 +7,8 @@ MY_NODE_N="node-modules"
 MY_NODE_D="node_modules"
 ROLLDOWN_PV="1.2.5"
 LIGHTNINGCSS_PV="1.33.0"
-SWC_PV="1.15.43"
+SWC_PV="1.16.1"
+TYPESCRIPT_PV="7.0.2"
 
 DESCRIPTION="Greenbone Security Assistant"
 HOMEPAGE="https://www.greenbone.net https://github.com/greenbone/gsa"
@@ -20,6 +21,7 @@ SRC_URI="
 	https://registry.npmjs.org/lightningcss-linux-arm64-musl/-/lightningcss-linux-arm64-musl-${LIGHTNINGCSS_PV}.tgz
 	https://registry.npmjs.org/@swc/core-linux-arm64-gnu/-/core-linux-arm64-gnu-${SWC_PV}.tgz
 	https://registry.npmjs.org/@swc/core-linux-arm64-musl/-/core-linux-arm64-musl-${SWC_PV}.tgz
+	https://registry.npmjs.org/@typescript/typescript-linux-arm64/-/typescript-linux-arm64-${TYPESCRIPT_PV}.tgz
 "
 
 LICENSE="AGPL-3+ MIT"
@@ -29,7 +31,7 @@ KEYWORDS="~arm64"
 RESTRICT="test"
 
 BDEPEND="
-	>=net-libs/nodejs-22.0.0[npm,ssl]
+	>=net-libs/nodejs-22.13.0[npm,ssl]
 "
 
 MY_NODE_DIR="${S}/${MY_NODE_D}"
@@ -53,6 +55,7 @@ src_unpack() {
 		lightningcss-linux-arm64-musl ${LIGHTNINGCSS_PV} lightningcss-linux-arm64-musl
 		core-linux-arm64-gnu ${SWC_PV} @swc/core-linux-arm64-gnu
 		core-linux-arm64-musl ${SWC_PV} @swc/core-linux-arm64-musl
+		typescript-linux-arm64 ${TYPESCRIPT_PV} @typescript/typescript-linux-arm64
 	EOF
 }
 

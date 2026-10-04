@@ -1,0 +1,506 @@
+Backport the Anki security fixes shipped through 26.09.3 to 25.09.2.
+
+Sources: https://github.com/ankitects/anki/compare/25.09.2...25.09.4
+https://github.com/ankitects/anki/commit/b81c3b2cc497c32cba0f029afc8421d288a6630b
+https://github.com/ankitects/anki/commit/71bd36ff074934c4bc0af56e2a5c2541da8a1b19
+https://github.com/ankitects/anki/commit/6eb89c06488727f57f5c03f31e4ee3c30ee27737
+https://github.com/ankitects/anki/commit/7add01b1bc89d81126b47b235ee24402159fce02
+https://github.com/ankitects/anki/commit/83254832b0fbe00602b5a6381c78ae59ccaf6c25
+https://github.com/ankitects/anki/commit/a39e1b7ee3b28b61bf07a40c66bab1315eff5889
+https://github.com/ankitects/anki/blob/26.09.3/rslib/src/notetype/emptycards.rs
+
+Adaptations: retain the legacy editor and route names, attach route metadata
+without adding the newer editor, and guard the common image-menu entry point.
+Enable upstream's SvelteKit bootstrap hashes for the untrusted occlusion route.
+Retain the existing Cargo graph while updating rustls and rustls-webpki.
+
+--- a/qt/aqt/mediasrv.py
++++ b/qt/aqt/mediasrv.py
+@@ -16,9 +17,9 @@
+ from dataclasses import dataclass
+ from errno import EPROTOTYPE
+ from http import HTTPStatus
++from pathlib import Path
+ 
+ import flask
+-import flask_cors
+ import stringcase
+ import waitress.wasyncore
+ from flask import Response, abort, request
+@@ -45,7 +46,6 @@
+ 
+ logger = logging.getLogger(__name__)
+ app = flask.Flask(__name__, root_path="/fake")
+-flask_cors.CORS(app, resources={r"/*": {"origins": "127.0.0.1"}})
+ 
+ 
+ @dataclass
+@@ -54,12 +54,101 @@
+     root: str
+     # path to file relative to root folder
+     path: str
++    # collection media is untrusted user content; add-on web exports are not
++    untrusted: bool = True
++
++
++UNTRUSTED_MEDIA_CSP = "; ".join(
++    (
++        # Disallow everything by default
++        "default-src 'none'",
++        "script-src 'none'",
++        "connect-src 'none'",
++        "object-src 'none'",
++        "frame-src 'none'",
++        "child-src 'none'",
++        "base-uri 'none'",
++        "form-action 'none'",
++        # Allow same-origin styles, images, fonts and media, so that an SVG or HTML
++        # file can use the resources next to it. 'unsafe-inline' is needed for
++        # <style> elements and style= attributes inside SVGs.
++        "style-src 'self' 'unsafe-inline'",
++        "img-src 'self'",
++        "font-src 'self'",
++        "media-src 'self'",
++        # The sandbox blocks scripts, forms, popups and top-level navigation.
++        # allow-same-origin is required for fonts (font loads use CORS, and we send
++        # no CORS headers) and to avoid stuck :hover styles under site isolation.
++        # Never add allow-scripts: with allow-same-origin, that would give media
++        # access to the parent page.
++        "sandbox allow-same-origin",
++    )
++)
++
++
++# Our pages are always shown top-level
++TRUSTED_PAGE_CSP = "frame-ancestors 'none'"
++
++
++def _untrusted_page_content_security_policy(script_src: str) -> str:
++    """CSP for pages that show user content, e.g. note fields in the editor."""
++    return "; ".join(
++        (
++            f"script-src {script_src}",
++            "form-action 'none'",
++            TRUSTED_PAGE_CSP,
++        )
++    )
++
++
++def _legacy_editor_content_security_policy(port: int) -> str:
++    csp_paths = (
++        f"http://127.0.0.1:{port}/_anki/",
++        f"http://127.0.0.1:{port}/_addons/",
++    )
++    return _untrusted_page_content_security_policy(" ".join(csp_paths))
++
++
++_SVELTEKIT_CSP_META_RE = re.compile(
++    rb"<meta http-equiv=\"content-security-policy\" content=\"script-src 'self' ('sha256-[A-Za-z0-9+/=]+')\">"
++)
++
++
++def _sveltekit_render_script_hash(html: bytes) -> str | None:
++    """Extract the hash SvelteKit computed for its inline render script.
++
++    SvelteKit (csp.mode = 'hash' in svelte.config.js) bakes this into a
++    <meta http-equiv="content-security-policy"> tag in the built HTML.
++    """
++    match = _SVELTEKIT_CSP_META_RE.search(html)
++    return match.group(1).decode("utf-8") if match else None
++
++
++def _strip_csp_meta(html: bytes) -> bytes:
++    stripped = _SVELTEKIT_CSP_META_RE.sub(b"", html)
++    if stripped == html:
++        raise RuntimeError("CSP meta tag not found in SvelteKit index page")
++    return stripped
++
++
++def _untrusted_sveltekit_content_security_policy(
++    port: int, script_hash: str | None
++) -> str:
++    csp_paths = [
++        f"http://127.0.0.1:{port}/_anki/",
++        f"http://127.0.0.1:{port}/_app/",
++        f"http://127.0.0.1:{port}/_addons/",
++    ]
++    if script_hash:
++        csp_paths.append(script_hash)
++    return _untrusted_page_content_security_policy(" ".join(csp_paths))
+ 
+ 
+ @dataclass
+ class BundledFileRequest:
+     # path relative to aqt data folder
+     path: str
++    sveltekit_route: str | None = None
+ 
+ 
+ @dataclass
+@@ -191,6 +280,40 @@
+     return resp
+ 
+ 
++class UnsafePathException(Exception):
++    def __init__(self, path: str):
++        super().__init__(f"Invalid path: {path}")
++
++
++def ensure_safe_path(base_dir: str | Path, path: str | Path) -> str:
++    base_dir = os.path.realpath(base_dir)
++    path = os.path.normpath(path)
++    fullpath = os.path.abspath(os.path.join(base_dir, path))
++
++    # protect against directory traversal: https://security.openstack.org/guidelines/dg_using-file-paths.html
++    if not fullpath.startswith(base_dir + os.sep):
++        raise UnsafePathException(path)
++    return fullpath
++
++
++_LOCALHOST_HOSTS = ("127.0.0.1", "localhost", "[::1]")
++
++_ALLOWED_ORIGIN_PREFIXES = tuple(
++    f"{scheme}{host}" for scheme in ("http://", "https://") for host in _LOCALHOST_HOSTS
++)
++
++
++def is_localhost_origin(origin: str) -> bool:
++    for prefix in _ALLOWED_ORIGIN_PREFIXES:
++        if (
++            origin == prefix
++            or origin.startswith(prefix + ":")
++            or origin.startswith(prefix + "/")
++        ):
++            return True
++    return False
++
++
+ def _handle_local_file_request(request: LocalFileRequest) -> Response:
+     directory = request.root
+     path = request.path
+@@ -201,15 +324,7 @@
+             HTTPStatus.BAD_REQUEST, f"Path for '{directory} - {path}' is too long!"
+         )
+ 
+-    directory = os.path.realpath(directory)
+-    path = os.path.normpath(path)
+-    fullpath = os.path.abspath(os.path.join(directory, path))
+-
+-    # protect against directory transversal: https://security.openstack.org/guidelines/dg_using-file-paths.html
+-    if not fullpath.startswith(directory):
+-        return _text_response(
+-            HTTPStatus.FORBIDDEN, f"Path for '{directory} - {path}' is a security leak!"
+-        )
++    fullpath = ensure_safe_path(directory, path)
+ 
+     if isdir:
+         return _text_response(
+@@ -229,13 +344,17 @@
+                 max_age = 0
+             else:
+                 max_age = 60 * 60
+-            return flask.send_file(
++            response = flask.send_file(
+                 fullpath,
+                 mimetype=mimetype,
+                 conditional=True,
+                 max_age=max_age,
+                 download_name="foo",  # type: ignore[call-arg]
+             )
++            if request.untrusted:
++                # Prevent user-provided HTML/SVG from running as an active document.
++                response.headers["Content-Security-Policy"] = UNTRUSTED_MEDIA_CSP
++            return response
+         else:
+             print(f"Not found: {path}")
+             return _text_response(HTTPStatus.NOT_FOUND, f"Invalid path: {path}")
+@@ -254,10 +373,10 @@
+ 
+ 
+ def _builtin_data(path: str) -> bytes:
+-    """Return data from file in aqt/data folder.
+-    Path must use forward slash separators."""
+-    full_path = aqt_data_path() / ".." / path
+-    return full_path.read_bytes()
++    """Return data from file in aqt/data folder."""
++    full_path = ensure_safe_path(aqt_data_path().parent, path)
++    with open(full_path, "rb") as f:
++        return f.read()
+ 
+ 
+ def _handle_builtin_file_request(request: BundledFileRequest) -> Response:
+@@ -273,6 +392,22 @@
+         response = Response(data, mimetype=mimetype)
+         if immutable:
+             response.headers["Cache-Control"] = "max-age=31536000"
++        if request.sveltekit_route:
++            is_index = path.endswith("index.html")
++            if is_untrusted_sveltekit_route(request.sveltekit_route):
++                script_hash = _sveltekit_render_script_hash(data) if is_index else None
++                response.headers["Content-Security-Policy"] = (
++                    _untrusted_sveltekit_content_security_policy(
++                        aqt.mw.mediaServer.getPort(), script_hash
++                    )
++                )
++            elif is_index:
++                # Replace the default CSP directive set in the SvelteKit config
++                response.set_data(_strip_csp_meta(data))
++                response.headers["Content-Security-Policy"] = TRUSTED_PAGE_CSP
++        elif mimetype == "text/html":
++            response.headers["Content-Security-Policy"] = TRUSTED_PAGE_CSP
++
+         return response
+     except FileNotFoundError:
+         if dev_mode:
+@@ -297,29 +432,34 @@
+ 
+ @app.route("/<path:pathin>", methods=["GET", "POST"])
+ def handle_request(pathin: str) -> Response:
+-    host = request.headers.get("Host", "").lower()
+-    allowed_prefixes = ("127.0.0.1:", "localhost:", "[::1]:")
+-    if not any(host.startswith(prefix) for prefix in allowed_prefixes):
+-        # while we only bind to localhost, this request may have come from a local browser
+-        # via a DNS rebinding attack; deny it unless we're doing non-local testing
+-        if os.environ.get("ANKI_API_HOST") != "0.0.0.0":
+-            print("deny non-local host", host)
++    if os.environ.get("ANKI_API_HOST") != "0.0.0.0":
++        host = request.headers.get("Host", "").lower()
++        origin = request.headers.get("Origin", "").lower()
++        allowed_hosts = tuple(f"{h}:" for h in _LOCALHOST_HOSTS)
++        if not any(host.startswith(h) for h in allowed_hosts):
++            logger.warning("denied non-local host: %s", host)
++            abort(403)
++        if origin and not is_localhost_origin(origin):
++            logger.warning("denied non-local origin: %s", origin)
+             abort(403)
+ 
+     req = _extract_request(pathin)
+     logger.debug("%s /%s", flask.request.method, pathin)
+ 
+-    if isinstance(req, NotFound):
+-        print(req.message)
+-        return _text_response(HTTPStatus.NOT_FOUND, f"Invalid path: {pathin}")
+-    elif callable(req):
+-        return _handle_dynamic_request(req)
+-    elif isinstance(req, BundledFileRequest):
+-        return _handle_builtin_file_request(req)
+-    elif isinstance(req, LocalFileRequest):
+-        return _handle_local_file_request(req)
+-    else:
+-        return _text_response(HTTPStatus.FORBIDDEN, f"unexpected request: {pathin}")
++    try:
++        if isinstance(req, NotFound):
++            print(req.message)
++            return _text_response(HTTPStatus.NOT_FOUND, f"Invalid path: {pathin}")
++        elif callable(req):
++            return _handle_dynamic_request(req)
++        elif isinstance(req, BundledFileRequest):
++            return _handle_builtin_file_request(req)
++        elif isinstance(req, LocalFileRequest):
++            return _handle_local_file_request(req)
++        else:
++            return _text_response(HTTPStatus.FORBIDDEN, f"unexpected request: {pathin}")
++    except UnsafePathException as exc:
++        return _text_response(HTTPStatus.FORBIDDEN, str(exc))
+ 
+ 
+ def is_sveltekit_page(path: str) -> bool:
+@@ -337,11 +477,17 @@
+     ]
+ 
+ 
++def is_untrusted_sveltekit_route(route: str) -> bool:
++    return route in ("editor", "image-occlusion")
++
++
++
+ def _extract_internal_request(
+     path: str,
+ ) -> BundledFileRequest | DynamicRequest | NotFound | None:
+     "Catch /_anki references and rewrite them to web export folder."
+-    if is_sveltekit_page(path):
++    sveltekit_route = path.split("/", maxsplit=1)[0] if is_sveltekit_page(path) else None
++    if sveltekit_route:
+         path = f"_anki/sveltekit/_app/{path}"
+     if path.startswith("_app/"):
+         path = path.replace("_app", "_anki/sveltekit/_app")
+@@ -386,7 +532,7 @@
+         path = f"{prefix}{additional_prefix}{base}{ext}"
+         print(f"legacy {oldpath} remapped to {path}")
+ 
+-    return BundledFileRequest(path=path[len(prefix) :])
++    return BundledFileRequest(path=path[len(prefix) :], sveltekit_route=sveltekit_route)
+ 
+ 
+ def _extract_addon_request(path: str) -> LocalFileRequest | NotFound | None:
+@@ -416,7 +562,9 @@
+         return None
+ 
+     if re.fullmatch(pattern, sub_path):
+-        return LocalFileRequest(root=manager.addonsFolder(), path=addon_path)
++        return LocalFileRequest(
++            root=manager.addonsFolder(), path=addon_path, untrusted=False
++        )
+ 
+     return NotFound(message=f"couldn't locate item in add-on folder {path}")
+ 
+@@ -760,14 +908,11 @@
+         # Prevent JS in field content from being executed in the editor, as it would
+         # have access to our internal API, and is a security risk.
+         if page.context == PageContext.EDITOR:
+-            port = aqt.mw.mediaServer.getPort()
+-            csp_paths = (
+-                f"http://127.0.0.1:{port}/_anki/",
+-                f"http://127.0.0.1:{port}/_addons/",
++            response.headers["Content-Security-Policy"] = (
++                _legacy_editor_content_security_policy(aqt.mw.mediaServer.getPort())
+             )
+-            response.headers["Content-Security-Policy"] = (
+-                f"script-src {' '.join(csp_paths)}"
+-            )
++        else:
++            response.headers["Content-Security-Policy"] = TRUSTED_PAGE_CSP
+         return response
+     else:
+         return _text_response(HTTPStatus.NOT_FOUND, "page not found")
+--- a/qt/aqt/editor.py
++++ b/qt/aqt/editor.py
+@@ -1739,6 +1739,9 @@
+         self._add_image_menu_with_path(menu, path)
+ 
+     def _add_image_menu_with_path(self, menu: QMenu, path: str) -> None:
++        _, ext = os.path.splitext(path)
++        if ext[1:] not in pics:
++            return
+         a = menu.addAction(tr.editing_open_image())
+         assert a is not None
+         qconnect(a.triggered, lambda: openFolder(path))
+--- a/qt/aqt/webview.py
++++ b/qt/aqt/webview.py
+@@ -61,6 +61,22 @@
+     IMPORT_ANKI_PACKAGE = "anki package import"
+ 
+ 
++def _is_internal_url(url: QUrl) -> bool:
++    from aqt import mw
++
++    server = QUrl(mw.serverURL())
++    if url.scheme() == server.scheme() and url.authority() == server.authority():
++        return True
++    # Vite server
++    return (
++        bool(hmr_mode)
++        and url.scheme() == "http"
++        and url.host() == "127.0.0.1"
++        and url.port() == 5173
++    )
++
++
++
+ class AuthInterceptor(QWebEngineUrlRequestInterceptor):
+     _api_enabled = False
+ 
+@@ -71,7 +87,7 @@
+     def interceptRequest(self, info):
+         from aqt.mediasrv import _APIKEY
+ 
+-        if self._api_enabled and info.requestUrl().host() == "127.0.0.1":
++        if self._api_enabled and _is_internal_url(info.requestUrl()):
+             info.setHttpHeader(b"Authorization", f"Bearer {_APIKEY}".encode("utf-8"))
+ 
+ 
+@@ -244,13 +260,17 @@
+     ) -> bool:
+         from aqt.mediasrv import is_sveltekit_page
+ 
+-        if (
+-            not self.open_links_externally
+-            or "_anki/pages" in url.path()
+-            or url.path() == "/_anki/legacyPageData"
+-            or is_sveltekit_page(url.path()[1:])
+-        ):
++        if not self.open_links_externally:
+             return super().acceptNavigationRequest(url, navType, isMainFrame)
++
++        if _is_internal_url(url):
++            path = url.path()
++            if (
++                path.startswith("/_anki/pages/")
++                or path == "/_anki/legacyPageData"
++                or is_sveltekit_page(path[1:])
++            ):
++                return super().acceptNavigationRequest(url, navType, isMainFrame)
+ 
+         if not isMainFrame:
+             return True
+--- a/ts/svelte.config.js
++++ b/ts/svelte.config.js
+@@ -33,6 +33,7 @@
+             entries: [],
+         },
+         paths: {},
++        csp: { mode: "hash", directives: { "script-src": ["'self'"] } },
+     },
+ };
+ 
+--- a/rslib/src/notetype/emptycards.rs
++++ b/rslib/src/notetype/emptycards.rs
+@@ -13,6 +13,7 @@
+ use crate::collection::Collection;
+ use crate::error::Result;
+ use crate::notes::NoteId;
++use crate::text::strip_html;
+ 
+ pub struct EmptyCardsForNote {
+     pub nid: NoteId,
+@@ -81,7 +82,7 @@
+                 write!(
+                     buf,
+                     "<div><b>{}</b></div><ol>",
+-                    self.tr.empty_cards_for_note_type(nt.name.clone())
++                    self.tr.empty_cards_for_note_type(strip_html(&nt.name))
+                 )
+                 .unwrap();
+ 
+@@ -124,7 +125,7 @@
+                         self.tr.empty_cards_count_line(
+                             note.empty.len(),
+                             note.current_count,
+-                            templates
++                            strip_html(&templates),
+                         )
+                     )
+                     .unwrap();
+@@ -137,3 +138,4 @@
+         Ok(buf)
+     }
+ }
++
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -5588,9 +5588,9 @@
+ 
+ [[package]]
+ name = "rustls"
+-version = "0.23.31"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c0ebcbd2f03de0fc1122ad9bb24b127a5a6cd51d72604a3f3c50ac459762b6cc"
++version = "0.23.45"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "0d41d731c7d2f962d1ccc364cec258de3c0e93b38c2fb3ba97ac74513048d634"
+ dependencies = [
+  "once_cell",
+  "ring",
+@@ -5642,9 +5642,9 @@
+ 
+ [[package]]
+ name = "rustls-webpki"
+-version = "0.103.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0a17884ae0c1b773f1ccd2bd4a8c72f16da897310a98b0e84bf349ad5ead92fc"
++version = "0.103.15"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "f3c3cf1d8b1e7d4927e2d154c3fcb02979afb9939629c62cd9048d4f07b60ac2"
+ dependencies = [
+  "ring",
+  "rustls-pki-types",
