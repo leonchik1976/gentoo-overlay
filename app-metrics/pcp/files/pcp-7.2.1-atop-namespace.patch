@@ -1,0 +1,307 @@
+--- a/src/pcp/atop/GNUmakefile
++++ b/src/pcp/atop/GNUmakefile
+@@ -68,11 +68,9 @@
+ 	@for link in $(DISTLINKS); do \
+ 	    $(INSTALL) -S $(DISTARGET) $(PCP_BINADM_DIR)/$$link; \
+ 	done
+-	$(INSTALL) -S $(PCP_BINADM_DIR)/pcp-atop $(PCP_BIN_DIR)/atop
+-	$(INSTALL) -S $(PCP_BINADM_DIR)/pcp-atopsar $(PCP_BIN_DIR)/atopsar
+-	$(INSTALL) -m 644 atop.service $(PCP_SYSTEMDUNIT_DIR)/atop.service
+-	$(INSTALL) -m 644 atop-daily.service $(PCP_SYSTEMDUNIT_DIR)/atop-daily.service
+-	$(INSTALL) -m 644 atop-daily.timer $(PCP_SYSTEMDUNIT_DIR)/atop-daily.timer
++	$(INSTALL) -m 644 atop.service $(PCP_SYSTEMDUNIT_DIR)/pcp-atop.service
++	$(INSTALL) -m 644 atop-daily.service $(PCP_SYSTEMDUNIT_DIR)/pcp-atop-daily.service
++	$(INSTALL) -m 644 atop-daily.timer $(PCP_SYSTEMDUNIT_DIR)/pcp-atop-daily.timer
+ 	$(INSTALL) -m 755 atop-daily.sh $(PCP_BINADM_DIR)/atop-daily
+ 	$(INSTALL) -m 644 atop.conf $(PCP_SYSCONFIG_DIR)/atop
+ 	$(INSTALL) -m 755 -d $(PCP_IMPORTLOG_DIR)/atop
+--- a/src/pcp/atop/atop.service.in
++++ b/src/pcp/atop/atop.service.in
+@@ -1,7 +1,7 @@
+ [Unit]
+ Description=PCP atop advanced performance monitor
+ Documentation=man:pcp-atop(1)
+-BindsTo=atop-daily.timer
++BindsTo=pcp-atop-daily.timer
+ 
+ [Service]
+ Type=simple
+@@ -17,4 +17,4 @@
+ 
+ [Install]
+ WantedBy=multi-user.target
+-Also=atop-daily.timer
++Also=pcp-atop-daily.timer
+--- a/src/pcp/atop/atop-daily.service
++++ b/src/pcp/atop/atop-daily.service
+@@ -5,7 +5,7 @@
+ [Service]
+ Type=oneshot
+ # restart seals yesterday's archive (pmiEnd on stop), then ExecStartPre
+-# in atop.service atomically renames prior-day files, forks background
++# in pcp-atop.service atomically renames prior-day files, forks background
+ # compression and culls old archives before recording resumes on the new
+ # date-stamped archive.  Compression runs in parallel with recording.
+-ExecStart=systemctl restart atop.service
++ExecStart=systemctl restart pcp-atop.service
+--- a/src/pcp/atop/atop-daily.timer
++++ b/src/pcp/atop/atop-daily.timer
+@@ -1,7 +1,7 @@
+ [Unit]
+ Description=Daily atop archive maintenance
+ Documentation=man:pcp-atop(1)
+-BindsTo=atop.service
++BindsTo=pcp-atop.service
+ 
+ [Timer]
+ OnCalendar=daily
+--- a/src/pcp/atop/atop.conf
++++ b/src/pcp/atop/atop.conf
+@@ -1,6 +1,6 @@
+ ## pcp-atop configuration
+ ## Settings in this file override the built-in defaults.
+-## Used by atop.service via EnvironmentFile=
++## Used by pcp-atop.service via EnvironmentFile=
+ 
+ ## Command-line flags passed to pcp-atop (e.g. -L for local context only)
+ LOGOPTS=""
+@@ -12,7 +12,7 @@
+ LOGGENERATIONS=28
+ 
+ ## Directory where PCP archives are written (default from PCP_IMPORTLOG_DIR)
+-#LOGPATH=/var/log/atop
++#LOGPATH=/var/log/pcp/pmimport/atop
+ 
+ ## Maximum data volume size before rotating to a new volume (k/m/g suffix supported).
+ ## Each completed volume is compressed with zstd immediately.
+--- a/src/pcp/atop/various.c
++++ b/src/pcp/atop/various.c
+@@ -1878,7 +1878,7 @@
+ 	** and compress each completed volume with zstd immediately.
+ 	** The .meta file is left uncompressed so the archive remains appendable
+ 	** after a mid-day service restart; prior-day archives are sealed by the
+-	** ExecStartPre in atop.service (xz .meta, zstd any leftover volumes).
++	** ExecStartPre in pcp-atop.service (xz .meta, zstd any leftover volumes).
+ 	** Default 0 means no intra-day volume rotation (daily restart suffices).
+ 	*/
+ 	env = getenv("LOGVOLSIZE");
+@@ -2187,7 +2187,7 @@
+ ** Close the PMI write context cleanly (called on normal exit).
+ ** Does NOT compress the archive: the session may be restarted mid-day
+ ** and the archive reopened with PMI_APPEND.  Compression of complete
+-** prior-day archives is handled by ExecStartPre in atop.service.
++** prior-day archives is handled by ExecStartPre in pcp-atop.service.
+ ** Per-volume compression during a long session is handled by the
+ ** pmiSetVolumeSize callback (rawarchive_compress_volume).
+ */
+--- a/man/man1/atop-daily.1
++++ b/man/man1/atop-daily.1
+@@ -28,7 +28,7 @@
+ It is normally called from
+ .BR systemd (1)
+ via the
+-.B atop-daily.timer
++.B pcp-atop-daily.timer
+ unit, or automatically by
+ .BR pcp-atop (1)
+ at startup.
+@@ -63,14 +63,12 @@
+ The following environment variables may be set in the
+ .BR pcp-atop (1)
+ sysconfig file
+-.RI ( /etc/sysconfig/atop
+-or
+-.IR /etc/default/atop ):
++.RI ( /etc/pcp/sysconfig/atop ):
+ .TP
+ .B LOGPATH
+ Archive directory.
+ Default:
+-.IR /var/log/atop .
++.IR /var/log/pcp/pmimport/atop .
+ May also be specified as a command line argument.
+ .TP
+ .B LOGGENERATIONS
+@@ -79,7 +77,7 @@
+ A value of 0 disables culling.
+ .SH FILES
+ .TP
+-.I /var/log/atop
++.I /var/log/pcp/pmimport/atop
+ Default directory for
+ .BR pcp-atop (1)
+ archive files.
+--- a/qa/2007
++++ b/qa/2007
+@@ -14,7 +14,7 @@
+ . ./common.check
+ 
+ [ -f $PCP_BINADM_DIR/pcp-atop ] || _notrun "pcp-atop not installed"
+-[ -f $PCP_SYSTEMDUNIT_DIR/atop.service ] || _notrun "atop.service not found"
++[ -f $PCP_SYSTEMDUNIT_DIR/pcp-atop.service ] || _notrun "pcp-atop.service not found"
+ [ "$PCPQA_SYSTEMD" = yes ] || _notrun "systemctl not installed or not active"
+ 
+ pmda=$PCP_PMDAS_DIR/pmimport/pmda_pmimport.$DSO_SUFFIX
+@@ -22,16 +22,16 @@
+ 
+ # remember whether atop was already running before the test
+ atop_was_active=false
+-$sudo systemctl is-active --quiet atop 2>/dev/null && atop_was_active=true
++$sudo systemctl is-active --quiet pcp-atop 2>/dev/null && atop_was_active=true
+ 
+ _cleanup()
+ {
+     # restore pre-test state: stop if we started it, restart if it was running
+     if $atop_was_active
+     then
+-        $sudo systemctl start atop 2>/dev/null
++        $sudo systemctl start pcp-atop 2>/dev/null
+     else
+-        $sudo systemctl stop atop 2>/dev/null
++        $sudo systemctl stop pcp-atop 2>/dev/null
+     fi
+     cd $here
+     $sudo rm -rf $tmp $tmp.*
+@@ -68,14 +68,14 @@
+ # real QA test starts here
+ 
+ # ensure we start from a stopped state
+-$sudo systemctl stop atop 2>/dev/null
++$sudo systemctl stop pcp-atop 2>/dev/null
+ sleep 1
+ 
+ echo "=== Before start: atop metrics not visible ==="
+ _pmimport_check 3 "not visible"
+ 
+ echo "=== Starting atop service ==="
+-$sudo systemctl start atop
++$sudo systemctl start pcp-atop
+ 
+ # wait for sidecar (atop writes it in rawwrite_open)
+ for i in 1 2 3 4 5 6 7 8 9 10; do
+@@ -92,7 +92,7 @@
+ grep -q "^args=.*CPU" "$sidecar" && echo "args: passed"  || echo "args: FAILED"
+ 
+ echo "=== Stopping atop service ==="
+-$sudo systemctl stop atop
++$sudo systemctl stop pcp-atop
+ 
+ echo "=== After stop: atop metrics not visible ==="
+ _pmimport_check 5 "not visible"
+--- a/src/pcp/atop/pcp-atop.1
++++ b/src/pcp/atop/pcp-atop.1
+@@ -16,7 +16,6 @@
+ .\"
+ .TH PCP-ATOP 1 "PCP" "Performance Co-Pilot"
+ .SH NAME
+-\f3atop\f1,
+ \f3pcp-atop\f1 \- Advanced System and Process Monitor
+ .SH SYNOPSIS
+ Interactive Usage:
+@@ -2563,13 +2562,13 @@
+ shows the number of tcp_sendmsg()/udp_sendmsg()/etc. kernel calls per process.
+ .SH FILES
+ .TP 5
+-.B /etc/atoprc
++.B /etc/pcp/atoprc
+ Configuration file containing system-wide default values.
+ For further information about the default values, refer to the
+ .BR pcp-atoprc (5)
+ man page).
+ .TP 5
+-.B ~/.atoprc
++.B ~/.pcp-atoprc
+ Configuration file containing personal default values.
+ For further information about the default values, refer to the
+ .BR pcp-atoprc (5)
+--- a/src/pcp/atop/pcp-atopsar.1
++++ b/src/pcp/atop/pcp-atopsar.1
+@@ -16,7 +16,6 @@
+ .\"
+ .TH PCP-ATOPSAR 1 "PCP" "Performance Co-Pilot"
+ .SH NAME
+-\f3atopsar\f1,
+ \f3pcp-atopsar\f1 \- Advanced System Activity Report (pcp-atop related)
+ .SH SYNOPSIS
+ \f3pcp\f1 [\f2pcp\ options\f1] \f3atopsar\f1 [\f2atop\ options\f1]
+@@ -1294,11 +1293,11 @@
+ .B \  pcp-atopsar \-AM | grep '[_*+]$'
+ .SH FILES
+ .TP 5
+-.B /etc/atoprc
++.B /etc/pcp/atoprc
+ Configuration file containing system-wide default values (mainly flags).
+ See related man-page.
+ .TP 5
+-.B ~/.atoprc
++.B ~/.pcp-atoprc
+ Configuration file containing personal default values (mainly flags).
+ See related man-page.
+ .TP 5
+--- a/src/pcp/atop/atop.c
++++ b/src/pcp/atop/atop.c
+@@ -192,7 +192,7 @@
+ static char		midnightflag;
+ 
+ /*
+-** interpretation of defaults-file /etc/atoprc and $HOME/.atop
++** interpretation of defaults-file /etc/pcp/atoprc and $HOME/.atop
+ */
+ static void		readrc(char *, int);
+ 
+@@ -268,13 +268,14 @@
+ 	argvp = argv;
+ 
+ 	/*
+-	** read defaults-files /etc/atoprc en $HOME/.atoprc (if any)
+-	*/
+-	readrc("/etc/atoprc", 1);
++	** read defaults-files /etc/pcp/atoprc en $HOME/.pcp-atoprc (if any)
++	*/
++	pmsprintf(path, sizeof(path), "%s/atoprc", pmGetConfig("PCP_SYSCONF_DIR"));
++	readrc(path, 1);
+ 
+ 	if ( (p = getenv("HOME")) )
+ 	{
+-		pmsprintf(path, sizeof(path), "%s/.atoprc", p);
++		pmsprintf(path, sizeof(path), "%s/.pcp-atoprc", p);
+ 		readrc(path, 0);
+ 	}
+ 
+--- a/src/pcp/atop/atopsar.c
++++ b/src/pcp/atop/atopsar.c
+@@ -1005,7 +1005,7 @@
+ 
+ /*
+ ** function to handle the default flags for atopsar as
+-** read from the files ~/.atoprc and /etc/atoprc
++** read from the files ~/.pcp-atoprc and /etc/pcp/atoprc
+ */
+ void
+ do_atopsarflags(char *name, char *val)
+--- a/src/pcp/atop/pcp-atoprc.5
++++ b/src/pcp/atop/pcp-atoprc.5
+@@ -28,9 +28,9 @@
+ .PP
+ The pcp-atoprc file contains the default settings. These settings are read
+ during startup, first from the system-wide rcfile
+-.I /etc/atoprc
++.I /etc/pcp/atoprc
+ and after that from the user-specific rcfile
+-.I ~/.atoprc
++.I ~/.pcp-atoprc
+ (so system-wide settings can be overruled by an individual user).
+ The options in both rcfiles are identical.
+ .SH OPTIONS
+@@ -199,9 +199,9 @@
+ one or more specific reports.
+ .PP
+ An example of the
+-.B /etc/atoprc
++.B /etc/pcp/atoprc
+ or
+-.B ~/.atoprc
++.B ~/.pcp-atoprc
+ file:
+ .TP 8
+ \ 

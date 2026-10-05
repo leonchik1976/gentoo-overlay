@@ -1,0 +1,31 @@
+PCP atop and standalone atop coexistence
+
+Use `pcp atop` and `pcp atopsar`. Manuals: pcp-atop(1), pcp-atopsar(1),
+and pcp-atoprc(5). PCP no longer installs plain atop/atopsar aliases.
+
+PCP recording units:
+  pcp-atop.service          continuous PCP archive recording
+  pcp-atop-daily.timer      daily rotation schedule
+  pcp-atop-daily.service    restarts pcp-atop.service for daily rotation
+
+The timer implicitly selects pcp-atop-daily.service. The recording service
+binds to and enables the timer through BindsTo= and Also=.
+Configuration remains /etc/pcp/sysconfig/atop. Archives default to
+/var/log/pcp/pmimport/atop. The maintenance helper remains
+/usr/libexec/pcp/bin/atop-daily; see atop-daily(1).
+
+Interactive PCP defaults are /etc/pcp/atoprc and ~/.pcp-atoprc. Previously
+PCP read /etc/atoprc and ~/.atoprc, shared with standalone atop.
+Copy only settings intended for PCP into the new files.
+
+Before upgrading, if the old atop.service runs the PCP implementation,
+stop and disable that service and its atop-daily.timer. After upgrading,
+enable/start pcp-atop.service if PCP recording is wanted. Do not blindly
+disable atop.service after installing standalone atop: it is then atop's
+service. Recording configuration needs no move. PCP import recordings now default
+to /var/log/pcp/pmimport (previously /var/log). To keep existing PCP atop
+recordings in place, explicitly set LOGPATH in /etc/pcp/sysconfig/atop;
+otherwise move only PCP archives into /var/log/pcp/pmimport/atop while
+recording is stopped. Do not mix PCP archives with standalone atop logs.
+This import-log default also applies to other PCP import tools.
+The package does not start, stop, or migrate services automatically.
