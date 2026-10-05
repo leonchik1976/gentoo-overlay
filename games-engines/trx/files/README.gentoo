@@ -1,0 +1,20 @@
+TRX requires an original Tomb Raider installation and per-user game files.
+
+For the default launcher paths, first copy the shipped configuration and game
+support assets (these do not include the original game's levels/music/video):
+
+  mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/trx"
+  mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/trx/games"
+  cp -a /usr/share/trx/cfg/. "${XDG_CONFIG_HOME:-$HOME/.config}/trx/"
+  cp -a /usr/share/trx/games/. "${XDG_DATA_HOME:-$HOME/.local/share}/trx/games/"
+
+Then copy your original game files into the appropriate games/<game-id>/
+subdirectory, using the directory mapping in upstream docs/trx/INSTALLING.md.
+Run 'trx'. The original game data is not downloaded or supplied by this package.
+On upgrades, compare refreshed support assets/configuration against your existing
+copies before updating them; preserve your own modifications and game files.
+
+TRX_DIR points to /usr/share/trx for modules/scripts. TRX_CONFIG_DIR, TRX_GAMES_DIR,
+TRX_CACHE_DIR, TRX_SAVES_DIR and TRX_SCREENSHOTS_DIR can override launcher defaults.
+The launcher never copies or overwrites your game data or configuration.
+For Gentoo Prefix, substitute the configured prefix before /usr/share/trx.

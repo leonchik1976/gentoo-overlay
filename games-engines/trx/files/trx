@@ -1,0 +1,10 @@
+#!/bin/sh
+# Upstream supports separate read-only assets and writable user directories.
+: "${TRX_DIR:=@EPREFIX@/usr/share/trx}"
+: "${TRX_CONFIG_DIR:=${XDG_CONFIG_HOME:-$HOME/.config}/trx}"
+: "${TRX_GAMES_DIR:=${XDG_DATA_HOME:-$HOME/.local/share}/trx/games}"
+: "${TRX_CACHE_DIR:=${XDG_CACHE_HOME:-$HOME/.cache}/trx}"
+: "${TRX_SAVES_DIR:=${XDG_DATA_HOME:-$HOME/.local/share}/trx/saves}"
+: "${TRX_SCREENSHOTS_DIR:=${XDG_DATA_HOME:-$HOME/.local/share}/trx/screenshots}"
+export TRX_DIR TRX_CONFIG_DIR TRX_GAMES_DIR TRX_CACHE_DIR TRX_SAVES_DIR TRX_SCREENSHOTS_DIR
+exec @EPREFIX@/usr/libexec/trx/TRX "$@"

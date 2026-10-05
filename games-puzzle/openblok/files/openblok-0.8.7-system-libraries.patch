@@ -1,0 +1,181 @@
+Use system SDL2pp and UnitTest++, support CMake 4, and make tests selectable.
+
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
++cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
+ project(openblok C CXX)
+ 
+ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
+@@ -17,7 +17,7 @@
+ option(INSTALL_PORTABLE "The installation step should put the data directory next to the runtime" ${INSTALL_PORTABLE_DEFAULT})
+ 
+ # Currently unit tests only work only in Debug
+-if(NOT "${CMAKE_BUILD_TYPE}" STREQUAL "release" AND NOT VITA)
++if(NOT VITA)
+     option(BUILD_TESTS "Build the unit tests" ON)
+     option(BUILD_TEST_COVERAGE "Build the test coverage report" OFF)
+ endif()
+@@ -65,7 +65,7 @@
+ # The main game source
+ include_directories(src)
+ add_subdirectory(src)
+-if(CMAKE_BUILD_TYPE STREQUAL "debug" AND BUILD_TESTS)
++if(BUILD_TESTS)
+     add_subdirectory(tests)
+ endif()
+ 
+--- a/thirdparty/CMakeLists.txt
++++ b/thirdparty/CMakeLists.txt
+@@ -1,16 +1,6 @@
+-# SDL2
+-set(SDL2PP_CXXSTD 11)
+-set(SDL2PP_WITH_IMAGE ON)
+-set(SDL2PP_WITH_MIXER ON)
+-set(SDL2PP_WITH_TTF ON)
+-add_subdirectory(libSDL2pp)
+-
+-
+-# tinydir
++# Libraries are provided by the package manager.
+ add_subdirectory(tinydir)
+-
+-
+-# UnitTest++
+-if(CMAKE_BUILD_TYPE STREQUAL "debug" AND BUILD_TESTS)
+-    add_subdirectory(unittest-cpp)
++if(BUILD_TESTS)
++    find_package(PkgConfig REQUIRED)
++    pkg_check_modules(UNITTESTCPP REQUIRED IMPORTED_TARGET GLOBAL UnitTest++)
+ endif()
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -17,7 +17,8 @@
+ 
+ add_executable(openblok_test ${TEST_SRC} ${TEST_H})
++target_compile_options(openblok_test PRIVATE -UNDEBUG)
+ 
+-target_link_libraries(openblok_test UnitTest++)
++target_link_libraries(openblok_test PkgConfig::UNITTESTCPP)
+ target_link_libraries(openblok_test module_system)
+ target_link_libraries(openblok_test module_game)
+ 
+--- a/cmake/RequireCxx11.cmake
++++ b/cmake/RequireCxx11.cmake
+@@ -1,6 +1,6 @@
+ # If C++14 support is available, we should use that,
+ # otherwise fall back to C++11
+ function(require_cxx11_or_higher target)
+-    set_target_properties(${target} PROPERTIES CXX_STANDARD 14)
++    set_target_properties(${target} PROPERTIES CXX_STANDARD 17)
+     set_target_properties(${target} PROPERTIES CXX_EXTENSIONS OFF)
+ endfunction()
+
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -59,1 +59,3 @@
++find_package(SDL2pp CONFIG REQUIRED)
++add_library(SDL2pp ALIAS SDL2pp::SDL2pp)
+ add_subdirectory(thirdparty)
+
+--- a/src/game/CMakeLists.txt
++++ b/src/game/CMakeLists.txt
+@@ -144,4 +144,2 @@
+-if(CMAKE_BUILD_TYPE STREQUAL "debug")
+     list(APPEND MOD_GAME_SRC components/well/Ascii.cpp)
+     list(APPEND MOD_GAME_H components/well/Ascii.h)
+-endif()
+
+--- a/src/game/CMakeLists.txt
++++ b/src/game/CMakeLists.txt
+@@ -150,1 +150,4 @@
+ add_library(module_game ${MOD_GAME_SRC} ${MOD_GAME_H})
++if(BUILD_TESTS)
++    target_compile_options(module_game PRIVATE -UNDEBUG)
++endif()
+
+--- a/tests/test_Well_TGM.cpp
++++ b/tests/test_Well_TGM.cpp
+@@ -1,4 +1,4 @@
+-#include "UnitTest++/UnitTest++.h"
++#include "UnitTest++.h"
+ 
+ #include "game/WellConfig.h"
+ #include "game/components/MinoStorage.h"
+
+--- a/tests/test_WellTSpin.cpp
++++ b/tests/test_WellTSpin.cpp
+@@ -1,4 +1,4 @@
+-#include "UnitTest++/UnitTest++.h"
++#include "UnitTest++.h"
+ 
+ #include "game/components/MinoStorage.h"
+ #include "game/components/PieceFactory.h"
+
+--- a/tests/test_Well.cpp
++++ b/tests/test_Well.cpp
+@@ -1,4 +1,4 @@
+-#include "UnitTest++/UnitTest++.h"
++#include "UnitTest++.h"
+ 
+ #include "game/WellConfig.h"
+ #include "game/components/MinoStorage.h"
+
+--- a/tests/test_Transition.cpp
++++ b/tests/test_Transition.cpp
+@@ -1,4 +1,4 @@
+-#include "UnitTest++/UnitTest++.h"
++#include "UnitTest++.h"
+ 
+ #include "game/Transition.h"
+ 
+
+--- a/tests/test_Piece.cpp
++++ b/tests/test_Piece.cpp
+@@ -1,4 +1,4 @@
+-#include "UnitTest++/UnitTest++.h"
++#include "UnitTest++.h"
+ 
+ #include "game/components/MinoStorage.h"
+ #include "game/components/Piece.h"
+
+--- a/tests/test_GraphicsContext.cpp
++++ b/tests/test_GraphicsContext.cpp
+@@ -1,4 +1,4 @@
+-#include "UnitTest++/UnitTest++.h"
++#include "UnitTest++.h"
+ 
+ #include "TestUtils.h"
+ #include "system/Font.h"
+
+--- a/tests/test_Color.cpp
++++ b/tests/test_Color.cpp
+@@ -1,4 +1,4 @@
+-#include "UnitTest++/UnitTest++.h"
++#include "UnitTest++.h"
+ 
+ #include "system/Color.h"
+ 
+
+--- a/tests/main.cpp
++++ b/tests/main.cpp
+@@ -1,4 +1,4 @@
+-#include "UnitTest++/UnitTest++.h"
++#include "UnitTest++.h"
+ 
+ // run all tests
+ int main(int, const char**)
+
+--- a/thirdparty/tinydir/tinydir.h
++++ b/thirdparty/tinydir/tinydir.h
+@@ -529,7 +529,8 @@
+ 		dir->_e->d_name
+ #endif
+ 	);
+-	_tinydir_strcat(file->path, file->name);
++	memcpy(file->path + _tinydir_strlen(file->path), file->name,
++		(_tinydir_strlen(file->name) + 1) * sizeof(file->name[0]));
+ #ifndef _MSC_VER
+ #ifdef __MINGW32__
+ 	if (_tstat(
