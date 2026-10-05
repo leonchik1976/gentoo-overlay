@@ -5,7 +5,6 @@
 		<email>leonchik1976@gmail.com</email>
 		<name>Leonid Kopylov</name>
 	</maintainer>
-	<stabilize-allarches/>
 	<upstream>
 		<remote-id type="pypi">grep-ast</remote-id>
 		<remote-id type="github">Aider-AI/grep-ast</remote-id>
