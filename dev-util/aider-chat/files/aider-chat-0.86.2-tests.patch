@@ -1,0 +1,40 @@
+Adapt offline tests for a source archive and the Gentoo parser set.
+
+--- a/tests/conftest.py
++++ b/tests/conftest.py
+@@ -0,0 +1,12 @@
++"""Keep offline unit tests independent of host color and remote model metadata."""
++import pytest
++
++
++@pytest.fixture(autouse=True)
++def offline_model_metadata(monkeypatch):
++    from aider.models import model_info_manager
++
++    # Tests of ModelInfoManager itself create separate manager instances.
++    # Prevent unrelated CLI/editing tests from refreshing the global cache.
++    monkeypatch.setattr(model_info_manager, "_update_cache", lambda: None)
++    monkeypatch.delenv("NO_COLOR", raising=False)
+--- a/tests/basic/test_repo.py
++++ b/tests/basic/test_repo.py
+@@ -17,6 +17,9 @@
+ 
+ class TestRepo(unittest.TestCase):
+     def setUp(self):
++        repo_context = GitTemporaryDirectory()
++        repo_context.__enter__()
++        self.addCleanup(repo_context.__exit__, None, None, None)
+         self.GPT35 = Model("gpt-3.5-turbo")
+ 
+     def test_diffs_empty_repo(self):
+--- a/tests/basic/test_repomap.py
++++ b/tests/basic/test_repomap.py
+@@ -402,6 +402,8 @@
+ 
+     def _test_language_repo_map(self, lang, key, symbol):
+         """Helper method to test repo map generation for a specific language."""
++        if lang not in {"c", "cpp", "javascript", "python"}:
++            self.skipTest("No repository-map query for this language in the Gentoo variant")
+         # Get the fixture file path and name based on language
+         fixture_dir = self.fixtures_dir / lang
+         filename = f"test.{key}"

@@ -1,0 +1,54 @@
+Gentoo integration
+==================
+
+This package uses Python 3.12 and Portage-managed dependencies. The upstream
+installer, uv, and pip are not required. Update Aider with Portage. In-app
+upgrades and automatic installation of extras, Pandoc, and Playwright browsers
+are disabled. Startup update checks are disabled by default; --check-update
+still permits an explicit check.
+
+The single-implementation LiteLLM, tokenizers, and Hugging Face Hub stack also
+needs Python 3.12. Existing consumers using another Python target must be aligned
+or run in a separate environment.
+
+The package uses ::gentoo's grep-ast adapter and separately packaged
+tree-sitter grammars. Repository-map tag extraction is available for C, C++,
+JavaScript, and Python. Syntax parsing is limited to the grammars provided by
+the adapter. Files in other languages can still be added and edited, but do
+not receive the full upstream repository-map/linter parser coverage.
+
+The upstream pip lockfile is replaced by a direct dependency list. In
+particular, the NetworkX/SciPy limits for Python 3.10 and the importlib-metadata
+limit used for release tooling are not applied to this Python 3.12 build.
+LiteLLM is constrained to the version selected for this overlay package.
+
+Ollama
+------
+
+Ollama is an independently administered service and may run on another host.
+No model files are downloaded or installed by this package. For example:
+
+    export OLLAMA_API_BASE=http://127.0.0.1:11434
+    aider --model ollama_chat/<model>
+
+See https://aider.chat/docs/llms/ollama.html for model configuration.
+
+Optional integrations
+---------------------
+
+Optional modules are detected at runtime rather than selected by dependency-
+pulling USE flags. Install their dependencies separately using Portage.
+
+AWS Bedrock additionally requires dev-python/boto3, installed with Portage.
+
+Voice input additionally needs the Python sounddevice and soundfile modules,
+PortAudio and libsndfile. Formats other than WAV may also require FFmpeg.
+Upstream's /voice command requires an OpenAI API key even when chat uses
+Ollama. Browser mode needs Streamlit. Semantic /help needs the upstream
+llama-index/Hugging Face embedding stack and model assets. These optional
+stacks are not supplied by this ebuild; package availability must be checked
+before use. Basic web scraping works without Playwright; Markdown conversion
+uses virtual/pandoc, pulled in by the required pypandoc package.
+
+Analytics retains upstream's opt-in behavior. Use --analytics-disable to
+permanently disable telemetry, or --no-analytics for a single session.

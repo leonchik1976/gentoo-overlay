@@ -1,0 +1,208 @@
+Keep upgrades and dependency/browser installations under administrator control.
+
+--- a/aider/utils.py
++++ b/aider/utils.py
+@@ -208,53 +208,7 @@
+ 
+ 
+ def run_install(cmd):
+-    print()
+-    print("Installing:", printable_shell_command(cmd))
+-
+-    # First ensure pip is available
+-    ensurepip_cmd = [sys.executable, "-m", "ensurepip", "--upgrade"]
+-    try:
+-        subprocess.run(ensurepip_cmd, capture_output=True, check=False)
+-    except Exception:
+-        pass  # Continue even if ensurepip fails
+-
+-    try:
+-        output = []
+-        process = subprocess.Popen(
+-            cmd,
+-            stdout=subprocess.PIPE,
+-            stderr=subprocess.STDOUT,
+-            text=True,
+-            bufsize=1,
+-            universal_newlines=True,
+-            encoding=sys.stdout.encoding,
+-            errors="replace",
+-        )
+-        spinner = Spinner("Installing...")
+-
+-        while True:
+-            char = process.stdout.read(1)
+-            if not char:
+-                break
+-
+-            output.append(char)
+-            spinner.step()
+-
+-        spinner.end()
+-        return_code = process.wait()
+-        output = "".join(output)
+-
+-        if return_code == 0:
+-            print("Installation complete.")
+-            print()
+-            return True, output
+-
+-    except subprocess.CalledProcessError as e:
+-        print(f"\nError running pip install: {e}")
+-
+-    print("\nInstallation failed.\n")
+-
+-    return False, output
++    return False, "Automatic dependency installation is disabled; use Portage."
+ 
+ 
+ def find_common_root(abs_fnames):
+@@ -300,36 +254,13 @@
+         except (ImportError, ModuleNotFoundError, RuntimeError):
+             pass
+ 
+-    cmd = get_pip_install(pip_install_cmd)
+-
+     if prompt:
+         io.tool_warning(prompt)
+-
+-    if self_update and platform.system() == "Windows":
+-        io.tool_output("Run this command to update:")
+-        print()
+-        print(printable_shell_command(cmd))  # plain print so it doesn't line-wrap
+-        return
+-
+-    if not io.confirm_ask("Run pip install?", default="y", subject=printable_shell_command(cmd)):
+-        return
+-
+-    success, output = run_install(cmd)
+-    if success:
+-        if not module:
+-            return True
+-        try:
+-            __import__(module)
+-            return True
+-        except (ImportError, ModuleNotFoundError, RuntimeError) as err:
+-            io.tool_error(str(err))
+-            pass
+-
+-    io.tool_error(output)
+-
+-    print()
+-    print("Install failed, try running this command manually:")
+-    print(printable_shell_command(cmd))
++    if self_update:
++        io.tool_warning("Aider is managed by Portage. Update dev-util/aider-chat with Portage.")
++    else:
++        io.tool_warning("Install the optional Python dependencies with Portage, then restart Aider.")
++    return False
+ 
+ 
+ def printable_shell_command(cmd_list):
+--- a/aider/scrape.py
++++ b/aider/scrape.py
+@@ -42,38 +42,12 @@
+     if has_pip and has_chromium:
+         return True
+ 
+-    pip_cmd = utils.get_pip_install(["aider-chat[playwright]"])
+-    chromium_cmd = "-m playwright install --with-deps chromium"
+-    chromium_cmd = [sys.executable] + chromium_cmd.split()
+-
+-    cmds = ""
+-    if not has_pip:
+-        cmds += " ".join(pip_cmd) + "\n"
+-    if not has_chromium:
+-        cmds += " ".join(chromium_cmd) + "\n"
+-
+-    text = f"""For the best web scraping, install Playwright:
+-
+-{cmds}
+-See {urls.enable_playwright} for more info.
+-"""
+-
+-    io.tool_output(text)
+-    if not io.confirm_ask("Install playwright?", default="y"):
+-        return
+-
+-    if not has_pip:
+-        success, output = utils.run_install(pip_cmd)
+-        if not success:
+-            io.tool_error(output)
+-            return
+-
+-    success, output = utils.run_install(chromium_cmd)
+-    if not success:
+-        io.tool_error(output)
+-        return
+-
+-    return True
++    io.tool_warning(
++        "Playwright and its browser must be provisioned separately. "
++        "Automatic installation is disabled in the Gentoo package; "
++        "HTTP scraping remains available."
++    )
++    return False
+ 
+ 
+ class Scraper:
+@@ -219,13 +193,7 @@
+         except OSError:
+             pass
+ 
+-        try:
+-            pypandoc.download_pandoc(delete_installer=True)
+-        except Exception as err:
+-            self.print_error(f"Unable to install pandoc: {err}")
+-            return
+-
+-        self.pandoc_available = True
++        self.print_error("Pandoc is unavailable. Install virtual/pandoc with Portage.")
+ 
+     def html_to_markdown(self, page_source):
+         from bs4 import BeautifulSoup
+--- a/aider/args.py
++++ b/aider/args.py
+@@ -605,7 +605,7 @@
+         "--check-update",
+         action=argparse.BooleanOptionalAction,
+         help="Check for new aider versions on launch",
+-        default=True,
++        default=False,
+     )
+     group.add_argument(
+         "--show-release-notes",
+--- a/aider/exceptions.py
++++ b/aider/exceptions.py
+@@ -83,7 +83,7 @@
+ 
+         if ex.__class__ is litellm.APIConnectionError:
+             if "boto3" in str(ex):
+-                return ExInfo("APIConnectionError", False, "You need to: pip install boto3")
++                return ExInfo("APIConnectionError", False, "AWS Bedrock requires dev-python/boto3. Install it with Portage.")
+             if "OpenrouterException" in str(ex) and "'choices'" in str(ex):
+                 return ExInfo(
+                     "APIConnectionError",
+--- a/aider/website/docs/llms/bedrock.md
++++ b/aider/website/docs/llms/bedrock.md
+@@ -111,17 +111,11 @@
+ Make sure you have access to these models in your AWS account before attempting to use them with Aider.
+ 
+ ## Install boto3
+-You may need to install the `boto3` package.
++
++AWS Bedrock requires `dev-python/boto3`. Install it with Portage:
+ 
+ ```bash
+-# If you installed with aider-install or `uv tool`
+-uv tool run --from aider-chat pip install boto3
+-
+-# Or with pipx...
+-pipx inject aider-chat boto3
+-
+-# Or with pip
+-pip install -U boto3
++emerge --ask dev-python/boto3
+ ```
+ 
+ # More info

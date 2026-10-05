@@ -1,0 +1,69 @@
+Use POSIX shell quoting and Python 3.12 resources; drop the inactive Mixpanel backend.
+
+--- a/aider/utils.py
++++ b/aider/utils.py
+@@ -5,7 +5,7 @@
+ import tempfile
+ from pathlib import Path
+ 
+-import oslex
++import shlex as oslex
+ 
+ from aider.dump import dump  # noqa: F401
+ from aider.waiting import Spinner
+--- a/aider/linter.py
++++ b/aider/linter.py
+@@ -7,7 +7,7 @@
+ from dataclasses import dataclass
+ from pathlib import Path
+ 
+-import oslex
++import shlex as oslex
+ from grep_ast import TreeContext, filename_to_lang
+ from grep_ast.tsl import get_parser  # noqa: E402
+ 
+--- a/aider/main.py
++++ b/aider/main.py
+@@ -13,7 +13,7 @@
+ except ImportError:
+     git = None
+ 
+-import importlib_resources
++from importlib import resources as importlib_resources
+ import shtab
+ from dotenv import load_dotenv
+ from prompt_toolkit.enums import EditingMode
+--- a/aider/help.py
++++ b/aider/help.py
+@@ -6,7 +6,7 @@
+ import warnings
+ from pathlib import Path
+ 
+-import importlib_resources
++from importlib import resources as importlib_resources
+ 
+ from aider import __version__, utils
+ from aider.dump import dump  # noqa: F401
+--- a/aider/analytics.py
++++ b/aider/analytics.py
+@@ -5,7 +5,6 @@
+ import uuid
+ from pathlib import Path
+ 
+-from mixpanel import MixpanelException
+ from posthog import Posthog
+ 
+ from aider import __version__
+@@ -229,12 +228,6 @@
+                 properties[key] = value
+             else:
+                 properties[key] = str(value)
+-
+-        if self.mp:
+-            try:
+-                self.mp.track(self.user_id, event_name, dict(properties))
+-            except MixpanelException:
+-                self.mp = None  # Disable mixpanel on connection errors
+ 
+         if self.ph:
+             self.ph.capture(event_name, distinct_id=self.user_id, properties=dict(properties))

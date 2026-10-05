@@ -1,0 +1,14 @@
+Handle LiteLLM 1.91.1 PermissionDeniedError as a non-retryable provider failure.
+Aider enumerates LiteLLM exceptions strictly, so the new class otherwise
+prevents every completion, including requests to Ollama.
+
+--- a/aider/exceptions.py
++++ b/aider/exceptions.py
+@@ -35,6 +35,7 @@
+     ExInfo("JSONSchemaValidationError", True, None),
+     ExInfo("NotFoundError", False, None),
+     ExInfo("OpenAIError", True, None),
++    ExInfo("PermissionDeniedError", False, "The API provider denied permission for this request."),
+     ExInfo(
+         "RateLimitError",
+         True,

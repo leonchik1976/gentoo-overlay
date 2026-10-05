@@ -1,0 +1,8 @@
+Match Python metadata to the separately packaged system parser adapter.
+
+--- a/requirements.txt
++++ b/requirements.txt
+@@ -1,2 +1,2 @@
+-tree-sitter-language-pack
++tree-sitter
+ pathspec
