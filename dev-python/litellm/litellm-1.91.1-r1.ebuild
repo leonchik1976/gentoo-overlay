@@ -90,6 +90,10 @@ RDEPEND="${RDEPEND}
 
 # google-auth is a transitive dependency we add to enable a few more tests
 BDEPEND="${BDEPEND}
+	$(python_gen_cond_dep '
+		>=dev-python/uv-build-0.12.23[${PYTHON_USEDEP}]
+		<dev-python/uv-build-0.13[${PYTHON_USEDEP}]
+	')
 	test? (
 		${PROXY_AND_TEST_DEPS}
 		${PROXY_RT_AND_TEST_DEPS}
@@ -103,6 +107,9 @@ BDEPEND="${BDEPEND}
 EPYTEST_PLUGINS=( pytest-{asyncio,mock,recording} respx )
 EPYTEST_XDIST=1
 distutils_enable_tests pytest
+
+# Overlay compatibility choice tested with uv-build 0.12.23 on both architectures.
+PATCHES=( "${FILESDIR}/${P}-uv-build.patch" )
 
 src_prepare() {
 	distutils-r1_src_prepare
