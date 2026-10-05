@@ -15,7 +15,10 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
+BDEPEND+=" python? ( >=dev-python/setuptools-77[${PYTHON_USEDEP}] )"
+
 PATCHES=(
+	"${FILESDIR}/${P}-python-metadata.patch"
 	# https://bugs.gentoo.org/928010
 	# Test name beginning with :: is incompatible with tree-sitter >0.22
 	"${FILESDIR}"/${PN}-0.20.0-test-selector.patch
