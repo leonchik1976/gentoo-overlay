@@ -29,7 +29,10 @@ BDEPEND="${BDEPEND}
 	)
 "
 
-PATCHES=( "${FILESDIR}/${P}-license-metadata.patch" )
+PATCHES=(
+	"${FILESDIR}/${P}-license-metadata.patch"
+	"${FILESDIR}/${P}-wheel-config.patch"
+)
 
 distutils_enable_tests unittest
 

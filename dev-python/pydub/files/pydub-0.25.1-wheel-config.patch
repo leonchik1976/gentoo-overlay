@@ -1,0 +1,11 @@
+Remove legacy universal-wheel configuration for Python 3-only Gentoo targets.
+Preserve the unrelated pep8 configuration.
+
+--- a/setup.cfg
++++ b/setup.cfg
+@@ -1,5 +1,2 @@
+-[wheel]
+-universal = 1
+-
+ [pep8]
+ max-line-length = 100
