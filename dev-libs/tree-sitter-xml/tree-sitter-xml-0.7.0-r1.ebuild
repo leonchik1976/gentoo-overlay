@@ -17,7 +17,12 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
-PATCHES=( "${FILESDIR}"/${P}-make.patch )
+BDEPEND+=" python? ( >=dev-python/setuptools-77[${PYTHON_USEDEP}] )"
+
+PATCHES=(
+	"${FILESDIR}"/${P}-make.patch
+	"${FILESDIR}/${P}-license-metadata.patch"
+)
 
 src_test() {
 	tree-sitter-grammar_src_test

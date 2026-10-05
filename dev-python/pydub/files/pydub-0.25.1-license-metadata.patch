@@ -1,0 +1,21 @@
+Use PEP 639 license metadata; retain non-license classifiers.
+
+--- a/setup.py
++++ b/setup.py
+@@ -12,14 +12,14 @@
+     author='James Robert',
+     author_email='jiaaro@gmail.com',
+     description='Manipulate audio with an simple and easy high level interface',
+-    license='MIT',
++    license_expression='MIT',
++    license_files=['LICENSE'],
+     keywords='audio sound high-level',
+     url='http://pydub.com',
+     packages=['pydub'],
+     long_description=__doc__,
+     classifiers=[
+         'Development Status :: 5 - Production/Stable',
+-        'License :: OSI Approved :: MIT License',
+         'Programming Language :: Python',
+         'Programming Language :: Python :: 2',
+         'Programming Language :: Python :: 2.7',

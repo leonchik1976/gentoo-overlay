@@ -23,10 +23,13 @@ RDEPEND="${RDEPEND}
 "
 
 BDEPEND="${BDEPEND}
+	>=dev-python/setuptools-77[${PYTHON_USEDEP}]
 	test? (
 		media-video/ffmpeg[lame,vorbis]
 	)
 "
+
+PATCHES=( "${FILESDIR}/${P}-license-metadata.patch" )
 
 distutils_enable_tests unittest
 

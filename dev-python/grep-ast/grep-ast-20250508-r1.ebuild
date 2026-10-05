@@ -59,10 +59,15 @@ RDEPEND="${RDEPEND}
 	dev-libs/tree-sitter-xml[python,${PYTHON_USEDEP}]
 "
 
+BDEPEND="${BDEPEND}
+	>=dev-python/setuptools-77[${PYTHON_USEDEP}]
+"
+
 EPYTEST_PLUGINS=()
 distutils_enable_tests pytest
 
 PATCHES=(
+	"${FILESDIR}/${P}-license-metadata.patch"
 	"${FILESDIR}"/${P}-treesitter.patch
 	"${FILESDIR}"/${P}-dependencies.patch
 )

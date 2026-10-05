@@ -1,0 +1,12 @@
+Use PEP 639 license metadata; retain non-license classifiers.
+
+--- a/setup.py
++++ b/setup.py
+@@ -24,5 +24,6 @@
+             "gast=grep_ast.main:main",
+         ],
+     },
+-    classifiers=["License :: OSI Approved :: Apache Software License"],
++    license_expression="Apache-2.0",
++    license_files=["LICENSE.txt"],
+ )

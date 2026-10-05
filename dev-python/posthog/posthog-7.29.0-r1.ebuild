@@ -61,3 +61,5 @@ EPYTEST_IGNORE=( posthog/test/ai/ )
 
 EPYTEST_PLUGINS=( pytest-asyncio pytest-bdd )
 distutils_enable_tests pytest
+
+PATCHES=( "${FILESDIR}/${P}-license-metadata.patch" )
