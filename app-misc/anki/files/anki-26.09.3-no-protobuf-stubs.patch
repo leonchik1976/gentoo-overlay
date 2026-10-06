@@ -1,0 +1,18 @@
+Do not advertise mypy-protobuf outputs after disabling its generator.
+
+--- a/build/configure/src/python.rs
++++ b/build/configure/src/python.rs
+@@ -97,11 +97,11 @@
+         let python_outputs: Vec<_> = proto_inputs
+             .iter()
+-            .flat_map(|path| {
++            .map(|path| {
+                 let path = path
+                     .replace('\\', "/")
+                     .replace("proto/", "pylib/")
+                     .replace(".proto", "_pb2");
+-                [format!("{path}.py"), format!("{path}.pyi")]
++                format!("{path}.py")
+             })
+             .collect();
+         build.add_inputs("in", &self.proto_files);

@@ -1,0 +1,12 @@
+The project already uses SPDX metadata; do not override it in legacy setup.py.
+
+--- a/setup.py
++++ b/setup.py
+@@ -28,7 +28,6 @@
+     author_email="engineering@posthog.com",
+     maintainer="PostHog",
+     maintainer_email="engineering@posthog.com",
+-    license="MIT License",
+     description="Integrate PostHog into any python application.",
+     long_description=long_description,
+     # This will fallback to pyproject.toml for detailed configuration

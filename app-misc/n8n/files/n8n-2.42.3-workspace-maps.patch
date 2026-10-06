@@ -1,0 +1,13 @@
+--- a/scripts/build-n8n.mjs
++++ b/scripts/build-n8n.mjs
+@@ -280,7 +280,9 @@
+ 	// stack traces. pnpm names an injected workspace package after its `file:` path,
+ 	// `<name>@file+packages+<dir>` on Linux and `<name>@file++++<abs path>` on macOS;
+ 	// the glob covers both.
+-	const workspacePackageGlob = '*@file+*packages+*';
++	// Long absolute paths are hashed by pnpm, hiding the packages component.
++	// Local file dependencies in this release are injected workspace packages.
++	const workspacePackageGlob = '*@file+*';
+ 	echo(chalk.yellow('INFO: Stripping third-party source maps...'));
+ 	await $`find ${config.compiledAppDir}/node_modules/.pnpm -name "*.map" -not -path ${workspacePackageGlob} -delete 2>/dev/null || true`;
+ 	echo(chalk.green('✅ Third-party source maps stripped'));
