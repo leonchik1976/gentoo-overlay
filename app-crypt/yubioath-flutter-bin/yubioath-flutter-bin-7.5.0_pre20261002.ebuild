@@ -5,16 +5,17 @@ EAPI=8
 
 inherit desktop xdg
 
-MY_ARTIFACT_ID=8169109310
-MY_BUNDLE="yubioath-desktop-${PV}-linux-arm64"
+MY_ARTIFACT_ID=11225676753
+MY_BUNDLE="yubioath-desktop-0.0.0-rc.8-linux-arm64"
 
 DESCRIPTION="Yubico Authenticator for TOTP"
 HOMEPAGE="
 	https://developers.yubico.com/yubioath-flutter/
 	https://github.com/Yubico/yubioath-flutter"
 # Upstream publishes ARM64 builds as expiring GitHub Actions artifacts rather
-# than release assets. nightly.link provides unauthenticated access to the exact
-# immutable artifact ID; this artifact expires on 2026-10-06.
+# than release assets. This 7.5.0-dev.0 snapshot is built from commit
+# cbf563f8536b622dd506414622b1222247daa5db (CI tag 0.0.0-rc.8).
+# nightly.link provides access to this artifact, expiring 2026-12-31 12:09:25 UTC.
 SRC_URI="https://nightly.link/Yubico/yubioath-flutter/actions/artifacts/${MY_ARTIFACT_ID}.zip
 	-> ${P}-arm64.zip"
 S="${WORKDIR}/${MY_BUNDLE}"
@@ -26,25 +27,27 @@ KEYWORDS="-* ~arm64"
 RDEPEND="
 	app-accessibility/at-spi2-core:2
 	app-crypt/ccid
-	dev-libs/ayatana-ido
 	dev-libs/glib:2
 	media-libs/fontconfig
 	media-libs/harfbuzz
 	media-libs/libepoxy
+	sys-apps/dbus
+	sys-apps/pcsc-lite
 	sys-libs/glibc
+	virtual/libudev
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf:2
 	x11-libs/gtk+:3[X,wayland]
 	x11-libs/libnotify
-	x11-libs/libxcb
+	x11-libs/libX11
+	x11-libs/libXi
 	x11-libs/pango"
-BDEPEND="
+BDEPEND="${BDEPEND}
 	app-admin/chrpath
 	app-arch/unzip"
 
-# The bundle contains Flutter, a Python interpreter, Python packages, and their
-# native libraries. Building and unbundling them is outside the scope of this
-# binary package.
+# The bundle contains Flutter and a Rust helper. These are upstream prebuilt
+# binaries; the helper links against the system PC/SC, D-Bus and udev libraries.
 QA_PREBUILT="opt/yubico-authenticator/*"
 
 src_unpack() {
