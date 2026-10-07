@@ -1,0 +1,9 @@
+# Copyright 2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+# Leonid Kopylov <leonchik1976@gmail.com> (2026-10-07)
+# Maintain Kibana and its accounts in this overlay after Gentoo retirement.
+# https://bugs.gentoo.org/983813
+acct-group/kibana
+acct-user/kibana
+www-apps/kibana-bin
