@@ -1,0 +1,13 @@
+Prevent host MySQL option files from initiating a connection before the GUI
+stdio bridge starts. Shell requires --no-defaults before other arguments.
+
+--- a/resources/app/src/mysqlsh-arguments.cjs
++++ b/resources/app/src/mysqlsh-arguments.cjs
+@@ -68,6 +68,7 @@
+ 
+ const buildMysqlShellArguments = ({ extraArguments = [] } = {}) => {
+     return [
++        "--no-defaults",
+         "--disable-plugins",
+         ...extraArguments,
+         "--py",

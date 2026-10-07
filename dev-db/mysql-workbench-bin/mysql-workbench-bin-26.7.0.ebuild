@@ -87,6 +87,8 @@ VERIFY_SIG_OPENPGP_KEY_PATH="/usr/share/openpgp-keys/mysql.asc"
 
 QA_PREBUILT="opt/mysql-workbench/*"
 
+PATCHES=( "${FILESDIR}/mysql-workbench-26.7.0-backend-no-defaults.patch" )
+
 pkg_pretend() {
 	chromium_suid_sandbox_check_kernel_config
 }

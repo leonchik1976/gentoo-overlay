@@ -386,3 +386,85 @@ returned exit 0 with no output. `bash -n` returned exit 0. Per-file
 `git diff --no-index --check /dev/null ...` emitted no whitespace diagnostics
 (exit 1 denotes the new-file difference). The broader musl findings above remain
 applicable and are explicitly retained.
+
+## Installed startup regression and revision 26.7.0-r1
+
+VERIFIED (2026-10-07, server01): the user's installed application's logs at
+`~/.config/MySQL Workbench/MySQL Workbench-electron.log` and
+`~/.config/MySQL Workbench/mysqlsh/mysqlsh.log` showed no bridge-ready message.
+The latter recorded:
+
+```text
+Connecting to MySQL at: mysql://leonid@/var%2Frun%2Fmysqld%2Fmysqld.sock
+MySQL Error 1045 (28000): Access denied for user 'leonid'@'localhost' (using password: NO)
+```
+
+INFERRED: automatic connection from host option-file defaults prevented the GUI
+bridge from starting, leaving context-dependent menus disabled and window-close
+approval unresponsive. The earlier GUI validation bypassed this defect with a
+test-only Shell wrapper; it did not establish normal packaged startup worked.
+
+Added `mysql-workbench-bin-26.7.0-r1.ebuild` and
+`files/mysql-workbench-26.7.0-backend-no-defaults.patch`. The patch prepends
+`--no-defaults` in `resources/app/src/mysqlsh-arguments.cjs`, before
+`--disable-plugins`. This keeps backend startup independent of MySQL option-file
+connection defaults. It leaves the separate bundled Shell executable unchanged.
+[Exact-version Shell documentation](https://dev.mysql.com/doc/mysql-shell/26.7/en/mysql-shell-connection-using-files.html)
+describes option-file handling. A search of bugs.gentoo.org found no matching
+Workbench 26 startup report; this is not proof no such report exists.
+
+VERIFIED: non-merging `ebuild ... clean install` returned exit 0 on server01 and
+native arm64 gentoo for the revision. Final output on each included:
+
+```text
+>>> Completed installing dev-db/mysql-workbench-bin-26.7.0-r1 into .../image
+```
+
+Reused the private GUI/database harness with its runtime-wrapper creation and
+`ELECTRON_MYSQLSH_RUNTIME_DIR` override removed (`gui-environment-r1.py`). Host
+MySQL defaults remained present. The packaged backend was used directly.
+Ran `node .../gui-test.mjs .../g6` locally and `.../a6` on gentoo. Both logs contain:
+
+```text
+GUI authenticated database connection and SQL editor: OK
+GUI SQL result: 42 | codex-gui-connection-ok
+GUI and database connection validation: OK
+```
+
+Normal `BrowserWindow.close()` was requested through the isolated main-process
+CDP endpoint. The renderer showed the unsaved-document confirmation; selecting
+Discard closed the application normally. Both application logs contain:
+
+```text
+mysqlsh desktop bridge ready
+main window closed
+window-all-closed
+before-quit
+```
+
+Raw logs reside under `/tmp/codex/dev-db/mysql-workbench-26.7.0`:
+`build-amd64-r1.log`, `gui-amd64-r1.log`,
+`validation-20261007/build-arm64-r1.log`, and
+`validation-20261007/gui-arm64-r1.log`. Private session cleanup on both hosts
+reported `Remaining processes tagged with the private validation runtime: []`.
+
+Repeated `pkgdev manifest --distdir ... dev-db/mysql-workbench-bin` returned
+`manifests are up to date`; Manifest is unchanged. Scoped glibc `pkgcheck scan`
+returned exit 0 with one finding:
+
+```text
+RedundantVersion: version 26.7.0: slot(0) keywords are overshadowed by version: 26.7.0-r1
+```
+
+The old ebuild is retained under the local preservation rule. Previously
+recorded musl findings and physical-desktop/GPU/Wayland/keyring validation limits
+remain. No live-system package merge or installation was performed.
+
+
+## Revision suffix removed at user request
+
+The tested backend startup fix was folded into
+`mysql-workbench-bin-26.7.0.ebuild`, and the `-r1` ebuild was removed at the
+user's request. Historical commands and outputs above retain their actual
+`-r1` names. The final ebuild content is identical to the tested revision;
+only its filename changed. No additional build was performed for this rename.
