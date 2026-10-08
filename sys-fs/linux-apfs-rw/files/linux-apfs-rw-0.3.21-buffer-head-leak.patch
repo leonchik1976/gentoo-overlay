@@ -1,0 +1,32 @@
+From a10279ce663bdbe4d32baef83930e5ba7d69d7df Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Ernesto=20A=2E=20Fern=C3=A1ndez?= <ernesto@corellium.com>
+Date: Fri, 14 Aug 2026 20:10:26 -0300
+Subject: [PATCH] Plug buffer head leak on submit for the 7.2 kernel
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Starting with the 7.2 kernel, buffer heads no longer lose a reference
+during the submit-wait procedure. I didn't notice that change, so now I
+would expect all buffer heads to be leaking. The fact that I still can't
+tell the difference makes me believe, like I mentioned before, that
+somehow the kernel is still disposing of the buffer heads. Either way,
+fix this.
+
+Signed-off-by: Ernesto A. Fernández <ernesto@corellium.com>
+---
+ apfs.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/apfs.h b/apfs.h
+index f797a10..6e4c201 100644
+--- a/apfs.h
++++ b/apfs.h
+@@ -47,6 +47,7 @@ static inline bool sb_rdonly(const struct super_block *sb) { return sb->s_flags
+ #if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 2, 0)
+ #define apfs_submit_bh(op, op_flags, bh)				\
+ do {									\
++	put_bh(bh);							\
+ 	if (op == REQ_OP_READ)						\
+ 		bh_submit(bh, op | op_flags, bh_end_read);		\
+ 	else								\
