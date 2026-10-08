@@ -31,3 +31,9 @@ dev-util/selenium-ide-bin
 # Upstream provides only an amd64 Linux AppImage, so this package cannot be
 # keyworded on arm64.
 =app-editors/nimbalyst-bin-0.78.2
+
+# Leonid Kopylov <leonchik1976@gmail.com> (2026-10-08)
+# Requires the GNOME 51 stack, unavailable in the configured repositories:
+# GLib >= 2.89.0, GTK >= 4.23.4, and libadwaita >= 1.10_alpha.
+# Native amd64 and arm64 configure tests stop at the GLib requirement.
+=x11-misc/gpaste-51.0
