@@ -1,0 +1,289 @@
+[
+  {
+    "archive": "semgrep-1.180.0-source.tar.gz",
+    "files": {
+      "semgrep-1.180.0/languages/bash/tree-sitter/semgrep-bash/fyi/semgrep-grammars/src/tree-sitter-bash/LICENSE": "semgrep-source/languages/bash/tree-sitter/semgrep-bash/fyi/semgrep-grammars/src/tree-sitter-bash/LICENSE",
+      "semgrep-1.180.0/languages/cairo/tree-sitter/semgrep-cairo/fyi/semgrep-grammars/src/tree-sitter-cairo/LICENSE": "semgrep-source/languages/cairo/tree-sitter/semgrep-cairo/fyi/semgrep-grammars/src/tree-sitter-cairo/LICENSE",
+      "semgrep-1.180.0/languages/circom/tree-sitter/semgrep-circom/fyi/semgrep-grammars/src/tree-sitter-circom/LICENSE": "semgrep-source/languages/circom/tree-sitter/semgrep-circom/fyi/semgrep-grammars/src/tree-sitter-circom/LICENSE",
+      "semgrep-1.180.0/languages/cpp/menhir/license.txt": "semgrep-source/languages/cpp/menhir/license.txt",
+      "semgrep-1.180.0/languages/cpp/tree-sitter/semgrep-cpp/fyi/semgrep-grammars/src/tree-sitter-c/LICENSE": "semgrep-source/languages/cpp/tree-sitter/semgrep-cpp/fyi/semgrep-grammars/src/tree-sitter-c/LICENSE",
+      "semgrep-1.180.0/languages/cpp/tree-sitter/semgrep-cpp/fyi/semgrep-grammars/src/tree-sitter-cpp/LICENSE": "semgrep-source/languages/cpp/tree-sitter/semgrep-cpp/fyi/semgrep-grammars/src/tree-sitter-cpp/LICENSE",
+      "semgrep-1.180.0/languages/csharp/tree-sitter/semgrep-c-sharp/fyi/semgrep-grammars/src/tree-sitter-c-sharp/LICENSE": "semgrep-source/languages/csharp/tree-sitter/semgrep-c-sharp/fyi/semgrep-grammars/src/tree-sitter-c-sharp/LICENSE",
+      "semgrep-1.180.0/languages/dart/tree-sitter/semgrep-dart/fyi/semgrep-grammars/src/tree-sitter-dart/LICENSE": "semgrep-source/languages/dart/tree-sitter/semgrep-dart/fyi/semgrep-grammars/src/tree-sitter-dart/LICENSE",
+      "semgrep-1.180.0/languages/dockerfile/tree-sitter/semgrep-dockerfile/fyi/semgrep-grammars/src/tree-sitter-dockerfile/LICENSE": "semgrep-source/languages/dockerfile/tree-sitter/semgrep-dockerfile/fyi/semgrep-grammars/src/tree-sitter-dockerfile/LICENSE",
+      "semgrep-1.180.0/languages/fga/tree-sitter/semgrep-fga/fyi/semgrep-grammars/src/tree-sitter-fga/LICENSE": "semgrep-source/languages/fga/tree-sitter/semgrep-fga/fyi/semgrep-grammars/src/tree-sitter-fga/LICENSE",
+      "semgrep-1.180.0/languages/go/tree-sitter/semgrep-go/fyi/semgrep-grammars/src/tree-sitter-go/LICENSE": "semgrep-source/languages/go/tree-sitter/semgrep-go/fyi/semgrep-grammars/src/tree-sitter-go/LICENSE",
+      "semgrep-1.180.0/languages/hack/tree-sitter/semgrep-hack/fyi/semgrep-grammars/src/tree-sitter-hack/LICENSE": "semgrep-source/languages/hack/tree-sitter/semgrep-hack/fyi/semgrep-grammars/src/tree-sitter-hack/LICENSE",
+      "semgrep-1.180.0/languages/html/tree-sitter/semgrep-html/fyi/semgrep-grammars/src/tree-sitter-html/LICENSE": "semgrep-source/languages/html/tree-sitter/semgrep-html/fyi/semgrep-grammars/src/tree-sitter-html/LICENSE",
+      "semgrep-1.180.0/languages/java/tree-sitter/semgrep-java/fyi/semgrep-grammars/src/tree-sitter-java/LICENSE": "semgrep-source/languages/java/tree-sitter/semgrep-java/fyi/semgrep-grammars/src/tree-sitter-java/LICENSE",
+      "semgrep-1.180.0/languages/javascript/menhir/license.txt": "semgrep-source/languages/javascript/menhir/license.txt",
+      "semgrep-1.180.0/languages/jsonnet/tree-sitter/semgrep-jsonnet/fyi/semgrep-grammars/src/tree-sitter-jsonnet/LICENSE": "semgrep-source/languages/jsonnet/tree-sitter/semgrep-jsonnet/fyi/semgrep-grammars/src/tree-sitter-jsonnet/LICENSE",
+      "semgrep-1.180.0/languages/julia/tree-sitter/semgrep-julia/fyi/semgrep-grammars/src/tree-sitter-julia/LICENSE": "semgrep-source/languages/julia/tree-sitter/semgrep-julia/fyi/semgrep-grammars/src/tree-sitter-julia/LICENSE",
+      "semgrep-1.180.0/languages/kotlin/tree-sitter/semgrep-kotlin/fyi/semgrep-grammars/src/tree-sitter-kotlin/LICENSE": "semgrep-source/languages/kotlin/tree-sitter/semgrep-kotlin/fyi/semgrep-grammars/src/tree-sitter-kotlin/LICENSE",
+      "semgrep-1.180.0/languages/lisp/tree-sitter/semgrep-clojure/fyi/semgrep-grammars/src/tree-sitter-clojure/COPYING.txt": "semgrep-source/languages/lisp/tree-sitter/semgrep-clojure/fyi/semgrep-grammars/src/tree-sitter-clojure/COPYING.txt",
+      "semgrep-1.180.0/languages/move_on_aptos/tree-sitter/semgrep-move-on-aptos/fyi/semgrep-grammars/src/tree-sitter-move-on-aptos/LICENSE": "semgrep-source/languages/move_on_aptos/tree-sitter/semgrep-move-on-aptos/fyi/semgrep-grammars/src/tree-sitter-move-on-aptos/LICENSE",
+      "semgrep-1.180.0/languages/move_on_sui/tree-sitter/semgrep-move-on-sui/fyi/semgrep-grammars/src/tree-sitter-move-on-sui/LICENSE": "semgrep-source/languages/move_on_sui/tree-sitter/semgrep-move-on-sui/fyi/semgrep-grammars/src/tree-sitter-move-on-sui/LICENSE",
+      "semgrep-1.180.0/languages/ocaml/tree-sitter/semgrep-ocaml/fyi/semgrep-grammars/src/tree-sitter-ocaml/LICENSE": "semgrep-source/languages/ocaml/tree-sitter/semgrep-ocaml/fyi/semgrep-grammars/src/tree-sitter-ocaml/LICENSE",
+      "semgrep-1.180.0/languages/php/tree-sitter/semgrep-php/fyi/semgrep-grammars/src/tree-sitter-php/LICENSE": "semgrep-source/languages/php/tree-sitter/semgrep-php/fyi/semgrep-grammars/src/tree-sitter-php/LICENSE",
+      "semgrep-1.180.0/languages/promql/tree-sitter/semgrep-promql/fyi/semgrep-grammars/src/tree-sitter-promql/LICENSE": "semgrep-source/languages/promql/tree-sitter/semgrep-promql/fyi/semgrep-grammars/src/tree-sitter-promql/LICENSE",
+      "semgrep-1.180.0/languages/protobuf/tree-sitter/semgrep-proto/fyi/semgrep-grammars/src/tree-sitter-proto/LICENSE": "semgrep-source/languages/protobuf/tree-sitter/semgrep-proto/fyi/semgrep-grammars/src/tree-sitter-proto/LICENSE",
+      "semgrep-1.180.0/languages/python/menhir/license.txt": "semgrep-source/languages/python/menhir/license.txt",
+      "semgrep-1.180.0/languages/python/tree-sitter/semgrep-python/fyi/semgrep-grammars/src/tree-sitter-python/LICENSE": "semgrep-source/languages/python/tree-sitter/semgrep-python/fyi/semgrep-grammars/src/tree-sitter-python/LICENSE",
+      "semgrep-1.180.0/languages/ruby/tree-sitter/semgrep-ruby/fyi/semgrep-grammars/src/tree-sitter-ruby/LICENSE": "semgrep-source/languages/ruby/tree-sitter/semgrep-ruby/fyi/semgrep-grammars/src/tree-sitter-ruby/LICENSE",
+      "semgrep-1.180.0/languages/rust/tree-sitter/semgrep-rust/fyi/semgrep-grammars/src/tree-sitter-rust/LICENSE": "semgrep-source/languages/rust/tree-sitter/semgrep-rust/fyi/semgrep-grammars/src/tree-sitter-rust/LICENSE",
+      "semgrep-1.180.0/languages/scala/tree-sitter/semgrep-scala/fyi/semgrep-grammars/src/tree-sitter-scala/LICENSE": "semgrep-source/languages/scala/tree-sitter/semgrep-scala/fyi/semgrep-grammars/src/tree-sitter-scala/LICENSE",
+      "semgrep-1.180.0/languages/solidity/tree-sitter/semgrep-solidity/fyi/semgrep-grammars/src/tree-sitter-solidity/LICENSE": "semgrep-source/languages/solidity/tree-sitter/semgrep-solidity/fyi/semgrep-grammars/src/tree-sitter-solidity/LICENSE",
+      "semgrep-1.180.0/languages/swift/tree-sitter/semgrep-swift/fyi/semgrep-grammars/src/tree-sitter-swift/LICENSE": "semgrep-source/languages/swift/tree-sitter/semgrep-swift/fyi/semgrep-grammars/src/tree-sitter-swift/LICENSE",
+      "semgrep-1.180.0/languages/terraform/tree-sitter/semgrep-hcl/fyi/semgrep-grammars/src/tree-sitter-hcl/LICENSE": "semgrep-source/languages/terraform/tree-sitter/semgrep-hcl/fyi/semgrep-grammars/src/tree-sitter-hcl/LICENSE",
+      "semgrep-1.180.0/languages/typescript/tree-sitter/semgrep-tsx/fyi/semgrep-grammars/src/tree-sitter-javascript/LICENSE": "semgrep-source/languages/typescript/tree-sitter/semgrep-tsx/fyi/semgrep-grammars/src/tree-sitter-javascript/LICENSE",
+      "semgrep-1.180.0/languages/typescript/tree-sitter/semgrep-tsx/fyi/semgrep-grammars/src/tree-sitter-typescript/LICENSE": "semgrep-source/languages/typescript/tree-sitter/semgrep-tsx/fyi/semgrep-grammars/src/tree-sitter-typescript/LICENSE",
+      "semgrep-1.180.0/languages/typescript/tree-sitter/semgrep-typescript/fyi/semgrep-grammars/src/tree-sitter-javascript/LICENSE": "semgrep-source/languages/typescript/tree-sitter/semgrep-typescript/fyi/semgrep-grammars/src/tree-sitter-javascript/LICENSE",
+      "semgrep-1.180.0/languages/typescript/tree-sitter/semgrep-typescript/fyi/semgrep-grammars/src/tree-sitter-typescript/LICENSE": "semgrep-source/languages/typescript/tree-sitter/semgrep-typescript/fyi/semgrep-grammars/src/tree-sitter-typescript/LICENSE",
+      "semgrep-1.180.0/libs/ocaml-tree-sitter-semgrep/LICENSE": "semgrep-source/libs/ocaml-tree-sitter-semgrep/LICENSE",
+      "semgrep-1.180.0/libs/ocaml-tree-sitter-semgrep/core/LICENSE": "semgrep-source/libs/ocaml-tree-sitter-semgrep/core/LICENSE",
+      "semgrep-1.180.0/libs/ocaml-tree-sitter-semgrep/lang/semgrep-grammars/LICENSE": "semgrep-source/libs/ocaml-tree-sitter-semgrep/lang/semgrep-grammars/LICENSE",
+      "semgrep-1.180.0/semgrep.opam": "source-metadata/semgrep.opam",
+      "semgrep-1.180.0/src/core/Range.ml": "source-notices/semgrep/Range.ml"
+    },
+    "url": "https://codeload.github.com/semgrep/semgrep/tar.gz/refs/tags/v1.180.0"
+  },
+  {
+    "archive": "ANSITerminal-0.8.5.tbz",
+    "files": {
+      "ANSITerminal-0.8.5/LICENSE.md": "ocaml/ANSITerminal/LICENSE.md"
+    },
+    "url": "https://github.com/Chris00/ANSITerminal/releases/download/0.8.5/ANSITerminal-0.8.5.tbz"
+  },
+  {
+    "archive": "bos-0.3.0.tbz",
+    "files": {
+      "bos-0.3.0/LICENSE.md": "ocaml/bos/LICENSE.md"
+    },
+    "url": "https://erratique.ch/software/bos/releases/bos-0.3.0.tbz"
+  },
+  {
+    "archive": "calendar-3.0.0.gh.tar.gz",
+    "files": {
+      "calendar-3.0.0/LICENSE": "ocaml/calendar/LICENSE",
+      "calendar-3.0.0/COPYING": "ocaml/calendar/COPYING"
+    },
+    "url": "https://github.com/ocaml-community/calendar/archive/refs/tags/v3.0.0.tar.gz"
+  },
+  {
+    "archive": "fmt-0.11.0.tbz",
+    "files": {
+      "fmt-0.11.0/LICENSE.md": "ocaml/fmt/LICENSE.md"
+    },
+    "url": "https://erratique.ch/software/fmt/releases/fmt-0.11.0.tbz"
+  },
+  {
+    "archive": "menhir-20230608.tar.gz",
+    "files": {
+      "menhir-20230608-a2141ee9f915abfd363adf1ef880915ffd90fbf4/LICENSE": "ocaml/menhirLib/LICENSE"
+    },
+    "url": "https://gitlab.inria.fr/fpottier/menhir/-/archive/20230608/archive.tar.gz"
+  },
+  {
+    "archive": "ocplib-endian-1.2.gh.tar.gz",
+    "files": {
+      "ocplib-endian-1.2/COPYING.txt": "ocaml/ocplib-endian/COPYING.txt"
+    },
+    "url": "https://github.com/OCamlPro/ocplib-endian/archive/refs/tags/1.2.tar.gz"
+  },
+  {
+    "archive": "uring-0.9.tbz",
+    "files": {
+      "uring-0.9/LICENSE.md": "ocaml/uring/LICENSE.md",
+      "uring-0.9/vendor/liburing/LICENSE": "ocaml/uring/vendor/liburing/LICENSE",
+      "uring-0.9/vendor/liburing/COPYING.GPL": "ocaml/uring/vendor/liburing/COPYING.GPL",
+      "uring-0.9/vendor/liburing/COPYING": "ocaml/uring/vendor/liburing/COPYING"
+    },
+    "url": "https://github.com/ocaml-multicore/ocaml-uring/releases/download/v0.9/uring-0.9.tbz"
+  },
+  {
+    "archive": "uucp-17.0.0.tbz",
+    "files": {
+      "uucp-17.0.0/LICENSE.md": "ocaml/uucp/LICENSE.md"
+    },
+    "url": "https://erratique.ch/software/uucp/releases/uucp-17.0.0.tbz"
+  },
+  {
+    "archive": "uutf-1.0.4.tbz",
+    "files": {
+      "uutf-1.0.4/LICENSE.md": "ocaml/uutf/LICENSE.md"
+    },
+    "url": "https://erratique.ch/software/uutf/releases/uutf-1.0.4.tbz"
+  },
+  {
+    "archive": "bzip2-libs-1.0.8-11.el9.x86_64.rpm",
+    "files": {
+      "usr/share/licenses/bzip2-libs/LICENSE": "native/bzip2-libs/LICENSE"
+    },
+    "url": "https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/bzip2-libs-1.0.8-11.el9.x86_64.rpm"
+  },
+  {
+    "archive": "libcom_err-1.46.5-8.el9.x86_64.rpm",
+    "files": {
+      "usr/share/licenses/libcom_err/NOTICE": "native/libcom_err/NOTICE"
+    },
+    "url": "https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/libcom_err-1.46.5-8.el9.x86_64.rpm"
+  },
+  {
+    "archive": "openssl-libs-3.5.8-1.el9_8.x86_64.rpm",
+    "files": {
+      "usr/share/licenses/openssl-libs/LICENSE.txt": "native/openssl-libs/LICENSE.txt"
+    },
+    "url": "https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/openssl-libs-3.5.8-1.el9_8.x86_64.rpm"
+  },
+  {
+    "archive": "libcurl-minimal-7.76.1-40.el9_8.7.x86_64.rpm",
+    "files": {
+      "usr/share/licenses/libcurl-minimal/COPYING": "native/libcurl-minimal/COPYING"
+    },
+    "url": "https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/libcurl-minimal-7.76.1-40.el9_8.7.x86_64.rpm"
+  },
+  {
+    "archive": "elfutils-libs-0.194-1.el9.alma.1.x86_64.rpm",
+    "files": {
+      "usr/share/licenses/elfutils-libs/COPYING-LGPLV3": "native/elfutils-libs/COPYING-LGPLV3",
+      "usr/share/licenses/elfutils-libs/COPYING-GPLV2": "native/elfutils-libs/COPYING-GPLV2"
+    },
+    "url": "https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/elfutils-libs-0.194-1.el9.alma.1.x86_64.rpm"
+  },
+  {
+    "archive": "elfutils-libelf-0.194-1.el9.alma.1.x86_64.rpm",
+    "files": {
+      "usr/share/licenses/elfutils-libelf/COPYING-LGPLV3": "native/elfutils-libelf/COPYING-LGPLV3",
+      "usr/share/licenses/elfutils-libelf/COPYING-GPLV2": "native/elfutils-libelf/COPYING-GPLV2"
+    },
+    "url": "https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/elfutils-libelf-0.194-1.el9.alma.1.x86_64.rpm"
+  },
+  {
+    "archive": "libev-4.33-6.el9.x86_64.rpm",
+    "files": {
+      "usr/share/licenses/libev/LICENSE": "native/libev/LICENSE"
+    },
+    "url": "https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/libev-4.33-6.el9.x86_64.rpm"
+  },
+  {
+    "archive": "libgcc-11.5.0-14.el9.alma.1.x86_64.rpm",
+    "files": {
+      "usr/share/licenses/libgcc/COPYING3.LIB": "native/libgcc/COPYING3.LIB",
+      "usr/share/licenses/libgcc/COPYING3": "native/libgcc/COPYING3",
+      "usr/share/licenses/libgcc/COPYING.RUNTIME": "native/libgcc/COPYING.RUNTIME",
+      "usr/share/licenses/libgcc/COPYING.LIB": "native/libgcc/COPYING.LIB",
+      "usr/share/licenses/libgcc/COPYING": "native/libgcc/COPYING"
+    },
+    "url": "https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/libgcc-11.5.0-14.el9.alma.1.x86_64.rpm"
+  },
+  {
+    "archive": "gmp-6.2.0-13.el9.x86_64.rpm",
+    "files": {
+      "usr/share/licenses/gmp/COPYINGv3": "native/gmp/COPYINGv3",
+      "usr/share/licenses/gmp/COPYINGv2": "native/gmp/COPYINGv2",
+      "usr/share/licenses/gmp/COPYING.LESSERv3": "native/gmp/COPYING.LESSERv3",
+      "usr/share/licenses/gmp/COPYING": "native/gmp/COPYING"
+    },
+    "url": "https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/gmp-6.2.0-13.el9.x86_64.rpm"
+  },
+  {
+    "archive": "krb5-libs-1.21.1-10.el9_8.x86_64.rpm",
+    "files": {
+      "usr/share/licenses/krb5-libs/LICENSE": "native/krb5-libs/LICENSE"
+    },
+    "url": "https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/krb5-libs-1.21.1-10.el9_8.x86_64.rpm"
+  },
+  {
+    "archive": "keyutils-libs-1.6.3-1.el9.x86_64.rpm",
+    "files": {
+      "usr/share/licenses/keyutils-libs/LICENCE.LGPL": "native/keyutils-libs/LICENCE.LGPL"
+    },
+    "url": "https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/keyutils-libs-1.6.3-1.el9.x86_64.rpm"
+  },
+  {
+    "archive": "xz-libs-5.2.5-8.el9_0.x86_64.rpm",
+    "files": {
+      "usr/share/licenses/xz-libs/COPYING": "native/xz-libs/COPYING"
+    },
+    "url": "https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/xz-libs-5.2.5-8.el9_0.x86_64.rpm"
+  },
+  {
+    "archive": "glibc-2.34-275.el9_8.x86_64.rpm",
+    "files": {
+      "usr/share/licenses/glibc/LICENSES": "native/glibc/LICENSES",
+      "usr/share/licenses/glibc/COPYING.LIB": "native/glibc/COPYING.LIB",
+      "usr/share/licenses/glibc/COPYING": "native/glibc/COPYING"
+    },
+    "url": "https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/glibc-2.34-275.el9_8.x86_64.rpm"
+  },
+  {
+    "archive": "libnghttp2-1.43.0-6.el9_8.2.x86_64.rpm",
+    "files": {
+      "usr/share/licenses/libnghttp2/COPYING": "native/libnghttp2/COPYING"
+    },
+    "url": "https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/libnghttp2-1.43.0-6.el9_8.2.x86_64.rpm"
+  },
+  {
+    "archive": "libselinux-3.6-3.el9.x86_64.rpm",
+    "files": {
+      "usr/share/licenses/libselinux/LICENSE": "native/libselinux/LICENSE"
+    },
+    "url": "https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/libselinux-3.6-3.el9.x86_64.rpm"
+  },
+  {
+    "archive": "libunwind-1.8.0-4.el9.x86_64.rpm",
+    "files": {
+      "usr/share/licenses/libunwind/COPYING": "native/libunwind/COPYING"
+    },
+    "url": "https://dl.fedoraproject.org/pub/epel/9/Everything/x86_64/Packages/l/libunwind-1.8.0-4.el9.x86_64.rpm"
+  },
+  {
+    "archive": "zlib-1.2.11-40.el9.x86_64.rpm",
+    "files": {
+      "usr/share/licenses/zlib/README": "native/zlib/README"
+    },
+    "url": "https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/zlib-1.2.11-40.el9.x86_64.rpm"
+  },
+  {
+    "archive": "libzstd-1.5.5-1.el9.x86_64.rpm",
+    "files": {
+      "usr/share/licenses/libzstd/LICENSE": "native/libzstd/LICENSE",
+      "usr/share/licenses/libzstd/COPYING": "native/libzstd/COPYING"
+    },
+    "url": "https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/libzstd-1.5.5-1.el9.x86_64.rpm"
+  },
+  {
+    "archive": "keyutils-1.6.3-1.el9.src.rpm",
+    "files": {
+      "keyutils-1.6.3/keyutils.c": "source-notices/keyutils/keyutils.c",
+      "keyutils-1.6.3/keyutils.h": "source-notices/keyutils/keyutils.h"
+    },
+    "inner": "keyutils-1.6.3.tar.gz",
+    "url": "https://vault.almalinux.org/9.8/BaseOS/Source/Packages/keyutils-1.6.3-1.el9.src.rpm"
+  },
+  {
+    "archive": "glibc-2.34-275.el9_8.src.rpm",
+    "files": {
+      "glibc-2.34/sysdeps/ieee754/dbl-64/e_acosh.c": "source-notices/glibc/e_acosh.c",
+      "glibc-2.34/resolv/res-close.c": "source-notices/glibc/res-close.c",
+      "glibc-2.34/resolv/arpa/nameser.h": "source-notices/glibc/nameser.h"
+    },
+    "inner": "glibc-2.34.tar.xz",
+    "url": "https://vault.almalinux.org/9.8/BaseOS/Source/Packages/glibc-2.34-275.el9_8.src.rpm"
+  },
+  {
+    "archive": "pcre2-10.40.tar.bz2",
+    "files": {
+      "pcre2-10.40/LICENCE": "native/pcre2/LICENCE",
+      "pcre2-10.40/COPYING": "native/pcre2/COPYING"
+    },
+    "url": "https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.40/pcre2-10.40.tar.bz2"
+  },
+  {
+    "archive": "ca-certs-1.0.3.tbz",
+    "files": {
+      "ca-certs-1.0.3/LICENSE.md": "ocaml/ca-certs/LICENSE.md"
+    },
+    "url": "https://github.com/mirage/ca-certs/releases/download/v1.0.3/ca-certs-1.0.3.tbz"
+  }
+]

@@ -18,20 +18,14 @@
 		does not build semgrep-core from OCaml source, and it does not
 		depend on a separate semgrep-core package.
 
-		Cross-overlay dependency notice: this ebuild's dependency graph
-		relies on several packages that exist only in ::guru, not
-		::gentoo, namely dev-python/opentelemetry-exporter-otlp-proto-http,
-		dev-python/opentelemetry-instrumentation,
-		dev-python/opentelemetry-instrumentation-threading,
-		dev-python/httpx-sse, and dev-python/sse-starlette (the last two
-		via dev-python/mcp). None of these are copied into this
-		package's own RDEPEND; they are pulled in transitively through
-		the packages that actually declare them. A plain local-repository
-		pkgcheck scan (pkgcheck scan --repo &lt;this overlay&gt;) reports
-		several of them as nonexistent/nonsolvable because it does not
-		evaluate the full enabled repository set (::gentoo + ::guru +
-		this overlay); they were independently confirmed resolvable
-		against the live Portage database, repo-qualified per package.
+		The dependency graph also uses OpenTelemetry instrumentation and
+		threading instrumentation from ::guru, plus httpx-sse and
+		sse-starlette through mcp. The local HTTP exporter revision repairs
+		missing direct dependencies. Click 8.5.0 and OpenTelemetry
+		1.45.1/0.66b1 are tested downstream compatibility choices; they
+		exceed Semgrep's declared upstream bounds. The installed wheel
+		metadata is adjusted to the same narrow baseline.
+
 	</longdescription>
 	<upstream>
 		<remote-id type="github">semgrep/semgrep</remote-id>
