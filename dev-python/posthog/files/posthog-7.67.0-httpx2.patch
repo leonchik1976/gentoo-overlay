@@ -1,0 +1,128 @@
+Prefer maintained HTTPX2 for optional async clients while retaining legacy
+HTTPX compatibility. Exercise HTTPX2 in the client tests and update async
+extra metadata; keep import-without-extra regression checks meaningful.
+The tested HTTPX2 baseline is 2.13.1.
+
+--- a/posthog/_async_request.py
++++ b/posthog/_async_request.py
+@@ -22,15 +22,18 @@
+ from .utils import remove_trailing_slash
+ 
+ try:  # pragma: no cover - exercised when the optional dependency is absent
+-    import httpx
++    import httpx2 as httpx
+ except ImportError:  # pragma: no cover
+-    httpx = None
++    try:
++        import httpx
++    except ImportError:
++        httpx = None
+ 
+ 
+ def _require_httpx():
+     if httpx is None:  # pragma: no cover
+         raise RuntimeError(
+-            "Async PostHog support requires httpx. Install it with `posthog[async]`."
++            "Async PostHog support requires httpx2 (or legacy httpx). Install it with `posthog[async]`."
+         )
+     return httpx
+ 
+--- a/posthog/ai/evaluations/_transport.py
++++ b/posthog/ai/evaluations/_transport.py
+@@ -242,10 +242,13 @@
+         _validate_options(project_id, secret_key, timeout, max_retries)
+         self._host = _normalize_host(host)
+         try:
+-            self._httpx = importlib.import_module("httpx")
++            try:
++                self._httpx = importlib.import_module("httpx2")
++            except ImportError:
++                self._httpx = importlib.import_module("httpx")
+         except ImportError:
+             raise RuntimeError(
+-                "Async evaluations require httpx. Install it with `posthog[async]`."
++                "Async evaluations require httpx2 (or legacy httpx). Install it with `posthog[async]`."
+             ) from None
+         self._max_retries = max_retries
+         self._closed = False
+--- a/posthog/test/test_async_request.py
++++ b/posthog/test/test_async_request.py
+@@ -7,7 +7,7 @@
+ import sys
+ from unittest import mock
+ 
+-import httpx
++import httpx2 as httpx
+ import pytest
+ 
+ from posthog._async_request import (
+@@ -64,7 +64,7 @@
+ import builtins
+ original_import = builtins.__import__
+ def blocked_import(name, *args, **kwargs):
+-    if name == 'httpx' or name.startswith('httpx.'):
++    if name in ('httpx', 'httpx2') or name.startswith(('httpx.', 'httpx2.')):
+         raise ImportError('httpx intentionally unavailable')
+     return original_import(name, *args, **kwargs)
+ builtins.__import__ = blocked_import
+--- a/posthog/test/test_async_consumer.py
++++ b/posthog/test/test_async_consumer.py
+@@ -4,7 +4,7 @@
+ import json
+ from unittest import mock
+ 
+-import httpx
++import httpx2 as httpx
+ import pytest
+ from freezegun import freeze_time
+ 
+--- a/posthog/test/ai/test_evaluations_transport.py
++++ b/posthog/test/ai/test_evaluations_transport.py
+@@ -8,7 +8,7 @@
+ from email.utils import format_datetime
+ from unittest.mock import AsyncMock, patch
+ 
+-import httpx
++import httpx2 as httpx
+ import pytest
+ import requests
+ 
+@@ -277,7 +277,7 @@
+ 
+     real_client = httpx.AsyncClient
+     with patch(
+-        "httpx.AsyncClient",
++        "httpx2.AsyncClient",
+         side_effect=lambda **kwargs: real_client(
+             transport=httpx.MockTransport(handle), **kwargs
+         ),
+@@ -363,6 +363,7 @@
+     script = """
+ import sys
+ sys.modules['httpx'] = None
++sys.modules['httpx2'] = None
+ from posthog.ai.evaluations._transport import SyncTransport, AsyncTransport
+ client = SyncTransport(123, 'secret')
+ client.close()
+--- a/posthog/test/mcp/test_v2_wire_dual_era.py
++++ b/posthog/test/mcp/test_v2_wire_dual_era.py
+@@ -18,7 +18,7 @@
+ import json
+ from contextlib import asynccontextmanager
+ 
+-import httpx
++import httpx2 as httpx
+ from mcp.server.mcpserver import MCPServer
+ 
+ from posthog.mcp import (
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -35,7 +35,7 @@
+ 
+ [project.optional-dependencies]
+ langchain = ["langchain>=1.3.9"]
+-async = ["httpx>=0.27.0,<1.0"]
++async = ["httpx2>=2.13.1"]
+ # Opt-in zstd support for capture-v1 request compression. Kept out of the core
+ # dependencies so existing installs are unaffected; Python gains stdlib zstd
+ # only in 3.14 (compression.zstd), so the third-party package is needed until
