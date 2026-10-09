@@ -12,7 +12,7 @@ HOMEPAGE="
 	https://github.com/raspberrypi/rpi-imager
 "
 
-# Upstream statically links curl, zlib, libarchive, xz(liblzma), zstd,
+# Upstream statically links curl, zlib, libarchive, bzip2, xz(liblzma), zstd,
 # nghttp2 and libusb, fetched at CMake-configure time as separate git
 # repositories via FetchContent (src/dependencies/vendor/<name>, see
 # src/dependencies/fetch-vendor.cmake and src/dependencies/*.cmake).
@@ -23,7 +23,7 @@ HOMEPAGE="
 # to system libraries would diverge substantially from what upstream builds
 # and tests. To keep the build fully offline (no network access during
 # src_compile, per repository policy) each vendored dependency is instead
-# fetched here, pinned to the exact commit the v${PV} submodules point at,
+# fetched here, pinned to upstream's selected commits or release versions,
 # and copied into place in src_prepare so FetchContent's vendor-detection
 # finds it locally instead of trying to fetch it.
 RPI_IMAGER_CURL_COMMIT="a05f34973e6c4bb629d018f7cb51487be1c904d8"
@@ -37,6 +37,7 @@ RPI_IMAGER_LIBUSB_COMMIT="87a55632db62c9bdc58cd31d3ccfa673f1bb017f"
 SRC_URI="
 	https://github.com/raspberrypi/${PN}/archive/refs/tags/v${PV}.tar.gz
 		-> ${P}.tar.gz
+	https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz
 	https://github.com/curl/curl/archive/${RPI_IMAGER_CURL_COMMIT}.tar.gz
 		-> ${PN}-curl-${RPI_IMAGER_CURL_COMMIT}.tar.gz
 	https://github.com/madler/zlib/archive/${RPI_IMAGER_ZLIB_COMMIT}.tar.gz
@@ -57,11 +58,12 @@ S="${WORKDIR}/${P}/src"
 # Main application: Apache-2.0 (src/../license.txt). Statically-linked
 # vendored components pulled in via SRC_URI above (see the long comment
 # above): libcurl is "curl", libarchive is BSD, zlib is ZLIB, xz/liblzma is
-# 0BSD, zstd is BSD, nghttp2 is MIT, libusb is LGPL-2.1. The in-tree (not
+# 0BSD, zstd is BSD, nghttp2 is MIT, libusb is LGPL-2.1, and bzip2 is BZIP2
+# (bzip2-1.0.8/LICENSE). The in-tree (not
 # separately fetched) yescrypt and drivelist helpers are BSD-2 and
 # Apache-2.0 respectively.
 LICENSE="Apache-2.0"
-LICENSE+=" curl BSD ZLIB 0BSD MIT LGPL-2.1 BSD-2"
+LICENSE+=" curl BSD ZLIB 0BSD MIT LGPL-2.1 BSD-2 BZIP2"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
@@ -108,6 +110,10 @@ src_prepare() {
 		mv "${WORKDIR}/${vendor_dirs[${name}]}"/* \
 			"${S}/dependencies/vendor/${name}/" || die
 	done
+
+	mkdir -p "${S}/dependencies/vendor/bzip2" || die
+	cp -a "${WORKDIR}/bzip2-1.0.8/." \
+		"${S}/dependencies/vendor/bzip2/" || die
 }
 
 src_configure() {
