@@ -23,6 +23,14 @@ IUSE="+ollama bedrock"
 # The PyPI source distribution does not contain the upstream test suite.
 RESTRICT="test"
 
+BDEPEND+="
+	>=dev-python/setuptools-77[${PYTHON_USEDEP}]
+"
+
+PATCHES=(
+	"${FILESDIR}/${P}-license-metadata.patch"
+)
+
 RDEPEND="
 	>=dev-python/anthropic-0.83.0[${PYTHON_USEDEP}]
 	dev-python/httpx[${PYTHON_USEDEP}]

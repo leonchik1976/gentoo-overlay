@@ -1,0 +1,20 @@
+Use PEP 639 license metadata supported by setuptools >=77.
+The exact release grants Apache-2.0 and ships LICENSE only.
+
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,11 +1,12 @@
+ [build-system]
+-requires = ["setuptools>=48"]
++requires = ["setuptools>=77"]
+ build-backend = "setuptools.build_meta"
+ 
+ [project]
+ name = "any-llm-sdk"
+ readme = "README.md"
+-license = {text = "Apache-2.0"}
++license = "Apache-2.0"
++license-files = ["LICENSE"]
+ requires-python = ">=3.11"
+ version = "1.26.0" # There is a regex in the release.yaml file that looks for this version string to set the version in the pyproject.toml file. Do not change this version string without updating the regex.
+ dependencies = [
