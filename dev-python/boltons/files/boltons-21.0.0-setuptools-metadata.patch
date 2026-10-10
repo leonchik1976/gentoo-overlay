@@ -1,0 +1,39 @@
+Use setuptools' PEP 639 metadata without a Python 2 universal-wheel tag.
+The release LICENSE grants BSD-3-Clause.  Keep the license file included
+and preserve all non-license classifiers.  Requires setuptools >= 77.
+
+--- a/setup.cfg
++++ b/setup.cfg
+@@ -1,5 +1,2 @@
+-[wheel]
+-universal = 1
+-
+ [metadata]
+-license_file = LICENSE
++license_files = LICENSE
+--- a/setup.py
++++ b/setup.py
+@@ -18,7 +18,7 @@
+ __version__ = '21.0.0'
+ __contact__ = 'mahmoud@hatnote.com'
+ __url__ = 'https://github.com/mahmoud/boltons'
+-__license__ = 'BSD'
++__license__ = 'BSD-3-Clause'
+ 
+ 
+ setup(name='boltons',
+@@ -31,13 +31,12 @@
+       packages=['boltons'],
+       include_package_data=True,
+       zip_safe=False,
+-      license=__license__,
++      license_expression=__license__,
+       platforms='any',
+       classifiers=[
+           # See: https://pypi.python.org/pypi?:action=list_classifiers
+           'Topic :: Utilities',
+           'Intended Audience :: Developers',
+-          'License :: OSI Approved :: BSD License',
+           'Topic :: Software Development :: Libraries',
+           'Development Status :: 5 - Production/Stable',
+           'Operating System :: OS Independent',

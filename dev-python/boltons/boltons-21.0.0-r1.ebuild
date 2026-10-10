@@ -31,6 +31,10 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
+BDEPEND+="
+	>=dev-python/setuptools-77[${PYTHON_USEDEP}]
+"
+
 distutils_enable_tests pytest
 distutils_enable_sphinx docs \
 	dev-python/sphinx-rtd-theme
@@ -41,6 +45,7 @@ PATCHES=(
 	"${FILESDIR}"/${P}-python3.10.patch
 	"${FILESDIR}"/${P}-python3.11-tests.patch
 	"${FILESDIR}"/${P}-pytest-ignore-collect-hookspec.patch
+	"${FILESDIR}"/${P}-setuptools-metadata.patch
 )
 
 EPYTEST_DESELECT=(
