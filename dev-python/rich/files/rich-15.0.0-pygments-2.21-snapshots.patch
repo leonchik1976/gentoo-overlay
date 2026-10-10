@@ -1,0 +1,34 @@
+From: Michael Daniels <mdaniels5757@gmail.com>
+Subject: [PATCH] tests: refresh snapshots for Pygments 2.21
+
+Compact test-only equivalent of the snapshot changes in upstream issue 4209:
+https://github.com/Textualize/rich/issues/4209
+https://gist.github.com/mdaniels5757/d2d48e8a5478b7b875b454b1237d3874/069a45fdaffba77b377b59e8c540a035b71ee82c
+
+Pygments now recognizes Python builtins such as iter and next.
+Visible text is unchanged; change only the four builtin token colors.
+Each of the seven resulting fixtures was checked against the upstream patch.
+Runtime dependency constraints and runtime code are unchanged.
+
+--- a/tests/_card_render.py
++++ b/tests/_card_render.py
+@@ -0,0 +1 @@
++import re
+@@ -1,0 +3 @@
++expected = re.sub('(\\x1b\\[[0-9;]*?)38;2;248;248;242(;[0-9;]*m)(iter|next|bool|b)(?=\\x1b)', '\\g<1>38;2;166;226;46\\2\\3', expected)
+--- a/tests/test_syntax.py
++++ b/tests/test_syntax.py
+@@ -0,0 +1 @@
++import re
+@@ -71,0 +73 @@
++    expected = re.sub('(\\x1b\\[[0-9;]*?)38;2;248;248;242(;[0-9;]*m)(iter|next|bool|b)(?=\\x1b)', '\\g<1>38;2;166;226;46\\2\\3', expected)
+@@ -86,0 +89 @@
++    expected = re.sub('(\\x1b\\[[0-9;]*?)38;2;248;248;242(;[0-9;]*m)(iter|next|bool|b)(?=\\x1b)', '\\g<1>38;2;166;226;46\\2\\3', expected)
+@@ -101,0 +105 @@
++    expected = re.sub('(\\x1b\\[[0-9;]*?)38;2;248;248;242(;[0-9;]*m)(iter|next|bool|b)(?=\\x1b)', '\\g<1>38;2;166;226;46\\2\\3', expected)
+@@ -156,0 +161 @@
++    expected = re.sub('(\\x1b\\[[0-9;]*?)38;2;248;248;242(;[0-9;]*m)(iter|next|bool|b)(?=\\x1b)', '\\g<1>38;2;166;226;46\\2\\3', expected)
+@@ -246,0 +252 @@
++    expected = re.sub('(\\x1b\\[[0-9;]*?)38;2;248;248;242(;[0-9;]*m)(iter|next|bool|b)(?=\\x1b)', '\\g<1>38;2;166;226;46\\2\\3', expected)
+@@ -301,0 +308 @@
++    expected = re.sub('(\\x1b\\[[0-9;]*?)38;2;248;248;242(;[0-9;]*m)(iter|next|bool|b)(?=\\x1b)', '\\g<1>38;2;166;226;46\\2\\3', expected)
