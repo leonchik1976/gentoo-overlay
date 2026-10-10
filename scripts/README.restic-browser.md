@@ -85,9 +85,8 @@ To bump the version:
    `RequiredUseUnsatisfiableInDev`, both on the `.../arm64/.../musl`
    profile, both because `REQUIRED_USE="elibc_glibc"` is unsatisfiable
    there. That pair is the deliberate, accepted consequence of this
-   ebuild's glibc-only native npm addons (see "libc split" below) --
-   `app-misc/n8n` in this overlay has the identical pair for the same
-   reason. If a `files/*-package-lock.json.gz` is ever added uncompressed
+   ebuild's glibc-only native npm addons (see "libc split" below).
+   If a `files/*-package-lock.json.gz` is ever added uncompressed
    or gains bulk (e.g. a much larger future dependency closure), expect
    `SizeViolation`/`TotalSizeViolation` to reappear -- keep the lockfile
    gzipped rather than accepting those findings. Any *other* finding is a
