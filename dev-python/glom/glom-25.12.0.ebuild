@@ -32,10 +32,13 @@ RDEPEND="
 	dev-python/attrs[${PYTHON_USEDEP}]
 	>=dev-python/face-20.1.1[${PYTHON_USEDEP}]
 "
-BDEPEND="
+BDEPEND+="
+	>=dev-python/setuptools-77[${PYTHON_USEDEP}]
 	test? (
 		dev-python/pyyaml[${PYTHON_USEDEP}]
 	)
 "
+
+PATCHES=( "${FILESDIR}/${P}-setuptools-metadata.patch" )
 
 distutils_enable_tests pytest

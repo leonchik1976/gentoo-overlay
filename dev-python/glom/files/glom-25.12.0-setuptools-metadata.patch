@@ -1,0 +1,30 @@
+Declare the fixture namespace and use the release's BSD-3-Clause grant
+through setuptools' PEP 639 metadata.  Preserve license_files and all
+non-license classifiers.  Requires setuptools >= 77.
+
+--- a/setup.py
++++ b/setup.py
+@@ -37,7 +37,7 @@
+       project_urls={
+           'Documentation': 'https://glom.readthedocs.io/en/latest/',
+       },
+-      packages=['glom', 'glom.test'],
++      packages=['glom', 'glom.test', 'glom.test.data'],
+       install_requires=['boltons>=19.3.0', 'attrs', 'face>=20.1.1'],
+       extras_require={
+           'toml': ['tomli; python_version<"3.11"'],
+@@ -47,6 +47,7 @@
+       include_package_data=True,
+       zip_safe=False,
+       platforms='any',
++      license_expression='BSD-3-Clause',
+       license_files=['LICENSE'],
+       classifiers=[
+           'Topic :: Utilities',
+@@ -62,7 +63,6 @@
+         'Programming Language :: Python :: 3.14',
+         'Programming Language :: Python :: Implementation :: CPython',
+           'Programming Language :: Python :: Implementation :: PyPy',
+-          'License :: OSI Approved :: BSD License',
+       ]
+      )
