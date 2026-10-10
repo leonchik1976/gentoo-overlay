@@ -1,0 +1,174 @@
+Downstream compatibility with Rich >=14.2.0,<15.1.
+Upstream capped Rich due to horizontal-rule presentation changes (PR 208).
+Preserve continuous separators, yellow style and a single newline.
+Use the same renderer for embedded rules in answers, history and tools.
+This range is a tested downstream choice, not upstream-supported metadata.
+
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -12,7 +12,7 @@
+     "any-llm-sdk[ollama,openai,atlascloud] ~=1.26.0",
+     "mcp>=1.25,<2",
+     "prompt-toolkit~=3.0.53",
+-    "rich>=14.2.0,<14.3",
++    "rich>=14.2.0,<15.1",
+     "typer~=0.27.0",
+ ]
+ 
+--- a/mcp_client_for_ollama/client.py
++++ b/mcp_client_for_ollama/client.py
+@@ -20,7 +20,7 @@
+ from prompt_toolkit.key_binding import KeyBindings
+ from prompt_toolkit.styles import Style
+ from rich.console import Console
+-from rich.markdown import Markdown
++from .utils.markdown import Markdown
+ from rich.panel import Panel
+ from rich.prompt import Prompt
+ from rich.text import Text
+--- a/mcp_client_for_ollama/utils/history.py
++++ b/mcp_client_for_ollama/utils/history.py
+@@ -10,7 +10,7 @@
+ from typing import List, Dict, Optional
+ from rich.console import Console
+ from rich.panel import Panel
+-from rich.markdown import Markdown
++from .markdown import Markdown
+ from rich.text import Text
+ 
+ 
+--- a/mcp_client_for_ollama/utils/tool_display.py
++++ b/mcp_client_for_ollama/utils/tool_display.py
+@@ -10,7 +10,7 @@
+ from rich.syntax import Syntax
+ from rich.text import Text
+ from typing import Any
+-from rich.markdown import Markdown
++from .markdown import Markdown
+ 
+ from .sanitize import strip_control_chars
+ 
+--- a/mcp_client_for_ollama/utils/streaming.py
++++ b/mcp_client_for_ollama/utils/streaming.py
+@@ -12,7 +12,8 @@
+ 
+ from rich.console import Console
+ from rich.live import Live
+-from rich.markdown import Markdown
++from rich.rule import Rule
++from .markdown import Markdown
+ from rich.text import Text
+ 
+ from .metrics import display_metrics, extract_metrics
+@@ -314,7 +315,7 @@
+             self.console.print(Markdown("📝 **Answer (Markdown):**"))
+         else:
+             self.console.print(Markdown("📝 **Answer:**"))
+-        self.console.print(Markdown("---"))
++        self.console.print(Rule(characters="─", style="yellow"))
+         self.console.print()
+ 
+     def _render_final_markdown_answer(self, accumulated_text):
+@@ -403,7 +404,7 @@
+                             thinking_content = "🤔 **Thinking:**\n\n"
+                             if not thinking_started and show_thinking:
+                                 self.console.print(Markdown("🤔 **Thinking:**\n"))
+-                                self.console.print(Markdown("---"))
++                                self.console.print(Rule(characters="─", style="yellow"))
+                                 self.console.print()
+                                 thinking_started = True
+                         thinking_content += thinking
+--- /dev/null
++++ b/mcp_client_for_ollama/utils/markdown.py
+@@ -0,0 +1,15 @@
++"""Keep Markdown separators stable across the supported Rich versions."""
++
++from rich.markdown import HorizontalRule, Markdown as RichMarkdown
++from rich.rule import Rule
++
++
++class _HorizontalRule(HorizontalRule):
++    def __rich_console__(self, console, options):
++        # Rich 14.3 changed the glyph, style and trailing blank line.
++        yield Rule(characters="─", style="yellow")
++
++
++class Markdown(RichMarkdown):
++    # Copy the mapping: never change Rich's global renderer registrations.
++    elements = {**RichMarkdown.elements, "hr": _HorizontalRule}
+--- /dev/null
++++ b/tests/test_markdown_rules.py
+@@ -0,0 +1,73 @@
++"""Regression coverage for the downstream Rich separator compatibility change."""
++import io
++
++import pytest
++from rich.console import Console
++from rich.rule import Rule
++
++from mcp_client_for_ollama.utils.markdown import Markdown
++
++
++@pytest.mark.parametrize("width", [1, 20, 40, 80, 120])
++@pytest.mark.parametrize("marker", ["---", "***", "___"])
++def test_markdown_rule_characters_style_spacing(width, marker):
++    console = Console(width=width, force_terminal=True, color_system="standard")
++    segments = list(console.render(Markdown(marker), console.options))
++    text = "".join(segment.text for segment in segments)
++    assert text == "─" * width + "\n"
++    painted = [segment for segment in segments if "─" in segment.text]
++    assert painted
++    assert all(segment.style.color.name == "yellow" for segment in painted)
++    assert all(not segment.style.dim for segment in painted)
++
++
++@pytest.mark.parametrize("width", [1, 20, 40, 80, 120])
++def test_standalone_rule_characters_style_spacing(width):
++    console = Console(width=width, force_terminal=True, color_system="standard")
++    segments = list(console.render(Rule(characters="─", style="yellow")))
++    assert "".join(segment.text for segment in segments) == "─" * width + "\n"
++    assert all(segment.style.color.name == "yellow" for segment in segments if "─" in segment.text)
++
++
++def test_horizontal_rule_in_body_and_code_block():
++    stream = io.StringIO()
++    console = Console(file=stream, width=20, color_system=None)
++    console.print(Markdown("before\n\n---\n\nafter"))
++    assert stream.getvalue().splitlines() == ["before              ", "", "─" * 20, "after               "]
++    stream.seek(0)
++    stream.truncate()
++    console.print(Markdown("```text\n---\n```"))
++    assert "---" in stream.getvalue()
++    assert "─" not in stream.getvalue()
++
++
++@pytest.mark.parametrize("width", [1, 20, 40, 80, 120])
++def test_actual_streaming_separators(width):
++    import asyncio
++    from types import SimpleNamespace
++    from unittest.mock import MagicMock, patch
++    from mcp_client_for_ollama.utils.streaming import StreamingManager
++
++    console = MagicMock()
++    manager = StreamingManager(console)
++
++    async def stream():
++        yield SimpleNamespace(choices=[SimpleNamespace(
++            delta=SimpleNamespace(content="answer", reasoning="thought", tool_calls=None),
++            finish_reason=None,
++        )])
++
++    with patch("mcp_client_for_ollama.utils.streaming.extract_metrics", return_value=None):
++        asyncio.run(manager.process_streaming_response(
++            stream(), thinking_mode=True, show_thinking=True, answer_render_mode="plain",
++        ))
++    calls = console.print.call_args_list
++    rules = [(i, call.args[0]) for i, call in enumerate(calls)
++             if call.args and isinstance(call.args[0], Rule)]
++    assert len(rules) == 2  # Thinking header and answer transition.
++    renderer = Console(width=width, force_terminal=True, color_system="standard")
++    for i, rule in rules:
++        segments = list(renderer.render(rule))
++        assert "".join(segment.text for segment in segments) == "─" * width + "\n"
++        assert all(segment.style.color.name == "yellow" for segment in segments if "─" in segment.text)
++        assert calls[i + 1].args == ()  # Existing deliberate blank line, exactly once.

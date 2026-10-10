@@ -26,6 +26,7 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
+# Downstream Rich 15.0 compatibility; patched separators preserve presentation.
 RDEPEND="
 	<dev-python/any-llm-sdk-1.27.0[ollama,${PYTHON_USEDEP}]
 	>=dev-python/any-llm-sdk-1.26.0[ollama,${PYTHON_USEDEP}]
@@ -33,16 +34,20 @@ RDEPEND="
 	>=dev-python/mcp-1.25[${PYTHON_USEDEP}]
 	<dev-python/prompt-toolkit-3.1[${PYTHON_USEDEP}]
 	>=dev-python/prompt-toolkit-3.0.53[${PYTHON_USEDEP}]
-	<dev-python/rich-14.3[${PYTHON_USEDEP}]
+	<dev-python/rich-15.1[${PYTHON_USEDEP}]
 	>=dev-python/rich-14.2.0[${PYTHON_USEDEP}]
 	<dev-python/typer-0.28[${PYTHON_USEDEP}]
 	>=dev-python/typer-0.27.0[${PYTHON_USEDEP}]
 "
-BDEPEND="
+BDEPEND+="
 	test? (
 		>=dev-python/pytest-9.1.0[${PYTHON_USEDEP}]
 	)
 "
+
+PATCHES=(
+	"${FILESDIR}/${P}-rich-rules.patch"
+)
 
 EPYTEST_PLUGINS=()
 EPYTEST_IGNORE=(
