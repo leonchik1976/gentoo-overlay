@@ -86,7 +86,7 @@ RDEPEND="
 # release's own dependency tree happened to pull selenium-webdriver in
 # (directly or transitively) -- how many copies exist, and at what depth,
 # is release-specific, so that part of the list is discovered from the
-# installed image itself in src_install rather than hardcoded to a count
+# extracted AppImage in src_prepare rather than hardcoded to a count
 # that could go stale.
 QA_PREBUILT="
 	opt/selenium-ide/selenium-ide
@@ -115,6 +115,14 @@ src_prepare() {
 	find "${S}" -type f -exec chmod a+r {} + || die
 
 	default
+
+	# Portage derives QA_PRESTRIPPED from QA_PREBUILT before src_install.
+	# Enumerate exact image-relative helper paths before that conversion.
+	local f
+	while IFS= read -r -d '' f; do
+		QA_PREBUILT+=" opt/${PN/-bin}/${f#"${S}/squashfs-root/"}"
+	done < <(find "${S}/squashfs-root" \
+		-path '*/selenium-webdriver/bin/linux/selenium-manager' -type f -print0)
 }
 
 src_install() {
@@ -141,15 +149,10 @@ src_install() {
 	mkdir -p "${ED}/${apphome}" || die
 	cp -r . "${ED}/${apphome}" || die
 
+	# Preserve the upstream debug sections and the executable's debuglink CRC.
+	dostrip -x "${apphome}/resources/app.asar.unpacked/node_modules/electron-chromedriver/bin/chromedriver.debug"
+
 	dosym -r "${apphome}/selenium-ide" "/usr/bin/${PN/-bin}"
 	make_desktop_entry "${PN/-bin}" "Selenium IDE" selenium-ide "Development;" \
 		"StartupWMClass=Selenium IDE"
-
-	# Every nested copy of the vendored selenium-manager Linux binary --
-	# however many there are, wherever this release's own node_modules
-	# tree happened to place them -- gets the same prebuilt-ELF exception.
-	local f
-	while IFS= read -r -d '' f; do
-		QA_PREBUILT+=" ${f#"${ED}"/}"
-	done < <(find "${ED}${apphome}" -path '*/selenium-webdriver/bin/linux/selenium-manager' -print0)
 }
