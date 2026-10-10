@@ -423,10 +423,9 @@ RESTRICT="bindist"
 # "2.87", i.e. dev-libs/glib. Traced directly from each crate's own
 # [package.metadata.system-deps] table at the exact versions pinned in this
 # ebuild's CRATES (relm4-0.11.0, gtk4-sys-0.11.2, libadwaita-sys-0.9.1,
-# gio-sys-0.22.0), not assumed from crate version numbers. gtk4 4.21 is not
-# satisfiable by any ::gentoo package right now, which is why this version
-# is package.masked; the DEPEND floor is kept accurate anyway so it's
-# correct the moment gtk4 4.21+ becomes available and this gets unmasked.
+# gio-sys-0.22.0), not assumed from crate version numbers. These requirements
+# previously caused a mask; ::gentoo now provides GTK 4.22, GLib 2.88 and
+# libadwaita 1.9, satisfying the recorded toolchain requirements.
 RDEPEND="
 	>=dev-libs/glib-2.87
 	dev-libs/libxml2
