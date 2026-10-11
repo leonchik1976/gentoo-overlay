@@ -49,6 +49,7 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-4.2.8_p18-r2-bind-fail-NULL-dereference.patch # bug #962770
 	"${FILESDIR}"/${PN}-4.2.8-configure.patch # bug 969483
 	"${FILESDIR}"/${PN}-4.2.8_p18-autotools-macro-dir.patch # bug #939587
+	"${FILESDIR}"/${PN}-4.2.8_p18-pathfind-check.patch
 )
 
 src_prepare() {

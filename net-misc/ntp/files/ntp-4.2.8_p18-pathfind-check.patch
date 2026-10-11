@@ -1,0 +1,48 @@
+Check the system header, declaration and linkage before executing the
+pathfind functional probe. Skip that probe when the function is unavailable,
+retaining the bundled implementation without implicit-declaration diagnostics.
+
+--- a/sntp/libopts/m4/libopts.m4
++++ b/sntp/libopts/m4/libopts.m4
+@@ -252,10 +252,32 @@
+ 
+ 
+ AC_DEFUN([LIBOPTS_RUN_PATHFIND],[
++  libopts_have_pathfind=no
++  AC_CHECK_HEADER([libgen.h],[
++    AC_CHECK_DECL([pathfind],[
++      AC_CACHE_CHECK([whether pathfind can be linked],
++        [libopts_cv_link_pathfind],[
++        AC_LINK_IFELSE([AC_LANG_PROGRAM([[
++#include <stdlib.h>
++#include <libgen.h>
++]], [[
++  char * pz = pathfind(getenv("PATH"), "sh", "x");
++  return pz == 0;
++]])], [libopts_cv_link_pathfind=yes], [libopts_cv_link_pathfind=no])
++      ])
++      libopts_have_pathfind=${libopts_cv_link_pathfind}
++    ],[],[[#include <libgen.h>]])
++  ])
++  if test "X${libopts_have_pathfind}" != Xyes
++  then
++    libopts_cv_run_pathfind=no
++  fi
++
+   AC_MSG_CHECKING([whether pathfind(3) works])
+   AC_CACHE_VAL([libopts_cv_run_pathfind],[
+   AC_RUN_IFELSE([AC_LANG_SOURCE([@%:@include <string.h>
+ @%:@include <stdlib.h>
++@%:@include <libgen.h>
+ int main (int argc, char ** argv) {
+    char * pz = pathfind( getenv( "PATH" ), "sh", "x" );
+    return (pz == 0) ? 1 : 0;
+@@ -264,7 +286,7 @@
+   ) # end of RUN_IFELSE
+   ]) # end of AC_CACHE_VAL for libopts_cv_run_pathfind
+   AC_MSG_RESULT([${libopts_cv_run_pathfind}])
+-  if test "X${libopts_cv_run_pathfind}" != Xno
++  if test "X${libopts_cv_run_pathfind}" = Xyes
+   then
+     AC_DEFINE([HAVE_PATHFIND],[1],
+         [Define this if pathfind(3) works])
