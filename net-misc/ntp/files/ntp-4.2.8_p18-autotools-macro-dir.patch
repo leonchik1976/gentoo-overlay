@@ -1,0 +1,28 @@
+The top-level and SNTP configure scripts share sntp/m4. Recursive
+autoreconf regenerates SNTP first, then top-level libtoolize overwrites
+its macros, triggering another autoreconf during compilation.
+
+Give the top-level build its own libtool macro directory while retaining
+access to NTP's macros in sntp/m4.
+
+https://bugs.gentoo.org/939587
+
+--- a/configure.ac
++++ b/configure.ac
+@@ -9,7 +9,7 @@
+     [],
+     [https://www.ntp.org/]dnl
+ )
+-AC_CONFIG_MACRO_DIR([sntp/m4])
++AC_CONFIG_MACRO_DIR([m4])
+ AC_CONFIG_AUX_DIR([sntp/libevent/build-aux])
+ AC_LANG([C])
+ 
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -1,4 +1,4 @@
+-ACLOCAL_AMFLAGS = -I sntp/m4 -I sntp/libevent/m4 -I sntp/libopts/m4
++ACLOCAL_AMFLAGS = -I m4 -I sntp/m4 -I sntp/libevent/m4 -I sntp/libopts/m4
+ 
+ NULL =
+ 

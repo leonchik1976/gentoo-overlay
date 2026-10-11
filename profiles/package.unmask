@@ -7,3 +7,8 @@
 acct-group/kibana
 acct-user/kibana
 www-apps/kibana-bin
+
+# Leonid Kopylov <leonchik1976@gmail.com> (2026-10-11)
+# Maintain the NTP reference implementation locally after Gentoo retirement.
+# https://bugs.gentoo.org/962880
+=net-misc/ntp-4.2.8_p18-r4

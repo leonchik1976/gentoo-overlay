@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>leonchik1976@gmail.com</email>
+    <name>Leonid Kopylov</name>
+  </maintainer>
+  <use>
+    <flag name="openntpd">Omit ntpd and its service files to allow installation alongside openntpd</flag>
+    <flag name="parse-clocks">Add support for PARSE clocks</flag>
+    <flag name="samba">Provide support for Samba's signing daemon (needed for Active Directory domain controllers)</flag>
+  </use>
+  <upstream>
+    <remote-id type="cpe">cpe:/a:ntp:ntp</remote-id>
+  </upstream>
+</pkgmetadata>
