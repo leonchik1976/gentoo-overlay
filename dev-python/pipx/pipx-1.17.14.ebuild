@@ -1,6 +1,7 @@
 # Copyright 2023-2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
+# distutils-r1.eclass supports EAPI 8 only.
 EAPI=8
 
 DISTUTILS_USE_PEP517=hatchling

@@ -37,7 +37,7 @@ GO_MODULE_LICENSES=(
 	"${P}-module-go.yaml.in-yaml-v3-v3.0.5.zip|go.yaml.in/yaml/v3@v3.0.5/LICENSE"
 	"${P}-module-golang.org-x-crypto-v0.56.0.zip|golang.org/x/crypto@v0.56.0/LICENSE"
 	"${P}-module-golang.org-x-net-v0.57.0.zip|golang.org/x/net@v0.57.0/LICENSE"
-	"${P}-module-golang.org-x-sys-v0.48.0.zip|golang.org/x/sys@v0.48.0/LICENSE"
+	"${P}-module-golang.org-x-sys-v0.49.0.zip|golang.org/x/sys@v0.49.0/LICENSE"
 	"${P}-module-golang.org-x-text-v0.42.0.zip|golang.org/x/text@v0.42.0/LICENSE"
 	"${P}-module-gopkg.in-warnings.v0-v0.1.2.zip|gopkg.in/warnings.v0@v0.1.2/LICENSE"
 )
@@ -94,8 +94,8 @@ SRC_URI+="
 		-> ${P}-module-golang.org-x-crypto-v0.56.0.zip
 	https://proxy.golang.org/golang.org/x/net/@v/v0.57.0.zip
 		-> ${P}-module-golang.org-x-net-v0.57.0.zip
-	https://proxy.golang.org/golang.org/x/sys/@v/v0.48.0.zip
-		-> ${P}-module-golang.org-x-sys-v0.48.0.zip
+	https://proxy.golang.org/golang.org/x/sys/@v/v0.49.0.zip
+		-> ${P}-module-golang.org-x-sys-v0.49.0.zip
 	https://proxy.golang.org/golang.org/x/text/@v/v0.42.0.zip
 		-> ${P}-module-golang.org-x-text-v0.42.0.zip
 	https://proxy.golang.org/gopkg.in/warnings.v0/@v/v0.1.2.zip

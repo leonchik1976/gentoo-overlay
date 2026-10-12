@@ -252,6 +252,7 @@ def _apply_overrides_and_detect_collisions(
     amd64_only: list[tuple[str, str, str, str]],
     arm64_only: list[tuple[str, str, str, str]],
     distfiles_dir: Path,
+    legacy_overrides: bool = True,
 ) -> tuple[
     list[tuple[str, str, str, str]],
     list[tuple[str, str, str, str]],
@@ -286,9 +287,9 @@ def _apply_overrides_and_detect_collisions(
     # antlr4-python3-runtime-4.9.3 is built from its sdist by the ebuild
     # and is known from that source/build output to install the regular
     # top-level `antlr4` package.  Fail if any selected wheel also owns it.
-    if "antlr4-python3-runtime" not in provided:
+    if legacy_overrides and "antlr4-python3-runtime" not in provided:
         raise SystemExit("manual Antlr addition is unexpectedly absent")
-    if provided["antlr4-python3-runtime"]:
+    if legacy_overrides and provided["antlr4-python3-runtime"]:
         raise SystemExit("Antlr is unexpectedly no longer represented by an sdist")
     antlr_colliders = sorted(
         name
@@ -300,13 +301,15 @@ def _apply_overrides_and_detect_collisions(
             "antlr4-python3-runtime's top-level 'antlr4' package collides with "
             f"selected distribution(s): {antlr_colliders}"
         )
-    provided["antlr4-python3-runtime"] = {"antlr4": True}
+    if legacy_overrides:
+        provided["antlr4-python3-runtime"] = {"antlr4": True}
 
     def _regular_names(pkg: str) -> set[str]:
         return {n for n, is_regular in provided[pkg].items() if is_regular}
 
     dropped: set[str] = set()
-    for drop_name, reason in PROVIDER_COLLISION_OVERRIDES.items():
+    provider_overrides = PROVIDER_COLLISION_OVERRIDES if legacy_overrides else {}
+    for drop_name, reason in provider_overrides.items():
         if drop_name not in provided:
             raise SystemExit(
                 f"PROVIDER_COLLISION_OVERRIDES names {drop_name!r}, but it is not "
@@ -317,7 +320,7 @@ def _apply_overrides_and_detect_collisions(
             other
             for other in provided
             if other != drop_name
-            and other not in PROVIDER_COLLISION_OVERRIDES
+            and other not in provider_overrides
             and (_regular_names(other) & drop_names)
         ]
         if not colliding_with:
@@ -456,6 +459,16 @@ def main() -> None:
     parser.add_argument("report_aarch64", type=Path)
     parser.add_argument("output", type=Path)
     parser.add_argument(
+        "--resolved-only",
+        action="store_true",
+        help=(
+            "Preserve resolver selections instead of applying the legacy "
+            "OmegaConf/Antlr/OpenCV overrides. Open WebUI 0.12.0 resolves "
+            "OmegaConf 2.4 and RapidOCR 3.10 without those overrides. "
+            "CPU Torch selection and wheel collision checks remain enabled."
+        ),
+    )
+    parser.add_argument(
         "--distfiles-dir",
         type=Path,
         default=Path("/var/cache/distfiles"),
@@ -523,14 +536,16 @@ def main() -> None:
             raise SystemExit(f"{name}=={version}: not a plain PyPI-hosted wheel/sdist")
         arm64_only.append((name, version, uri, distfile(uri)))
 
-    common = _apply_manual_package_overrides(common)
+    if not args.resolved_only:
+        common = _apply_manual_package_overrides(common)
     amd64_only, arm64_only = _apply_manual_arch_package_overrides(
         amd64_only, arm64_only
     )
 
     if not args.skip_collision_check:
         common, amd64_only, arm64_only = _apply_overrides_and_detect_collisions(
-            common, amd64_only, arm64_only, args.distfiles_dir
+            common, amd64_only, arm64_only, args.distfiles_dir,
+            legacy_overrides=not args.resolved_only,
         )
 
     lines = [

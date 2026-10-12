@@ -23,7 +23,7 @@ S="${WORKDIR}/${MY_PN}"
 
 LICENSE="MIT"
 # Licenses of crates statically linked into the release binary (derived from
-# the exact Cargo.lock at v2026.10.3; see the dev-util/mise-bin metadata for how
+# the exact Cargo.lock at v2026.10.8; see the dev-util/mise-bin metadata for how
 # this was verified).
 LICENSE+="
 	0BSD Apache-2.0 Apache-2.0-with-LLVM-exceptions BSD BSD-1 BSD-2 BZIP2
@@ -39,7 +39,6 @@ REQUIRED_USE="elibc_glibc"
 # equivalent of the source build's BDEPEND applies here.
 #
 # This release generates bash, fish and zsh completions using mise itself.
-# Newly added packslip and temp-env crates retain the existing license set.
 RDEPEND="
 	|| (
 		llvm-runtimes/libgcc

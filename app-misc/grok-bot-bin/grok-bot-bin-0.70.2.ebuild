@@ -12,7 +12,7 @@ MY_PN="${PN%-bin}"
 # Per-release build id embedded in the Cursor CDN download path; changes
 # with every version and must be refreshed on each bump (grab it from the
 # links on https://x.ai/bot#download or https://cursor.com/download/bot).
-MY_BUILD="12fb477da4023dc110998df181ec150d29c355f2"
+MY_BUILD="52da656f56d317510ca65ad6af3d69a2cde461e0"
 
 DESCRIPTION="Grok Bot desktop agent: xAI's always-on AI teammates"
 HOMEPAGE="https://x.ai/bot https://docs.x.ai/grok-bot/get-started"
@@ -60,8 +60,9 @@ RDEPEND="
 	dev-libs/nspr
 	dev-libs/nss
 	media-libs/alsa-lib
-	media-libs/mesa[gbm(+)]
+	media-libs/mesa[opengl]
 	net-print/cups
+	>=sys-libs/glibc-2.38
 	sys-apps/dbus
 	sys-apps/util-linux
 	virtual/libudev

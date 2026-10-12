@@ -1,4 +1,4 @@
-oh-my-posh 31.7.0 compiled dependency license inventory
+oh-my-posh 31.8.0 compiled dependency license inventory
 
 Modules enumerated by go version -m on both exact release binaries.
 The upstream license texts listed below are installed alongside this inventory.
@@ -55,8 +55,8 @@ golang.org/x/crypto@v0.56.0
 Source: https://proxy.golang.org/golang.org/x/crypto/@v/v0.56.0.zip
 golang.org/x/net@v0.57.0
 Source: https://proxy.golang.org/golang.org/x/net/@v/v0.57.0.zip
-golang.org/x/sys@v0.48.0
-Source: https://proxy.golang.org/golang.org/x/sys/@v/v0.48.0.zip
+golang.org/x/sys@v0.49.0
+Source: https://proxy.golang.org/golang.org/x/sys/@v/v0.49.0.zip
 golang.org/x/text@v0.42.0
 Source: https://proxy.golang.org/golang.org/x/text/@v/v0.42.0.zip
 gopkg.in/warnings.v0@v0.1.2

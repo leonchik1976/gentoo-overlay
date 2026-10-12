@@ -1,6 +1,7 @@
 # Copyright 1999-2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
+# distutils-r1.eclass supports EAPI 8 only.
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
@@ -82,7 +83,7 @@ distutils_enable_tests pytest
 
 PATCHES=(
 	"${FILESDIR}/posthog-7.64.0-setup-license.patch"
-	"${FILESDIR}/${P}-httpx2.patch"
+	"${FILESDIR}/posthog-7.67.0-httpx2.patch"
 )
 
 python_test() {
