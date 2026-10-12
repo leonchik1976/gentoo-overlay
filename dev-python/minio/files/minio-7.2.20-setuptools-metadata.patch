@@ -1,0 +1,18 @@
+Remove empty test requirements and the deprecated license classifier.
+Keep the explicit Apache-2.0 license declaration.
+
+--- a/setup.py
++++ b/setup.py
+@@ -46,12 +46,10 @@
+     python_requires=">=3.9",
+     install_requires=["certifi", "urllib3", "argon2-cffi",
+                       "pycryptodome", "typing-extensions"],
+-    tests_require=[],
+     license="Apache-2.0",
+     classifiers=[
+         "Development Status :: 5 - Production/Stable",
+         "Intended Audience :: Developers",
+-        "License :: OSI Approved :: Apache Software License",
+         "Natural Language :: English",
+         "Operating System :: OS Independent",
+         "Programming Language :: Python",

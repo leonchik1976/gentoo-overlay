@@ -5,7 +5,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{12..14} )
+PYTHON_COMPAT=( python3_{12..15} )
 
 inherit distutils-r1 pypi
 
@@ -24,6 +24,7 @@ RDEPEND="
 	dev-python/urllib3[${PYTHON_USEDEP}]
 "
 
+PATCHES=( "${FILESDIR}/${P}-setuptools-metadata.patch" )
 DOCS=( README.md README_zh_CN.md NOTICE )
 
 distutils_enable_tests unittest
