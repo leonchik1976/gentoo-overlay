@@ -1,0 +1,20 @@
+Source: https://www.min.io/download/aistor-client
+Retrieved: 2026-10-12
+
+MinIO Software License
+
+This MinIO Software License (the License) applies to MinIO source code and compiled binaries distributed pursuant to this License (the Software). AnEnterprise Agreement means a currently paid-up and active commercial agreement between you or your company (You) and MinIO. Your use of the Software indicates your agreement to the terms and conditions of this License. If you disagree, do not download or use the Software.
+
+Unless there is currently an Enterprise Agreement in force for the Software, the Software is offered to You under the following evaluation terms: You may only use one instance of the Software for non-production, internal evaluation purposes only. In case of any conflict between the terms of this License and theEnterprise Agreement, the Enterprise Agreement shall govern.
+
+This License does not grant permission to use the trademarks, service marks, orproduct names of MinIO, except as required for reasonable and customary use in describing the origin of the Software.
+
+You may not reverse engineer, decompile or disassemble, or remove copyright or other proprietary notices from any portion of the Software.
+
+MinIO reserves all rights, title, and interest in and to the Software, not expressly granted to You under this License.
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, MINIO AND ITS AFFILIATES SHALL NOT BELIABLE FOR ANY (I) SPECIAL, INCIDENTAL, PUNITIVE OR CONSEQUENTIAL DAMAGES, OR(II) DAMAGES FOR (A) ANY LOST PROFITS, LOSS OF USE, LOSS OF DATA OR LOSS OF GOOD WILL, OR (B) THE COSTS OF PROCURING SUBSTITUTE PRODUCTS, ARISING OUT OF ORIN CONNECTION WITH THIS AGREEMENT OR THE USE OR PERFORMANCE OF THE SDK, WHETHER SUCH LIABILITY ARISES FROM ANY CLAIM BASED UPON BREACH OF CONTRACT, BREACH OF WARRANTY, TORT (INCLUDING NEGLIGENCE), PRODUCT LIABILITY OR ANY OTHER CAUSE OF ACTION OR THEORY OF LIABILITY. IN NO EVENT WILL MINIO AND ITS AFFILIATES TOTAL CUMULATIVE LIABILITY UNDER OR ARISING OUT OF THIS AGREEMENT EXCEED US$10.00. THE NATURE OF THE LIABILITY OR THE NUMBER OF CLAIMS OR SUITS SHALL NOT ENLARGE OR EXTEND THIS LIMIT.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+The Software may depend on or incorporate other third party software subject to open source license terms. Your use of such third party software is subject to the terms and conditions of those licenses.
