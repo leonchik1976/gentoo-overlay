@@ -1,0 +1,33 @@
+Source: https://www.min.io/legal/aistor-free-agreement
+Retrieved: 2026-10-12
+Privacy policy: https://min.io/legal/privacy-policy
+
+This MinIO AIStor Free Tier License Agreement (“Agreement”) between you (either an individual or an entity) (“You” or “Your”) and MinIO, Inc. ("MinIO") for the MinIO AIStor Free Tier software ("Software").
+
+BY DOWNLOADING, INSTALLING, OR USING THE SOFTWARE, YOU AGREE TO BE BOUND BY THE TERMS OF THIS AGREEMENT AND THE MINIO PRIVACY POLICY. THIS AGREEMENT APPLIES TO ALL CURRENT AND FUTURE USE AND ACCESS OF THE SOFTWARE.
+
+This Agreement may be periodically updated from time to time, and the current version will be posted at https://min.io/legal. Your continued use of the Software after a revised Agreement has been posted constitutes Your acceptance of its terms.
+
+1. Grant of License: MinIO grants You a limited, non-exclusive, non-transferable, royalty-free license to install and use the Software solely in standalone mode (single-node deployments without distributed clustering or high availability) (“License”) until terminated in accordance with the terms herein. Subject to the use restrictions in Section 2 (Restrictions), this License permits Your use for any purpose, including commercial production workloads, prototyping, personal projects, homelabs, research, education, backups, or media repositories, provided they do not require distributed mode.
+
+2. Restrictions:
+
+   1. You may not modify, reverse engineer, decompile, disassemble, or create derivative works of the Software.
+
+   2. You may not distribute, sublicense, rent, lease, resell, or redistribute the Software (in whole or in part) to any third party.
+
+   3. You may not remove or alter any copyright, trademark, or other proprietary notices in the Software.
+
+3. Ownership: The Software is proprietary to MinIO and protected by copyright and other intellectual property laws. MinIO retains all rights, title, and interest in and to the Software. This Agreement grants You no ownership rights in or to the Software.
+
+4. NO WARRANTY: THE SOFTWARE IS PROVIDED "AS IS" ON AN “AS AVAILABLE" BASIS WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, OR NON-INFRINGEMENT. MINIO DOES NOT WARRANT THAT THE SOFTWARE WILL MEET YOUR REQUIREMENTS OR OPERATE UNINTERRUPTED OR ERROR-FREE.
+
+5. LIMITATION OF LIABILITY: TO THE MAXIMUM EXTENT PERMITTED BY LAW, MINIO SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS, DATA, OR BUSINESS, ARISING FROM YOUR USE OF THE SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. TO THE MAXIMUM EXTENT PERMITTED BY LAW, MINIO'S TOTAL AGGREGATE LIABILITY ARISING OUT OF OR RELATED TO THIS AGREEMENT SHALL NOT EXCEED THE AMOUNTS PAID BY YOU TO MINIO FOR THE SOFTWARE IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM (IF ANY).
+
+6. Termination: This License is effective upon You downloading the Software. MinIO may terminate this Agreement and/or the License granted herein immediately upon Your breach any term of this Agreement. Upon termination, all Licenses granted herein shall automatically terminate and You must cease all use and destroy all copies of the Software.
+
+7. Modifications: MinIO has the sole discretion, at any time, to change, substitute, or modify the Software.
+
+8. Governing Law and Venue: This Agreement is governed by the laws of the State of California, USA, without regard to conflict of laws principles. For any disputes arising out of or related to this Agreement, You and MinIO each consent to the exclusive personal jurisdiction and venue in the state or federal courts located in Santa Clara County, California, United States.
+
+9. Entire Agreement: This Agreement constitutes the entire agreement between You and MinIO regarding Your access and use of the Software.

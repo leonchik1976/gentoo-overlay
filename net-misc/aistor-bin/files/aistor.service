@@ -1,0 +1,29 @@
+[Unit]
+Description=MinIO AIStor object storage
+Documentation=https://docs.min.io/aistor/
+After=network-online.target
+Wants=network-online.target
+ConditionPathExists=/etc/aistor/aistor.license
+
+[Service]
+Type=notify
+User=aistor
+Group=aistor
+WorkingDirectory=/var/lib/aistor
+Environment=MINIO_CONFIG_ENV_FILE=/etc/aistor/aistor.env
+EnvironmentFile=/etc/aistor/aistor.env
+ExecStartPre=/usr/libexec/aistor/check-credentials
+ExecStart=/usr/bin/aistor server $MINIO_OPTS $MINIO_VOLUMES
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+LimitNOFILE=1048576
+TasksMax=infinity
+TimeoutStopSec=infinity
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/aistor
+
+[Install]
+WantedBy=multi-user.target

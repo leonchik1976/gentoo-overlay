@@ -5,7 +5,4 @@
 		<email>leonchik1976@gmail.com</email>
 		<name>Leonid Kopylov</name>
 	</maintainer>
-	<upstream>
-		<remote-id type="github">minio/minio</remote-id>
-	</upstream>
 </pkgmetadata>

@@ -5,6 +5,6 @@ EAPI=9
 
 inherit acct-group
 
-DESCRIPTION="Group for MinIO"
+DESCRIPTION="Group for MinIO AIStor"
 KEYWORDS="~amd64 ~arm64"
 ACCT_GROUP_ID=-1
