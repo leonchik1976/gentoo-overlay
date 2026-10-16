@@ -1,0 +1,64 @@
+Snipe-IT requires manual deployment and database setup.
+
+Deploy with webapp-config -I -h HOST -d snipe-it snipe-it VERSION, specifying
+the configuration owner and group with -u and -g and the server with -s.
+Replace HOST and VERSION. The -u/-g options affect configuration ownership;
+server-owned directories use webapp-config's selected server account. If a
+dedicated PHP-FPM pool uses another account, adjust the deployed writable
+directories to that account before running setup. Do not change ownership
+of the shared /usr/share/webapps template.
+The deployment root contains artisan; configure the web server document root
+to its public/ subdirectory ONLY. Do not expose .env, vendor, or storage.
+Use a PHP-FPM pool or Apache PHP SAPI matching the chosen PHP CLI slot.
+For nginx, route non-file requests to /index.php; for Apache, enable rewrite
+and allow the supplied public/.htaccess rules. Configure HTTPS before use.
+
+Before entering credentials, set .env ownership and permissions in the
+deployed instance (replace the account/group placeholders):
+  chown CONFIG_OWNER:PHP_WORKER_GROUP .env
+  chmod 0640 .env
+The configuration owner must belong to PHP_WORKER_GROUP. Keep storage/,
+public/uploads/, and bootstrap/cache/ owned by the PHP worker, with group
+write/search access for the configuration owner during setup. Use that shared
+group for files created during setup so the worker can continue using them.
+
+As the configuration owner, edit .env: APP_ENV=production, APP_DEBUG=false,
+APP_URL, database credentials, and outgoing mail settings. Create a dedicated
+MySQL/MariaDB database and user first; the database may be on another host.
+Set DB_DUMP_PATH=/usr/bin for Gentoo's client utilities. Select a matching
+MySQL/MariaDB client provider if application backups/restores are required.
+
+From the deployment root, using the selected slot's PHP CLI (for example
+php8.4), generate the key as the configuration owner, who can write .env:
+  ( umask 0007; php8.4 artisan key:generate --force )
+Then run normal application commands as the PHP worker user:
+  php8.4 artisan migrate --force
+Then visit the site to finish setup. Keep APP_KEY private and back it up.
+Retain .env ownership CONFIG_OWNER:PHP_WORKER_GROUP and mode 0640; the PHP
+worker must be able to read it but must not be able to write it.
+Application commands must not run as root. Composer is not needed after build.
+
+Configure one cron entry under the PHP worker account, using absolute paths:
+  * * * * * cd /DEPLOYMENT && /usr/bin/php8.4 artisan schedule:run
+A systemd timer may run the same command every minute instead. Use one
+scheduler only. Configure a queue worker separately if selecting async queues;
+the default synchronous queue does not require a daemon.
+
+LDAP: enable USE=ldap on the PHP slot used by both CLI and the web worker.
+Imagick: optional dev-php/pecl-imagick; GD remains required by barcode code.
+Redis: optional backend requiring its own server/client configuration.
+
+UPGRADES: back up the database, .env (including APP_KEY), storage/, and
+public/uploads/ before changing the deployment. Put the old instance into
+maintenance mode. Use webapp-config to upgrade the deployed files, preserving
+those paths and their ownership; check its configuration-file updates.
+Never use upgrade.php, git pull, or composer update on a managed deployment.
+As the PHP worker, clear stale caches with artisan optimize:clear, run
+artisan migrate --force, and rebuild package discovery with
+artisan package:discover. Bring the instance up with artisan up after checks.
+Do not automatically migrate a live database from package-manager phases.
+
+Upstream guides:
+  https://snipe-it.readme.io/docs/configuration
+  https://snipe-it.readme.io/docs/configuring-alerts-backups
+  https://snipe-it.readme.io/docs/upgrading
