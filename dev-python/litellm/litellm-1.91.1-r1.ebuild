@@ -38,8 +38,8 @@ CORE_DEPS="
 		>=dev-python/pydantic-2.10.0[${PYTHON_USEDEP}]
 		>=dev-python/python-dotenv-1.0.0[${PYTHON_USEDEP}]
 		>=dev-python/tiktoken-0.8.0[${PYTHON_USEDEP}]
+		>=sci-ml/tokenizers-0.21.0[${PYTHON_USEDEP}]
 	')
-	>=sci-ml/tokenizers-0.21.0[${PYTHON_SINGLE_USEDEP}]
 "
 
 PROXY_AND_TEST_DEPS="
