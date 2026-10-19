@@ -126,10 +126,11 @@ RESTRICT="mirror strip"
 # Keep weak blockers against overlapping source/core packages, even though
 # those atoms are absent from the current gentoo/guru/local scan context.
 # Preserve the exact release's dependency windows, except for the tested
-# downstream baseline: Click 8.5.0 and OTel 1.45.1/0.66b1. Upstream still
-# declares Click ~=8.4.2 and OTel ~=1.37.0/~=0.58b0; these overrides are
-# local compatibility choices, not upstream-supported bounds. Keep installed
-# METADATA aligned in src_prepare. The bundled libgcc requires GLIBC_2.35.
+# downstream baseline: Click 8.5.0, OTel 1.45.1/0.66b1 and jsonschema <4.27.
+# Upstream declares Click ~=8.4.2, OTel ~=1.37.0/~=0.58b0 and
+# jsonschema ~=4.25.1; these overrides are local compatibility choices,
+# not upstream-supported bounds. Keep installed METADATA aligned in
+# src_prepare. The bundled libgcc requires GLIBC_2.35.
 RDEPEND="
 	>=sys-libs/glibc-2.35
 	${PYTHON_DEPS}
@@ -148,7 +149,7 @@ RDEPEND="
 		<dev-python/exceptiongroup-1.3[${PYTHON_USEDEP}]
 		>=dev-python/glom-23.3[${PYTHON_USEDEP}]
 		>=dev-python/jsonschema-4.25.1[${PYTHON_USEDEP}]
-		<dev-python/jsonschema-4.26[${PYTHON_USEDEP}]
+		<dev-python/jsonschema-4.27[${PYTHON_USEDEP}]
 		~dev-python/mcp-1.29.0[${PYTHON_USEDEP}]
 		~dev-python/opentelemetry-api-1.45.1[${PYTHON_USEDEP}]
 		~dev-python/opentelemetry-sdk-1.45.1[${PYTHON_USEDEP}]
@@ -228,6 +229,7 @@ src_prepare() {
 
 	# Retain the existing downstream baseline; upstream bounds remain narrower.
 	sed -i \
+		-e 's/^Requires-Dist: jsonschema~=4\.25\.1$/Requires-Dist: jsonschema>=4.25.1,<4.27/' \
 		-e 's/^Requires-Dist: click~=8\.4\.2$/Requires-Dist: click==8.5.0/' \
 		-e 's/^Requires-Dist: \(opentelemetry-.*\)~=1\.37\.0$/Requires-Dist: \1==1.45.1/' \
 		-e 's/^Requires-Dist: \(opentelemetry-.*\)~=0\.58b0$/Requires-Dist: \1==0.66b1/' \
