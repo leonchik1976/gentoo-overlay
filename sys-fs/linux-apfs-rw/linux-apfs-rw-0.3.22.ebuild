@@ -13,8 +13,6 @@ LICENSE="GPL-2 BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
-PATCHES=( "${FILESDIR}/${PN}-0.3.21-buffer-head-leak.patch" )
-
 CONFIG_CHECK="LIBCRC32C"
 
 pkg_setup() {
