@@ -26,7 +26,7 @@ SRC_URI="
 
 LICENSE="AGPL-3+ MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64"
+KEYWORDS="~arm64"
 # Upstream tests are not currently run in the ebuild's offline build setup.
 RESTRICT="test"
 
