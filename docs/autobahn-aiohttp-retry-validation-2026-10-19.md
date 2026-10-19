@@ -157,3 +157,124 @@ pkgdev manifest exit 0; bash -n exit 0; syntax stdout/stderr was empty.
 The dependency floor now agrees with upstream metadata. The hosts’ installed zope-interface was used; integration with exactly 6.2 was not tested. Existing Autobahn test exclusions and unprovided optional cryptobox integration are unchanged. Python 3.12, 3.13 and 3.14 were tested on both hosts; Autobahn’s declared 3.11 and the aiohttp-retry PythonCompatUpdate suggestion of 3.15 were not tested. aiohttp-retry was built and tested natively on both hosts; its any wheel tag was not treated as architecture validation.
 
 No live-system merge/installation, commit, push, branch change or pull request was performed. No unrelated package, patch or lockfile was edited.
+
+## aiohttp-retry license-classifier QA follow-up
+
+This narrowly scoped follow-up changes only the aiohttp-retry ebuild and this document. In python_prepare_all(), an anchored sed expression removes exactly the obsolete classifier entry:
+
+    sed -e '/^[[:space:]]*"License :: OSI Approved :: MIT License",$/d' -i setup.py || die
+
+Entry removed:
+
+    "License :: OSI Approved :: MIT License",
+
+The existing correction from upstream 2.9.0 to the ebuild PV and its verification are unchanged. setup.py retains license="MIT", the ebuild retains LICENSE="MIT" and the setuptools backend, and distutils-r1_python_prepare_all is still called. No warning suppression was added and the source archive was not modified.
+
+Primary sources consulted: [v2.9.1 setup.py](https://raw.githubusercontent.com/inyutin/aiohttp_retry/v2.9.1/setup.py), current [Setuptools license migration guidance](https://setuptools.pypa.io/en/stable/userguide/license_migration.html), [PyPA core metadata](https://packaging.python.org/en/latest/specifications/core-metadata/), and the current local distutils-r1.eclass prepare-hook implementation. These sources explain the deprecated classifier; only the requested entry was removed.
+
+### VERIFIED: commands and isolation
+
+Fresh local workspace:
+
+    /tmp/codex/dev-python/aiohttp-retry-2.9.1/license-classifier-1792433766684902612
+
+Host commands returned hostname leonids-pc and uname -m x86_64. Portage environment settings were:
+
+    PORTAGE_TMPDIR=/tmp/codex/dev-python/aiohttp-retry-2.9.1/license-classifier-1792433766684902612/build
+    PORTAGE_DEPCACHEDIR=/tmp/codex/dev-python/aiohttp-retry-2.9.1/license-classifier-1792433766684902612/dep-cache
+    PORT_LOGDIR=/tmp/codex/dev-python/aiohttp-retry-2.9.1/license-classifier-1792433766684902612/logs
+    DISTDIR=/tmp/codex/dev-python/aiohttp-retry-2.9.1/license-classifier-1792433766684902612/distfiles
+    PKGDIR=/tmp/codex/dev-python/aiohttp-retry-2.9.1/license-classifier-1792433766684902612/packages
+    XDG_CACHE_HOME=/tmp/codex/dev-python/aiohttp-retry-2.9.1/license-classifier-1792433766684902612/cache
+    PYTHONPATH=/tmp/codex/dev-python/aiohttp-retry-2.9.1/license-classifier-1792433766684902612/testdeps
+    FEATURES="-userpriv -usersandbox -buildpkg -ccache -distcc"
+    MAKEOPTS="-j2"
+    NINJAOPTS="-j2"
+
+PORTAGE_REPOSITORIES selected the local checkout with the installed Gentoo/Guru masters. Declared test helpers were supplied through SHA256-checked upstream wheels extracted into the temporary PYTHONPATH; no live dependencies were installed. Commands with those settings:
+
+    ebuild /home/leonid/GitHub/leonchik1976/gentoo-overlay/dev-python/aiohttp-retry/aiohttp-retry-2.9.1.ebuild unpack prepare configure compile
+    ebuild /home/leonid/GitHub/leonchik1976/gentoo-overlay/dev-python/aiohttp-retry/aiohttp-retry-2.9.1.ebuild test
+    sudo -n env <the explicit temporary settings above> ebuild /home/leonid/GitHub/leonchik1976/gentoo-overlay/dev-python/aiohttp-retry/aiohttp-retry-2.9.1.ebuild install
+
+Prepared setup.py and generated wheels were inspected between compile and test. Logs and local wheel artifacts were retained before cleaning the build workdir. The remote run asserted native aarch64 on gentoo and used this unique temporary repository/workspace:
+
+    /tmp/codex/dev-python/aiohttp-retry-2.9.1/validation-1792433880496331469
+
+Actual remote phase commands:
+
+    ebuild /tmp/codex/dev-python/aiohttp-retry-2.9.1/validation-1792433880496331469/repo/dev-python/aiohttp-retry/aiohttp-retry-2.9.1.ebuild clean unpack prepare configure compile
+    ebuild /tmp/codex/dev-python/aiohttp-retry-2.9.1/validation-1792433880496331469/repo/dev-python/aiohttp-retry/aiohttp-retry-2.9.1.ebuild test install
+
+Remote Portage paths and test helpers were likewise confined under that workspace, with FEATURES="-buildpkg -ccache -distcc" and two build jobs. Logs, prepared-source checks, full wheel metadata and image inventories were returned locally before removing only the unique temporary staging directory. The remote checkout was never modified.
+
+Post-build scoped local commands:
+
+    pkgdev manifest -d /tmp/codex/dev-python/aiohttp-retry-2.9.1/license-classifier-1792433766684902612/distfiles dev-python/aiohttp-retry
+    pkgcheck scan --cache-dir /tmp/codex/dev-python/aiohttp-retry-2.9.1/license-classifier-1792433766684902612/pkgcheck-cache dev-python/aiohttp-retry
+    bash -n /home/leonid/GitHub/leonchik1976/gentoo-overlay/dev-python/aiohttp-retry/aiohttp-retry-2.9.1.ebuild
+
+### VERIFIED: prepared source, metadata, warning and tests
+
+Both architectures completed build, tests and temporary image staging with exit 0. The prepared setup.py was compared byte-for-byte against the original archive with exactly the pre-existing version correction and this single classifier removal applied. AST checks confirmed version, license and the complete remaining classifier list. Wheel filename versions were parsed independently of METADATA; both agree on 2.9.1.
+
+amd64:
+
+    Wheel: aiohttp_retry-2.9.1-py3-none-any.whl
+    Metadata entry: aiohttp_retry-2.9.1.dist-info/METADATA
+    Name: aiohttp_retry
+    Version: 2.9.1
+    License: MIT
+    Classifier: Programming Language :: Python :: 3
+    Classifier: Operating System :: OS Independent
+    License-classifier warning matches in complete build/staging logs: 0
+    ======================= 42 passed, 3 warnings in 17.23s ========================
+    ======================= 42 passed, 3 warnings in 17.27s ========================
+    ======================= 42 passed, 3 warnings in 17.23s ========================
+
+Remaining test warning messages:
+
+    DeprecationWarning: BasicAuth is deprecated and will be removed in aiohttp 4.0; use aiohttp.encode_basic_auth() with headers={'Authorization': ...} instead
+    DeprecationWarning: The 'auth' parameter is deprecated and will be removed in v4; pass headers={'Authorization': aiohttp.encode_basic_auth(login, password)} instead
+    PytestAssertRewriteWarning: Module already imported so cannot be rewritten; asyncio
+
+arm64:
+
+    Wheel: aiohttp_retry-2.9.1-py3-none-any.whl
+    Metadata entry: aiohttp_retry-2.9.1.dist-info/METADATA
+    Name: aiohttp_retry
+    Version: 2.9.1
+    License: MIT
+    Classifier: Programming Language :: Python :: 3
+    Classifier: Operating System :: OS Independent
+    License-classifier warning matches in complete build/staging logs: 0
+    ======================= 42 passed, 3 warnings in 17.27s ========================
+    ======================= 42 passed, 3 warnings in 17.31s ========================
+    ======================= 42 passed, 3 warnings in 17.30s ========================
+
+Remaining test warning messages:
+
+    DeprecationWarning: BasicAuth is deprecated and will be removed in aiohttp 4.0; use aiohttp.encode_basic_auth() with headers={'Authorization': ...} instead
+    DeprecationWarning: The 'auth' parameter is deprecated and will be removed in v4; pass headers={'Authorization': aiohttp.encode_basic_auth(login, password)} instead
+    PytestAssertRewriteWarning: Module already imported so cannot be rewritten; asyncio
+
+The earlier amd64 build log provides the literal positive control:
+
+    SetuptoolsDeprecationWarning: License classifiers are deprecated.
+
+The unchanged source archive SHA256 is:
+
+    873fc4f7c5dde1206d7016d4d9889f0f6ea03bf5b6bafcb889bd407f0d97f84e
+
+Full evidence remains in prepared-source-amd64.json, prepared-source-arm64.json, wheel-metadata-amd64.json, wheel-metadata-arm64.json, build-amd64.log, stage-amd64.log, build-arm64.log, validation-arm64.json and classifier-validation-checks.json under the fresh workspace. Local wheel files are retained under wheel-artifacts-amd64.
+
+Scoped pkgcheck exit 0; literal remaining output:
+
+    dev-python/aiohttp-retry
+      PythonCompatUpdate: version 2.9.1: PYTHON_COMPAT update available: python3_15
+
+pkgdev manifest exit 0; bash -n exit 0 with empty stdout/stderr. The Manifest is byte-identical to the pre-fix snapshot.
+
+### NOT VERIFIED / limits
+
+Python 3.12, 3.13 and 3.14 were built and tested on both hosts. Python 3.15 remains untested; the existing PythonCompatUpdate suggestion is reported rather than suppressed. The remaining pytest/plugin and aiohttp-auth deprecation warnings are quoted above. Temporary image staging is not live-system integration testing. No live-system installation/merge, branch creation/switch, commit, push or PR was performed. Unrelated checkout files were preserved.

@@ -29,5 +29,8 @@ python_prepare_all() {
 	sed -e "s/version=\"2[.]9[.]0\"/version=\"${PV}\"/" -i setup.py || die
 	grep -Fq "    version=\"${PV}\"," setup.py || die "Incorrect source version"
 
+	# Remove the obsolete classifier while retaining license="MIT".
+	sed -e '/^[[:space:]]*"License :: OSI Approved :: MIT License",$/d' -i setup.py || die
+
 	distutils-r1_python_prepare_all
 }
