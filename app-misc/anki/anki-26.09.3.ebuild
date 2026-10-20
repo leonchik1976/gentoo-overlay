@@ -662,6 +662,7 @@ GUI_RDEPEND="
 	${PYTHON_DEPS}
 	dev-qt/qtsvg:6
 	$(python_gen_cond_dep '
+		>=dev-python/asgiref-3.2[${PYTHON_USEDEP}]
 		dev-python/beautifulsoup4[${PYTHON_USEDEP}]
 		dev-python/distro[${PYTHON_USEDEP}]
 		dev-python/decorator[${PYTHON_USEDEP}]
