@@ -75,6 +75,7 @@ DEPEND="
 	app-misc/jq:=
 	dev-cpp/gflags:=
 	dev-db/lmdb:=
+	dev-libs/icu:=
 	dev-lang/jsonnet:=
 	dev-libs/libaio:=
 	<dev-libs/libfmt-11.1.5:=
@@ -122,7 +123,6 @@ DEPEND="
 	)
 	rabbitmq? ( net-libs/rabbitmq-c:= )
 	radosgw? (
-		dev-libs/icu:=
 		dev-libs/expat:=
 		net-misc/curl:=[curl_ssl_openssl]
 	)
