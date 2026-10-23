@@ -25,7 +25,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
 PATCHES=(
-	"${FILESDIR}/${P}-drop-license-classifier.patch"
+	"${FILESDIR}/mysql-connector-python-26.7.0-drop-license-classifier.patch"
 )
 
 DOCS=(

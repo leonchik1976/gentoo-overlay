@@ -14,7 +14,9 @@ HOMEPAGE="
 	https://docs.aws.amazon.com/serverless-application-model/
 "
 
-LICENSE="Apache-2.0"
+LICENSE="Apache-2.0 BSD BSD-2 MIT"
+DOCS=( README.md THIRD-PARTY-LICENSES )
+
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
@@ -24,7 +26,7 @@ RESTRICT="test"
 # Upstream requests boto3[crt].  CRT support is intentionally omitted;
 # standard botocore HTTP and S3 transfer implementations remain available.
 #
-# Upstream (1.169.0) pins click-8.1.8, boto3-1.43.108, tomlkit-0.15.1,
+# Upstream (1.170.0) pins click-8.1.8, boto3-1.43.108, tomlkit-0.15.1,
 # watchdog-4.0.2 and tzlocal-5.4.4, and requires rich>=14.3.3.
 # Gentoo patch/minor updates within the bounds below are intentionally
 # allowed.  Rich follows upstream's range; sci-ml/ollmcp carries a local
@@ -37,7 +39,7 @@ RDEPEND+="
 	<dev-python/boto3-1.44[${PYTHON_USEDEP}]
 	>=dev-python/boto3-stubs-1.41.0[${PYTHON_USEDEP}]
 	>=dev-python/cfn-lint-1.52.0[${PYTHON_USEDEP}]
-	<dev-python/cfn-lint-1.54[${PYTHON_USEDEP}]
+	<dev-python/cfn-lint-1.59[${PYTHON_USEDEP}]
 	>=dev-python/chevron-0.12[${PYTHON_USEDEP}]
 	<dev-python/chevron-1[${PYTHON_USEDEP}]
 	>=dev-python/click-8.1.8[${PYTHON_USEDEP}]

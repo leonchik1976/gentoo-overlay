@@ -19,7 +19,7 @@ SRC_URI="
 "
 S="${WORKDIR}"
 
-LICENSE="MPL-2.0 BUSL-1.1"
+LICENSE="MPL-2.0 BUSL-1.1 Apache-2.0 BSD BSD-2 MIT Unicode-DFS-2016 Unlicense"
 SLOT="0"
 KEYWORDS="-* ~amd64 ~arm64"
 RESTRICT="strip"

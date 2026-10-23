@@ -1,0 +1,35 @@
+Fix the offline NetworkFirewall fixture to match the 1.58.0 GetAtt test.
+
+Upstream a0bdcfdf676997beaf243aff205dd20224a041c3 updated the assertions
+for NumberOfAssociations, but not the fallback fixture selected by
+test/unit/conftest.py when no downloaded schema cache exists. Copy only
+the property and read-only entry from the production schema shipped in
+this same release (src/cfnlint/data/schemas/resources/b16c8a77751b42a5.json).
+Keep all assertions and runtime schemas unchanged; no network is needed.
+
+Upstream: https://github.com/aws-cloudformation/cfn-lint/pull/4788
+Source: https://github.com/aws-cloudformation/cfn-lint/blob/v1.58.0/src/cfnlint/data/schemas/resources/b16c8a77751b42a5.json
+
+--- a/test/fixtures/schemas/resources/5a9db56d38ad6f4f.json
++++ b/test/fixtures/schemas/resources/5a9db56d38ad6f4f.json
+@@ -206,6 +206,10 @@
+   "FirewallPolicyChangeProtection": {
+    "type": "boolean"
+   },
++  "NumberOfAssociations": {
++   "description": "The number of VPC endpoint associations attached to the firewall.",
++   "type": "integer"
++  },
+   "SubnetChangeProtection": {
+    "type": "boolean"
+   },
+@@ -251,7 +255,8 @@
+   "/properties/FirewallArn",
+   "/properties/FirewallId",
+   "/properties/TransitGatewayAttachmentId",
+-  "/properties/EndpointIds"
++  "/properties/EndpointIds",
++  "/properties/NumberOfAssociations"
+  ],
+  "required": [
+   "FirewallName",

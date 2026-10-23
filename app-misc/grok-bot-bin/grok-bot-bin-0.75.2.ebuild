@@ -12,7 +12,7 @@ MY_PN="${PN%-bin}"
 # Per-release build id embedded in the Cursor CDN download path; changes
 # with every version and must be refreshed on each bump (grab it from the
 # links on https://x.ai/bot#download or https://cursor.com/download/bot).
-MY_BUILD="0754837254309a566ace488b3a8de245c7a82ea5"
+MY_BUILD="ec623d18b8a375d2ab29814cf974ddb791d8c33b"
 
 DESCRIPTION="Grok Bot desktop agent: xAI's always-on AI teammates"
 HOMEPAGE="https://x.ai/bot https://docs.x.ai/grok-bot/get-started"

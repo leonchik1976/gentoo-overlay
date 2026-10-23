@@ -15,7 +15,9 @@ HOMEPAGE="
 "
 
 # Upstream's PyPI sdist ships no test suite, so tests are not enabled here.
-LICENSE="MIT-0"
+LICENSE="MIT-0 MIT Apache-2.0"
+DOCS=( README.md THIRD-PARTY-LICENSES )
+
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 

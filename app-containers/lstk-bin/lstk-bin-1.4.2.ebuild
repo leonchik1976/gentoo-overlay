@@ -19,7 +19,7 @@ SRC_URI="
 "
 S="${WORKDIR}"
 
-LICENSE="Apache-2.0 BSD BSD-2 CC-BY-SA-4.0 MIT MPL-2.0 Unicode-DFS-2016"
+LICENSE="Apache-2.0 BSD BSD-2 MIT MPL-2.0 Unicode-DFS-2016"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 

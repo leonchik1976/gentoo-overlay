@@ -14,6 +14,8 @@ SRC_URI="https://downloads.k8slens.dev/ide/${MY_PN}-${MY_PV}.amd64.deb"
 S="${WORKDIR}"
 
 LICENSE="
+	0BSD
+	BlueOak-1.0.0
 	APSL-2
 	Apache-2.0
 	Apache-2.0-with-LLVM-exceptions
@@ -55,7 +57,10 @@ KEYWORDS="~amd64"
 
 RESTRICT="bindist mirror strip"
 
+REQUIRED_USE="elibc_glibc"
+
 RDEPEND="
+	>=sys-libs/glibc-2.34
 	app-accessibility/at-spi2-core:2
 	app-crypt/libsecret
 	dev-libs/expat
@@ -91,12 +96,10 @@ RDEPEND="
 "
 
 QA_PREBUILT="
-	opt/Lens/chrome_crashpad_handler
 	opt/Lens/chrome-sandbox
+	opt/Lens/chrome_crashpad_handler
 	opt/Lens/lens-desktop
-	opt/Lens/libEGL.so
 	opt/Lens/libffmpeg.so
-	opt/Lens/libGLESv2.so
 	opt/Lens/libvk_swiftshader.so
 	opt/Lens/libvulkan.so.1
 	opt/Lens/resources/app.asar.unpacked/node_modules/@azure/msal-node-runtime/dist/libmsalruntime.so
@@ -109,12 +112,17 @@ QA_PREBUILT="
 	opt/Lens/resources/app.asar.unpacked/node_modules/@electron-internal/extract-zip/index.linux-ia32-gnu.node
 	opt/Lens/resources/app.asar.unpacked/node_modules/@electron-internal/extract-zip/index.linux-x64-gnu.node
 	opt/Lens/resources/app.asar.unpacked/node_modules/@electron-internal/extract-zip/index.linux-x64-musl.node
+	opt/Lens/resources/app.asar.unpacked/node_modules/@parcel/watcher-linux-x64-glibc/watcher.node
+	opt/Lens/resources/app.asar.unpacked/node_modules/@parcel/watcher-linux-x64-musl/watcher.node
+	opt/Lens/resources/app.asar.unpacked/node_modules/@parcel/watcher/bin/linux-x64-149/watcher.node
+	opt/Lens/resources/app.asar.unpacked/node_modules/@parcel/watcher/build/Release/watcher.node
+	opt/Lens/resources/app.asar.unpacked/node_modules/@typescript/typescript-linux-x64/lib/tsc
 	opt/Lens/resources/app.asar.unpacked/node_modules/keytar/build/Release/keytar.node
-	opt/Lens/resources/app.asar.unpacked/node_modules/msgpackr-extract/bin/linux-x64-148/msgpackr-extract.node
+	opt/Lens/resources/app.asar.unpacked/node_modules/msgpackr-extract/bin/linux-x64-149/msgpackr-extract.node
 	opt/Lens/resources/app.asar.unpacked/node_modules/msgpackr-extract/build/Release/extract.node
-	opt/Lens/resources/app.asar.unpacked/node_modules/native-machine-id/bin/linux-x64-148/native-machine-id.node
+	opt/Lens/resources/app.asar.unpacked/node_modules/native-machine-id/bin/linux-x64-149/native-machine-id.node
 	opt/Lens/resources/app.asar.unpacked/node_modules/native-machine-id/build/Release/native_machine_id.node
-	opt/Lens/resources/app.asar.unpacked/node_modules/node-pty/bin/linux-x64-148/node-pty.node
+	opt/Lens/resources/app.asar.unpacked/node_modules/node-pty/bin/linux-x64-149/node-pty.node
 	opt/Lens/resources/app.asar.unpacked/node_modules/node-pty/build/Release/pty.node
 	opt/Lens/resources/cli/bin/lens-cli-linux-x64
 	opt/Lens/resources/x64/helm
@@ -122,7 +130,7 @@ QA_PREBUILT="
 	opt/Lens/resources/x64/lens-k8s-proxy
 "
 
-# The extract-zip module bundles variants for platforms other than Linux
+# The extract-zip and watcher modules bundle variants for platforms other than Linux
 # amd64/glibc. They are selected by platform at runtime and must not contribute
 # foreign-ABI requirements to this amd64 package's dependency metadata.
 REQUIRES_EXCLUDE="
@@ -131,6 +139,7 @@ REQUIRES_EXCLUDE="
 	opt/Lens/resources/app.asar.unpacked/node_modules/@electron-internal/extract-zip/index.linux-arm64-musl.node
 	opt/Lens/resources/app.asar.unpacked/node_modules/@electron-internal/extract-zip/index.linux-ia32-gnu.node
 	opt/Lens/resources/app.asar.unpacked/node_modules/@electron-internal/extract-zip/index.linux-x64-musl.node
+	opt/Lens/resources/app.asar.unpacked/node_modules/@parcel/watcher-linux-x64-musl/watcher.node
 "
 
 src_unpack() {

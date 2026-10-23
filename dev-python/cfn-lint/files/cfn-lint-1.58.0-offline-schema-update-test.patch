@@ -1,0 +1,28 @@
+Mock the version.json request in the already-mocked schema-update unit test.
+
+ProviderSchemaManager.update() in v1.58.0 fetches version.json after installing
+schemas. test_update_force mocks the schema archive and metadata requests but
+leaves this request live. Offline execution changes the last debug log call
+and fails its existing assertion. Mock only that remaining response, keeping
+all assertions and runtime behavior unchanged.
+
+Source: https://github.com/aws-cloudformation/cfn-lint/blob/v1.58.0/src/cfnlint/schema/manager.py
+
+--- a/test/unit/module/schema/test_manager.py
++++ b/test/unit/module/schema/test_manager.py
+@@ -73,6 +73,7 @@
+         result = self.manager.update(force=False)
+         self.assertEqual(result, 0)
+
++    @patch("cfnlint.schema.manager.get_url_content", return_value='{}')
+     @patch("cfnlint.schema.manager.LOGGER")
+     @patch("cfnlint.schema.manager.save_metadata")
+     @patch("cfnlint.schema.manager.get_url_metadata")
+@@ -87,6 +88,7 @@
+         mock_get_metadata,
+         mock_save_metadata,
+         mock_logger,
++        mock_version_content,
+     ):
+         """Force download even if cached"""
+         import tempfile
