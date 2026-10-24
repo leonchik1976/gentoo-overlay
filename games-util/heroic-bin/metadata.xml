@@ -6,6 +6,9 @@
     <email>leonchik1976@gmail.com</email>
     <name>Leonid Kopylov</name>
   </maintainer>
+  <use>
+    <flag name="gamescope">Run Heroic Launcher inside gamescope</flag>
+  </use>
   <longdescription>
     Heroic is an Open Source Game Launcher for Linux, Windows and macOS. Right
     now it supports launching games from the Epic Games Store using Legendary
