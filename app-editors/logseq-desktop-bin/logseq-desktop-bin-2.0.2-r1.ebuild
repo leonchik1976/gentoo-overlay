@@ -3,20 +3,29 @@
 
 EAPI=8
 
+PYTHON_COMPAT=( python3_{12..15} )
+
 CHROMIUM_LANGS="
 	af am ar bg bn ca cs da de el en-GB en-US es-419 es et fa fil fi fr gu he hi
 	hr hu id it ja kn ko lt lv ml mr ms nb nl pl pt-BR pt-PT ro ru sk sl sr sv sw
 	ta te th tr uk ur vi zh-CN zh-TW
 "
 
-inherit chromium-2 desktop unpacker xdg
+inherit chromium-2 desktop python-any-r1 unpacker xdg
+
+# Must match the SDK bundled in resources/app.asar.
+ZVEC_PV=0.5.0
 
 DESCRIPTION="A privacy-first, open-source platform for knowledge sharing and management"
 HOMEPAGE="https://github.com/logseq"
-SRC_URI="https://github.com/logseq/logseq/releases/download/${PV}/Logseq-linux-arm64-${PV}.zip -> ${P}-arm64.zip"
+SRC_URI="
+	https://github.com/logseq/logseq/releases/download/${PV}/Logseq-linux-arm64-${PV}.zip -> ${P}-arm64.zip
+	https://registry.npmjs.org/@zvec/bindings-linux-arm64/-/bindings-linux-arm64-${ZVEC_PV}.tgz
+		-> zvec-bindings-linux-arm64-${ZVEC_PV}.tgz
+"
 S="${WORKDIR}"
 
-LICENSE="AGPL-3"
+LICENSE="AGPL-3 Apache-2.0"
 SLOT="2"
 KEYWORDS="-* ~arm64"
 IUSE="wayland"
@@ -33,7 +42,8 @@ RDEPEND="
 	net-misc/curl
 	net-print/cups
 	sys-apps/dbus
-	sys-libs/glibc
+	sys-devel/gcc:*
+	>=sys-libs/glibc-2.28
 	virtual/zlib:=
 	x11-libs/cairo
 	x11-libs/gtk+:3
@@ -49,6 +59,8 @@ RDEPEND="
 	x11-libs/pango
 "
 BDEPEND="
+	${PYTHON_DEPS}
+	app-admin/chrpath
 	app-arch/unzip
 "
 
@@ -61,6 +73,17 @@ src_configure() {
 
 src_prepare() {
 	default
+
+	# Drop unused upstream CI search paths before computing ASAR integrity hashes.
+	chrpath -d "${WORKDIR}/package/zvec_node_binding.node" || die
+
+	# Replace upstream's foreign binding in both the ASAR index and unpacked tree.
+	"${PYTHON}" "${FILESDIR}/install-zvec-binding.py" resources/app.asar \
+		"${WORKDIR}/package" || die "Failed to register the arm64 ZVec binding"
+	rm -r resources/app.asar.unpacked/node_modules/@zvec/bindings-linux-x64 || die
+	cp -a "${WORKDIR}/package" \
+		resources/app.asar.unpacked/node_modules/@zvec/bindings-linux-arm64 || die
+
 	pushd locales > /dev/null || die
 	chromium_remove_language_paks
 	popd > /dev/null || die
@@ -75,6 +98,8 @@ src_install() {
 		v8_context_snapshot.bin vk_swiftshader_icd.json
 	insopts -m0755
 	doins -r locales resources
+	# Keep the new unpacked file's size and integrity hashes in sync with its ASAR entry.
+	dostrip -x /opt/logseq-desktop/resources/app.asar.unpacked/node_modules/@zvec/bindings-linux-arm64
 
 	# Chrome-sandbox requires the setuid bit to be specifically set
 	# see https://github.com/electron/electron/issues/17972
