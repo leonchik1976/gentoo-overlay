@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription lang="en">
+		An Electron workspace for coding agents, editors, and task tracking.
+		The TypeScript application and native PTY/SQLite addons are compiled
+		locally. Electron and third-party runtimes, including Anthropic's
+		proprietary agent executable, remain bundled prebuilt dependencies.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">nimbalyst/nimbalyst</remote-id>
+	</upstream>
+</pkgmetadata>

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Nimbalyst
+Comment=Visual workspace for coding agents
+Icon=nimbalyst
+Categories=Development;
+Exec=nimbalyst %U
+TryExec=nimbalyst
+MimeType=text/markdown;x-scheme-handler/nimbalyst;

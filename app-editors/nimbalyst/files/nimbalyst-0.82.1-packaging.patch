@@ -1,0 +1,61 @@
+Disable vendor binary updates for the distribution-managed build, and make
+Linux worker ABI probes execute the application rather than chrome-sandbox.
+The latter issue is observable in the tagged upstream checker; no sandbox or
+ABI compatibility checks are disabled.
+
+--- a/packages/electron/build/validate-packaged-sdks.js
++++ b/packages/electron/build/validate-packaged-sdks.js
+@@ -546,13 +546,9 @@
+     return path.join(macOsDir, entries[0]);
+   }
+   if (targetPlatform === 'linux') {
+-    const entries = fs.readdirSync(appPath, { withFileTypes: true });
+-    for (const e of entries) {
+-      if (!e.isFile()) continue;
+-      const full = path.join(appPath, e.name);
+-      if (isExecutableFile(full)) return full;
+-    }
+-    return null;
++    const executable = require('../package.json').build.linux.executableName;
++    const full = path.join(appPath, executable);
++    return isExecutableFile(full) ? full : null;
+   }
+   if (targetPlatform === 'win32') {
+     const entries = fs.readdirSync(appPath).filter((n) => n.toLowerCase().endsWith('.exe'));
+--- a/packages/electron/src/main/services/autoUpdater.ts
++++ b/packages/electron/src/main/services/autoUpdater.ts
+@@ -69,8 +69,13 @@
+     // Configure auto-updater. autoDownload=true: both background polls and the
+     // manual "Check for Updates" trigger download immediately, then surface a
+     // single "Ready to install" toast. Per maintainer direction on #327.
+-    autoUpdater.autoDownload = true;
+-    autoUpdater.autoInstallOnAppQuit = true;
++    // The distribution owns this installation and its architecture selection.
++    autoUpdater.autoDownload = false;
++    autoUpdater.autoInstallOnAppQuit = false;
++    const managedUpdate = () => { throw new Error('Updates are managed by Portage.'); };
++    autoUpdater.checkForUpdates = async () => managedUpdate();
++    autoUpdater.downloadUpdate = async () => managedUpdate();
++    autoUpdater.quitAndInstall = managedUpdate;
+ 
+     // electron-updater's stock Authenticode check times out at 20s, which a
+     // freshly downloaded installer can exceed while Defender scans it.
+@@ -581,16 +586,8 @@
+     });
+   }
+ 
+-  public startAutoUpdateCheck(intervalMinutes = 60) {
+-    // Initial check after 30 seconds
+-    setTimeout(() => {
+-      this.checkForUpdates();
+-    }, 30000);
+-
+-    // Set up periodic checks
+-    this.updateCheckInterval = setInterval(() => {
+-      this.checkForUpdates();
+-    }, intervalMinutes * 60 * 1000);
++  public startAutoUpdateCheck(_intervalMinutes = 60) {
++    // No polling of vendor binaries for a Portage-managed source build.
+   }
+ 
+   public stopAutoUpdateCheck() {
