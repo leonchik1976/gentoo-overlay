@@ -9,7 +9,7 @@ DISTUTILS_EXT=1
 # passed the previous release test suite on arm64 with Python 3.12-3.14.
 # This release still needs architecture validation.
 DISTUTILS_USE_PEP517=maturin
-PYTHON_COMPAT=( python3_{12..14} )
+PYTHON_COMPAT=( python3_{12..14} python3_14t )
 
 RUST_MIN_VER="1.83.0"
 CRATES="
@@ -58,9 +58,28 @@ BDEPEND+="
 
 QA_FLAGS_IGNORED="usr/lib.*/site-packages/jh2/_hazmat.*.so"
 
+PATCHES=( "${FILESDIR}/${P}-hypothesis-executors.patch" )
+
 EPYTEST_PLUGINS=()
 distutils_enable_tests pytest
 
 src_unpack() {
 	cargo_src_unpack
+}
+
+python_test() {
+	# Test the staged package, including its compiled extension.
+	rm -rf jh2 || die
+	"${EPYTHON}" - "${BUILD_DIR}/install" <<-EOF || die
+	import importlib, pathlib, sys
+	print("Interpreter:", sys.version)
+	print("GIL before:", getattr(sys, "_is_gil_enabled", lambda: True)())
+	for name in ("jh2", "jh2._hazmat"):
+	    module = importlib.import_module(name)
+	    location = pathlib.Path(module.__file__).resolve()
+	    print("Imported:", name, location)
+	    assert location.is_relative_to(pathlib.Path(sys.argv[1]).resolve()), location
+	print("GIL after:", getattr(sys, "_is_gil_enabled", lambda: True)())
+	EOF
+	epytest -ra
 }

@@ -5,7 +5,7 @@ EAPI=8
 
 DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=maturin
-PYTHON_COMPAT=( python3_{12..14} )
+PYTHON_COMPAT=( python3_{12..14} python3_14t )
 
 RUST_MIN_VER="1.88.0"
 CRATES="
@@ -221,7 +221,7 @@ BDEPEND+="
 QA_FLAGS_IGNORED="usr/lib.*/site-packages/qh3/_hazmat.*.so"
 
 # Network-facing integration examples need additional web and DNS stacks.
-EPYTEST_PLUGINS=()
+EPYTEST_PLUGINS=( pytest-asyncio )
 distutils_enable_tests pytest
 
 src_unpack() {
@@ -229,5 +229,18 @@ src_unpack() {
 }
 
 python_test() {
-	epytest --ignore=tests/test_asyncio.py --ignore=tests/test_ech.py
+	# Test the staged package, including its compiled extension.
+	rm -rf qh3 || die
+	"${EPYTHON}" - "${BUILD_DIR}/install" <<-EOF || die
+	import importlib, pathlib, sys
+	print("Interpreter:", sys.version)
+	print("GIL before:", getattr(sys, "_is_gil_enabled", lambda: True)())
+	for name in ("qh3", "qh3._hazmat"):
+	    module = importlib.import_module(name)
+	    location = pathlib.Path(module.__file__).resolve()
+	    print("Imported:", name, location)
+	    assert location.is_relative_to(pathlib.Path(sys.argv[1]).resolve()), location
+	print("GIL after:", getattr(sys, "_is_gil_enabled", lambda: True)())
+	EOF
+	epytest -ra --ignore=tests/test_asyncio.py --ignore=tests/test_ech.py
 }

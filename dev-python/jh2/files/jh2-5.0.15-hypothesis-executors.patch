@@ -1,0 +1,23 @@
+The parametrized method does not use self or instance state. Its different
+pytest-created instances are therefore equivalent Hypothesis executors.
+Limit the differing_executors exception to this one stateless property test.
+
+--- a/tests/test_invalid_headers.py
++++ b/tests/test_invalid_headers.py
+@@ -26,7 +26,7 @@
+ 
+ from jh2.hyperframe import frame
+ 
+-from hypothesis import given
++from hypothesis import HealthCheck, given, settings
+ from hypothesis.strategies import binary, lists, tuples
+ 
+ HEADERS_STRATEGY = lists(tuples(binary(min_size=1), binary()))
+@@ -514,6 +514,7 @@
+     @pytest.mark.parametrize('validation_function', validation_functions)
+     @pytest.mark.parametrize('hdr_validation_flags', hdr_validation_combos)
+     @given(headers=HEADERS_STRATEGY)
++    @settings(suppress_health_check=[HealthCheck.differing_executors])
+     def test_range_of_acceptable_outputs(self,
+                                          headers,
+                                          validation_function,
