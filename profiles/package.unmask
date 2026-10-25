@@ -12,3 +12,8 @@ www-apps/kibana-bin
 # Maintain the NTP reference implementation locally after Gentoo retirement.
 # https://bugs.gentoo.org/962880
 =net-misc/ntp-4.2.8_p18-r4
+
+# Leonid Kopylov <leonchik1976@gmail.com> (2026-10-25)
+# Maintain ca-bundle and its Gentoo autoloader integration locally.
+=dev-php/ca-bundle-1.6.0
+=dev-php/fedora-autoloader-1.0.1
