@@ -480,3 +480,143 @@ Both returned exit status 0. Compass stdout was empty; JupyterLab stdout was:
 sci-misc/jupyterlab-desktop
   OldPackageName: package uses old name which is source of pkgmove, rename into 'sci-misc/jupyterlab-desktop-bin'
 ```
+
+
+## Compass 1.53.1 Electron L10N selection (2026-10-26)
+
+**Implementation.** Only the Compass source ebuild changed. `CHROMIUM_LANGS`
+is defined before inheriting `chromium-2`; its 55 tags were derived from
+`locales/*.pak` in the exact bundled
+[Electron 45.0.0 Linux arm64 archive](https://github.com/electron/electron/releases/download/v45.0.0/electron-v45.0.0-linux-arm64.zip).
+Its SHA512 is
+`e18cdce5abd108a116a5a1fc35cd7d51d9ca31a548ea432de31d707b88d205d26ab6ccedf0c96a3ab97b79c9699f4ae8edf3107afb852d85dc8b935753bcad35`.
+`src_install` calls `chromium_remove_language_paks` in the extracted Electron
+`locales` directory, in a subshell so the existing installation directory does
+not change. The source build, native addon compilation, runtime selection,
+other packaging behavior, and `KEYWORDS="~arm64"` are preserved.
+L10N selects Electron resource packs; it does not add Compass interface translations.
+
+Sources inspected on `leonids-pc` were
+`/var/db/repos/gentoo/eclass/chromium-2.eclass` (documentation and implementation),
+`/var/db/repos/gentoo/eclass/linux-info.eclass`,
+`/var/db/repos/gentoo/profiles/desc/l10n.desc`, and the current local-tree example
+`/var/db/repos/gentoo/dev-db/mongodb-compass-bin/mongodb-compass-bin-1.50.0.ebuild`.
+The [official chromium-2 reference](https://devmanual.gentoo.org/eclass-reference/chromium-2.eclass/index.html)
+confirms the helper's current-directory contract and supported EAPIs 7 and 8;
+this ebuild retains EAPI 8. The implementation generates L10N USE flags at
+inheritance time, checks the declared list against available packs, and always
+retains `en-US` as a fallback. The example's list was not used as the authority
+for this release. All archive tags exist in the current Gentoo L10N registry.
+
+**VERIFIED — static checks on `leonids-pc`.** Starting Git status was empty.
+No applicable filesystem AGENTS.md was found; the supplied repository
+instructions were followed. The workspace for this run, locally and on `gentoo`,
+was `/tmp/codex/dev-db/mongodb-compass-1.53.1/l10n-0xprd572`.
+Python `zipfile` enumerated archive members beginning `locales/` and ending
+`.pak`, compared their stems with the ebuild's `CHROMIUM_LANGS`, and checked
+uniqueness. Literal results:
+
+```text
+Archive/declaration equality: True (55 unique locale tags)
+KEYWORDS="~arm64": True
+Archive locale tags missing from ::gentoo L10N registry: []
+```
+
+Commands actually run from the overlay (cache paths were confined to this workspace):
+
+```bash
+bash -n dev-db/mongodb-compass/mongodb-compass-1.53.1.ebuild
+pkgdev manifest -d /tmp/codex/dev-db/mongodb-compass-1.53.1/distfiles dev-db/mongodb-compass
+XDG_CACHE_HOME=/tmp/codex/dev-db/mongodb-compass-1.53.1/l10n-0xprd572/cache pkgcheck scan dev-db/mongodb-compass
+XDG_CACHE_HOME=/tmp/codex/dev-db/mongodb-compass-1.53.1/l10n-0xprd572/cache pkgcheck scan --profiles default/linux/arm64/23.0 dev-db/mongodb-compass
+git diff --check
+```
+
+All returned exit status 0. `bash -n`, `git diff --check`, and the glibc-profile
+scan emitted no output. Manifest generation printed `manifests are up to date`;
+no Manifest content changed. The full package scan retained these existing
+findings, with no new finding and no suppression:
+
+```text
+dev-db/mongodb-compass
+  RequiredUseDefaults: version 1.53.1: profile: 'default/linux/arm64/23.0/musl' (3 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 1.53.1: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~arm64) dev profile (default/linux/arm64/23.0/musl) (3 total)
+```
+
+**VERIFIED — native arm64 build and image on `gentoo`.** `uname -m` returned
+`aarch64`. A fresh validation subdirectory was created, and a tarball containing
+the package, its dependency eclass, and minimal repository metadata was copied
+there and extracted into `repo`. No remote overlay checkout was changed.
+To free tmpfs space, only the previous assistant-created Compass review build
+was cleaned using `ebuild ... clean`; its image and log had already been copied
+back to `leonids-pc`. The new full build used this command from the fresh directory:
+
+```bash
+L10N="en-US he ru" \
+PORTDIR_OVERLAY=/tmp/codex/dev-db/mongodb-compass-1.53.1/l10n-0xprd572/repo \
+DISTDIR=/tmp/codex/dev-db/mongodb-compass-1.53.1/distfiles \
+PORTAGE_TMPDIR=/tmp/codex/dev-db/mongodb-compass-1.53.1/l10n-0xprd572/build \
+FEATURES="-userpriv" MAKEOPTS="-j4" \
+ebuild repo/dev-db/mongodb-compass/mongodb-compass-1.53.1.ebuild clean unpack prepare configure compile install > build.log 2>&1
+```
+
+Exit status was 0. Relevant literal log lines (terminal color escapes omitted):
+
+```text
+   ✔  61/61 succeeded [0 read from cache]
+>>> Source compiled.
+>>> Completed installing dev-db/mongodb-compass-1.53.1 into /tmp/codex/dev-db/mongodb-compass-1.53.1/l10n-0xprd572/build/portage/dev-db/mongodb-compass-1.53.1/image
+```
+
+The build still emits Portage's large-environment warning (`A`, 77568 bytes),
+the existing upstream patch mode warning
+`warning: LIBRARY/float128/architecture.h has type 100755, expected 100644`,
+and compiler warnings in Node headers and Kerberos (multiline comments,
+function-pointer casts, and implicit `this` capture). No `QA Notice` or
+`L10N warning` appeared. These were not suppressed; this locale-only change
+does not modify their sources. The build's test phase was not enabled.
+
+The staged inspection script was run as:
+
+```bash
+ssh gentoo 'python3 /tmp/codex/dev-db/mongodb-compass-1.53.1/l10n-0xprd572/inspect-image.py'
+```
+
+It returned exit status 0 and the following literal results:
+
+```text
+Archive locale count: 55
+Declared locale count: 55
+Missing from declaration: []
+Extra declared locales: []
+Effective L10N USE flags: l10n_en-US l10n_he l10n_ru
+Installed locale packs: en-US.pak he.pak ru.pak
+Unselected locale packs absent: 52
+Unselected locale packs still present: []
+Locale packs outside runtime locales directory: []
+Selected packs byte-identical to archive: en-US.pak he.pak ru.pak
+Bundled Electron version: 45.0.0
+Expected native addons present and aarch64: 5
+Compiled Compass main.js present: True
+```
+
+The script compared the original archive with the staged ebuild and complete
+image, checked selected pack bytes, inspected ELF machine fields of the five
+expected addons, and read the effective USE flags. `scp` copied `build.log`
+(as `arm64-build.log`) and `image-inspection.log` back to the local workspace.
+The image was also copied back with:
+
+```bash
+ssh gentoo 'tar -C /tmp/codex/dev-db/mongodb-compass-1.53.1/l10n-0xprd572/build/portage/dev-db/mongodb-compass-1.53.1/image -czf - .' > /tmp/codex/dev-db/mongodb-compass-1.53.1/l10n-0xprd572/arm64-validation-image.tar.gz
+```
+
+**INFERRED.** Other L10N selections follow the inspected eclass helper's
+selection logic, including its mandatory `en-US` fallback; only the requested
+three-language combination was built in this run.
+
+**NOT VERIFIED.** Locale rendering in a running desktop, Compass interface
+translations, and other locale combinations were not tested. Architecture
+coverage is a real non-merging arm64 build through temporary-image installation
+on `gentoo`; static packaging checks ran on amd64 `leonids-pc`, with no amd64
+build. No live-system installation/merge, commit, push, branch change, or PR
+was performed. Signal, JupyterLab Desktop, and unrelated files were untouched.

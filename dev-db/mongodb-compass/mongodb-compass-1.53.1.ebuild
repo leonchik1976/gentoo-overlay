@@ -5,7 +5,13 @@
 EAPI=8
 
 PYTHON_COMPAT=( python3_{11..15} )
-inherit desktop multiprocessing python-any-r1 toolchain-funcs xdg-utils
+# Locale packs from Electron 45.0.0, not translations of the Compass interface.
+CHROMIUM_LANGS="
+	af am ar bg bn ca cs da de el en-GB en-US es-419 es et fa fi fil fr gu he
+	hi hr hu id it ja kn ko lt lv ml mr ms nb nl pl pt-BR pt-PT ro ru sk
+	sl sr sv sw ta te th tr uk ur vi zh-CN zh-TW
+"
+inherit chromium-2 desktop multiprocessing python-any-r1 toolchain-funcs xdg-utils
 inherit mongodb-compass-npm-deps-1.53.1
 
 DESCRIPTION="MongoDB GUI built from source, with bundled Electron"
@@ -156,6 +162,10 @@ src_install() {
 	electron_dir=$(mktemp -d "${T}/electron.XXXXXX") || die
 	unzip -q "${DISTDIR}/electron-v${ELECTRON_VERSION}-linux-arm64.zip" \
 		-d "${electron_dir}" || die
+	(
+		cd "${electron_dir}/locales" || die
+		chromium_remove_language_paks
+	) || die "Failed to prune Electron locale packs"
 	rm "${electron_dir}/resources/default_app.asar" || die
 	mv "${electron_dir}/electron" "${electron_dir}/${PN}" || die
 	insinto "${appdir}"
