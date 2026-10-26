@@ -88,6 +88,8 @@ src_prepare() {
 	cat > .yarnrc <<-EOF_YARN
 		yarn-offline-mirror "${T}/yarn-mirror"
 		cache-folder "${T}/yarn-cache"
+		prefix "${T}/yarn-prefix"
+		global-folder "${T}/yarn-global"
 		disable-self-update-check true
 	EOF_YARN
 	# Electron is fetched by Portage, never by npm lifecycle scripts.
@@ -96,7 +98,7 @@ src_prepare() {
 	mkdir -p node_modules/electron/dist || die
 	unzip -q "${DISTDIR}/electron-v${ELECTRON_VERSION}-linux-arm64.zip" \
 		-d node_modules/electron/dist || die
-	echo electron > node_modules/electron/path.txt || die
+	printf '%s' electron > node_modules/electron/path.txt || die
 }
 
 src_compile() {

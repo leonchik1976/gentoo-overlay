@@ -620,3 +620,460 @@ coverage is a real non-merging arm64 build through temporary-image installation
 on `gentoo`; static packaging checks ran on amd64 `leonids-pc`, with no amd64
 build. No live-system installation/merge, commit, push, branch change, or PR
 was performed. Signal, JupyterLab Desktop, and unrelated files were untouched.
+
+
+## Electron path.txt correction and fresh offline validation (2026-10-26)
+
+**Historical validation correction.** The earlier reported successful Compass
+validation did not establish reproducible offline behavior. Its reported success
+conflicts with the subsequently observed failure in
+`gentoo:/var/tmp/portage/dev-db/mongodb-compass-1.53.1/temp/build.log`.
+No explanation for that earlier success has been established. The fresh run
+below verifies the corrected ebuild offline; it resolves the current build
+failure, but does not explain or retroactively validate the historical result.
+
+**VERIFIED — cause and localized changes.** Starting Git status was empty;
+applicable ancestor/package AGENTS.md paths were checked, and the supplied
+repository instructions applied. The failed build directory was read using
+`ssh gentoo 'sudo -n tail .../temp/build.log'` and read-only Python inspections.
+It was not modified or cleaned. The retained failure log and remote log both
+had SHA256 `cf4a95a3fb92b89a0e617165d7e279aad7f3c188a068f99b1e26c00bd9de882d`.
+Literal failure evidence includes:
+
+```text
+Downloading Electron binary...
+TypeError: fetch failed
+Error: Electron failed to install correctly.
+Failed loader matches locked npm artifact: True
+Failed path.txt bytes: b'electron\n'
+```
+
+Compass's original release `package-lock.json` locks Electron 45.0.0;
+JupyterLab's original release `yarn.lock` resolves `electron@^42.4.0` to
+42.5.0. Both exact npm tarballs' SHA512 values were checked against the original
+release locks, not just their package version strings. Sources:
+[Electron 45 npm archive](https://registry.npmjs.org/electron/-/electron-45.0.0.tgz),
+[Electron 42.5 npm archive](https://registry.npmjs.org/electron/-/electron-42.5.0.tgz),
+[Compass release source](https://github.com/mongodb-js/compass/archive/refs/tags/v1.53.1.tar.gz),
+and [JupyterLab Desktop release source](https://github.com/jupyterlab/jupyterlab-desktop/archive/refs/tags/v4.6.3-1.tar.gz).
+The failed loader matched the locked Compass npm archive byte for byte.
+Both loaders read `path.txt` without trimming, then test the resulting path.
+Their installers write the filename without a newline. The equivalent
+[45 loader](https://github.com/electron/electron/blob/v45.0.0/npm/index.js) and
+[42.5 loader](https://github.com/electron/electron/blob/v42.5.0/npm/index.js)
+were also consulted.
+
+Both ebuilds now use exactly:
+
+```bash
+printf '%s' electron > node_modules/electron/path.txt || die
+```
+
+An overlay-wide `rg -n 'path.txt' --glob '*.ebuild' --glob '*.py' --glob '*.sh' .`
+found only these two newline-producing writes. Nimbalyst's Python helper already
+writes `"electron"` without a newline and was left untouched. Both changed
+packages retain `KEYWORDS="~arm64"`; Compass's L10N declaration and pruning,
+native addons, and runtime selection are unchanged.
+
+**VERIFIED — download-path investigation.** The exact bootstrap lifecycle
+scripts, webpack configuration, Electron `index.js`/`install.js`, and
+`@electron/get` implementation were inspected. The loader can invoke
+`install.js` on a missing executable; that installer has an independent download
+path and does not honor the existing `ELECTRON_SKIP_BINARY_DOWNLOAD` setting.
+`npm --offline` does not govern arbitrary JavaScript download code. No supported
+offline environment switch was found in this exact downloader implementation.
+The corrected filename makes the already-staged executable satisfy the loader;
+no downloader override, network exception, or extra ebuild configuration was
+needed for this exact bootstrap/build. Existing npm offline settings,
+ignored dependency lifecycle scripts, and existing font/installer exclusions
+were preserved. No other bootstrap download was observed in this fresh run.
+Searches of bugs.gentoo.org for Compass/Electron path.txt and Yarn global-folder
+failures returned no matching Gentoo bug; this is not a claim that the issue is new.
+
+**VERIFIED — native arm64 validation on `gentoo`.** Fresh workspace roots,
+also used to retain evidence on `leonids-pc`:
+
+```text
+Compass: /tmp/codex/dev-db/mongodb-compass-1.53.1/path-fix-ehf083l5
+JupyterLab first attempt: /tmp/codex/sci-misc/jupyterlab-desktop-4.6.3_p1/path-fix-8f_s465i
+JupyterLab successful retry: /tmp/codex/sci-misc/jupyterlab-desktop-4.6.3_p1/path-fix-8f_s465i-retry
+```
+
+Minimal repositories containing the exact changed packages and dependency
+eclasses were staged under each workspace's `repo`; no remote overlay checkout
+was edited. The only existing cache of build inputs consulted was
+`/var/cache/distfiles`: 3230 Compass distfiles and two JupyterLab distfiles were
+copied into isolated `distfiles` directories. Portage's explicit `fetch` phase
+obtained the remaining 666 JupyterLab inputs there. The retry copied only those
+668 declared distfiles from the first attempt, not its work or package caches.
+The lists are retained as `staged-existing-distfiles.txt` and
+`missing-distfiles.txt`. The retry script's copied-input status message still
+labels its source `/var/cache/distfiles`; the actual source in its retained
+script is the first attempt's staged `distfiles` directory.
+
+The exact executed setup/build commands are retained in each
+`run-validation.sh`. From each fresh workspace they exported:
+
+```bash
+export PORTDIR_OVERLAY="$PWD/repo" DISTDIR="$PWD/distfiles" PORTAGE_TMPDIR="$PWD/build"
+export PORTAGE_LOGDIR="$PWD/logs" XDG_CACHE_HOME="$PWD/caches/xdg" electron_config_cache="$PWD/caches/electron"
+export CCACHE_DIR="$PWD/caches/ccache" npm_config_userconfig="$PWD/caches/npm-userconfig" npm_config_globalconfig="$PWD/caches/npm-globalconfig"
+export FEATURES="-userpriv -ccache network-sandbox sandbox" MAKEOPTS="-j4" L10N="en-US he ru"
+unset ELECTRON_OVERRIDE_DIST_PATH ELECTRON_CUSTOM_VERSION ELECTRON_MIRROR ELECTRON_CUSTOM_DIR ELECTRON_CUSTOM_FILENAME NODE_OPTIONS NODE_PATH npm_config_cache
+```
+
+New empty npm configuration files and cache directories were created before the
+commands. `ebuild <staged-ebuild> fetch > fetch.log 2>&1` was followed by:
+
+```bash
+ebuild repo/dev-db/mongodb-compass/mongodb-compass-1.53.1.ebuild clean unpack prepare configure compile install > build.log 2>&1
+# Corresponding JupyterLab command in its separate workspace:
+ebuild repo/sci-misc/jupyterlab-desktop/jupyterlab-desktop-4.6.3_p1.ebuild clean unpack prepare configure compile install > build.log 2>&1
+```
+
+Fetch and completed-build exit statuses were each 0, retained in `fetch.exit`
+and `build.exit`. Compass's npm cache was freshly populated from staged
+file-URL inputs under its new Portage `${T}/npm-cache`; Yarn used its new
+`${T}/yarn-cache` and mirror of staged distfiles. Electron's explicitly selected
+cache remained empty. Nx reported `0 read from cache`; ccache was disabled.
+No previously populated npm, Yarn, Electron, or Nx cache was relied upon.
+Portage filters inherited `XDG_CACHE_HOME`; the effective npm/Electron cache
+settings and the ebuild's `${T}` Yarn settings, rather than that inherited
+variable, establish the relevant cache isolation here.
+
+The active Compass bootstrap process was inspected through `/proc`:
+
+```text
+bootstrap network namespace: net:[4026532700]
+host network namespace: net:[4026531833]
+```
+
+Its effective FEATURES contained `network-sandbox` and `sandbox`, and its
+`npm_config_offline` was `true`. Networking was not enabled for build phases.
+The [Portage FEATURES documentation](https://dev.gentoo.org/~zmedico/portage/doc/man/make.conf.5.html)
+was the reference for the network-sandbox setting.
+
+JupyterLab's first attempt returned exit 1 due to Yarn's attempted
+`mkdir /usr/local/share/.yarn`, denied by the filesystem sandbox. This was not
+suppressed. After inspecting the bundled Yarn 1.22.22 implementation's `PREFIX`
+handling, its fresh retry additionally exported:
+
+```bash
+export PREFIX="$PWD/caches/yarn-prefix" YARN_GLOBAL_FOLDER="$PWD/caches/yarn-global"
+```
+
+That retry completed through temporary-image installation with exit 0 and no
+access-denied entry. No additional repository code was changed for this
+validation-environment adjustment. Both attempts' logs are retained.
+
+`inspect-loader.cjs` was run against each actual prepared source tree, replacing
+`child_process.spawnSync` with a throwing guard before requiring Electron. It
+returned exit 0 for both packages, with these literal results:
+
+```text
+path.txt bytes: "electron"
+path.txt hex: 656c656374726f6e
+Loader resolves existing staged executable: true
+Electron installer invocations: 0
+```
+
+For JupyterLab, production dependency pruning removes the development Electron
+npm module; its loader test therefore used a separate fresh `loader-build`
+prepare run (exit 0), not a fabricated installed module. The exact command and
+its log are retained in `loader-prepare-command.txt`, `loader-prepare.log`, and
+`loader-prepare.exit`; it used the
+same staged repo/distfiles, sandbox features, and temporary Yarn prefix.
+
+`python3 inspect-native.py` inspected each completed temporary image and the
+original locked artifacts. Both returned exit 0. Compass's literal results:
+
+```text
+Locked Electron npm version: 45.0.0
+Locked Electron npm archive: mc-9a3d1dc73f7f6166.tgz
+Npm archive SHA512 matches original release lock: True
+Loader reads path.txt without trimming: True
+Installer honors ELECTRON_SKIP_BINARY_DOWNLOAD: False
+Build exit: 0
+Electron download messages: 0
+Electron cache file count: 0
+Installed Electron version: 45.0.0
+Compiled application build present: True
+Declared locales match archive: True (55)
+Installed locale packs: en-US.pak he.pak ru.pak
+Unselected packs absent: 52
+Selected packs byte-identical to original archive: True
+Bootstrap: 61/61 succeeded [0 read from cache]
+```
+
+JupyterLab reported the corresponding locked version `42.5.0`, original-lock
+SHA512 match, `Build exit: 0`, `Electron download messages: 0`,
+`Electron cache file count: 0`, `Installed Electron version: 42.5.0`, and
+`Compiled application build present: True`.
+
+**VERIFIED — local packaging checks on `leonids-pc`.** The following commands
+were run for each changed package; exact argv, literal stdout/stderr, and exit
+statuses are retained in `local-validation.json` and `final-check-*.log` in
+its initial local workspace:
+
+```bash
+bash -n dev-db/mongodb-compass/mongodb-compass-1.53.1.ebuild
+bash -n sci-misc/jupyterlab-desktop/jupyterlab-desktop-4.6.3_p1.ebuild
+pkgcheck scan dev-db/mongodb-compass
+pkgcheck scan sci-misc/jupyterlab-desktop
+pkgcheck scan --profiles default/linux/arm64/23.0 dev-db/mongodb-compass
+pkgcheck scan --profiles default/linux/arm64/23.0 sci-misc/jupyterlab-desktop
+pkgdev manifest -d /tmp/codex/dev-db/mongodb-compass-1.53.1/path-fix-ehf083l5/distfiles dev-db/mongodb-compass
+pkgdev manifest -d /tmp/codex/sci-misc/jupyterlab-desktop-4.6.3_p1/path-fix-8f_s465i/distfiles sci-misc/jupyterlab-desktop
+git diff --check
+```
+
+Each returned exit 0. Syntax and whitespace checks emitted no output. Both
+Manifest commands printed `manifests are up to date`; no Manifest content
+changed. Package-scoped scans retained the following existing findings:
+
+```text
+dev-db/mongodb-compass
+  RequiredUseDefaults: version 1.53.1: profile: 'default/linux/arm64/23.0/musl' (3 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 1.53.1: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~arm64) dev profile (default/linux/arm64/23.0/musl) (3 total)
+sci-misc/jupyterlab-desktop
+  OldPackageName: package uses old name which is source of pkgmove, rename into 'sci-misc/jupyterlab-desktop-bin'
+  RequiredUseDefaults: version 4.6.3_p1: profile: 'default/linux/arm64/23.0/musl' (3 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 4.6.3_p1: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~arm64) dev profile (default/linux/arm64/23.0/musl) (3 total)
+```
+
+The glibc-profile Compass scan emitted no output; JupyterLab retained only
+`OldPackageName`. No QA finding was suppressed. Build logs retain the large
+Portage environment warning, upstream libmongocrypt patch mode warning, and
+Node/Kerberos compiler warnings for Compass; JupyterLab retains Yarn's existing
+peer-dependency/workspace/engine warnings and Node's `url.parse()` deprecation
+warning. No `QA Notice` or L10N warning occurred in the completed Compass run.
+
+Native-tested repository copies, logs, scripts, exit statuses, and inspection
+results were copied back as `native-evidence.tar.gz` and extracted into local
+`native-results` directories. Both final images are retained locally as
+`arm64-image.tar.gz`. Native-tested ebuilds were compared byte for byte with
+the final overlay files; both comparisons returned True. All package files and
+dependency eclasses also matched (five files per package), recorded in
+`final-file-comparison.json`. Inspection of the entire retained Compass image
+confirmed that the other 52 locale names occur nowhere in it, recorded in
+`complete-image-locale-inspection.log`. The ebuild SHA256 values:
+
+```text
+Compass: 2ba86e66ea361ff392000f4e1a94d1542cd2317a9cf85c581a8dbfe455b05bb0
+JupyterLab: 2b6679a3837fd6c6265b7f246861a8e0b648075c4068ae3fe1d90dc7540ac652
+```
+
+**INFERRED.** Removing the newline eliminates the verified invalid executable
+lookup and its resulting Electron download branch. The fresh successful
+sandboxed build establishes that no additional bootstrap offline configuration
+is necessary for these exact staged inputs; it is not a guarantee for future
+upstream releases or different build paths.
+
+**NOT VERIFIED / limitations.** This run does not explain the earlier
+conflicting success report. Desktop interaction, notebook execution, database
+connections, and rendering were not tested. Build tests ran natively on arm64
+`gentoo`, with `-userpriv` but filesystem and network sandboxing enabled;
+ordinary userpriv builds were not repeated. Static packaging checks ran on
+amd64 `leonids-pc`; no amd64 build was performed. No live-system installation,
+merge, Git commit/push, branch change, or PR occurred. The failed `/var/tmp`
+build and remote overlay checkout were untouched.
+
+Staging deviation: the first Compass transfer briefly placed
+`/tmp/validation.tar.gz` and `/tmp/run-validation.sh` directly under `/tmp`,
+then moved them into the scoped workspace. All extraction, caches, builds, and
+subsequent transfers used the required `/tmp/codex/<category>/<package>-<version>`
+subdirectories. No validation files remain at those two initial transport paths.
+
+
+## JupyterLab Desktop: self-contained Yarn paths (2026-10-26)
+
+**VERIFIED — implementation and retained failure.** The initial working tree
+already contained the Compass and JupyterLab Electron path.txt fixes and the
+previous report additions; all were preserved. Applicable ancestor, repository,
+package, and scripts AGENTS.md paths were checked; the supplied repository
+instructions applied. This follow-up changes only two lines in the JupyterLab
+ebuild's existing generated project `.yarnrc`, plus this report section:
+
+```text
+prefix "${T}/yarn-prefix"
+global-folder "${T}/yarn-global"
+```
+
+The retained first-attempt log at
+`/tmp/codex/sci-misc/jupyterlab-desktop-4.6.3_p1/path-fix-8f_s465i/native-results/build.log`
+was inspected without altering it. Its literal sandbox evidence includes:
+
+```text
+F: mkdir
+S: deny
+P: /usr/local/share/.yarn
+```
+
+Both the outer `yarn --offline build` and nested `yarn bundle:preload` appeared
+in that failure. The earlier successful retry exported `PREFIX` and
+`YARN_GLOBAL_FOLDER` externally in `run-validation.sh`; it therefore did not
+establish a self-contained ebuild fix. The new validation below uses the ebuild's
+project configuration and removes those harness overrides.
+
+The exact bundled `yarn-v1.22.22/lib/cli.js` was inspected, including
+`getGlobalPrefix` and `this.globalFolder` initialization. Prefix selection checks
+`config.getOption('prefix', true)` before the environment/fallback lookup;
+global-folder initialization reads `config.getOption('global-folder', true)`.
+The matching [Yarn 1.22.22 source](https://github.com/yarnpkg/yarn/blob/v1.22.22/src/cli/commands/global.js)
+and [Yarn Classic .yarnrc documentation](https://classic.yarnpkg.com/lang/en/docs/yarnrc/)
+were also consulted. Yarn reads project configuration up the directory tree,
+so this existing `.yarnrc` covers prepare-time installation, compilation,
+nested Yarn scripts, and production dependency pruning. No helper or exported
+prefix variables are necessary. The implementation excerpts are retained as
+`yarn-implementation.txt` and the generated configuration as `effective.yarnrc`.
+
+The existing offline/frozen-lockfile/ignore-scripts options, `${T}/yarn-cache`,
+production pruning, Electron newline correction, selected-Python patch, and
+`KEYWORDS="~arm64"` are unchanged. No sandbox exception or suppression was added.
+
+**VERIFIED — fresh arm64 build with normal userpriv on `gentoo`.** A new workspace
+was created at
+`/tmp/codex/sci-misc/jupyterlab-desktop-4.6.3_p1/yarn-paths-9_hzidep`.
+The package and dependency eclass were staged in its minimal `repo`; the remote
+overlay checkout and old failed builds were untouched. Its 668 declared
+Portage distfiles were copied from the earlier retry's staged `distfiles`
+directory, recorded in `staged-inputs.txt`; no earlier work, npm/Yarn/Electron
+cache, or installed node_modules was reused. `ebuild ... fetch` checked the
+staged distfiles and exited 0. Yarn populated a new `${T}/yarn-cache` from the
+new mirror of explicitly staged distfiles. The Electron cache started and ended
+empty. No npm installation command or existing npm cache was used.
+
+The complete executed validation harness is retained locally as `validate.py`;
+`commands.json` retains argv, working directories, and exit statuses, and
+`harness-settings.json` retains its explicit settings and removed variables.
+It removes inherited `PREFIX`, `YARN_*`, and relevant npm path overrides. It
+exports no Yarn prefix/global/cache override. Its explicit settings were:
+
+```text
+PORTDIR_OVERLAY=<workspace>/repo
+DISTDIR=<workspace>/distfiles
+PORTAGE_TMPDIR=<workspace>/build
+PORTAGE_LOGDIR=<workspace>/logs
+FEATURES=userpriv usersandbox network-sandbox sandbox -ccache
+MAKEOPTS=-j4
+electron_config_cache=<workspace>/caches/electron
+```
+
+From the workspace, the actual non-merging Portage commands were:
+
+```bash
+ebuild repo/sci-misc/jupyterlab-desktop/jupyterlab-desktop-4.6.3_p1.ebuild fetch
+ebuild repo/sci-misc/jupyterlab-desktop/jupyterlab-desktop-4.6.3_p1.ebuild clean unpack prepare
+ebuild repo/sci-misc/jupyterlab-desktop/jupyterlab-desktop-4.6.3_p1.ebuild configure compile install
+```
+
+Each returned exit 0; separate `fetch.log`, `prepare.log`, and `build.log` and
+corresponding `.exit` files are retained. Between prepare and compile, the
+harness ran these read-only/configuration probes as the `portage` user from
+the prepared source directory:
+
+```text
+runuser -u portage -- node <bundled-yarn>/bin/yarn.js --offline config get prefix
+runuser -u portage -- node <bundled-yarn>/bin/yarn.js --offline config get global-folder
+runuser -u portage -- node <bundled-yarn>/bin/yarn.js --offline config get cache-folder
+runuser -u portage -- node <bundled-yarn>/bin/yarn.js --offline global bin
+runuser -u portage -- node <workspace>/inspect-loader.cjs <prepared-source>
+```
+
+The path probes returned the actual absolute `${T}` directory under this new
+workspace, ending respectively in `yarn-prefix`, `yarn-global`, `yarn-cache`,
+and `yarn-prefix/bin`. All probe exit statuses were 0. The Electron probe
+intercepts installer process spawning and reported:
+
+```text
+path.txt bytes: "electron"
+path.txt hex: 656c656374726f6e
+Loader resolves existing staged executable: true
+Electron installer invocations: 0
+```
+
+A `/proc` monitor captured both the outer build and nested preload Yarn
+processes running with all four UID fields equal to 250, the host's `portage`
+UID. Both used `net:[4026532700]`, while the host namespace was
+`net:[4026531833]`. This evidence is retained in `process-evidence.json`.
+No root-only workaround was required for this build. The final native
+`python3 inspect-result.py` check returned exit 0 with these literal results:
+
+```text
+Effective Yarn prefix: ${T}/yarn-prefix
+Effective Yarn global-folder: ${T}/yarn-global
+Effective Yarn cache-folder: ${T}/yarn-cache
+Effective Yarn global bin: ${T}/yarn-prefix/bin
+fetch exit: 0
+prepare exit: 0
+yarn-prefix exit: 0
+yarn-global-folder exit: 0
+yarn-cache-folder exit: 0
+yarn-global-bin exit: 0
+loader-inspection exit: 0
+build exit: 0
+/usr/local/share/.yarn log mentions: 0
+Sandbox violation log: absent or empty
+Electron cache entries: 0
+Electron download messages: 0
+--offline build: uid=250 (portage), separate network namespace
+bundle:preload: uid=250 (portage), separate network namespace
+Image: compiled server.js and aarch64 Electron 42.5.0 present
+```
+
+No `/usr/local/share/.yarn` write attempt was recorded: neither build log
+contained that path or an access-denied entry, and the enabled filesystem
+sandbox produced no nonempty violation log. Together with the effective prefix
+and global paths, this verifies that the fallback responsible for the earlier
+failure was avoided. This check is not a separate syscall trace of every path.
+
+**VERIFIED — packaging checks on `leonids-pc`.** Exact argv/output/status records
+are retained in `local-validation.json` and `check-*.log` in the local workspace.
+Commands actually run:
+
+```bash
+bash -n sci-misc/jupyterlab-desktop/jupyterlab-desktop-4.6.3_p1.ebuild
+pkgcheck scan sci-misc/jupyterlab-desktop
+pkgdev manifest -d /tmp/codex/sci-misc/jupyterlab-desktop-4.6.3_p1/yarn-paths-9_hzidep/distfiles sci-misc/jupyterlab-desktop
+git diff --check
+```
+
+All returned exit 0. Syntax and whitespace checks emitted no output. Manifest
+generation printed `manifests are up to date`; no Manifest content changed.
+The scoped pkgcheck output retained the same existing findings, with no new
+finding and no suppression:
+
+```text
+sci-misc/jupyterlab-desktop
+  OldPackageName: package uses old name which is source of pkgmove, rename into 'sci-misc/jupyterlab-desktop-bin'
+  RequiredUseDefaults: version 4.6.3_p1: profile: 'default/linux/arm64/23.0/musl' (3 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 4.6.3_p1: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~arm64) dev profile (default/linux/arm64/23.0/musl) (3 total)
+```
+
+Build logs retain Yarn's peer-dependency/workspace/engine warnings and Node's
+`url.parse()` deprecation warning; these were not suppressed.
+
+The tested repository, logs, harness, command/status records, and process
+observations were copied back to `leonids-pc` as `native-evidence.tar.gz` and
+extracted into `native-results` in the matching local workspace. The final
+inspection logs/scripts and generated configuration were also retained there;
+`arm64-image.tar.gz` retains the temporary image. The native-tested ebuild was
+compared byte for byte with the final repository file:
+
+```text
+Final ebuild matches native-tested copy: True
+Only two Yarn configuration lines added to starting ebuild: True
+Ebuild SHA256: b517436a1a9b871f9975688f3cc92df354deae9f6a62acc888630f2b54644e56
+```
+
+**INFERRED.** Project-local prefix/global-folder configuration will apply to
+other Yarn commands run from this source tree or its children by the inspected
+Yarn release. This is based on Yarn's configuration lookup; the installation,
+build, nested preload, and pruning paths used here were actually exercised.
+
+**NOT VERIFIED.** Desktop interaction, notebook execution, and server behavior
+were not retested for this path-only packaging change. Native arm64 validation
+ran on `gentoo`, including an ordinary userpriv build; static packaging checks
+ran on amd64 `leonids-pc`, with no amd64 build. No live-system installation or
+merge, commit, push, branch change, or PR was performed. Previous failed build
+evidence and unrelated repository changes were preserved.

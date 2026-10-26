@@ -117,7 +117,7 @@ src_prepare() {
 	mkdir -p node_modules/electron/dist || die
 	unzip -q "${DISTDIR}/electron-v${ELECTRON_VERSION}-linux-arm64.zip" \
 		-d node_modules/electron/dist || die
-	echo electron > node_modules/electron/path.txt || die
+	printf '%s' electron > node_modules/electron/path.txt || die
 	# Use the stylesheet's normal sans-serif fallback instead of downloading
 	# proprietary Euclid fonts. The enterprise crypt_shared download is also
 	# skipped; upstream already handles its absence and accepts an external path.
