@@ -1077,3 +1077,184 @@ ran on `gentoo`, including an ordinary userpriv build; static packaging checks
 ran on amd64 `leonids-pc`, with no amd64 build. No live-system installation or
 merge, commit, push, branch change, or PR was performed. Previous failed build
 evidence and unrelated repository changes were preserved.
+
+
+## JupyterLab Desktop 4.6.3_p1: Electron L10N selection (2026-10-26)
+
+**VERIFIED — implementation and sources.** Starting Git status was empty.
+Applicable ancestor/repository/package/scripts AGENTS.md paths were checked;
+the supplied repository instructions applied. Only the JupyterLab ebuild and
+this report section changed. Compass, Signal, and previous failed-build evidence
+were preserved.
+
+The 55 `CHROMIUM_LANGS` tags were independently derived with Python `zipfile`
+from `locales/*.pak` in the exact bundled
+[Electron 42.5.0 Linux arm64 archive](https://github.com/electron/electron/releases/download/v42.5.0/electron-v42.5.0-linux-arm64.zip).
+The archive's SHA512 matched the existing package Manifest. The complete derived
+list is retained as `archive-locales.txt`; it was compared with the declaration
+and `/var/db/repos/gentoo/profiles/desc/l10n.desc`. Literal local results:
+
+```text
+Archive SHA512 matches package Manifest: True
+Archive locale count: 55
+Archive tags absent from Gentoo L10N registry: []
+Declared locales match exact archive: True (55)
+```
+
+The current `/var/db/repos/gentoo/eclass/chromium-2.eclass` documentation and
+implementation, inherited `linux-info.eclass`, and
+[official eclass reference](https://devmanual.gentoo.org/eclass-reference/chromium-2.eclass/index.html)
+were inspected. The helper operates on the current directory, validates the
+language list, and always retains `en-US`. The eclass generates L10N USE flags
+when inherited, so `CHROMIUM_LANGS` is defined first. EAPI 8 is retained within
+the eclass's documented supported EAPIs 7 and 8. The reviewed local Compass
+implementation and current
+`/var/db/repos/gentoo/sci-misc/jupyterlab-desktop-bin/jupyterlab-desktop-bin-4.6.3.1.ebuild`
+were inspected as examples; neither supplied the authoritative language list.
+
+`src_install` now invokes `chromium_remove_language_paks` inside the extracted
+Electron runtime's `locales` directory before installing the runtime. A subshell
+preserves the existing working directory. Source compilation, production
+pruning, selected-Python patch, newline-free Electron `path.txt`, project-local
+Yarn prefix/global/cache settings, and `KEYWORDS="~arm64"` remain intact.
+L10N selects Electron resource packs; it does not add JupyterLab interface
+translations.
+
+**VERIFIED — fresh native arm64 build on `gentoo`.** The fresh workspace was
+`/tmp/codex/sci-misc/jupyterlab-desktop-4.6.3_p1/l10n-_sfpuqbf`, matching the local
+evidence directory on `leonids-pc`. The staged `repo` contains the tested package
+and dependency eclass. No remote overlay checkout was edited. The 668 declared
+distfiles were explicitly copied from the previous `yarn-paths-9_hzidep/distfiles`
+staging directory into a new `distfiles` directory; the exact list/source is in
+`staged-inputs.txt`. Old work directories and package-manager caches were not
+reused. Portage verified the staged inputs in its fetch phase. Yarn populated
+a fresh `${T}/yarn-cache` from the new offline mirror. No npm installation or
+existing npm cache was used. The explicit Electron cache remained empty.
+
+The actual harness invocation was:
+
+```bash
+ssh gentoo 'cd /tmp/codex/sci-misc/jupyterlab-desktop-4.6.3_p1/l10n-_sfpuqbf; tar -xzf validation.tar.gz; sudo -n python3 validate.py'
+```
+
+`validate.py` and `harness-settings.json` retain its exact configuration. It
+removed inherited Yarn/prefix overrides, exported no Yarn path overrides, and
+set these build controls in addition to workspace-local Portage/distfile/log
+paths:
+
+```text
+FEATURES=userpriv usersandbox network-sandbox sandbox -ccache
+MAKEOPTS=-j4
+L10N=en-US he ru
+electron_config_cache=<workspace>/caches/electron
+```
+
+From that workspace, its actual Portage commands were:
+
+```bash
+ebuild repo/sci-misc/jupyterlab-desktop/jupyterlab-desktop-4.6.3_p1.ebuild fetch
+ebuild repo/sci-misc/jupyterlab-desktop/jupyterlab-desktop-4.6.3_p1.ebuild clean unpack prepare
+ebuild repo/sci-misc/jupyterlab-desktop/jupyterlab-desktop-4.6.3_p1.ebuild configure compile install
+```
+
+Each returned exit 0, recorded separately in `fetch.exit`, `prepare.exit`, and
+`build.exit`, with corresponding complete logs. `commands.json` also records
+exact argv/working directories/statuses for Yarn configuration and guarded
+Electron-loader probes run as `portage` between prepare and compile.
+`process-evidence.json` captures the outer and nested build commands running as
+UID 250 (`portage`) in a network namespace separate from the host. Filesystem
+and network sandboxing remained enabled, with normal userpriv and no exceptions.
+
+The final native `python3 inspect-result.py` command returned exit 0 and these
+literal results:
+
+```text
+Effective Yarn prefix: ${T}/yarn-prefix
+Effective Yarn global-folder: ${T}/yarn-global
+Effective Yarn cache-folder: ${T}/yarn-cache
+Effective Yarn global bin: ${T}/yarn-prefix/bin
+fetch exit: 0
+prepare exit: 0
+yarn-prefix exit: 0
+yarn-global-folder exit: 0
+yarn-cache-folder exit: 0
+yarn-global-bin exit: 0
+loader-inspection exit: 0
+build exit: 0
+/usr/local/share/.yarn log mentions: 0
+Sandbox violation log: absent or empty
+Electron cache entries: 0
+Electron download messages: 0
+--offline build: uid=250 (portage), separate network namespace
+bundle:preload: uid=250 (portage), separate network namespace
+Image: compiled server.js and aarch64 Electron 42.5.0 present
+Archive locale count: 55
+Declared locale count: 55
+Missing from declaration: []
+Extra declared locales: []
+Tags absent from Gentoo L10N registry: []
+Installed locale packs: en-US.pak he.pak ru.pak
+Unselected locale packs absent: 52
+Selected packs byte-identical to archive: True
+Locale packs elsewhere in image: []
+L10N QA warning messages: 0
+```
+
+The locale inspector compared the declaration against the full original archive,
+checked selected pack bytes directly, and searched the whole image for locale
+packs outside the runtime directory. Thus all 52 unselected packs are excluded
+from the image, not just hidden in another installed directory. The compiled
+`resources/app/build/out/main/server.js` exists, and the runtime executable's
+ELF machine field is AArch64. The probe verified Electron's prepared npm loader
+before production pruning removes that development dependency.
+
+**VERIFIED — local checks and retained artifacts.** These commands ran on
+`leonids-pc`, with pkgcheck's cache inside the local workspace:
+
+```bash
+bash -n sci-misc/jupyterlab-desktop/jupyterlab-desktop-4.6.3_p1.ebuild
+pkgcheck scan sci-misc/jupyterlab-desktop
+pkgdev manifest -d /tmp/codex/sci-misc/jupyterlab-desktop-4.6.3_p1/l10n-_sfpuqbf/distfiles sci-misc/jupyterlab-desktop
+git diff --check
+```
+
+All returned exit 0. Syntax and whitespace checks emitted no output; Manifest
+generation printed `manifests are up to date`, with no Manifest content change.
+The existing scoped pkgcheck findings remain, without suppression:
+
+```text
+sci-misc/jupyterlab-desktop
+  OldPackageName: package uses old name which is source of pkgmove, rename into 'sci-misc/jupyterlab-desktop-bin'
+  RequiredUseDefaults: version 4.6.3_p1: profile: 'default/linux/arm64/23.0/musl' (3 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 4.6.3_p1: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~arm64) dev profile (default/linux/arm64/23.0/musl) (3 total)
+```
+
+The build also retains Yarn's existing peer/workspace/engine warnings and Node's
+`url.parse()` deprecation warning; none was suppressed. There was no new L10N
+warning. Exact local command/output/status records are in
+`local-validation.json` and `check-*.log`.
+
+The native-tested repository, harness, logs, statuses, and inspections were
+copied back as `native-evidence.tar.gz` and extracted into `native-results` in
+the local workspace. `arm64-image.tar.gz` retains the temporary image, and the
+exact original Electron archive is retained locally for comparison.
+`final-file-comparison.json` records byte-for-byte equality between all final
+package files plus the dependency eclass and their native-tested copies:
+
+```text
+All final package files and dependency eclass match tested copies: 5
+Compass and Signal files unchanged: True
+Final ebuild SHA256: 300981958173043f6ce9334f20c8993521e16bd7162af033387c74b898f60eea
+```
+
+**INFERRED.** Other language combinations follow the inspected helper's logic,
+including its mandatory `en-US` fallback. Only `L10N="en-US he ru"` was built
+in this validation.
+
+**NOT VERIFIED.** Locale rendering, desktop interaction, notebook/server
+functionality, and other locale combinations were not tested in this run.
+Architecture coverage is an actual native arm64 userpriv build through
+temporary-image installation on `gentoo`; static packaging checks ran on amd64
+`leonids-pc`, with no amd64 build. No live-system installation/merge, commit,
+push, branch change, or PR occurred. Historical failure evidence was not modified
+or removed, and the earlier report content was preserved.
