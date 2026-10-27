@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<use>
+		<flag name="uchardet">Enable charset discovery via <pkg>app-i18n/uchardet</pkg></flag>
+	</use>
+	<upstream>
+		<bugs-to>https://github.com/TypesettingTools/Aegisub/issues</bugs-to>
+		<remote-id type="github">TypesettingTools/Aegisub</remote-id>
+	</upstream>
+</pkgmetadata>
