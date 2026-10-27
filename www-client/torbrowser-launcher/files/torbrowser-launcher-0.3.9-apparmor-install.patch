@@ -1,0 +1,34 @@
+From: Leonid Kopylov <leonchik1976@gmail.com>
+Subject: [PATCH] Leave AppArmor configuration installation to the ebuild
+
+Absolute data_files destinations become etc/ inside site-packages in a
+PEP 517 wheel. The ebuild installs these shared files under /etc instead.
+
+--- a/setup.py
++++ b/setup.py
+@@ -75,24 +75,7 @@
+     if files:
+         datafiles.append((root, [os.path.join(root, f) for f in files]))
+ 
+-# disable shipping apparmor profiles until they work in ubuntu (#128)
+-if distro != "Ubuntu":
+-    if not hasattr(sys, "real_prefix"):
+-        # we're not in a virtualenv, so we can probably write to /etc
+-        datafiles += [
+-            (
+-                "/etc/apparmor.d/",
+-                ["apparmor/torbrowser.Browser.firefox", "apparmor/torbrowser.Tor.tor"],
+-            ),
+-            (
+-                "/etc/apparmor.d/local/",
+-                [
+-                    "apparmor/local/torbrowser.Browser.firefox",
+-                    "apparmor/local/torbrowser.Tor.tor",
+-                ],
+-            ),
+-            ("/etc/apparmor.d/tunables/", ["apparmor/tunables/torbrowser"]),
+-        ]
++# AppArmor profiles are installed by the distribution packaging.
+ 
+ datafiles += [(os.path.dirname(f), [f]) for f in create_mo_files()]
+ 

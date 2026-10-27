@@ -1,0 +1,102 @@
+From: Leonid Kopylov <leonchik1976@gmail.com>
+Subject: [PATCH] Add Linux aarch64 using the official Tor Browser alpha channel
+
+Linux aarch64 Tor Browser is currently published only on the alpha channel.
+Detect the native architecture, use its update feed and archive names, and
+include its installation paths in the shipped AppArmor profiles. Keep the
+upstream signing key and signature verification unchanged. Label the arm64
+launcher window as Alpha and require the current aarch64 browser baseline.
+
+This is a local overlay patch, not an upstream-supported launcher port.
+
+--- a/torbrowser_launcher/common.py
++++ b/torbrowser_launcher/common.py
+@@ -47,7 +47,10 @@
+         self.tbl_version = tbl_version
+ 
+         # initialize the app
+-        self.architecture = "x86_64" if "64" in platform.architecture()[0] else "i686"
++        if platform.machine().lower() in ("aarch64", "arm64"):
++            self.architecture = "aarch64"
++        else:
++            self.architecture = "x86_64" if "64" in platform.architecture()[0] else "i686"
+         self.default_mirror = "https://dist.torproject.org/"
+         self.build_paths()
+         self.torbrowser12_rename_old_tbb()
+@@ -94,10 +97,7 @@
+ 
+         if tbb_version:
+             # tarball filename
+-            if self.architecture == "x86_64":
+-                arch = "linux-x86_64"
+-            else:
+-                arch = "linux-i686"
++            arch = "linux-" + self.architecture
+ 
+             tarball_filename = "tor-browser-" + arch + "-" + tbb_version + ".tar.xz"
+ 
+@@ -143,7 +143,12 @@
+                 "gnupg_homedir": tbb_local + "/gnupg_homedir",
+                 "settings_file": tbb_config + "/settings.json",
+                 "settings_file_pickle": tbb_config + "/settings",
+-                "version_check_url": "https://aus1.torproject.org/torbrowser/update_3/release/Linux_x86_64-gcc3/x/ALL",
++                # Tor Browser for Linux aarch64 is currently alpha-only.
++                "version_check_url": (
++                    "https://aus1.torproject.org/torbrowser/update_3/alpha/Linux_aarch64-gcc3/x/ALL"
++                    if self.architecture == "aarch64"
++                    else "https://aus1.torproject.org/torbrowser/update_3/release/Linux_x86_64-gcc3/x/ALL"
++                ),
+                 "version_check_file": tbb_cache + "/download/release.xml",
+                 "tbb": {
+                     "changelog": tbb_local
+--- a/torbrowser_launcher/launcher.py
++++ b/torbrowser_launcher/launcher.py
+@@ -74,7 +74,7 @@
+         self._threads = []
+ 
+         # This is the current version of Tor Browser, which should get updated with every release
+-        self.min_version = "13.0"
++        self.min_version = "16.0a14" if common.architecture == "aarch64" else "13.0"
+ 
+         # Init launcher
+         self.set_state(None, "", [])
+@@ -120,7 +120,10 @@
+         # Build the rest of the UI
+ 
+         # Set up the window
+-        self.setWindowTitle(_("Tor Browser"))
++        title = _("Tor Browser")
++        if common.architecture == "aarch64":
++            title += " (Alpha)"
++        self.setWindowTitle(title)
+         self.setWindowIcon(QtGui.QIcon(self.common.paths["icon_file"]))
+ 
+         # Label
+--- a/apparmor/torbrowser.Browser.firefox
++++ b/apparmor/torbrowser.Browser.firefox
+@@ -1,7 +1,7 @@
+ #include <tunables/global>
+ #include <tunables/torbrowser>
+ 
+-@{torbrowser_firefox_executable} = /home/*/.local/share/torbrowser/tbb/{i686,x86_64}/tor-browser/Browser/firefox.real
++@{torbrowser_firefox_executable} = /home/*/.local/share/torbrowser/tbb/{aarch64,i686,x86_64}/tor-browser/Browser/firefox.real
+ 
+ profile torbrowser_firefox @{torbrowser_firefox_executable} {
+   #include <abstractions/audio>
+--- a/apparmor/torbrowser.Tor.tor
++++ b/apparmor/torbrowser.Tor.tor
+@@ -1,7 +1,7 @@
+ #include <tunables/global>
+ #include <tunables/torbrowser>
+ 
+-@{torbrowser_tor_executable} = /home/*/.local/share/torbrowser/tbb/{i686,x86_64}/tor-browser/Browser/TorBrowser/Tor/tor
++@{torbrowser_tor_executable} = /home/*/.local/share/torbrowser/tbb/{aarch64,i686,x86_64}/tor-browser/Browser/TorBrowser/Tor/tor
+ 
+ profile torbrowser_tor @{torbrowser_tor_executable} {
+   #include <abstractions/base>
+--- a/apparmor/tunables/torbrowser
++++ b/apparmor/tunables/torbrowser
+@@ -1,2 +1,2 @@
+-@{torbrowser_installation_dir}=@{HOME}/.local/share/torbrowser/tbb/{i686,x86_64}/tor-browser
++@{torbrowser_installation_dir}=@{HOME}/.local/share/torbrowser/tbb/{aarch64,i686,x86_64}/tor-browser
+ @{torbrowser_home_dir}=@{torbrowser_installation_dir}/Browser
