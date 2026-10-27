@@ -12,9 +12,9 @@
 		metadata lookups.
 
 		This package installs Ronald Blankendaal's officially distributed
-		prebuilt Linux release, which bundles a prebuilt SWT native
-		binding for x86_64 only; no linux-arm64 build is currently
-		published upstream.
+		prebuilt Linux release. On arm64, its bundled x86_64 SWT library
+		is replaced with the matching upstream Eclipse Linux aarch64
+		SWT binary.
 
 		DBGL itself does not bundle a DOSBox emulator on Linux; a
 		DOSBox-compatible emulator (games-emulation/dosbox or

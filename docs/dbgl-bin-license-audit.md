@@ -4,6 +4,70 @@ Full findings from the 2026-08-21 audit against the real `dbgl099.tar.xz`
 distfile. Referenced from a short comment in the ebuild; kept here instead
 of inline so the ebuild body stays short.
 
+## arm64 addition (2026-10-27)
+
+DBGL [still lists 0.99 as its latest stable release](https://dbgl.org/).
+The existing ebuild was updated rather than replaced with a newer version.
+The amd64 archive is unchanged. For arm64 only, the ebuild substitutes the
+complete `swt.jar` from Eclipse's
+[SWT 4.33 Linux aarch64 archive](https://archive.eclipse.org/eclipse/downloads/drops4/R-4.33-202409030240/swt-4.33-gtk-linux-aarch64.zip)
+for `lib/swtlin64.jar`, retaining the filename required by DBGL's manifest.
+Both JARs report `version 4.966` and native-library suffix `4966r5`.
+The replacement's `about.html` specifies EPL-2.0, so no license token was added.
+No native library was patched. `metadata.xml` and the Manifest were updated.
+
+EAPI 9 is supported by the installed Portage (`portage.const.EAPI` printed
+`9`) and the current [java-pkg-2 eclass documentation](https://devmanual.gentoo.org/eclass-reference/java-pkg-2.eclass/index.html).
+The [PMS for EAPI 9](https://projects.gentoo.org/pms/9/pms.html) was consulted.
+The ebuild now appends to the inherited dependency variables.
+No DBGL package was found in the local `::gentoo` or `::guru` snapshots;
+`::gentoo/dev-java/swt/swt-4.38-r1.ebuild` was inspected as architecture
+packaging prior art, not as the source of the SWT version or license.
+An indexed bugs.gentoo.org search found no relevant DBGL bug; this does not
+prove that no bug exists.
+
+### VERIFIED
+
+- `pkgdev manifest -d /tmp/codex/games-emulation/dbgl-bin-0.99/distfiles games-emulation/dbgl-bin`
+  printed `* generating manifest: games-emulation/dbgl-bin::local` and exited 0.
+  It added the aarch64 SWT distfile without removing the DBGL entry.
+- `bash -n games-emulation/dbgl-bin/dbgl-bin-0.99.ebuild` and
+  `git diff --check` exited 0 with no output.
+- Python ZIP inspection and `readelf -h` found seven SWT shared objects,
+  each reporting `AArch64`. `readelf -d` on the GTK3, cairo and atk bindings
+  found the expected GTK3/cairo/GLib/ATK libraries covered by existing dependencies.
+- Native non-merging phase tests ran on amd64 `leonids-pc` and arm64 `gentoo`:
+  `sudo -n env PORTAGE_TMPDIR=/tmp/codex/games-emulation/dbgl-bin-0.99 DISTDIR=/tmp/codex/games-emulation/dbgl-bin-0.99/distfiles PORT_LOGDIR=/tmp/codex/games-emulation/dbgl-bin-0.99/logs ebuild <ebuild-path> clean install`.
+  The local test used the checkout's ebuild; the remote test used a minimal
+  staged repository entirely under that workspace, leaving its overlay checkout
+  untouched. Both commands exited 0 and printed:
+  `>>> Completed installing games-emulation/dbgl-bin-0.99 into .../image`.
+  These are binary-package staging tests, not Java or native source compilation.
+- A temporary Java GUI probe loaded DBGL's Launcher class, created an SWT
+  Display, Shell and Nebula Gallery from each staged image, opened and disposed
+  the widgets under Xvfb. Commands were
+  `python3 /tmp/codex/games-emulation/dbgl-bin-0.99/gui-probe.py amd64`
+  locally and the same command with `arm64` on `gentoo`. Output was respectively:
+  `DBGL classes, SWT Display and Nebula Gallery initialized on amd64` and
+  `DBGL classes, SWT Display and Nebula Gallery initialized on aarch64`.
+  Both exited 0. Java emitted warnings about future native-access restrictions.
+- `pkgcheck scan --cache-dir /tmp/codex/games-emulation/dbgl-bin-0.99/pkgcheck-cache games-emulation/dbgl-bin`
+  exited 0 but reported `NonsolvableDepsInDev` and `NonsolvableDepsInStable`
+  for `~arm64`, with `solutions: [ games-emulation/dosbox, games-emulation/dosbox-staging ]`.
+  These findings are exposed by the new keyword: neither emulator has arm64
+  keywords in the inspected `::gentoo` snapshot. The dependency was retained;
+  emulator keywording/build validation remains separate work.
+
+### INFERRED / NOT VERIFIED
+
+The matching SWT build and native GUI probe support this arm64 packaging
+approach, but the full DBGL interface, game execution, optional browser/OpenGL
+features and every integration were not tested. An arm64 administrator still
+needs a separately validated DOSBox provider and appropriate keyword acceptance.
+No source compilation, live-system installation or merge was performed on
+either host. Remote build log and environment were copied back to
+`/tmp/codex/games-emulation/dbgl-bin-0.99/arm64-build-evidence.tar.gz`.
+
 ## Bundled licenses
 
 - **dbgl.jar itself**: the bundled `COPYING` is the unmodified FSF GPL-2
