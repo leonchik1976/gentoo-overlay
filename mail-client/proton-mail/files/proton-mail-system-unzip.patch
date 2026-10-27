@@ -1,0 +1,20 @@
+Use the system unzip for the pinned Electron runtime archive. extract-zip
+can leave its promise unresolved and Node exits successfully after extracting
+only the first entry in the native arm64 validation environment.
+
+See https://github.com/nodejs/node/issues/63487 and
+https://github.com/electron/electron/issues/51619.
+
+--- a/unzip.js
++++ b/unzip.js
+@@ -6,7 +6,8 @@
+ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.extractElectronZip = void 0;
+-const extract_zip_1 = __importDefault(require("extract-zip"));
++const { execFile } = require("node:child_process");
++const { promisify } = require("node:util");
+ async function extractElectronZip(zipPath, targetDir) {
+-    await (0, extract_zip_1.default)(zipPath, { dir: targetDir });
++    await promisify(execFile)("unzip", ["-q", zipPath, "-d", targetDir]);
+ }
+ exports.extractElectronZip = extractElectronZip;
