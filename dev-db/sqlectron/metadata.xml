@@ -9,8 +9,10 @@
 		Sqlectron is a simple and lightweight SQL client with support for
 		MySQL, PostgreSQL, SQLite, SQL Server, Cassandra and other
 		databases. This package installs the official prebuilt Electron
-		binary; a from-source build (via npm + electron-builder) is not
-		provided by this ebuild but would be the path to arm64 support.
+		binary on amd64. On arm64, it reuses the upstream application
+		bundle with matching upstream Linux arm64 Electron and SQLite
+		binaries. Optional native SSH accelerators are omitted on arm64;
+		the upstream JavaScript and WebAssembly fallbacks are used instead.
 	</longdescription>
 	<upstream>
 		<remote-id type="github">sqlectron/sqlectron</remote-id>

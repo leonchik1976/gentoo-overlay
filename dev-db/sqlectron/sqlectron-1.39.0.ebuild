@@ -14,26 +14,26 @@ HOMEPAGE="
 	https://sqlectron.github.io/
 	https://github.com/sqlectron/sqlectron
 "
+# Match the runtime and SQLite addon in the upstream release's package-lock.json.
+ELECTRON_PV="24.8.8"
+SQLITE_PV="5.1.7"
 SRC_URI="
-	amd64? (
-		https://github.com/sqlectron/sqlectron/releases/download/v${PV}/${PN}_${PV}_amd64.deb
-			-> ${P}-amd64.deb
+	https://github.com/sqlectron/sqlectron/releases/download/v${PV}/${PN}_${PV}_amd64.deb
+		-> ${P}-amd64.deb
+	arm64? (
+		https://github.com/electron/electron/releases/download/v${ELECTRON_PV}/electron-v${ELECTRON_PV}-linux-arm64.zip
+		https://github.com/TryGhost/node-sqlite3/releases/download/v${SQLITE_PV}/sqlite3-v${SQLITE_PV}-napi-v6-linux-arm64.tar.gz
 	)
 "
 S="${WORKDIR}"
 
-LICENSE="MIT"
+LICENSE="MIT BSD"
 SLOT="0"
-# Local overlay keyword policy defaults new ebuilds to ~amd64 ~arm64; this is
-# a documented exception, not an oversight. Unlike the other five amd64-only
-# packages in this overlay, sqlectron itself is open source (MIT) and
-# Electron does support arm64 Linux in general -- but this -bin ebuild
-# tracks upstream's prebuilt GitHub Releases artifact, and upstream only
-# publishes an amd64.deb there, no arm64.deb. Real arm64 support would
-# require a from-source Electron build, not attempted here.
-KEYWORDS="-* ~amd64"
+KEYWORDS="~amd64 ~arm64"
 REQUIRED_USE="elibc_glibc"
 RESTRICT="bindist mirror strip"
+
+BDEPEND+=" arm64? ( app-arch/unzip )"
 
 # RDEPEND verified 2026-08-18 with `readelf -d` against the real
 # opt/sqlectron/sqlectron ELF extracted from the official .deb, cross-checked
@@ -77,8 +77,39 @@ QA_PREBUILT="*"
 
 SQLECTRON_HOME="opt/sqlectron"
 
+src_unpack() {
+	# The .deb supplies the architecture-independent app bundle and desktop files.
+	unpacker "${P}-amd64.deb"
+
+	if use arm64; then
+		mkdir electron-arm64 sqlite-arm64 || die
+		pushd electron-arm64 >/dev/null || die
+		unpack "electron-v${ELECTRON_PV}-linux-arm64.zip"
+		popd >/dev/null || die
+		pushd sqlite-arm64 >/dev/null || die
+		unpack "sqlite3-v${SQLITE_PV}-napi-v6-linux-arm64.tar.gz"
+		popd >/dev/null || die
+	fi
+}
+
 src_prepare() {
 	default
+
+	if use arm64; then
+		mv "${SQLECTRON_HOME}" sqlectron-amd64 || die
+		mv electron-arm64 "${SQLECTRON_HOME}" || die
+		mv "${SQLECTRON_HOME}/electron" "${SQLECTRON_HOME}/sqlectron" || die
+		mv sqlectron-amd64/resources/app.asar{,.unpacked} \
+			"${SQLECTRON_HOME}/resources/" || die
+
+		local modules="${SQLECTRON_HOME}/resources/app.asar.unpacked/node_modules"
+		cp sqlite-arm64/build/Release/node_sqlite3.node \
+			"${modules}/sqlite3/build/Release/node_sqlite3.node" || die
+		# ssh2 catches failure to load these optional native accelerators and
+		# uses its JavaScript/WASM crypto and default cipher ordering instead.
+		rm "${modules}/ssh2/lib/protocol/crypto/build/Release/sshcrypto.node" \
+			"${modules}/cpu-features/build/Release/cpufeatures.node" || die
+	fi
 
 	pushd "${SQLECTRON_HOME}/locales" >/dev/null || die
 	chromium_remove_language_paks
