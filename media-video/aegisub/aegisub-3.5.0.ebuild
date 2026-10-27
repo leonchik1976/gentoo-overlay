@@ -56,7 +56,11 @@ BDEPEND+="
 	virtual/pkgconfig
 "
 
-PATCHES=( "${FILESDIR}/${P}-matroska-recovery.patch" )
+PATCHES=(
+	"${FILESDIR}/${P}-matroska-recovery.patch"
+	"${FILESDIR}/${P}-lua-error-unwind.patch"
+	"${FILESDIR}/${P}-lua-bom.patch"
+)
 
 aegisub_check_compiler() {
 	[[ ${MERGE_TYPE} == binary ]] && return

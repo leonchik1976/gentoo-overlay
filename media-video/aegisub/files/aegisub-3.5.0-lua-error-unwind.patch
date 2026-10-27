@@ -1,0 +1,143 @@
+Subject: [PATCH] Propagate native Lua errors through the C++ exception wrapper
+
+Local patch; not submitted upstream. With external unwinding, LuaJIT raises
+Lua errors as foreign exceptions. They must reach lua_pcall; the catch-all
+currently calls terminate without an active C++ exception. Rethrow after the
+existing typed conversion handlers, preserving Lua error objects.
+
+See https://luajit.org/extensions.html#exceptions for the interoperability
+contract. Add regression cases for native Lua errors, object identity,
+existing exception conversions, and successful calls. Loader regressions
+also cover the companion upstream BOM backport and the bundled Unicode
+module whose BOM triggers the observed arm64 startup failure.
+
+diff --git a/libaegisub/lua/utils.cpp b/libaegisub/lua/utils.cpp
+--- a/libaegisub/lua/utils.cpp
++++ b/libaegisub/lua/utils.cpp
+@@ -230,7 +230,9 @@
+ 		return lua_error(L);
+ 	}
+ 	catch (...) {
+-		std::terminate();
++		// LuaJIT can unwind Lua errors through C++ frames. Let lua_pcall
++		// handle them without replacing the error object or aborting.
++		throw;
+ 	}
+ }
+ 
+diff --git a/tests/meson.build b/tests/meson.build
+--- a/tests/meson.build
++++ b/tests/meson.build
+@@ -35,6 +35,7 @@
+     'tests/line_iterator.cpp',
+     'tests/line_wrap.cpp',
+     'tests/lua_lfs.cpp',
++    'tests/lua_exception.cpp',
+     'tests/mru.cpp',
+     'tests/option.cpp',
+     'tests/path.cpp',
+diff --git a/tests/tests/lua_exception.cpp b/tests/tests/lua_exception.cpp
+--- /dev/null
++++ b/tests/tests/lua_exception.cpp
+@@ -0,0 +1,96 @@
++// SPDX-License-Identifier: MIT
++// Copyright 2026 Leonid Kopylov
++#include <main.h>
++#include <libaegisub/exception.h>
++#include <libaegisub/lua/utils.h>
++#include <libaegisub/lua/modules.h>
++#include <libaegisub/lua/script_reader.h>
++#include <util.h>
++#include <lua.hpp>
++#include <stdexcept>
++
++namespace {
++class lagi_lua_exception : public ::testing::Test {
++protected:
++    lua_State *L = nullptr;
++    void SetUp() override {
++        L = luaL_newstate();
++        ASSERT_NE(nullptr, L);
++    }
++    void TearDown() override { if (L) lua_close(L); }
++
++    template<int (*Function)(lua_State *)>
++    int call(int results = 0) {
++        lua_pushcfunction(L, agi::lua::exception_wrapper<Function>);
++        return lua_pcall(L, 0, results, 0);
++    }
++};
++
++int native_error(lua_State *L) { return luaL_error(L, "native Lua error"); }
++int object_error(lua_State *L) { lua_pushvalue(L, 1); return lua_error(L); }
++int standard_error(lua_State *) { throw std::runtime_error("standard exception"); }
++class ScriptError : public agi::Exception {
++public:
++    ScriptError() : Exception("Aegisub exception") { }
++};
++int aegisub_error(lua_State *) { throw ScriptError(); }
++int tagged_error(lua_State *L) { return agi::lua::error(L, "tagged error"); }
++int successful_call(lua_State *L) { lua_pushinteger(L, 42); return 1; }
++}
++
++TEST_F(lagi_lua_exception, native_lua_error_reaches_pcall) {
++    EXPECT_EQ(LUA_ERRRUN, call<native_error>());
++    ASSERT_TRUE(lua_isstring(L, -1));
++    EXPECT_STREQ("native Lua error", lua_tostring(L, -1));
++}
++
++TEST_F(lagi_lua_exception, native_lua_error_preserves_object_identity) {
++    lua_newtable(L);
++    lua_pushcfunction(L, agi::lua::exception_wrapper<object_error>);
++    lua_pushvalue(L, 1);
++    EXPECT_EQ(LUA_ERRRUN, lua_pcall(L, 1, 0, 0));
++    EXPECT_TRUE(lua_rawequal(L, 1, -1));
++}
++
++TEST_F(lagi_lua_exception, standard_exception_is_still_converted) {
++    EXPECT_EQ(LUA_ERRRUN, call<standard_error>());
++    ASSERT_TRUE(lua_isstring(L, -1));
++    EXPECT_STREQ("standard exception", lua_tostring(L, -1));
++}
++
++TEST_F(lagi_lua_exception, aegisub_exception_is_still_converted) {
++    EXPECT_EQ(LUA_ERRRUN, call<aegisub_error>());
++    ASSERT_TRUE(lua_isstring(L, -1));
++    EXPECT_STREQ("Aegisub exception", lua_tostring(L, -1));
++}
++
++TEST_F(lagi_lua_exception, tagged_error_keeps_its_message) {
++    EXPECT_EQ(LUA_ERRRUN, call<tagged_error>());
++    ASSERT_TRUE(lua_isstring(L, -1));
++    EXPECT_STREQ("tagged error", lua_tostring(L, -1));
++}
++
++TEST_F(lagi_lua_exception, successful_call_keeps_return_value) {
++    EXPECT_EQ(0, call<successful_call>(1));
++    EXPECT_EQ(42, lua_tointeger(L, -1));
++}
++
++TEST_F(lagi_lua_exception, loads_bom_prefixed_moonscript) {
++    agi::lua::preload_modules(L);
++    auto support = util::test_data_dir().parent_path() / "automation/include";
++    ASSERT_TRUE(agi::lua::Install(L, {support}, support)) << lua_tostring(L, -1);
++    auto script = util::test_data_dir() / "data/lua-bom.moon";
++    ASSERT_TRUE(agi::lua::LoadFile(L, script)) << lua_tostring(L, -1);
++    ASSERT_EQ(0, lua_pcall(L, 0, 1, 0)) << lua_tostring(L, -1);
++    EXPECT_EQ(42, lua_tointeger(L, -1));
++}
++
++TEST_F(lagi_lua_exception, bundled_unicode_module_loads) {
++    agi::lua::preload_modules(L);
++    auto support = util::test_data_dir().parent_path() / "automation/include";
++    ASSERT_TRUE(agi::lua::Install(L, {support}, support)) << lua_tostring(L, -1);
++    ASSERT_EQ(0, luaL_dostring(L,
++        "local u = require 'aegisub.unicode'; return u.len('a\\195\\169')"))
++        << lua_tostring(L, -1);
++    EXPECT_EQ(2, lua_tointeger(L, -1));
++}
+diff --git a/tests/data/lua-bom.moon b/tests/data/lua-bom.moon
+--- /dev/null
++++ b/tests/data/lua-bom.moon
+@@ -0,0 +1 @@
++﻿return 42

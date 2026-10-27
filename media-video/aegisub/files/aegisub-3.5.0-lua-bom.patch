@@ -1,0 +1,25 @@
+From cb2cff01170e6d47d83763a4fc479aaf459b2af1 Mon Sep 17 00:00:00 2001
+From: arch1t3cht <arch1t3cht@gmail.com>
+Date: Fri, 16 Oct 2026 14:02:55 +0200
+Subject: [PATCH] lua: Fix BOM check in LoadFile when char is unsigned
+
+Aren't integer promotion rules fun?
+
+Fixes TypesettingTools/Aegisub#633.
+---
+ libaegisub/lua/script_reader.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libaegisub/lua/script_reader.cpp b/libaegisub/lua/script_reader.cpp
+index 7e8bbe39f9..23b4a097bb 100644
+--- a/libaegisub/lua/script_reader.cpp
++++ b/libaegisub/lua/script_reader.cpp
+@@ -51,7 +51,7 @@ namespace agi::lua {
+ 		auto size = static_cast<size_t>(file.size());
+ 
+ 		// Discard the BOM if present
+-		if (size >= 3 && buff[0] == -17 && buff[1] == -69 && buff[2] == -65) {
++		if (size >= 3 && buff[0] == '\xef' && buff[1] == '\xbb' && buff[2] == '\xbf') {
+ 			buff += 3;
+ 			size -= 3;
+ 		}
