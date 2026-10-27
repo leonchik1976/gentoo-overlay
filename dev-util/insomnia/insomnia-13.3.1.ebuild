@@ -70,19 +70,28 @@ DEPEND="dev-libs/openssl:0 net-misc/curl[ssl,curl_ssl_openssl]"
 BDEPEND+="
 	${PYTHON_DEPS}
 	app-arch/unzip
-	>=net-libs/nodejs-24.18.0:0/24[npm]
+	|| (
+		>=net-libs/nodejs-24.18.0:0/24[npm]
+		>=net-libs/nodejs-26.12.1:0/26[npm]
+	)
 	virtual/pkgconfig
 "
 
 # Only Electron is prebuilt; the libcurl addon is compiled against system libs.
 QA_PREBUILT="opt/insomnia/insomnia opt/insomnia/chrome-sandbox
 	opt/insomnia/chrome_crashpad_handler opt/insomnia/*.so*"
-PATCHES=( "${FILESDIR}/${P}-lockfile.patch" )
+PATCHES=(
+	"${FILESDIR}/${P}-lockfile.patch"
+	"${FILESDIR}/${P}-node-26.patch"
+)
 
 pkg_setup() {
 	python-any-r1_pkg_setup
 	tc-is-cross-compiler && die "Build natively on amd64 or arm64"
-	[[ $(node --version) == v24.* ]] || die "Upstream requires Node 24 to build"
+	case $(node --version) in
+		v24.*|v26.*) ;;
+		*) die "This ebuild requires Node 24 or Node 26 to build" ;;
+	esac
 }
 
 src_unpack() {
@@ -102,7 +111,10 @@ src_prepare() {
 	default
 	insomnia_build_env
 	"${PYTHON}" "${FILESDIR}/insomnia-build.py" prepare "${S}" "${DISTDIR}" || die
-	npm ci --offline --ignore-scripts --no-audit --no-fund || die
+	# Upstream enables engine-strict. The locked apiconnect-wsdl-2.0.36 engine
+	# range (>=18.7.0 <25.0.0) rejects locally validated Node 26. Keep its warning
+	# and override the strict check only for this offline dependency install.
+	npm ci --offline --ignore-scripts --engine-strict=false --no-audit --no-fund || die
 	node node_modules/patch-package/index.js --error-on-fail || die
 	"${PYTHON}" "${FILESDIR}/insomnia-build.py" configure "${S}" || die
 }
