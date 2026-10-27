@@ -1,0 +1,454 @@
+Subject: [PATCH] Bound Matroska longjmp recovery to live parser state
+
+Local patch against the upstream v3.5.0 release; not submitted upstream.
+The current upstream parser is identical to the release parser.
+
+Keep only reindex's mutable scan cursor and failed-attempt counter volatile,
+with a single checkpoint around the scan. Other attempt-local values are
+reassigned before use after recovery. Restore the caller's handler before
+fallback cue allocation, so allocation failure cannot re-enter a completed
+scan. Preserve the 50-failure skip and block reader's three-retry limit.
+
+nSeekHeads is never used after recovery, so restrict its scope to the parsing
+branch. The block reader's result is also reassigned after recovery: put the
+parsing attempt in a helper without setjmp instead of making its locals
+volatile. These lifetimes follow C 7.13.2.1's rules for automatic objects.
+
+Add synthetic malformed/truncated EBML, retry/progress, SeekHead-cycle and
+allocation-failure regression tests. The unpatched parser fails the fallback
+allocation test by rescanning the same position.
+
+diff --git a/src/MatroskaParser.c b/src/MatroskaParser.c
+--- a/src/MatroskaParser.c
++++ b/src/MatroskaParser.c
+@@ -2014,7 +2014,6 @@
+ 
+ static void parseSegment(MatroskaFile *mf,uint64_t toplen) {
+   uint64_t   nextpos;
+-  unsigned    nSeekHeads = 0, dontstop = 0;
+   jmp_buf     jb;
+ 
+   memcpy(&jb,&mf->jb,sizeof(jb));
+@@ -2022,6 +2021,8 @@
+   if (setjmp(mf->jb))
+     mf->flags &= ~MPF_ERROR;
+   else {
++    unsigned nSeekHeads = 0, dontstop = 0;
++
+     // we want to read data until we find a seekhead or a trackinfo
+     FOREACH(mf,toplen)
+       case 0x114d9b74: // SeekHead
+@@ -2346,55 +2347,10 @@
+     ClearQueue(mf,&mf->Queues[i]);
+ }
+ 
+-static int  readMoreBlocks(MatroskaFile *mf) {
+-  uint64_t		toplen, cstop;
+-  int64_t		cp;
+-  int			cid, ret = 0;
+-  jmp_buf		jb;
+-  volatile unsigned	retries = 0;
+-
+-  if (mf->readPosition >= mf->pSegmentTop)
+-    return EOF;
+-
+-  memcpy(&jb,&mf->jb,sizeof(jb));
+-
+-  if (setjmp(mf->jb)) { // something evil happened here, try to resync
+-    // always advance read position no matter what so
+-    // we don't get caught in an endless loop
+-    mf->readPosition = filepos(mf);
+-
+-    ret = EOF;
+-
+-    if (++retries > 3) // don't try too hard
+-      goto ex;
+-
+-    for (;;) {
+-      if (filepos(mf) >= mf->pSegmentTop)
+-	goto ex;
+-
+-      cp = mf->cache->scan(mf->cache,filepos(mf),0x1f43b675); // cluster
+-
+-      if (cp < 0 || (uint64_t)cp >= mf->pSegmentTop)
+-	goto ex;
+-
+-      seek(mf,cp);
+-
+-      cid = readID(mf);
+-      if (cid == EOF)
+-	goto ex;
+-      if (cid == 0x1f43b675) {
+-	toplen = readSize(mf);
+-	if (toplen < MAXCLUSTER) {
+-	  // reset error flags
+-	  mf->flags &= ~MPF_ERROR;
+-	  ret = RBRESYNC;
+-	  break;
+-	}
+-      }
+-    }
+-
+-    mf->readPosition = cp;
+-  }
++// The parsing attempt has no setjmp: its locals are discarded on recovery.
++static int readMoreBlocksData(MatroskaFile *mf, int ret) {
++  uint64_t toplen, cstop;
++  int cid;
+ 
+   cstop = mf->cache->getcachesize(mf->cache)>>1;
+   if (cstop > MAX_READAHEAD)
+@@ -2469,6 +2425,62 @@
+ 
+   mf->readPosition = filepos(mf);
+ 
++  return ret;
++}
++
++static int  readMoreBlocks(MatroskaFile *mf) {
++  uint64_t		toplen;
++  int64_t		cp;
++  int			cid, ret;
++  jmp_buf		jb;
++  volatile unsigned	retries = 0;
++
++  if (mf->readPosition >= mf->pSegmentTop)
++    return EOF;
++
++  memcpy(&jb,&mf->jb,sizeof(jb));
++
++  if (setjmp(mf->jb)) { // something evil happened here, try to resync
++    // always advance read position no matter what so
++    // we don't get caught in an endless loop
++    mf->readPosition = filepos(mf);
++
++    if (++retries > 3) // don't try too hard
++      goto fail;
++
++    for (;;) {
++      if (filepos(mf) >= mf->pSegmentTop)
++	goto fail;
++
++      cp = mf->cache->scan(mf->cache,filepos(mf),0x1f43b675); // cluster
++
++      if (cp < 0 || (uint64_t)cp >= mf->pSegmentTop)
++	goto fail;
++
++      seek(mf,cp);
++
++      cid = readID(mf);
++      if (cid == EOF)
++	goto fail;
++      if (cid == 0x1f43b675) {
++	toplen = readSize(mf);
++	if (toplen < MAXCLUSTER) {
++	  // reset error flags
++	  mf->flags &= ~MPF_ERROR;
++	  break;
++	}
++      }
++    }
++
++    mf->readPosition = cp;
++    ret = readMoreBlocksData(mf, RBRESYNC);
++  } else
++    ret = readMoreBlocksData(mf, 0);
++  goto ex;
++
++fail:
++  ret = EOF;
++
+ ex:
+   memcpy(&mf->jb,&jb,sizeof(jb));
+ 
+@@ -2505,11 +2517,12 @@
+ 
+ static void reindex(MatroskaFile *mf) {
+   jmp_buf     jb;
+-  uint64_t   pos = mf->pCluster;
++  volatile uint64_t pos = mf->pCluster;
+   uint64_t   step = 10*1024*1024;
+   uint64_t   size, tc, isize;
+   int64_t    next_cluster;
+-  int	      id, have_tc, bad;
++  int	      id, have_tc;
++  volatile int bad = 0;
+   struct Cue  *cue;
+ 
+   if (pos >= mf->pSegmentTop)
+@@ -2525,7 +2538,9 @@
+   // remove all cues
+   mf->nCues = 0;
+ 
+-  bad = 0;
++  // The mutable scan cursor and failed-attempt count must survive errors.
++  // Establish one checkpoint so loop housekeeping also has a valid handler.
++  (void)setjmp(mf->jb);
+ 
+   while (pos < mf->pSegmentTop) {
+     if (!mf->cache->progress(mf->cache,pos,mf->pSegmentTop))
+@@ -2543,9 +2558,6 @@
+       break;
+ 
+     pos = next_cluster + 4; // prevent endless loops
+-
+-    if (setjmp(mf->jb)) // something evil happened while reindexing
+-      continue;
+ 
+     seek(mf,next_cluster);
+ 
+@@ -2605,6 +2617,9 @@
+     bad = 0;
+   }
+ 
++  // Cue finalization must not jump back into the completed scan on OOM.
++  memcpy(&mf->jb,&jb,sizeof(jb));
++
+   fixupCues(mf);
+ 
+   if (mf->nCues == 0) {
+@@ -2616,8 +2631,6 @@
+   }
+ 
+   mf->cache->progress(mf->cache,0,0);
+-
+-  memcpy(&mf->jb,&jb,sizeof(jb));
+ }
+ 
+ static void fixupChapter(uint64_t adj, struct Chapter *ch) {
+diff --git a/tests/meson.build b/tests/meson.build
+--- a/tests/meson.build
++++ b/tests/meson.build
+@@ -86,3 +86,11 @@
+ 
+ test('gtest main', runner, env: {'AEGISUB_TEST_DATA_DIR': meson.current_source_dir()}, depends: test_setup)
+ test('luajit-52', executable('luajit-52', 'tests/luajit_52.c', dependencies: luajit))
++
++# Exercise the bundled C parser separately from libaegisub's C++ tests.
++matroska_recovery = executable('matroska-recovery',
++    'tests/matroska_recovery.c',
++    c_args: conf_defines,
++    dependencies: zlib_dep,
++)
++test('matroska recovery', matroska_recovery, timeout: 10)
+diff --git a/tests/tests/matroska_recovery.c b/tests/tests/matroska_recovery.c
+--- /dev/null
++++ b/tests/tests/matroska_recovery.c
+@@ -0,0 +1,217 @@
++/* Regression tests for the bundled parser's private recovery paths.
++ * Synthetic EBML containers avoid external files and GUI dependencies.
++ * SPDX-License-Identifier: MIT
++ * Copyright 2026 Leonid Kopylov
++ */
++#include <stdlib.h>
++#include <stdio.h>
++#include <string.h>
++#include "../../src/MatroskaParser.c"
++
++#define CHECK(expr) do { \
++  if (!(expr)) { \
++    fprintf(stderr, "%s:%d: %s\n", __FILE__, __LINE__, #expr); \
++    exit(EXIT_FAILURE); \
++  } \
++} while (0)
++
++struct TestStream {
++  InputStream io;
++  MatroskaFile mf;
++  unsigned char data[8192];
++  size_t size;
++  unsigned reads, scans, progress_calls, reallocs;
++  unsigned read_chunk;
++  int fail_alloc;
++  uint64_t last_scan, positions[512];
++};
++
++static int test_read(InputStream *io, uint64_t pos, void *buffer, int count) {
++  struct TestStream *s = (struct TestStream *)io;
++  CHECK(++s->reads < 1000);
++  if (pos >= s->size) return 0;
++  if ((uint64_t)count > s->size - pos) count = (int)(s->size - pos);
++  if (s->read_chunk && (unsigned)count > s->read_chunk) count = (int)s->read_chunk;
++  if (buffer) memcpy(buffer, s->data + pos, (size_t)count);
++  return count;
++}
++
++static int64_t test_scan(InputStream *io, uint64_t start, unsigned signature) {
++  struct TestStream *s = (struct TestStream *)io;
++  uint64_t i;
++  CHECK(++s->scans < 500);
++  CHECK(s->scans == 1 || start > s->last_scan);
++  s->last_scan = start;
++  for (i = start; i + 4 <= s->size; ++i) {
++    unsigned value = (unsigned)s->data[i] << 24 | (unsigned)s->data[i+1] << 16 |
++                     (unsigned)s->data[i+2] << 8 | s->data[i+3];
++    if (value == signature) return (int64_t)i;
++  }
++  return -1;
++}
++
++static unsigned test_cache_size(InputStream *io) { (void)io; return 8192; }
++static const char *test_error(InputStream *io) { (void)io; return "test I/O error"; }
++static void *test_alloc(InputStream *io, size_t n) { (void)io; return malloc(n); }
++static void *test_realloc(InputStream *io, void *ptr, size_t n) {
++  struct TestStream *s = (struct TestStream *)io;
++  ++s->reallocs;
++  return s->fail_alloc ? NULL : realloc(ptr, n);
++}
++static void test_free(InputStream *io, void *ptr) { (void)io; free(ptr); }
++static int test_progress(InputStream *io, uint64_t pos, uint64_t max) {
++  struct TestStream *s = (struct TestStream *)io;
++  if (max) {
++    CHECK(s->progress_calls < 512);
++    s->positions[s->progress_calls++] = pos;
++  }
++  return 1;
++}
++
++static struct TestStream *make_stream(const unsigned char *data, size_t size) {
++  struct TestStream *s = calloc(1, sizeof(*s));
++  CHECK(s && size <= sizeof(s->data));
++  memcpy(s->data, data, size);
++  s->size = size;
++  s->io.read = test_read;
++  s->io.scan = test_scan;
++  s->io.getcachesize = test_cache_size;
++  s->io.geterror = test_error;
++  s->io.memalloc = test_alloc;
++  s->io.memrealloc = test_realloc;
++  s->io.memfree = test_free;
++  s->io.progress = test_progress;
++  s->mf.cache = &s->io;
++  s->mf.pSegment = s->mf.pCluster = s->mf.readPosition = 1;
++  s->mf.pSegmentTop = size;
++  s->mf.Seg.TimecodeScale = 1;
++  return s;
++}
++
++static void release_stream(struct TestStream *s) {
++  free(s->mf.Cues);
++  free(s);
++}
++
++static void check_blocks(const unsigned char *data, size_t size, int expected,
++                         unsigned scans, uint64_t position, int error) {
++  struct TestStream *s = make_stream(data, size);
++  if (setjmp(s->mf.jb)) CHECK(!"unexpected escape from readMoreBlocks");
++  CHECK(readMoreBlocks(&s->mf) == expected);
++  CHECK(s->scans == scans);
++  CHECK(s->mf.readPosition == position);
++  CHECK(!!(s->mf.flags & MPF_ERROR) == error);
++  if (expected != EOF) CHECK(s->mf.tcCluster == 7);
++  release_stream(s);
++}
++
++static void test_blocks(void) {
++  static const unsigned char valid[] = {0, 0x1f,0x43,0xb6,0x75,0x83,0xe7,0x81,7};
++  static const unsigned char corrupt[] = {0, 0, 0x1f,0x43,0xb6,0x75,0x83,0xe7,0x81,7};
++  /* BlockGroup before Timecode is invalid: recover at the next cluster. */
++  static const unsigned char block[] = {0, 0x1f,0x43,0xb6,0x75,0x82,0xa0,0x80,
++                                         0x1f,0x43,0xb6,0x75,0x83,0xe7,0x81,7};
++  static const unsigned char truncated_id[] = {0, 0x1f,0x43,0xb6,0x75,0x83,0x1f};
++  static const unsigned char truncated_size[] = {0, 0x1f,0x43,0xb6,0x75,0x40};
++  static const unsigned char oversized[] = {0, 0, 0x1f,0x43,0xb6,0x75,0x14,0,0,0,
++                                             0x1f,0x43,0xb6,0x75,0x83,0xe7,0x81,7};
++  static const unsigned char exhausted[] = {0, 0x1f,0x43,0xb6,0x75,0,
++                                             0x1f,0x43,0xb6,0x75,0,
++                                             0x1f,0x43,0xb6,0x75,0,
++                                             0x1f,0x43,0xb6,0x75,0,
++                                             0x1f,0x43,0xb6,0x75,0x83,0xe7,0x81,7};
++  check_blocks(valid, sizeof(valid), 0, 0, sizeof(valid), 0);
++  check_blocks(corrupt, sizeof(corrupt), RBRESYNC, 1, sizeof(corrupt), 0);
++  check_blocks(block, sizeof(block), RBRESYNC, 1, sizeof(block), 0);
++  check_blocks(truncated_id, sizeof(truncated_id), EOF, 0, sizeof(truncated_id), 1);
++  check_blocks(truncated_size, sizeof(truncated_size), EOF, 0, sizeof(truncated_size), 1);
++  check_blocks(oversized, sizeof(oversized), RBRESYNC, 2, sizeof(oversized), 0);
++  check_blocks(exhausted, sizeof(exhausted), EOF, 3, 21, 1);
++  puts("readMoreBlocks: 7 valid/corrupt/truncated/retry-limit cases OK");
++}
++
++static void test_reindex_limit(void) {
++  unsigned char data[1000] = {0};
++  struct TestStream *s;
++  unsigned i;
++  for (i = 1; i < 501; i += 5) memcpy(data+i, "\x1f\x43\xb6\x75\0", 5);
++  s = make_stream(data, sizeof(data));
++  if (setjmp(s->mf.jb)) CHECK(!"unexpected escape from reindex");
++  reindex(&s->mf);
++  unsigned skipped = 0;
++  for (i = 1; i < s->progress_calls; ++i)
++    if (s->positions[i] == s->positions[i-1] + (sizeof(data)-1)/10) ++skipped;
++  CHECK(skipped == 1); /* step over data after 50 unsuccessful candidates */
++  CHECK(s->scans < 101 && s->scans > 50);
++  CHECK(s->mf.nCues == 1 && s->mf.Cues[0].Position == 0);
++  release_stream(s);
++  puts("reindex: malformed candidates preserve 50-attempt skip and forward progress OK");
++}
++
++static void test_reindex_cue(void) {
++  unsigned char data[1040] = {0};
++  struct TestStream *s;
++  /* An invalid-size candidate, then a 1024-byte cluster and another header. */
++  memcpy(data+1, "\x1f\x43\xb6\x75\0", 5);
++  memcpy(data+6, "\x1f\x43\xb6\x75\x44\0\xe7\x81\x02", 9);
++  memcpy(data+1036, "\x1f\x43\xb6\x75", 4);
++  s = make_stream(data, sizeof(data));
++  if (setjmp(s->mf.jb)) CHECK(!"unexpected escape while indexing a valid cluster");
++  reindex(&s->mf);
++  CHECK(s->mf.nCues == 1);
++  CHECK(s->mf.Cues[0].Time == 2 && s->mf.Cues[0].Position == 5);
++  release_stream(s);
++  puts("reindex: recovery retains a valid following cue OK");
++}
++
++static void test_reindex_oom(void) {
++  unsigned char data[64] = {0};
++  struct TestStream *s;
++  memcpy(data+1, "\x1f\x43\xb6\x75\0", 5);
++  s = make_stream(data, sizeof(data));
++  s->fail_alloc = 1;
++  if (!setjmp(s->mf.jb)) {
++    reindex(&s->mf);
++    CHECK(!"fallback allocation failure must reach the caller");
++  }
++  CHECK(s->reallocs == 1 && s->scans == 2);
++  CHECK(strstr(s->mf.errmsg, "Out of memory in ArrayAlloc"));
++  release_stream(s);
++  puts("reindex: fallback allocation failure reaches caller without retrying completed scan OK");
++}
++
++static void test_segment(void) {
++  static const unsigned char corrupt[] = {0, 0x11,0x4d,0x9b,0x74,0x80,
++                                             0x11,0x4d,0x9b,0x74,0x80,0};
++  static const unsigned char chain[] = {0, 0x11,0x4d,0x9b,0x74,0x8e,0x4d,0xbb,0x8b,
++                                           0x53,0xab,0x84,0x11,0x4d,0x9b,0x74,
++                                           0x53,0xac,0x81,0};
++  struct TestStream *s = make_stream(corrupt, sizeof(corrupt));
++  s->mf.pCluster = 0;
++  if (setjmp(s->mf.jb)) CHECK(!"segment recovery unexpectedly escaped");
++  seek(&s->mf, 1);
++  parseSegment(&s->mf, s->size - 1);
++  CHECK(!(s->mf.flags & MPF_ERROR));
++  release_stream(s);
++
++  s = make_stream(chain, sizeof(chain));
++  s->mf.pCluster = 0;
++  s->read_chunk = 1; /* count all bytes even when the SeekHead points to itself */
++  if (setjmp(s->mf.jb)) CHECK(!"SeekHead chain unexpectedly escaped");
++  seek(&s->mf, 1);
++  parseSegment(&s->mf, s->size - 1);
++  CHECK(s->reads == 195); /* initial 5 bytes + 10*(14 payload + 5 header) */
++  CHECK(filepos(&s->mf) == s->size && s->mf.pSeekHead == 1);
++  release_stream(s);
++  puts("parseSegment: corrupt input recovery and 10-SeekHead chain limit OK");
++}
++
++int main(void) {
++  test_blocks();
++  test_reindex_limit();
++  test_reindex_cue();
++  test_reindex_oom();
++  test_segment();
++  puts("12 Matroska parser recovery scenarios OK");
++  return 0;
++}

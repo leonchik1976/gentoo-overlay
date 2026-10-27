@@ -56,6 +56,8 @@ BDEPEND+="
 	virtual/pkgconfig
 "
 
+PATCHES=( "${FILESDIR}/${P}-matroska-recovery.patch" )
+
 aegisub_check_compiler() {
 	[[ ${MERGE_TYPE} == binary ]] && return
 	test-flag-CXX -std=c++20 || die "Your compiler lacks C++20 support."
@@ -119,7 +121,7 @@ src_configure() {
 }
 
 src_test() {
-	# Run the C++ and LuaJIT compatibility tests. Exclude the separate
+	# Run C++, LuaJIT compatibility, and parser recovery tests. Exclude the
 	# automation suite, which needs a LuaRocks/Busted test environment.
-	meson_src_test 'gtest main' luajit-52
+	meson_src_test 'gtest main' luajit-52 'matroska recovery'
 }
