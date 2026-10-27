@@ -1883,7 +1883,6 @@ BDEPEND+="
 	$(python_gen_any_dep 'dev-python/pyyaml[${PYTHON_USEDEP}]')
 	app-arch/unzip
 	>=net-libs/nodejs-24.22.1
-	<net-libs/nodejs-25
 "
 RDEPEND="
 	!mail-client/proton-mail-bin
