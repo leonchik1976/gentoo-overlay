@@ -51,7 +51,7 @@ RESTRICT="bindist mirror strip"
 BDEPEND="${PYTHON_DEPS}"
 
 # RDEPEND checked with `readelf -d` against ELF binaries and .so files in
-# the v4.8.0 amd64 AppImage; the arm64 dependency inventory still needs
+# the v4.9.0 amd64 AppImage; the arm64 dependency inventory still needs
 # validation on gentoo. This includes Zettlr, chrome-sandbox,
 # chrome_crashpad_handler, libEGL.so, libGLESv2.so, libvk_swiftshader.so,
 # libvulkan.so.1, libffmpeg.so, and the bundled Nodehun.node spellcheck

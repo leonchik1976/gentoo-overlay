@@ -12,7 +12,7 @@ CHROMIUM_LANGS="
 	sl sr sv sw ta te th tr uk ur vi zh-CN zh-TW
 "
 inherit chromium-2 desktop multiprocessing python-any-r1 toolchain-funcs xdg-utils
-inherit mongodb-compass-npm-deps-1.53.1
+inherit mongodb-compass-npm-deps-1.53.2
 
 DESCRIPTION="MongoDB GUI built from source, with bundled Electron"
 HOMEPAGE="https://www.mongodb.com/compass https://github.com/mongodb-js/compass"
@@ -33,7 +33,7 @@ mongodb_compass_npm_src_uri
 S="${WORKDIR}/compass-${PV}"
 
 # SSPL-1 is the application license; other licenses cover bundled dependencies.
-LICENSE="SSPL-1 Apache-2.0 MIT BSD BSD-2 ISC BlueOak-1.0.0 0BSD CC0-1.0
+LICENSE="SSPL-1 Apache-2.0 EPL-2.0 MIT MIT-0 BSD BSD-2 ISC BlueOak-1.0.0 0BSD CC0-1.0
 	Artistic-2 MPL-2.0 CC-BY-3.0 CC-BY-4.0 WTFPL PSF-2
 	Boost-1.0 FFT2D FTL IJG LGPL-2 LGPL-2.1 OFL-1.1
 	Unicode-3.0 Unicode-DFS-2016 ZLIB Apache-2.0-with-LLVM-exceptions Clear-BSD MPL-1.1 Ms-PL SGI-B-2.0

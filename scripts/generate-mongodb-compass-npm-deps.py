@@ -26,7 +26,7 @@ lines = [
     '# Copyright 2026 Gentoo Authors',
     '# Distributed under the terms of the GNU General Public License v2',
     '',
-    '# @ECLASS: mongodb-compass-npm-deps-1.53.1.eclass',
+    f'# @ECLASS: {a.output.name}',
     '# @MAINTAINER:',
     '# Leonid Kopylov <leonchik1976@gmail.com>',
     '# @SUPPORTED_EAPIS: 8',

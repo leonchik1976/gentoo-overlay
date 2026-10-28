@@ -57,9 +57,8 @@ BDEPEND+="
 "
 
 PATCHES=(
-	"${FILESDIR}/${P}-matroska-recovery.patch"
-	"${FILESDIR}/${P}-lua-error-unwind.patch"
-	"${FILESDIR}/${P}-lua-bom.patch"
+	"${FILESDIR}/aegisub-3.5.0-matroska-recovery.patch"
+	"${FILESDIR}/aegisub-3.5.0-lua-error-unwind.patch"
 )
 
 aegisub_check_compiler() {

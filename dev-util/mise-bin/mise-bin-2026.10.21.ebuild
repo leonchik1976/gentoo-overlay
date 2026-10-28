@@ -23,7 +23,7 @@ S="${WORKDIR}/${MY_PN}"
 
 LICENSE="MIT"
 # Licenses of crates statically linked into the release binary (derived from
-# the exact Cargo.lock at v2026.10.18; see the dev-util/mise-bin metadata for how
+# the exact Cargo.lock at v2026.10.21; see the dev-util/mise-bin metadata for how
 # this was verified).
 LICENSE+="
 	0BSD Apache-2.0 Apache-2.0-with-LLVM-exceptions BSD BSD-1 BSD-2 BZIP2

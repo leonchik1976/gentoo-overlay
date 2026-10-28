@@ -36,6 +36,7 @@ RDEPEND+="
 	>=dev-python/userpath-1.9.2[${PYTHON_USEDEP}]
 "
 BDEPEND="${BDEPEND}
+	>=dev-python/hatch-fancy-pypi-readme-25.1[${PYTHON_USEDEP}]
 	>=dev-python/hatchling-1.32.4[${PYTHON_USEDEP}]
 	>=dev-python/docutils-0.23[${PYTHON_USEDEP}]
 	>=dev-python/hatch-vcs-0.5[${PYTHON_USEDEP}]

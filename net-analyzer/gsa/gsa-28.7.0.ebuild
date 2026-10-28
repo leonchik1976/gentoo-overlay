@@ -5,9 +5,9 @@ EAPI=9
 
 MY_NODE_N="node-modules"
 MY_NODE_D="node_modules"
-ROLLDOWN_PV="1.2.10"
+ROLLDOWN_PV="1.2.13"
 LIGHTNINGCSS_PV="1.33.0"
-SWC_PV="1.16.1"
+SWC_PV="1.16.13"
 TYPESCRIPT_PV="7.0.2"
 
 DESCRIPTION="Greenbone Security Assistant"

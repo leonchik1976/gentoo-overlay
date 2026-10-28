@@ -1,7 +1,7 @@
 # Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-# @ECLASS: mongodb-compass-npm-deps-1.53.1.eclass
+# @ECLASS: mongodb-compass-npm-deps-1.53.2.eclass
 # @MAINTAINER:
 # Leonid Kopylov <leonchik1976@gmail.com>
 # @SUPPORTED_EAPIS: 8
@@ -335,7 +335,7 @@ MONGODB_COMPASS_NPM_SRC_URI="
 	https://registry.npmjs.org/@leafygreen-ui/emotion/-/emotion-5.2.1.tgz -> mc-de0400baf75200ef.tgz
 	https://registry.npmjs.org/@leafygreen-ui/form-field/-/form-field-4.0.10.tgz -> mc-422818c5a11fabd4.tgz
 	https://registry.npmjs.org/@leafygreen-ui/guide-cue/-/guide-cue-8.2.1.tgz -> mc-dcd1c46402b0ad24.tgz
-	https://registry.npmjs.org/@leafygreen-ui/hooks/-/hooks-9.3.2.tgz -> mc-4c0ce52f1dc5345e.tgz
+	https://registry.npmjs.org/@leafygreen-ui/hooks/-/hooks-9.3.3.tgz -> mc-6b5ab6130a1483cd.tgz
 	https://registry.npmjs.org/@leafygreen-ui/icon-button/-/icon-button-17.1.6.tgz -> mc-e3fc06fa43fa129c.tgz
 	https://registry.npmjs.org/@leafygreen-ui/icon/-/icon-14.9.1.tgz -> mc-1fd4086a1263b222.tgz
 	https://registry.npmjs.org/@leafygreen-ui/info-sprinkle/-/info-sprinkle-5.0.12.tgz -> mc-2ee39a551bc0bf24.tgz
@@ -414,7 +414,7 @@ MONGODB_COMPASS_NPM_SRC_URI="
 	https://registry.npmjs.org/@mongodb-js/atlas-local-win32-x64-msvc/-/atlas-local-win32-x64-msvc-1.3.0.tgz -> mc-fcded2a873d11ae2.tgz
 	https://registry.npmjs.org/@mongodb-js/atlas-local/-/atlas-local-1.3.0.tgz -> mc-878fd8bb08456e9b.tgz
 	https://registry.npmjs.org/@mongodb-js/connection-string-policy/-/connection-string-policy-0.2.0.tgz -> mc-80c9b8a2558d2f2d.tgz
-	https://registry.npmjs.org/@mongodb-js/device-id/-/device-id-0.4.19.tgz -> mc-b5c0749d96abfaa3.tgz
+	https://registry.npmjs.org/@mongodb-js/device-id/-/device-id-0.4.20.tgz -> mc-392df73c834ae53d.tgz
 	https://registry.npmjs.org/@mongodb-js/devtools-connect/-/devtools-connect-3.17.10.tgz -> mc-94d19632844a0b4a.tgz
 	https://registry.npmjs.org/@mongodb-js/devtools-docker-test-envs/-/devtools-docker-test-envs-1.3.3.tgz -> mc-767302631d97400a.tgz
 	https://registry.npmjs.org/@mongodb-js/devtools-github-repo/-/devtools-github-repo-1.4.1.tgz -> mc-d9e47c052c856d50.tgz
@@ -424,18 +424,18 @@ MONGODB_COMPASS_NPM_SRC_URI="
 	https://registry.npmjs.org/@mongodb-js/electron-wix-msi/-/electron-wix-msi-3.1.3.tgz -> mc-b9b0edd303495def.tgz
 	https://registry.npmjs.org/@mongodb-js/eslint-config-devtools/-/eslint-config-devtools-0.11.5.tgz -> mc-ae583635c22c9968.tgz
 	https://registry.npmjs.org/@mongodb-js/eslint-plugin-devtools/-/eslint-plugin-devtools-0.3.3.tgz -> mc-bd1f114e6471d149.tgz
-	https://registry.npmjs.org/@mongodb-js/get-os-info/-/get-os-info-0.7.6.tgz -> mc-fb489af4e76ab865.tgz
+	https://registry.npmjs.org/@mongodb-js/get-os-info/-/get-os-info-0.7.7.tgz -> mc-f3fee91eadaa84c3.tgz
 	https://registry.npmjs.org/@mongodb-js/mdb-experiment-js/-/mdb-experiment-js-1.9.0.tgz -> mc-180e8059397843b8.tgz
 	https://registry.npmjs.org/@mongodb-js/mocha-config-devtools/-/mocha-config-devtools-2.0.1.tgz -> mc-dc3dd6067b28d5dd.tgz
 	https://registry.npmjs.org/@mongodb-js/mongodb-constants/-/mongodb-constants-0.33.0.tgz -> mc-07df64f300b1187b.tgz
-	https://registry.npmjs.org/@mongodb-js/mongodb-constants/-/mongodb-constants-0.34.11.tgz -> mc-d93e525d5de06510.tgz
+	https://registry.npmjs.org/@mongodb-js/mongodb-constants/-/mongodb-constants-0.34.12.tgz -> mc-eb20aea387786ceb.tgz
 	https://registry.npmjs.org/@mongodb-js/mongodb-downloader/-/mongodb-downloader-3.0.2.tgz -> mc-84bd7905783a74e5.tgz
 	https://registry.npmjs.org/@mongodb-js/mongodb-runner/-/mongodb-runner-8.4.0.tgz -> mc-38d2550bd6cdc96c.tgz
 	https://registry.npmjs.org/@mongodb-js/mongodb-schema/-/mongodb-schema-12.7.3.tgz -> mc-087a1d11a5957ef6.tgz
 	https://registry.npmjs.org/@mongodb-js/mongodb-server-log-checker/-/mongodb-server-log-checker-0.2.1.tgz -> mc-69c865d53eeb0601.tgz
 	https://registry.npmjs.org/@mongodb-js/mongodb-ts-autocomplete/-/mongodb-ts-autocomplete-0.9.3.tgz -> mc-bb464adcdd4f9973.tgz
 	https://registry.npmjs.org/@mongodb-js/monorepo-tools/-/monorepo-tools-1.6.1.tgz -> mc-d81508a65d0e0665.tgz
-	https://registry.npmjs.org/@mongodb-js/native-machine-id/-/native-machine-id-1.0.3.tgz -> mc-af1e16c7501cc347.tgz
+	https://registry.npmjs.org/@mongodb-js/native-machine-id/-/native-machine-id-1.0.4.tgz -> mc-3786666698aea700.tgz
 	https://registry.npmjs.org/@mongodb-js/oidc-http-server-pages/-/oidc-http-server-pages-1.2.14.tgz -> mc-48d03fbeed94f3da.tgz
 	https://registry.npmjs.org/@mongodb-js/oidc-mock-provider/-/oidc-mock-provider-0.11.3.tgz -> mc-313b3fbde09db97d.tgz
 	https://registry.npmjs.org/@mongodb-js/oidc-mock-provider/-/oidc-mock-provider-0.13.19.tgz -> mc-67c4b0098b88fdd4.tgz
@@ -1765,7 +1765,6 @@ MONGODB_COMPASS_NPM_SRC_URI="
 	https://registry.npmjs.org/hash-base/-/hash-base-3.0.4.tgz -> mc-c6708cfc7d604727.tgz
 	https://registry.npmjs.org/hash.js/-/hash.js-1.1.7.tgz -> mc-47a6984647c3aa5b.tgz
 	https://registry.npmjs.org/hasha/-/hasha-5.2.2.tgz -> mc-82ea1d2c8d6d171d.tgz
-	https://registry.npmjs.org/hasown/-/hasown-2.0.2.tgz -> mc-1544a275589c9ad8.tgz
 	https://registry.npmjs.org/hasown/-/hasown-2.0.4.tgz -> mc-1f5bc6ae0d0df257.tgz
 	https://registry.npmjs.org/hast-util-from-parse5/-/hast-util-from-parse5-7.1.2.tgz -> mc-1062bc28e9adc3e8.tgz
 	https://registry.npmjs.org/hast-util-parse-selector/-/hast-util-parse-selector-3.1.1.tgz -> mc-2d1d610db3eb79f5.tgz
@@ -1887,7 +1886,7 @@ MONGODB_COMPASS_NPM_SRC_URI="
 	https://registry.npmjs.org/is-buffer/-/is-buffer-2.0.5.tgz -> mc-e66025cfa220f009.tgz
 	https://registry.npmjs.org/is-callable/-/is-callable-1.2.7.tgz -> mc-7cd4d0c373ab5f91.tgz
 	https://registry.npmjs.org/is-ci/-/is-ci-3.0.1.tgz -> mc-f3ceedde30559e30.tgz
-	https://registry.npmjs.org/is-core-module/-/is-core-module-2.16.1.tgz -> mc-a5be6ebf980e1e52.tgz
+	https://registry.npmjs.org/is-core-module/-/is-core-module-2.17.0.tgz -> mc-cc0c968998d6a5d9.tgz
 	https://registry.npmjs.org/is-data-view/-/is-data-view-1.0.2.tgz -> mc-58c7bc9c5ab583a5.tgz
 	https://registry.npmjs.org/is-date-object/-/is-date-object-1.1.0.tgz -> mc-b5d2dfa167d4e958.tgz
 	https://registry.npmjs.org/is-docker/-/is-docker-2.2.1.tgz -> mc-8f81525e67b07772.tgz
@@ -2247,7 +2246,7 @@ MONGODB_COMPASS_NPM_SRC_URI="
 	https://registry.npmjs.org/mongodb-assistant-eval/-/mongodb-assistant-eval-0.0.8.tgz -> mc-1f671132f7f8b496.tgz
 	https://registry.npmjs.org/mongodb-build-info/-/mongodb-build-info-1.9.12.tgz -> mc-84eea219be9fcee5.tgz
 	https://registry.npmjs.org/mongodb-client-encryption/-/mongodb-client-encryption-7.2.1.tgz -> mc-4df53c7ec3775f95.tgz
-	https://registry.npmjs.org/mongodb-cloud-info/-/mongodb-cloud-info-2.3.21.tgz -> mc-5822d4670c77da49.tgz
+	https://registry.npmjs.org/mongodb-cloud-info/-/mongodb-cloud-info-2.3.22.tgz -> mc-9989baf076e42314.tgz
 	https://registry.npmjs.org/mongodb-connection-string-url/-/mongodb-connection-string-url-2.6.0.tgz -> mc-f48a3de5a46dffcc.tgz
 	https://registry.npmjs.org/mongodb-connection-string-url/-/mongodb-connection-string-url-7.0.1.tgz -> mc-d04c9d2cf8419547.tgz
 	https://registry.npmjs.org/mongodb-connection-string-url/-/mongodb-connection-string-url-7.0.2.tgz -> mc-5859c8bbbb12b57e.tgz

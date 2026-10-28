@@ -5,27 +5,27 @@ EAPI=8
 
 CRATES="
 	adler2@2.0.1
-	aho-corasick@1.1.4
-	aligned-vec@0.6.4
+	aho-corasick@1.1.5
 	aligned@0.4.3
-	android_system_properties@0.1.5
+	aligned-vec@0.6.4
+	android_system_properties@0.1.6
 	anstyle@1.0.14
 	anyhow@1.0.104
-	arbitrary@1.4.2
+	arbitrary@1.5.0
 	arg_enum_proc_macro@0.3.4
 	arrayvec@0.7.8
 	as-slice@0.2.1
-	async-trait@0.1.91
+	async-trait@0.1.92
 	atomic@0.6.1
 	autocfg@1.5.1
 	av-scenechange@0.14.1
 	av1-grain@0.2.5
 	avif-serialize@0.8.9
 	base64@0.22.1
-	bigdecimal@0.4.10
+	bigdecimal@0.4.11
 	bindgen@0.72.1
 	bit_field@0.10.3
-	bitflags@2.13.1
+	bitflags@2.13.2
 	bitstream-io@4.10.0
 	bitvec@1.1.1
 	block-buffer@0.10.4
@@ -33,73 +33,74 @@ CRATES="
 	built@0.8.1
 	bumpalo@3.20.3
 	bytemuck@1.25.2
-	byteorder-lite@0.1.0
 	byteorder@1.5.0
+	byteorder-lite@0.1.0
 	bytes@1.12.1
 	c_str_macro@1.0.3
-	camino@1.2.5
+	camino@1.2.6
 	cargo-platform@0.3.3
 	cargo_metadata@0.23.1
 	cargo_toml@0.22.3
-	cc@1.4.0
+	cc@1.10.0
 	cee-scape@0.2.0
 	cexpr@0.6.0
-	cfg-if@1.0.4
-	chacha20@0.10.1
+	cfg-if@1.0.5
+	chacha20@0.10.2
 	chrono@0.4.45
 	clang-sys@1.9.1
+	clap@4.6.7
 	clap-cargo@0.18.3
-	clap@4.6.4
-	clap_builder@4.6.2
-	clap_derive@4.6.4
-	clap_lex@1.1.0
+	clap_builder@4.6.7
+	clap_derive@4.6.7
+	clap_lex@1.1.1
 	cmov@0.5.4
-	codepage@0.1.2
+	codepage@0.1.3
 	color_quant@1.1.0
 	const-oid@0.10.2
 	convert_case@0.11.0
 	core-foundation-sys@0.8.7
-	cpufeatures@0.3.0
-	crc32fast@1.5.0
-	crossbeam-deque@0.8.7
-	crossbeam-epoch@0.9.20
-	crossbeam-utils@0.8.22
+	core_detect@1.0.0
+	cpufeatures@0.3.1
+	crc32fast@1.5.3
+	crossbeam-deque@0.8.8
+	crossbeam-epoch@0.9.21
+	crossbeam-utils@0.8.23
 	crunchy@0.2.4
 	crypto-common@0.1.7
 	crypto-common@0.2.2
-	ctutils@0.4.2
-	deranged@0.5.8
+	ctutils@0.4.6
+	deranged@0.5.9
 	deunicode@1.6.2
 	digest@0.10.7
 	digest@0.11.3
 	dispatch2@0.3.1
 	displaydoc@0.2.7
-	either@1.17.0
-	encoding_rs@0.8.35
-	enum-map-derive@0.17.0
+	either@1.19.0
+	encoding_rs@0.8.42
 	enum-map@2.7.3
-	equator-macro@0.4.2
+	enum-map-derive@0.17.0
 	equator@0.4.2
-	equivalent@1.0.2
+	equator-macro@0.4.2
+	equivalent@1.0.3
 	errno@0.3.14
 	exr@1.74.2
-	eyre@0.6.12
+	eyre@0.6.14
 	fake@5.1.0
 	fallible-iterator@0.2.0
 	fastrand@2.5.0
 	fax@0.2.7
 	fdeflate@0.3.7
-	find-msvc-tools@0.1.9
+	find-msvc-tools@0.1.15
 	fixedbitset@0.5.7
-	flate2@1.1.9
+	flate2@1.1.10
 	foldhash@0.1.5
 	form_urlencoded@1.2.2
 	funty@2.0.0
-	futures-channel@0.3.33
-	futures-core@0.3.33
-	futures-sink@0.3.33
-	futures-task@0.3.33
-	futures-util@0.3.33
+	futures-channel@0.3.34
+	futures-core@0.3.34
+	futures-sink@0.3.34
+	futures-task@0.3.34
+	futures-util@0.3.34
 	generic-array@0.14.7
 	getrandom@0.2.17
 	getrandom@0.3.4
@@ -113,40 +114,42 @@ CRATES="
 	heck@0.5.0
 	hmac@0.13.0
 	http@1.5.0
-	hybrid-array@0.4.13
-	iana-time-zone-haiku@0.1.2
+	hybrid-array@0.4.15
 	iana-time-zone@0.1.65
-	icu_collections@2.2.0
-	icu_locale_core@2.2.0
-	icu_normalizer@2.2.0
-	icu_normalizer_data@2.2.0
-	icu_properties@2.2.0
-	icu_properties_data@2.2.0
-	icu_provider@2.2.0
+	iana-time-zone-haiku@0.1.2
+	icu_collections@2.4.0
+	icu_locale_core@2.4.0
+	icu_normalizer@2.4.0
+	icu_normalizer_data@2.4.0
+	icu_properties@2.4.0
+	icu_properties_data@2.4.0
+	icu_provider@2.4.0
 	idna@1.1.0
 	idna_adapter@1.2.2
-	image-webp@0.2.4
 	image@0.25.10
-	imgref@1.12.2
+	image-webp@0.2.4
+	imgref@1.12.3
 	indenter@0.3.4
-	indexmap@2.14.0
+	indexmap@2.14.2
 	interpolate_name@0.2.4
 	is_ci@1.2.0
 	itertools@0.13.0
 	itertools@0.14.0
 	itoa@1.0.18
 	jobserver@0.1.35
-	js-sys@0.3.103
+	js-sys@0.3.106
+	kinded@0.5.1
+	kinded_macros@0.5.1
 	lebe@0.5.3
-	libc@0.2.189
+	libc@0.2.191
 	libfuzzer-sys@0.4.13
 	libloading@0.8.9
 	libm@0.2.16
-	libredox@0.1.18
+	libredox@0.1.25
 	linux-raw-sys@0.12.1
-	litemap@0.8.2
+	litemap@0.8.3
 	lock_api@0.4.14
-	log@0.4.33
+	log@0.4.34
 	loop9@0.1.5
 	maybe-rayon@0.1.1
 	md-5@0.10.6
@@ -154,8 +157,10 @@ CRATES="
 	memchr@2.8.3
 	minimal-lexical@0.2.1
 	miniz_oxide@0.8.9
-	mio@1.2.2
+	miniz_oxide@0.9.1
+	mio@1.2.4
 	moxcms@0.8.1
+	multiversion_no_op@1.0.0
 	new_debug_unreachable@1.0.6
 	no_std_io2@0.9.4
 	nom@7.1.3
@@ -166,18 +171,20 @@ CRATES="
 	num-complex@0.4.6
 	num-conv@0.2.2
 	num-derive@0.4.2
-	num-integer@0.1.46
+	num-integer@0.1.47
 	num-rational@0.4.2
 	num-traits@0.2.19
+	nutype@0.8.0
+	nutype_macros@0.8.0
+	objc2@0.6.5
 	objc2-core-foundation@0.3.2
 	objc2-encode@4.1.0
 	objc2-foundation@0.3.2
 	objc2-io-kit@0.3.2
 	objc2-open-directory@0.3.2
 	objc2-system-configuration@0.3.2
-	objc2@0.6.4
 	once_cell@1.21.4
-	owo-colors@4.3.0
+	owo-colors@4.4.0
 	parking_lot@0.12.5
 	parking_lot_core@0.9.12
 	paste@1.0.15
@@ -185,28 +192,28 @@ CRATES="
 	pathsearch@0.2.0
 	percent-encoding@2.3.2
 	petgraph@0.8.3
-	pgrx-bindgen@0.19.1
-	pgrx-macros@0.19.1
-	pgrx-pg-config@0.19.1
-	pgrx-pg-sys@0.19.1
-	pgrx-sql-entity-graph@0.19.1
-	pgrx-tests@0.19.1
-	pgrx@0.19.1
+	pgrx@0.19.3
+	pgrx-bindgen@0.19.3
+	pgrx-macros@0.19.3
+	pgrx-pg-config@0.19.3
+	pgrx-pg-sys@0.19.3
+	pgrx-sql-entity-graph@0.19.3
+	pgrx-tests@0.19.3
 	phf@0.13.1
 	phf_shared@0.13.1
 	pin-project-lite@0.2.17
 	png@0.18.1
+	postgres@0.19.14
 	postgres-protocol@0.6.12
 	postgres-types@0.2.14
-	postgres@0.19.14
-	potential_utf@0.1.5
-	powerfmt@0.2.0
+	potential_utf@0.1.6
+	powerfmt@0.2.1
 	ppv-lite86@0.2.21
 	proc-macro2@1.0.107
-	profiling-procmacros@1.0.18
 	profiling@1.0.18
-	pulp-wasm-simd-flag@0.1.1
+	profiling-procmacros@1.0.18
 	pulp@0.22.3
+	pulp-wasm-simd-flag@0.1.1
 	pxfm@0.1.30
 	qoi@0.4.1
 	quick-error@2.0.1
@@ -214,8 +221,8 @@ CRATES="
 	r-efi@5.3.0
 	r-efi@6.0.0
 	radium@0.7.0
-	rand@0.10.2
-	rand@0.8.7
+	rand@0.10.3
+	rand@0.8.8
 	rand@0.9.5
 	rand_chacha@0.3.1
 	rand_chacha@0.9.0
@@ -226,17 +233,18 @@ CRATES="
 	rav1e@0.8.1
 	ravif@0.13.0
 	raw-cpuid@11.6.0
-	rayon-core@1.13.0
 	rayon@1.12.0
+	rayon-core@1.13.0
 	reborrow@0.5.5
 	redox_syscall@0.5.18
-	regex-automata@0.4.16
-	regex-syntax@0.8.11
 	regex@1.13.1
+	regex-automata@0.4.18
+	regex-syntax@0.8.11
 	rgb@0.8.53
-	rust_decimal@1.42.1
+	rust_decimal@1.43.0
 	rustc-hash@2.1.3
-	rustix@1.1.4
+	rustc_version@0.4.1
+	rustix@1.1.6
 	rustversion@1.0.23
 	same-file@1.0.6
 	scopeguard@1.2.0
@@ -246,56 +254,57 @@ CRATES="
 	serde_cbor@0.11.2
 	serde_core@1.0.229
 	serde_derive@1.0.229
-	serde_json@1.0.151
-	serde_spanned@1.1.1
+	serde_json@1.0.154
+	serde_spanned@1.1.2
 	sha1_smol@1.0.1
-	sha2@0.11.0
+	sha2@0.11.1
 	shlex@1.3.0
 	shlex@2.0.1
 	simd-adler32@0.3.10
 	simd_helpers@0.1.0
-	siphasher@1.0.3
+	simdutf8@0.1.5
+	siphasher@1.0.4
 	slab@0.4.12
-	smallvec@1.15.2
+	smallvec@1.16.4
 	socket2@0.6.5
 	stable_deref_trait@1.2.1
 	stringprep@0.1.5
 	supports-color@3.0.2
 	syn@2.0.119
-	syn@3.0.3
-	synstructure@0.13.2
+	syn@3.0.9
+	synstructure@0.14.0
 	sysinfo@0.39.6
 	tap@1.0.1
 	tempfile@3.27.0
-	thiserror-impl@2.0.19
-	thiserror@2.0.19
+	thiserror@2.0.21
+	thiserror-impl@2.0.21
 	tiff@0.11.3
+	time@0.3.55
 	time-core@0.1.9
 	time-macros@0.2.32
-	time@0.3.54
-	tinystr@0.8.3
-	tinyvec@1.12.0
-	tinyvec_macros@0.1.1
+	tinystr@0.8.5
+	tinyvec@1.13.3
+	tokio@1.54.1
 	tokio-postgres@0.7.18
-	tokio-util@0.7.19
-	tokio@1.53.1
+	tokio-util@0.7.20
 	toml@0.9.12+spec-1.1.0
-	toml@1.1.4+spec-1.1.0
+	toml@1.1.8+spec-1.1.0
 	toml_datetime@0.7.5+spec-1.1.0
-	toml_datetime@1.1.1+spec-1.1.0
-	toml_parser@1.1.3+spec-1.1.0
-	toml_writer@1.1.2+spec-1.1.0
+	toml_datetime@1.1.2+spec-1.1.0
+	toml_parser@1.1.5+spec-1.1.0
+	toml_writer@1.1.3+spec-1.1.0
 	typenum@1.20.1
 	unescape@0.1.0
 	unicode-bidi@0.3.18
-	unicode-ident@1.0.24
-	unicode-normalization@0.1.25
+	unicode-ident@1.0.27
+	unicode-normalization@0.1.26
 	unicode-properties@0.1.4
 	unicode-segmentation@1.13.3
-	url-escape@0.1.2
 	url@2.5.8
+	url-escape@0.1.2
+	urlencoding@2.1.3
 	utf8_iter@1.0.4
-	uuid@1.24.0
+	uuid@1.29.0
 	v_frame@0.3.9
 	version_check@0.9.5
 	walkdir@2.5.0
@@ -303,17 +312,18 @@ CRATES="
 	wasi@0.14.7+wasi-0.2.4
 	wasip2@1.0.4+wasi-0.2.12
 	wasite@1.0.2
-	wasm-bindgen-macro-support@0.2.126
-	wasm-bindgen-macro@0.2.126
-	wasm-bindgen-shared@0.2.126
-	wasm-bindgen@0.2.126
-	web-sys@0.3.103
+	wasm-bindgen@0.2.129
+	wasm-bindgen-macro@0.2.129
+	wasm-bindgen-macro-support@0.2.129
+	wasm-bindgen-shared@0.2.129
+	web-sys@0.3.106
 	weezl@0.1.12
-	whoami@2.1.2
+	whoami@2.1.3
+	winapi@0.3.9
 	winapi-i686-pc-windows-gnu@0.4.0
 	winapi-util@0.1.11
 	winapi-x86_64-pc-windows-gnu@0.4.0
-	winapi@0.3.9
+	windows@0.62.2
 	windows-collections@0.3.2
 	windows-core@0.62.2
 	windows-future@0.3.2
@@ -325,24 +335,24 @@ CRATES="
 	windows-strings@0.5.1
 	windows-sys@0.61.2
 	windows-threading@0.2.1
-	windows@0.62.2
 	winnow@0.7.15
 	winnow@1.0.4
 	wit-bindgen@0.57.1
-	writeable@0.6.3
+	writeable@0.6.4
 	wyz@0.5.1
 	y4m@0.8.0
-	yoke-derive@0.8.2
-	yoke@0.8.3
-	zerocopy-derive@0.8.55
-	zerocopy@0.8.55
-	zerofrom-derive@0.1.7
+	yoke@0.8.4
+	yoke-derive@0.8.4
+	zerocopy@0.8.63
+	zerocopy-derive@0.8.63
 	zerofrom@0.1.8
-	zerotrie@0.2.4
-	zerovec-derive@0.11.3
-	zerovec@0.11.6
+	zerofrom-derive@0.1.8
+	zerotrie@0.2.5
+	zerovec@0.11.9
+	zerovec-derive@0.11.7
+	zlib-rs@0.6.8
 	zmij@1.0.23
-	zune-core@0.5.1
+	zune-core@0.5.3
 	zune-inflate@0.2.54
 	zune-jpeg@0.5.15
 "
@@ -359,20 +369,11 @@ HOMEPAGE="https://gitlab.com/dalibo/postgresql_anonymizer"
 SRC_URI="https://gitlab.com/dalibo/${PN}/-/archive/${PV}/${P}.tar.bz2
 	${CARGO_CRATE_URIS}"
 
-# POSTGRESQL covers the extension's own PL/pgSQL and C code. The rest is
-# the audited union of every crates.io dependency's license field in
-# Cargo.lock at this exact tag (352 packages, verified individually via
-# the crates.io API, not carried over from an older CRATES list): a
-# dependency's license is only counted here if it has no MIT/Apache-2.0
-# alternative to fall back to, e.g. plain "BSD-2-Clause" (av1-grain,
-# rav1e, v_frame), "(MIT OR Apache-2.0) AND NCSA" (libfuzzer-sys), or
-# "Unicode-3.0" (several icu_* crates; this crate set no longer uses the
-# older Unicode-DFS-2016 SPDX id at all, so that entry was dropped, and
-# plain "Zlib" (foldhash) is likewise mandatory, not merely an
-# MIT/Apache-2.0-satisfiable alternative as it is for most other crates
-# offering it. Permissive OR-alternatives that are always satisfiable via
-# the MIT or Apache-2.0 branch already present (0BSD, BSL-1.0, CC0-1.0,
-# LGPL-2.1-or-later, Unlicense) are intentionally not listed.
+# POSTGRESQL covers the extension. The remaining grants come from the 351
+# registry-crate manifests in this release's Cargo.lock; archive SHA256 values
+# were checked against the lock. MIT/Apache alternatives are selected where
+# available; BSD-2, NCSA, Unicode-3.0 and Zlib grants remain mandatory for
+# crates that do not offer such an alternative.
 LICENSE="Apache-2.0 BSD BSD-2 ISC MIT POSTGRESQL UoI-NCSA Unicode-3.0 ZLIB"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
@@ -380,7 +381,7 @@ REQUIRED_USE="${POSTGRES_REQ_USE} ${LLVM_REQUIRED_USE}"
 RESTRICT="test" # installs extension outside of sandbox
 
 RDEPEND="${POSTGRES_DEP}"
-BDEPEND+=" ~dev-util/cargo-pgrx-0.19.1
+BDEPEND+=" ~dev-util/cargo-pgrx-0.19.3
 	virtual/pkgconfig
 	$(llvm_gen_dep 'llvm-core/clang:${LLVM_SLOT}')"
 

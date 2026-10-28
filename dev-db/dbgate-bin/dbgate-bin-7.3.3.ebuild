@@ -45,7 +45,7 @@ RDEPEND="
 	media-libs/mesa[gbm(+)]
 	net-print/cups
 	sys-apps/dbus
-	sys-libs/glibc
+	>=sys-libs/glibc-2.34
 	virtual/udev
 	virtual/zlib:=
 	x11-libs/cairo
@@ -91,55 +91,40 @@ src_prepare() {
 	default
 
 	# The AppImage cannot use a setuid sandbox, so its launcher disables the
-	# Chromium sandbox. The installed package restores the setuid helper.
+	# Chromium sandbox. Restore the setuid helper when the payload provides it.
 	sed -e '/^Exec=/c Exec=dbgate %U' \
 		-e '/^X-AppImage-Version=/d' \
 		-i dbgate.desktop || die
 
 	local modules=resources/app.asar.unpacked/node_modules
+	local node_arch=$(usex amd64 x64 arm64)
 	local oracle_release=${modules}/oracledb/build/Release
-	local oracle_version=6.10.0
+	local oracle_version=26.0.0
+	local addon
 
-	# Remove a build-time node-gyp symlink to upstream's CI environment.
-	rm -r "${modules}/better-sqlite3/build/node_gyp_bins" || die
+	# This release supplies SQLite prebuilds for both Linux architectures.
+	[[ -f ${modules}/better-sqlite3/prebuilds/linux-${node_arch}.node ]] ||
+		die "Missing SQLite prebuild for ${node_arch}"
+	for addon in "${modules}/better-sqlite3/prebuilds/"*.node; do
+		[[ ${addon##*/} == linux-${node_arch}.node ]] || rm "${addon}" || die
+	done
 
-	# Keep only the Oracle module built for the selected Linux architecture.
-	rm \
-		"${oracle_release}/oracledb-${oracle_version}-darwin-arm64.node" \
-		"${oracle_release}/oracledb-${oracle_version}-darwin-arm64.node-buildinfo.txt" \
-		"${oracle_release}/oracledb-${oracle_version}-darwin-x64.node" \
-		"${oracle_release}/oracledb-${oracle_version}-darwin-x64.node-buildinfo.txt" \
-		"${oracle_release}/oracledb-${oracle_version}-win32-x64.node" \
-		"${oracle_release}/oracledb-${oracle_version}-win32-x64.node-buildinfo.txt" || die
+	[[ -f ${oracle_release}/oracledb-${oracle_version}-linux-${node_arch}.node ]] ||
+		die "Missing Oracle prebuild for ${node_arch}"
+	for addon in "${oracle_release}/"*.node*; do
+		[[ ${addon##*/} == oracledb-${oracle_version}-linux-${node_arch}.node* ]] ||
+			rm "${addon}" || die
+	done
 
-	case ${ARCH} in
-	amd64)
-		# The musl addon cannot run in this glibc-only AppImage.
-		rm -r "${modules}/@libsql/linux-x64-musl" || die
-		rm \
-			"${oracle_release}/oracledb-${oracle_version}-linux-arm64.node" \
-			"${oracle_release}/oracledb-${oracle_version}-linux-arm64.node-buildinfo.txt" || die
-		;;
-	arm64)
-		# Upstream cross-builds the arm64 AppImage on an x86-64 runner and
-		# ships several unusable x86-64 native modules. Keep the working
-		# Oracle arm64 module; ssh2 falls back to its JavaScript code when
-		# its optional native crypto helper is absent. See upstream #1384.
-		rm -r \
-			"${modules}/@duckdb/node-bindings/node_modules/@duckdb/node-bindings-linux-x64" \
-			"${modules}/@libsql/linux-x64-gnu" \
-			"${modules}/@libsql/linux-x64-musl" || die
-		rm \
-			"${modules}/better-sqlite3/build/Release/better_sqlite3.node" \
-			"${modules}/better-sqlite3/build/Release/test_extension.node" \
-			"${oracle_release}/oracledb-${oracle_version}-linux-x64.node" \
-			"${oracle_release}/oracledb-${oracle_version}-linux-x64.node-buildinfo.txt" \
-			"${modules}/ssh2/lib/protocol/crypto/build/Release/sshcrypto.node" || die
-		;;
-	*)
-		die "Unsupported architecture: ${ARCH}"
-		;;
-	esac
+	# The release still ships x64-only DuckDB/libSQL modules on arm64.
+	# ssh2 uses its upstream JavaScript fallback without its x64 addon.
+	rm -r "${modules}/@duckdb/node-bindings-linux-x64-musl" \
+		"${modules}/@libsql/linux-x64-musl" || die
+	if use arm64; then
+		rm -r "${modules}/@duckdb/node-bindings-linux-x64" \
+			"${modules}/@libsql/linux-x64-gnu" || die
+		rm "${modules}/ssh2/lib/protocol/crypto/build/Release/sshcrypto.node" || die
+	fi
 }
 
 src_configure() {
@@ -166,12 +151,12 @@ src_install() {
 	fperms +x \
 		/opt/DbGate/dbgate \
 		/opt/DbGate/chrome_crashpad_handler \
-		/opt/DbGate/libEGL.so \
 		/opt/DbGate/libffmpeg.so \
-		/opt/DbGate/libGLESv2.so \
 		/opt/DbGate/libvk_swiftshader.so \
 		/opt/DbGate/libvulkan.so.1
-	fperms 4711 /opt/DbGate/chrome-sandbox
+	if [[ -f ${ED}/opt/DbGate/chrome-sandbox ]]; then
+		fperms 4711 /opt/DbGate/chrome-sandbox
+	fi
 
 	dosym ../../opt/DbGate/dbgate /usr/bin/dbgate
 }
@@ -180,8 +165,8 @@ pkg_postinst() {
 	xdg_pkg_postinst
 
 	if use arm64; then
-		ewarn "Upstream's arm64 release lacks native arm64 modules for SQLite,"
-		ewarn "DuckDB, and libSQL; those database integrations do not work."
+		ewarn "Upstream's arm64 release lacks native arm64 modules for"
+		ewarn "DuckDB and libSQL; those database integrations do not work."
 		ewarn "See https://github.com/dbgate/dbgate/issues/1384"
 	fi
 }

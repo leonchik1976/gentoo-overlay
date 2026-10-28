@@ -1,5 +1,11 @@
 # arm64 desktop packages
 
+Current Compass update (2026-10-28): `dev-db/mongodb-compass-1.53.2` replaces
+1.53.1 and retains arm64-only keywords. See
+[the release audit](../docs/upstream-bumps-20261028.md) for the new build evidence.
+The older validation records below retain their original versions and paths.
+
+
 These personal-overlay packages deliberately have only `KEYWORDS="~arm64"`.
 The applications need glibc because they bundle upstream arm64 Electron.
 The source packages compile their application code; Electron itself remains an
