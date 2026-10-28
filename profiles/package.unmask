@@ -17,3 +17,7 @@ www-apps/kibana-bin
 # Maintain ca-bundle and its Gentoo autoloader integration locally.
 =dev-php/ca-bundle-1.6.0
 =dev-php/fedora-autoloader-1.0.1
+
+# Leonid Kopylov <leonchik1976@gmail.com> (2026-10-28)
+# Fluentd 1.20 uses Ruby 3.3 or newer instead of masked Ruby 3.2.
+=app-admin/fluentd-1.20.1
