@@ -14,7 +14,12 @@ LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
-BDEPEND+=" test? ( dev-python/pytest-asyncio[${PYTHON_USEDEP}] )"
+BDEPEND+="
+	>=dev-python/setuptools-77.0.3[${PYTHON_USEDEP}]
+	test? ( dev-python/pytest-asyncio[${PYTHON_USEDEP}] )
+"
+
+PATCHES=( "${FILESDIR}/${P}-spdx-license.patch" )
 
 EPYTEST_PLUGINS=( pytest-asyncio )
 EPYTEST_IGNORE=( tests/test_benchmarks.py )
