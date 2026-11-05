@@ -1,0 +1,60 @@
+Use a user-owned source checkout for renderer development.
+The installed Python package contains runtime bundles, not a writable build tree.
+
+--- a/dash/development/build_process.py
++++ b/dash/development/build_process.py
+@@ -4,6 +4,10 @@
+ import string
+ import shutil
+ import logging
++import tarfile
++import tempfile
++
++from ..version import __version__
+ import coloredlogs
+ import fire
+ import requests
+@@ -180,14 +184,40 @@
+ 
+ 
+ class Renderer(BuildProcess):
+-    def __init__(self):
+-        """dash-renderer's path is binding with the dash folder hierarchy."""
++    def __init__(self, path=None):
++        """Build in a writable source workspace, or select one with --path."""
++        if path is None:
++            candidates = (
++                os.getcwd(),
++                self._concat(os.getcwd(), "dash", "dash-renderer"),
++            )
++            for candidate in candidates:
++                package = os.path.join(candidate, "package.json")
++                if os.path.isfile(package):
++                    with open(package, encoding="utf-8") as fp:
++                        if json.load(fp).get("name") == "dash-renderer":
++                            path = candidate
++                            break
++        if path is None:
++            cache = os.environ.get("XDG_CACHE_HOME") or os.path.expanduser("~/.cache")
++            cache = os.path.join(cache, "dash", __version__)
++            checkout = os.path.join(cache, f"dash-{__version__}")
++            if not os.path.isdir(checkout):
++                os.makedirs(cache, exist_ok=True)
++                with tempfile.TemporaryDirectory(dir=cache) as staging:
++                    with tarfile.open("@DASH_SOURCE_ARCHIVE@") as archive:
++                        archive.extractall(staging, filter="data")
++                    shutil.move(
++                        os.path.join(staging, f"dash-{__version__}"), checkout
++                    )
++            path = os.path.join(checkout, "dash", "dash-renderer")
++        path = os.path.abspath(os.path.expanduser(path))
+         extras = [
+             "18.2.0",
+             "19.2.4",
+         ]  # versions to include beyond what's in package.json
+         super().__init__(
+-            self._concat(os.path.dirname(__file__), os.pardir, "dash-renderer"),
++            path,
+             (
+                 ("@babel", "polyfill", "dist", "polyfill.min.js", None),
+                 (None, "react", "umd", "react.production.min.js", extras),

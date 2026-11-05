@@ -1,0 +1,64 @@
+Dash runtime and development tools
+==================================
+
+This ebuild is based on sci-visualization/dash in ::gentoo. It builds the
+Python package offline from the upstream PyPI source distribution, including
+the upstream built JavaScript assets and Jupyter extensions. No npm command
+runs during an ebuild phase.
+
+USE=development installs dash-generate-components, dash-update-components,
+renderer, and a complete, version-matched upstream source archive. The flag
+changes installed files, rather than just selecting optional dependencies.
+
+renderer initializes a writable checkout under
+${XDG_CACHE_HOME:-$HOME/.cache}/dash/4.5.0/dash-4.5.0 on first use. It never
+rebuilds or overwrites the installed system package. Alternatively, select
+your own checkout with renderer --path=/path/to/dash/dash-renderer.
+renderer --help lists the available commands. renderer build downloads npm
+dependencies and extra React assets, then builds the JavaScript bundles in
+that workspace. Network access is needed for this user-invoked development
+operation; it is not part of the Portage build.
+
+For dash-update-components, change into a writable full Dash checkout first
+(the renderer workspace above is suitable). Initialize the root workspace
+according to upstream CONTRIBUTING.md, then build the component libraries:
+
+  npm ci
+  dash-update-components all --ci True --concurrency 1
+
+USE=development provides Black, which the generated Python backend build
+scripts invoke. The combined root, renderer and component lockfiles require
+Node 22.22.1 or later within 22.x, 24.x, or 26.x, with npm enabled. In
+particular, Lerna does not accept intervening odd-numbered Node releases.
+The command copies generated libraries into this writable checkout; use
+that checkout or an isolated editable environment to run the modified Dash.
+
+dash-generate-components operates on your own component project; its npm
+dependencies likewise belong to that project's writable development tree.
+
+Optional runtime integrations remain installed and available without USE
+flags. Install/world-select the corresponding packages when needed:
+
+  HTTP compression: dev-python/flask-compress
+  Async Flask callbacks: dev-python/asgiref
+  Disk cache: dev-python/diskcache, dev-python/multiprocess,
+              dev-python/psutil, dev-python/msgspec
+  Redis storage: dev-python/redis (>=3.5.3, <=8.1.0), dev-python/msgspec
+  Celery callbacks: dev-python/celery (>=5.1.2, <5.7),
+                    dev-python/kombu (<5.7), dev-python/redis as above
+  FastAPI backend: dev-python/fastapi, dev-python/uvicorn
+  Quart backend: dev-python/quart
+  Shared-storage serialization: dev-python/msgspec
+
+Upstream requests uvicorn[standard]. Consult Uvicorn's own documentation for
+the optional providers needed for its server features.
+
+The former compress and diskcache USE flags from ::gentoo are unnecessary:
+they only selected optional runtime dependencies and changed no Dash files.
+This follows Gentoo QA policy PG0001. Existing installed providers continue
+to work; world-select them if you want to keep them through dependency cleanup.
+
+Plotly Cloud and Dash AG Grid are separate upstream projects. The plotly
+command delegates to plotly-cloud and requires that separate package and,
+where applicable, a service account. Enterprise services are not included
+in the open-source Dash distribution.
