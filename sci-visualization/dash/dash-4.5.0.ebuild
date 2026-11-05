@@ -61,7 +61,13 @@ RDEPEND+="
 	)
 "
 
-PATCHES=( "${FILESDIR}/${P}-renderer-workspace.patch" )
+# PEP 639 license_expression/license_files support starts with setuptools 77.
+BDEPEND+=" >=dev-python/setuptools-77[${PYTHON_USEDEP}] "
+
+PATCHES=(
+	"${FILESDIR}/${P}-renderer-workspace.patch"
+	"${FILESDIR}/${P}-setuptools-metadata.patch"
+)
 DOCS=( README.md "${FILESDIR}/README.gentoo" )
 
 src_unpack() {

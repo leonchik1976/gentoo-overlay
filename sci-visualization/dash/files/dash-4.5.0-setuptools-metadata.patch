@@ -1,0 +1,33 @@
+--- a/setup.py
++++ b/setup.py
+@@ -21,5 +21,20 @@
+-    include_package_data=True,
+-    license="MIT",
++    # These directories contain assets, not importable Python packages.
++    # Explicit package data avoids treating manifest paths as namespace packages.
++    include_package_data=False,
++    package_data={
++        "dash": [
++            "favicon.ico", "extract-meta.js", "py.typed",
++            "deps/*.js", "deps/*.map",
++            "dash-renderer/build/*.js", "dash-renderer/build/*.map",
++            "labextension/package.json", "labextension/dist/dash-jupyterlab.tgz",
++        ],
++        "dash.dcc": ["*", ".gitkeep"],
++        "dash.html": ["*", ".gitkeep"],
++        "dash.dash_table": ["*", ".gitkeep"],
++        "dash.nbextension": ["*.js", "*.json"],
++    },
++    license_expression="MIT",
++    license_files=["LICENSE"],
+     description=(
+         "A Python framework for building reactive web-apps. "
+         "Developed by Plotly."
+@@ -70,7 +85,6 @@
+         "Intended Audience :: Healthcare Industry",
+         "Intended Audience :: Manufacturing",
+         "Intended Audience :: Science/Research",
+-        "License :: OSI Approved :: MIT License",
+         "Programming Language :: Python",
+         "Programming Language :: Python :: 3",
+         "Programming Language :: Python :: 3.9",
