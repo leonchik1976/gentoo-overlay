@@ -1,5 +1,15 @@
 # Dash packaging investigation and validation — 2026-11-05
 
+The [4.5.0 flag-restoration report](dash-4.5.0-use-validation.md)
+records the current compress/diskcache behavior and new validation. Both
+flags are restored, disabled by default, and automatically select providers.
+This retains the requested ::gentoo behavior despite the PG0001 concern.
+
+The subsequent [Python 3.15 and 3.15t investigation](dash-janus-python315-validation.md)
+records new native builds/tests on both architectures, dependency-target
+limitations, and the reason for the local compression/diskcache flag change.
+Its results supersede earlier statements here that these targets were untested.
+
 ## Current provider selection
 
 At the user's request, the local coloredlogs and python-fire overrides were
@@ -379,12 +389,13 @@ tools. It is a local flag with a metadata.xml description. Global and local
 USE registries were searched; no existing global development flag applied.
 It makes an installation choice and is not merely an optional-dependency flag.
 
-The official ebuild's compress/diskcache flags only add optional runtime
-dependencies. PG0001 calls for integration guidance instead; all Dash Python
-integration modules remain installed. `optfeature` and README.gentoo explain
-providers for compression, async callbacks, disk/Redis storage, Celery,
-FastAPI and Quart. Separate Cloud/AG Grid projects are documented, not bundled.
-No claim is made that every optional backend or external service was tested.
+The compress/diskcache integration modules remain installed. In 4.5.0,
+the restored flags automatically select their runtime dependencies, retaining
+the requested ::gentoo behavior despite the PG0001 concern. README.gentoo
+documents application configuration and the other optional integrations.
+Separate Cloud/AG Grid projects are documented, not bundled. The original
+validation below predates the restored flags; see the new restoration report
+for newly executed compression and background-callback tests.
 
 The sdist includes its Jupyter extension, so the official ebuild's separate
 maintainer-provided Jupyter archive is unnecessary. Its Jupyter configuration

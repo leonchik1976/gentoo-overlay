@@ -36,13 +36,32 @@ that checkout or an isolated editable environment to run the modified Dash.
 dash-generate-components operates on your own component project; its npm
 dependencies likewise belong to that project's writable development tree.
 
-Optional runtime integrations remain installed and available without USE
-flags. Install/world-select the corresponding packages when needed:
+Dash 4.5.0 restores the ::gentoo compress and diskcache USE flags. Both
+are disabled by default, as in the baseline. Enabling them automatically
+pulls in the required dependencies:
 
-  HTTP compression: dev-python/flask-compress
+  compress: dev-python/flask-compress
+  diskcache: >=dev-python/diskcache-5.2.1, >=dev-python/multiprocess-0.70.12,
+             >=dev-python/psutil-5.8.0, dev-python/msgspec
+
+msgspec is required for Dash 4.5.0's disk-backed shared-storage serialization.
+Compression and diskcache Python code is installed regardless of these flags.
+Disabling a flag omits its conditional dependency group; it does not disable
+an integration when its providers are otherwise installed.
+
+Configure the application to use the selected integration: Dash(compress=True)
+for HTTP compression, DiskcacheManager for background callbacks, or the
+diskcache shared-storage backend. Enabling a USE flag supplies dependencies;
+it does not change application configuration.
+
+Retaining these dependency-only flags follows the explicitly requested
+::gentoo installation behavior despite the Gentoo QA PG0001 concern. This
+is a deliberate personal-overlay choice, not the policy-preferred design.
+
+Other optional runtime integrations remain installed. Install/world-select
+their corresponding providers when needed:
+
   Async Flask callbacks: dev-python/asgiref
-  Disk cache: dev-python/diskcache, dev-python/multiprocess,
-              dev-python/psutil, dev-python/msgspec
   Redis storage: dev-python/redis (>=3.5.3, <=8.1.0), dev-python/msgspec
   Celery callbacks: dev-python/celery (>=5.1.2, <5.7),
                     dev-python/kombu (<5.7), dev-python/redis as above
@@ -52,11 +71,6 @@ flags. Install/world-select the corresponding packages when needed:
 
 Upstream requests uvicorn[standard]. Consult Uvicorn's own documentation for
 the optional providers needed for its server features.
-
-The former compress and diskcache USE flags from ::gentoo are unnecessary:
-they only selected optional runtime dependencies and changed no Dash files.
-This follows Gentoo QA policy PG0001. Existing installed providers continue
-to work; world-select them if you want to keep them through dependency cleanup.
 
 Plotly Cloud and Dash AG Grid are separate upstream projects. The plotly
 command delegates to plotly-cloud and requires that separate package and,

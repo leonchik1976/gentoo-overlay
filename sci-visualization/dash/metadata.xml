@@ -6,7 +6,9 @@
 		<name>Leonid Kopylov</name>
 	</maintainer>
 	<use>
+		<flag name="compress">Install dependencies for HTTP compression with Flask-Compress</flag>
 		<flag name="development">Install component development commands and the complete upstream source archive for a writable renderer workspace</flag>
+		<flag name="diskcache">Install dependencies for disk-backed background callbacks and shared storage</flag>
 	</use>
 	<upstream>
 		<remote-id type="github">plotly/dash</remote-id>

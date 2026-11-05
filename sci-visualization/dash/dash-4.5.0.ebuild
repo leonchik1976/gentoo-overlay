@@ -19,7 +19,7 @@ SRC_URI+="
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
-IUSE="+development"
+IUSE="compress +development diskcache"
 
 # The upstream integration suite needs browsers, running services and packages
 # not available in the repositories. Targeted offline checks are run separately.
@@ -41,6 +41,13 @@ RDEPEND+="
 	>=dev-python/janus-1[${PYTHON_USEDEP}]
 	>=dev-python/pydantic-2.10[${PYTHON_USEDEP}]
 	dev-python/comm[${PYTHON_USEDEP}]
+	compress? ( dev-python/flask-compress[${PYTHON_USEDEP}] )
+	diskcache? (
+		>=dev-python/diskcache-5.2.1[${PYTHON_USEDEP}]
+		>=dev-python/multiprocess-0.70.12[${PYTHON_USEDEP}]
+		>=dev-python/psutil-5.8.0[${PYTHON_USEDEP}]
+		dev-python/msgspec[${PYTHON_USEDEP}]
+	)
 	development? (
 		dev-python/black[${PYTHON_USEDEP}]
 		>=dev-python/coloredlogs-15.0.1[${PYTHON_USEDEP}]
@@ -91,10 +98,17 @@ python_install_all() {
 }
 
 pkg_postinst() {
-	optfeature "HTTP compression" dev-python/flask-compress
+	if use compress; then
+		elog "HTTP compression dependencies are installed; configure Dash(compress=True)."
+	else
+		elog "Enable USE=compress to pull in HTTP compression dependencies."
+	fi
+	if use diskcache; then
+		elog "Diskcache dependencies are installed; configure DiskcacheManager or shared storage."
+	else
+		elog "Enable USE=diskcache to pull in disk-backed callback and shared-storage dependencies."
+	fi
 	optfeature "async Flask callbacks" dev-python/asgiref
-	optfeature "disk-backed callbacks and shared storage" \
-		">=dev-python/diskcache-5.2.1 >=dev-python/multiprocess-0.70.12 >=dev-python/psutil-5.8.0 dev-python/msgspec"
 	optfeature "Redis shared storage" \
 		">=dev-python/redis-3.5.3 <=dev-python/redis-8.1.0 dev-python/msgspec"
 	optfeature "Celery callbacks (Celery is in ::guru)" \
