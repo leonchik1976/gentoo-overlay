@@ -7,16 +7,13 @@ inherit desktop xdg
 
 DESCRIPTION="Betterbird is a fine-tuned version of Mozilla Thunderbird"
 HOMEPAGE="https://github.com/Betterbird/thunderbird-patches/ https://betterbird.eu/"
-SRC_URI="
-	amd64? ( https://www.betterbird.eu/downloads/LinuxArchive/betterbird-${PV}esr-bb12.en-US.linux-x86_64.tar.xz )
-	arm64? ( https://www.betterbird.eu/downloads/LinuxArchive/betterbird-153-linux-aarch64-built-with-glibc-2_36/betterbird-${PV}esr-bb12.en-US.linux-aarch64.tar.xz )
-"
+SRC_URI="https://www.betterbird.eu/downloads/LinuxArchive/betterbird-153-linux-aarch64-built-with-glibc-2_36/betterbird-${PV%_p*}esr-bb${PV##*_p}.en-US.linux-aarch64.tar.xz"
 
 S="${WORKDIR}"
 # Bundled about:license identifies the MPL application and GPL/LGPL code.
 LICENSE="MPL-2.0 GPL-2 LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64"
+KEYWORDS="~arm64"
 REQUIRED_USE="elibc_glibc"
 
 RDEPEND="
@@ -27,7 +24,7 @@ RDEPEND="
 	media-libs/fontconfig
 	media-libs/freetype
 	sys-apps/dbus
-	arm64? ( >=sys-libs/glibc-2.28 )
+	>=sys-libs/glibc-2.28
 	virtual/freedesktop-icon-theme
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf:2
