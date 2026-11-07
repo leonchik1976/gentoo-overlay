@@ -1,0 +1,28 @@
+Declare the setuptools PEP 517 backend missing from the upstream sdist.
+Only setuptools is needed to build the wheel; twine and pkginfo are release tools.
+Setuptools 77.0.3 supports the PEP 639 license expression used by this release.
+
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,6 @@
+ [build-system]
+-requires = ["setuptools", "wheel", "twine>=6.1.0", "packaging>=24.2", "pkginfo>=1.12.0"]
++requires = ["setuptools>=77.0.3"]
++build-backend = "setuptools.build_meta"
+ 
+ [project]
+ name = "google-genai"
+@@ -61,6 +62,13 @@
+ # Other [tool.setuptools] settings are in setup.cfg
+ 
++[tool.setuptools]
++include-package-data = false
++
++[tool.setuptools.packages.find]
++include = ["google.genai", "google.genai.*"]
++exclude = ["google.genai.tests", "google.genai.tests.*"]
++
+ [tool.setuptools.package-data]
+ "google.genai" = ["py.typed"]
+ 
+ [tool.pytest.ini_options]

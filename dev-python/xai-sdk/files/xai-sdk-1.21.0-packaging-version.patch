@@ -1,0 +1,14 @@
+Allow current packaging: the only use is parsing the protobuf version through
+packaging.version.parse(), whose API remains compatible in packaging 26.
+
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -16,7 +16,7 @@
+   "pydantic>=2.5.3,<3",
+   "requests>=2.31.0,<3",
+   "aiohttp>=3.8.6,<4",
+-  "packaging>=25.0,<26",
++  "packaging>=25.0",
+   "opentelemetry-sdk>=1.36.0,<2",
+   "typing-extensions>=4.14.0,<5",
+ ]

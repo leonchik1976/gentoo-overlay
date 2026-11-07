@@ -1,0 +1,7 @@
+Exercise the default httpx2 transport without requiring deprecated httpx.
+
+--- a/google/genai/tests/errors/test_api_error.py
++++ b/google/genai/tests/errors/test_api_error.py
+@@ -24 +24 @@
+-import httpx
++import httpx2 as httpx
