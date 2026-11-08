@@ -1,0 +1,14 @@
+Use imperative wording in the valid-overload fixture.
+Snowball 3 detects "Adding" as non-imperative, correctly triggering D401.
+
+--- a/src/tests/test_integration.py
++++ b/src/tests/test_integration.py
+@@ -814,7 +814,7 @@
+         from typing import overload
+ 
+         def function_with_nesting():
+-            """Adding a docstring to a function."""
++            """Add a docstring to a function."""
+             @overload
+             def overloaded_func(a: int) -> str:
+                 ...
