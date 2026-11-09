@@ -1,0 +1,16 @@
+Keep the tilde-path test inside its temporary repository, away from the real home.
+
+--- a/tests/basic/test_commands.py
++++ b/tests/basic/test_commands.py
+@@ -1588,7 +1588,10 @@
+             self.assertEqual(len(coder.abs_read_only_fnames), 0)
+ 
+     def test_cmd_read_only_with_tilde_path(self):
+-        with GitTemporaryDirectory():
++        with GitTemporaryDirectory() as repo_dir, mock.patch(
++            "os.path.expanduser",
++            side_effect=lambda path: str(path).replace("~", repo_dir, 1),
++        ) as expanduser, mock.patch("aider.commands.expanduser", expanduser):
+             io = InputOutput(pretty=False, fancy_input=False, yes=False)
+             coder = Coder.create(self.GPT35, None, io)
+             commands = Commands(io, coder)
