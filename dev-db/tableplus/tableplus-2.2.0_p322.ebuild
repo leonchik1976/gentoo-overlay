@@ -50,7 +50,7 @@ src_prepare() {
 	default
 
 	sed -i \
-		-e 's:^Exec=.*:Exec=/opt/tableplus/tableplus:' \
+		-e 's:^Exec=.*:Exec=/opt/tableplus/tableplus %u:' \
 		-e 's:^Icon=.*:Icon=tableplus:' \
 		opt/tableplus/tableplus.desktop || die
 }
@@ -61,6 +61,7 @@ src_install() {
 	doins opt/tableplus/tableplus-crash-reporter.tar.gz
 	exeinto /opt/tableplus
 	doexe opt/tableplus/tableplus opt/tableplus/crashpad_handler
+	doexe opt/tableplus/tableplus-mcp
 
 	dosym ../../opt/tableplus/tableplus /usr/bin/tableplus
 
