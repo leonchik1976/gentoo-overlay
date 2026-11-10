@@ -1,0 +1,225 @@
+app-admin/kiro-cli-bin
+  NonsolvableDepsInDev: version 3.1.0: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (3 total): solutions: [ >=sys-libs/glibc-2.34 ]
+  NonsolvableDepsInDev: version 3.1.0: nonsolvable depset(rdepend) keyword(~arm64) dev profile (default/linux/arm64/23.0/musl) (3 total): solutions: [ >=sys-libs/glibc-2.30 ]
+  RequiredUseDefaults: version 3.1.0: profile: 'default/linux/amd64/23.0/musl' (6 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 3.1.0: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total)
+
+app-admin/filebeat-bin
+  NonsolvableDepsInDev: version 9.5.6: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total): solutions: [ sys-libs/glibc ]
+
+app-admin/serverless-bin
+  NonsolvableDepsInDev: version 4.46.0: nonsolvable depset(bdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/x32): solutions: [ >=net-libs/nodejs-18.17.0 ]
+  NonsolvableDepsInDev: version 4.46.0: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/x32): solutions: [ >=net-libs/nodejs-18.17.0[ssl] ]
+
+app-admin/logstash-bin
+  NonsolvableDepsInDev: version 9.5.6: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total): solutions: [ sys-libs/glibc ]
+
+app-admin/infracost-bin
+  NonsolvableDepsInDev: version 2.18.3: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (3 total): solutions: [ >=sys-libs/glibc-2.34 ]
+  RequiredUseDefaults: version 2.18.3: profile: 'default/linux/amd64/23.0/musl' (3 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 2.18.3: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (3 total)
+
+app-admin/pulumi-bin
+  NonsolvableDepsInDev: version 3.274.1: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (3 total): solutions: [ >=sys-libs/glibc-2.29 ]
+  NonsolvableDepsInDev: version 3.274.1: nonsolvable depset(rdepend) keyword(~arm64) dev profile (default/linux/arm64/23.0/musl) (3 total): solutions: [ >=sys-libs/glibc-2.18 ]
+  RequiredUseDefaults: version 3.274.1: profile: 'default/linux/amd64/23.0/musl' (6 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 3.274.1: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total)
+
+app-admin/vector-bin
+  RequiredUseDefaults: version 0.61.0: profile: 'default/linux/amd64/23.0/musl' (6 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 0.61.0: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total)
+
+app-metrics/metricbeat-bin
+  NonsolvableDepsInDev: version 9.5.6: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total): solutions: [ sys-libs/glibc ]
+
+app-editors/cursor
+  NonsolvableDepsInDev: version 3.29.15: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total): solutions: [ >=sys-libs/glibc-2.28 ]
+
+app-text/koodo-reader-bin
+  NonsolvableDepsInDev: version 2.4.7: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (3 total): solutions: [ >=sys-libs/glibc-2.34 ]
+  NonsolvableDepsInDev: version 2.4.7: nonsolvable depset(rdepend) keyword(~arm64) dev profile (default/linux/arm64/23.0/musl) (3 total): solutions: [ >=sys-libs/glibc-2.38 ]
+
+app-misc/elasticsearch
+  NonsolvableDepsInDev: version 9.5.6: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total): solutions: [ sys-libs/glibc ]
+  RequiredUseDefaults: version 9.5.6: profile: 'default/linux/amd64/23.0/musl' (6 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 9.5.6: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total)
+
+app-editors/kiro
+  NonsolvableDepsInDev: version 1.4.154: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (3 total): solutions: [ >=sys-libs/glibc-2.34 ]
+  NonsolvableDepsInDev: version 1.4.154: nonsolvable depset(rdepend) keyword(~arm64) dev profile (default/linux/arm64/23.0/musl) (3 total): solutions: [ >=sys-libs/glibc-2.28 ]
+  RequiredUseDefaults: version 1.4.154: profile: 'default/linux/amd64/23.0/musl' (6 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 1.4.154: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total)
+
+dev-libs/node-semver
+  NonsolvableDepsInDev: version 7.8.6: nonsolvable depset(bdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/x32): solutions: [ net-libs/nodejs ]
+  NonsolvableDepsInDev: version 7.8.6: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/x32): solutions: [ net-libs/nodejs ]
+
+app-misc/grok-bot-bin
+  NonsolvableDepsInDev: version 0.79.3: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total): solutions: [ >=sys-libs/glibc-2.38 ]
+
+app-misc/chatgpt-bin
+  NonsolvableDepsInDev: version 26.1103.60933: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total): solutions: [ >=sys-libs/glibc-2.30 ]
+  RequiredUseDefaults: version 26.1103.60933: profile: 'default/linux/amd64/23.0/musl' (6 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 26.1103.60933: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total)
+
+dev-db/beekeeper-studio-bin
+  RequiredUseDefaults: version 6.2.2: profile: 'default/linux/amd64/23.0/musl' (6 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 6.2.2: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total)
+
+dev-python/billiard
+  PythonCompatUpdate: version 4.3.2: PYTHON_COMPAT update available: python3_15
+
+dev-db/dbgate-bin
+  NonsolvableDepsInDev: version 7.3.4: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total): solutions: [ >=sys-libs/glibc-2.34 ]
+
+app-misc/openclaw-bin
+  NonsolvableDepsInDev: version 2026.11.3: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total): solutions: [ sys-libs/glibc ]
+  NonsolvableDepsInDev: version 2026.11.3: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/x32): solutions: [ <net-libs/nodejs-25, >=net-libs/nodejs-24.16.0, >=net-libs/nodejs-26.1.0 ]
+  RequiredUseDefaults: version 2026.11.3: profile: 'default/linux/amd64/23.0/musl' (6 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 2026.11.3: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total)
+
+app-editors/nimbalyst
+  NonsolvableDepsInDev: version 0.83.0: nonsolvable depset(bdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/x32): solutions: [ >=net-libs/nodejs-24 ]
+  PythonCompatUpdate: version 0.83.0: PYTHON_COMPAT update available: python3_15
+  RequiredUseDefaults: version 0.83.0: profile: 'default/linux/amd64/23.0/musl' (6 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 0.83.0: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total)
+
+dev-python/boto3-stubs
+  PythonCompatUpdate: version 1.43.127: PYTHON_COMPAT update available: python3_15
+
+dev-python/dateparser
+  NonsolvableDepsInDev: version 1.5.0: nonsolvable depset(bdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (13 total): solutions: [ dev-python/convertdate[python_targets_python3_12(-),python_targets_python3_13(-),python_targets_python3_14(-)], dev-python/hijridate[python_targets_python3_12(-),python_targets_python3_13(-),python_targets_python3_14(-)], dev-python/langdetect[python_targets_python3_12(-),python_targets_python3_13(-),python_targets_python3_14(-)] ]
+  NonsolvableDepsInStable: version 1.5.0: nonsolvable depset(bdepend) keyword(~amd64) stable profile (default/linux/amd64/23.0) (40 total): solutions: [ dev-python/convertdate[python_targets_python3_12(-),python_targets_python3_13(-),python_targets_python3_14(-)], dev-python/hijridate[python_targets_python3_12(-),python_targets_python3_13(-),python_targets_python3_14(-)], dev-python/langdetect[python_targets_python3_12(-),python_targets_python3_13(-),python_targets_python3_14(-)] ]
+
+dev-python/aws-lambda-builders
+  PythonCompatUpdate: version 1.68.0: PYTHON_COMPAT update available: python3_15
+
+app-admin/cockpit
+  NonsolvableDepsInDev: version 372: nonsolvable depset(depend) keyword(~amd64) dev profile (default/linux/amd64/23.0/split-usr/musl) (4 total): solutions: [ >=sys-apps/systemd-235 ]
+  NonsolvableDepsInDev: version 372: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/split-usr/musl) (4 total): solutions: [ >=net-misc/networkmanager-1.6[policykit,systemd], >=sys-apps/systemd-235, sys-auth/polkit[systemd], >=sys-fs/udisks-2.9[daemon,introspection,systemd] ]
+  NonsolvableDepsInStable: version 372: nonsolvable depset(depend) keyword(~amd64) stable profile (default/linux/amd64/23.0/split-usr) (14 total): solutions: [ >=sys-apps/systemd-235 ]
+  NonsolvableDepsInStable: version 372: nonsolvable depset(rdepend) keyword(~amd64) stable profile (default/linux/amd64/23.0/split-usr) (14 total): solutions: [ >=net-misc/networkmanager-1.6[policykit,systemd], >=sys-apps/systemd-235, sys-auth/polkit[systemd], >=sys-fs/udisks-2.9[daemon,introspection,systemd] ]
+
+dev-util/cursor-agent
+  NonsolvableDepsInDev: version 2026.11.05: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (3 total): solutions: [ >=sys-libs/glibc-2.28 ]
+  NonsolvableDepsInDev: version 2026.11.05: nonsolvable depset(rdepend) keyword(~arm64) dev profile (default/linux/arm64/23.0/musl) (3 total): solutions: [ >=sys-libs/glibc-2.34 ]
+
+dev-python/slack-sdk
+  PythonCompatUpdate: version 3.46.0: PYTHON_COMPAT update available: python3_15
+
+dev-util/aws-cdk
+  NonsolvableDepsInDev: version 2.1148.0: nonsolvable depset(bdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/x32): solutions: [ >=net-libs/nodejs-18 ]
+  NonsolvableDepsInDev: version 2.1148.0: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/x32): solutions: [ >=net-libs/nodejs-18[ssl] ]
+
+dev-python/python-hcl2
+  PythonCompatUpdate: version 8.2.0: PYTHON_COMPAT update available: python3_15
+
+dev-util/github-copilot-cli-bin
+  NonsolvableDepsInDev: version 1.0.109: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total): solutions: [ >=sys-libs/glibc-2.28 ]
+  RequiredUseDefaults: version 1.0.109: profile: 'default/linux/amd64/23.0/musl' (6 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 1.0.109: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total)
+
+dev-ruby/io-stream
+  RubyCompatUpdate: version 0.13.2: USE_RUBY update available: ruby40
+
+dev-util/mise-bin
+  NonsolvableDepsInDev: version 2026.11.6: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total): solutions: [ >=sys-libs/glibc-2.18 ]
+  RequiredUseDefaults: version 2026.11.6: profile: 'default/linux/amd64/23.0/musl' (6 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 2026.11.6: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total)
+
+dev-util/github-copilot-bin
+  RequiredUseDefaults: version 1.1.35: profile: 'default/linux/amd64/23.0/musl' (6 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 1.1.35: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total)
+
+dev-util/postman-bin
+  NonsolvableDepsInDev: version 12.36.1: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total): solutions: [ >=sys-libs/glibc-2.34 ]
+
+dev-util/sonarqube-bin
+  NonsolvableDepsInDev: version 26.11.0.134175: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total): solutions: [ sys-libs/glibc ]
+  RequiredUseDefaults: version 26.11.0.134175: profile: 'default/linux/amd64/23.0/musl' (6 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 26.11.0.134175: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total)
+
+dev-vcs/sublime-merge
+  NonsolvableDepsInDev: version 2136: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total): solutions: [ sys-libs/glibc ]
+
+games-misc/tui-battleship
+  BetterCompressionUri: version 0.2.0: line 8: better compression URI using extension '.tar.bz2' for 'https://gitlab.com/christosangel/${PN}/-/archive/${PV}/${P}.tar.gz'
+
+net-im/claude-desktop-bin
+  NonsolvableDepsInDev: version 4.23118.1: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total): solutions: [ >=sys-libs/glibc-2.34 ]
+
+media-sound/cliamp-bin
+  NonsolvableDepsInDev: version 2.4.0: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total): solutions: [ >=sys-libs/glibc-2.34 ]
+
+dev-python/posthog
+  NonsolvableDepsInDev: version 7.86.6: nonsolvable depset(bdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (13 total): solutions: [ <dev-python/celery-6[python_targets_python3_12(-),python_targets_python3_13(-),python_targets_python3_14(-)], >=dev-python/celery-5.3[python_targets_python3_12(-),python_targets_python3_13(-),python_targets_python3_14(-)] ]
+  NonsolvableDepsInStable: version 7.86.6: nonsolvable depset(bdepend) keyword(~amd64) stable profile (default/linux/amd64/23.0) (40 total): solutions: [ <dev-python/celery-6[python_targets_python3_12(-),python_targets_python3_13(-),python_targets_python3_14(-)], >=dev-python/celery-5.3[python_targets_python3_12(-),python_targets_python3_13(-),python_targets_python3_14(-)] ]
+
+net-misc/expandrive
+  RequiredUseDefaults: version 2026.11.6_p916: profile: 'default/linux/amd64/23.0/musl' (3 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 2026.11.6_p916: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (3 total)
+
+dev-util/insomnia
+  NonsolvableDepsInDev: version 13.4.0: nonsolvable depset(bdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/x32): solutions: [ >=net-libs/nodejs-24.18.0:0/24[npm], >=net-libs/nodejs-26.12.1:0/26[npm] ]
+  RequiredUseDefaults: version 13.4.0: profile: 'default/linux/amd64/23.0/musl' (6 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 13.4.0: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total)
+
+net-im/viber
+  RequiredUseDefaults: version 29.4.0.7: profile: 'default/linux/amd64/23.0/musl' (3 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 29.4.0.7: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (3 total)
+
+sys-auth/keycloak-bin
+  RequiredUseDefaults: version 26.8.2: profile: 'default/linux/amd64/23.0' (53 total) failed REQUIRED_USE: exactly-one-of ( h2-file h2-mem mariadb mssql mysql postgres )
+
+sci-ml/lm-studio-bin
+  NonsolvableDepsInDev: version 0.4.28_p2: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total): solutions: [ sys-libs/glibc ]
+  RequiredUseDefaults: version 0.4.28_p2: profile: 'default/linux/amd64/23.0/musl' (6 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 0.4.28_p2: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total)
+
+sys-process/falco-bin
+  RequiredUseDefaults: version 0.45.2: profile: 'default/linux/amd64/23.0/musl' (6 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 0.45.2: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total)
+
+media-sound/lmms
+  NonsolvableDepsInDev: version 1.3.0_pre20261108: nonsolvable depset(depend) keyword(~arm64) dev profile (default/linux/arm64/23.0/hardened) (9 total): solutions: [ media-libs/libgig, media-libs/stk ]
+  NonsolvableDepsInDev: version 1.3.0_pre20261108: nonsolvable depset(rdepend) keyword(~arm64) dev profile (default/linux/arm64/23.0/hardened) (9 total): solutions: [ media-libs/libgig, media-libs/stk ]
+  NonsolvableDepsInStable: version 1.3.0_pre20261108: nonsolvable depset(depend) keyword(~arm64) stable profile (default/linux/arm64/23.0) (12 total): solutions: [ media-libs/libgig, media-libs/stk ]
+  NonsolvableDepsInStable: version 1.3.0_pre20261108: nonsolvable depset(rdepend) keyword(~arm64) stable profile (default/linux/arm64/23.0) (12 total): solutions: [ media-libs/libgig, media-libs/stk ]
+
+dev-ruby/async-http
+  NonsolvableDepsInDev: version 0.91.0: nonsolvable depset(bdepend) keyword(~arm64) dev profile (default/linux/arm64/23.0/hardened) (9 total): solutions: [ <dev-ruby/async-pool-1:0[ruby_targets_ruby33(-)], <dev-ruby/async-pool-1:0[ruby_targets_ruby34(-)], >=dev-ruby/async-pool-0.11:0[ruby_targets_ruby33(-)], >=dev-ruby/async-pool-0.11:0[ruby_targets_ruby34(-)] ]
+  NonsolvableDepsInDev: version 0.91.0: nonsolvable depset(rdepend) keyword(~arm64) dev profile (default/linux/arm64/23.0/hardened) (9 total): solutions: [ <dev-ruby/async-pool-1:0[ruby_targets_ruby33(-)], <dev-ruby/async-pool-1:0[ruby_targets_ruby34(-)], >=dev-ruby/async-pool-0.11:0[ruby_targets_ruby33(-)], >=dev-ruby/async-pool-0.11:0[ruby_targets_ruby34(-)] ]
+  NonsolvableDepsInStable: version 0.91.0: nonsolvable depset(bdepend) keyword(~arm64) stable profile (default/linux/arm64/23.0) (12 total): solutions: [ <dev-ruby/async-pool-1:0[ruby_targets_ruby33(-)], <dev-ruby/async-pool-1:0[ruby_targets_ruby34(-)], >=dev-ruby/async-pool-0.11:0[ruby_targets_ruby33(-)], >=dev-ruby/async-pool-0.11:0[ruby_targets_ruby34(-)] ]
+  NonsolvableDepsInStable: version 0.91.0: nonsolvable depset(rdepend) keyword(~arm64) stable profile (default/linux/arm64/23.0) (12 total): solutions: [ <dev-ruby/async-pool-1:0[ruby_targets_ruby33(-)], <dev-ruby/async-pool-1:0[ruby_targets_ruby34(-)], >=dev-ruby/async-pool-0.11:0[ruby_targets_ruby33(-)], >=dev-ruby/async-pool-0.11:0[ruby_targets_ruby34(-)] ]
+
+sys-cluster/lens-bin
+  NonsolvableDepsInDev: version 2026.11.91422: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (3 total): solutions: [ >=sys-libs/glibc-2.34 ]
+  RequiredUseDefaults: version 2026.11.91422: profile: 'default/linux/amd64/23.0/musl' (3 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 2026.11.91422: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (3 total)
+
+app-misc/anki
+  DeprecatedDep: version 26.09.4: BDEPEND: deprecated dependencies: dev-python/orjson[python_targets_python3_12(-)] dev-python/orjson[python_targets_python3_13(-)] dev-python/orjson[python_targets_python3_14(-)]
+  DeprecatedDep: version 26.09.4: RDEPEND: deprecated dependencies: dev-python/orjson[python_targets_python3_12(-)] dev-python/orjson[python_targets_python3_13(-)] dev-python/orjson[python_targets_python3_14(-)]
+  PythonCompatUpdate: version 26.09.4: PYTHON_COMPAT update available: python3_15
+
+www-client/brave-bin
+  NonsolvableDepsInDev: version 1.99.56: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total): solutions: [ >=sys-libs/glibc-2.25 ]
+  RequiredUseDefaults: version 1.99.56: profile: 'default/linux/amd64/23.0/musl' (6 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 1.99.56: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total)
+
+www-apps/open-webui-bin
+  NonsolvableDepsInDev: version 0.13.3: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total): solutions: [ >=sys-libs/glibc-2.34 ]
+  PythonCompatUpdate: version 0.13.3: PYTHON_COMPAT updates available: python3_13, python3_14, python3_15
+  RequiredUseDefaults: version 0.13.3: profile: 'default/linux/amd64/23.0/musl' (6 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 0.13.3: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total)
+
+mail-client/proton-mail
+  NonsolvableDepsInDev: version 1.16.1: nonsolvable depset(rdepend) keyword(~arm64) dev profile (default/linux/arm64/23.0/musl) (3 total): solutions: [ sys-libs/glibc ]
+
+dev-util/semgrep-bin
+  BetterCompressionUri: version 1.185.0: line 51: better compression URI using extension '.tar.bz2' for 'https://gitlab.inria.fr/fpottier/menhir/-/archive/20230608/archive.tar.gz'
+  NonsolvableDepsInDev: version 1.185.0: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total): solutions: [ ~dev-python/opentelemetry-instrumentation-threading-0.66_beta1[python_targets_python3_12(-)], >=sys-libs/glibc-2.35 ]
+  NonsolvableDepsInDev: version 1.185.0: nonsolvable depset(rdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/x32) (7 total): solutions: [ ~dev-python/opentelemetry-instrumentation-threading-0.66_beta1[python_targets_python3_12(-)] ]
+  NonsolvableDepsInStable: version 1.185.0: nonsolvable depset(rdepend) keyword(~amd64) stable profile (default/linux/amd64/23.0) (40 total): solutions: [ ~dev-python/opentelemetry-instrumentation-threading-0.66_beta1[python_targets_python3_12(-)] ]
+  RequiredUseDefaults: version 1.185.0: profile: 'default/linux/amd64/23.0/musl' (6 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 1.185.0: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total)

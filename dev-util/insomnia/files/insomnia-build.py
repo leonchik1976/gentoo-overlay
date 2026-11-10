@@ -198,7 +198,11 @@ if __name__ == '__main__':
     parser.add_argument('command', choices=('prepare', 'configure', 'stage'))
     parser.add_argument('source', type=Path)
     parser.add_argument('target', type=Path, nargs='?')
+    parser.add_argument('--grpc-commit', default=GRPC_COMMIT)
     args = parser.parse_args()
+    if not re.fullmatch(r'[0-9a-f]{40}', args.grpc_commit):
+        parser.error('grpc commit must be an exact 40-character SHA1')
+    GRPC_COMMIT = args.grpc_commit
     if args.command == 'configure':
         configure(args.source)
     else:

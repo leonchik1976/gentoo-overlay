@@ -1,0 +1,21 @@
+WORKTREE scoped QA after review corrections
+Command: pkgcheck scan --cache-dir /tmp/codex/dev-ruby/io-stream-0.11.1/review-pkgcheck-cache --cache=-git dev-ruby/io-stream dev-ruby/async-http app-editors/nimbalyst games-misc/tui-battleship
+Exit: 0
+
+games-misc/tui-battleship
+  BetterCompressionUri: version 0.2.0: line 8: better compression URI using extension '.tar.bz2' for 'https://gitlab.com/christosangel/${PN}/-/archive/${PV}/${P}.tar.gz'
+
+dev-ruby/io-stream
+  RubyCompatUpdate: version 0.11.1: USE_RUBY update available: ruby40
+
+dev-ruby/async-http
+  NonsolvableDepsInDev: version 0.91.0: nonsolvable depset(bdepend) keyword(~arm64) dev profile (default/linux/arm64/23.0/hardened) (9 total): solutions: [ <dev-ruby/async-pool-1:0[ruby_targets_ruby33(-)], <dev-ruby/async-pool-1:0[ruby_targets_ruby34(-)], >=dev-ruby/async-pool-0.11:0[ruby_targets_ruby33(-)], >=dev-ruby/async-pool-0.11:0[ruby_targets_ruby34(-)] ]
+  NonsolvableDepsInDev: version 0.91.0: nonsolvable depset(rdepend) keyword(~arm64) dev profile (default/linux/arm64/23.0/hardened) (9 total): solutions: [ <dev-ruby/async-pool-1:0[ruby_targets_ruby33(-)], <dev-ruby/async-pool-1:0[ruby_targets_ruby34(-)], >=dev-ruby/async-pool-0.11:0[ruby_targets_ruby33(-)], >=dev-ruby/async-pool-0.11:0[ruby_targets_ruby34(-)] ]
+  NonsolvableDepsInStable: version 0.91.0: nonsolvable depset(bdepend) keyword(~arm64) stable profile (default/linux/arm64/23.0) (12 total): solutions: [ <dev-ruby/async-pool-1:0[ruby_targets_ruby33(-)], <dev-ruby/async-pool-1:0[ruby_targets_ruby34(-)], >=dev-ruby/async-pool-0.11:0[ruby_targets_ruby33(-)], >=dev-ruby/async-pool-0.11:0[ruby_targets_ruby34(-)] ]
+  NonsolvableDepsInStable: version 0.91.0: nonsolvable depset(rdepend) keyword(~arm64) stable profile (default/linux/arm64/23.0) (12 total): solutions: [ <dev-ruby/async-pool-1:0[ruby_targets_ruby33(-)], <dev-ruby/async-pool-1:0[ruby_targets_ruby34(-)], >=dev-ruby/async-pool-0.11:0[ruby_targets_ruby33(-)], >=dev-ruby/async-pool-0.11:0[ruby_targets_ruby34(-)] ]
+
+app-editors/nimbalyst
+  NonsolvableDepsInDev: version 0.83.0: nonsolvable depset(bdepend) keyword(~amd64) dev profile (default/linux/amd64/23.0/x32): solutions: [ >=net-libs/nodejs-24 ]
+  PythonCompatUpdate: version 0.83.0: PYTHON_COMPAT update available: python3_15
+  RequiredUseDefaults: version 0.83.0: profile: 'default/linux/amd64/23.0/musl' (6 total) failed REQUIRED_USE: elibc_glibc
+  RequiredUseUnsatisfiableInDev: version 0.83.0: REQUIRED_USE can't be satisfied due to masked/forced USE flags, keyword(~amd64) dev profile (default/linux/amd64/23.0/musl) (6 total)

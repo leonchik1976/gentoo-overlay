@@ -66,7 +66,7 @@ def generate(source, output):
     lines.extend(["# @FUNCTION: nimbalyst_npm_src_uri", "# @DESCRIPTION:",
                   "# Append the exact registry inputs to SRC_URI, with architecture",
                   "# conditionals for native dependencies. Call after defining SRC_URI.",
-                  "nimbalyst_npm_src_uri() {", "\tSRC_URI+=\" "])
+                  "nimbalyst_npm_src_uri() {", "\tSRC_URI+=\""])
     for group in ("common", "amd64", "arm64"):
         if group != "common":
             lines.append(f"\t\t{group}? (")
