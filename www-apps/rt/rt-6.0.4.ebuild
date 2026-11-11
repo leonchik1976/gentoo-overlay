@@ -10,7 +10,7 @@ HOMEPAGE="https://bestpractical.com/rt/"
 SRC_URI="https://download.bestpractical.com/pub/${PN}/release/${P}.tar.gz"
 
 LICENSE="GPL-2"
-KEYWORDS="~amd64 ~arm64"
+KEYWORDS="~amd64"
 IUSE="graphviz mysql +postgres fastcgi lighttpd nginx +apache"
 REQUIRED_USE="^^ ( mysql postgres ) ^^ ( lighttpd nginx apache )"
 
@@ -28,13 +28,13 @@ DEPEND+="
 	>=dev-perl/CGI-4
 	>=dev-perl/CSS-Inliner-4027
 	>=dev-perl/CSS-Squish-0.60.0
-	>=dev-perl/DBIx-SearchBuilder-1.850.0
+	>=dev-perl/DBIx-SearchBuilder-1.860.0
 	>=dev-perl/Date-Extract-0.70.0
 	>=dev-perl/DateTime-Format-Natural-0.670.0
 	>=dev-perl/Email-Address-1.912.0
 	>=dev-perl/Email-Address-List-0.60.0
 	>=dev-perl/Locale-Maketext-Lexicon-0.320.0
-	>=dev-perl/MIME-tools-5.504.0
+	>=dev-perl/MIME-tools-5.522.0
 	>=dev-perl/Module-Versions-Report-1.50.0
 	>=dev-perl/Role-Basic-0.120.0
 	>=dev-perl/Symbol-Global-Name-0.50.0
@@ -42,6 +42,7 @@ DEPEND+="
 	>=dev-perl/Text-WikiFormat-0.760.0
 	>=dev-perl/Tree-Simple-1.40.0
 	>=dev-perl/XML-RSS-1.50.0
+	dev-perl/Archive-Zip
 	dev-perl/Business-Hours
 	dev-perl/CGI-Emulate-PSGI
 	dev-perl/CGI-PSGI
@@ -56,9 +57,9 @@ DEPEND+="
 	dev-perl/DateTime-Set
 	>=dev-perl/DBI-1.370.0
 	dev-perl/MIME-Types
-	dev-perl/Mozilla-CA
+	>=dev-perl/Mozilla-CA-20261020
 	dev-perl/Plack
-	dev-perl/Starlet
+	>=dev-perl/Starlet-0.330.0
 	dev-perl/Regexp-Common
 	dev-perl/Regexp-Common-net-CIDR
 	dev-perl/Regexp-IPv6
@@ -66,6 +67,7 @@ DEPEND+="
 	dev-perl/URI
 	dev-perl/TermReadKey
 	dev-perl/Crypt-Eksblowfish
+	>=dev-perl/Crypt-URandom-0.550.0
 	dev-perl/Crypt-X509
 	dev-perl/Data-GUID
 	dev-perl/Data-ICal
@@ -82,7 +84,7 @@ DEPEND+="
 	dev-perl/HTML-FormatExternal
 	dev-perl/HTML-FormatText-WithLinks
 	dev-perl/HTML-FormatText-WithLinks-AndTables
-	dev-perl/HTML-Gumbo
+	>=dev-perl/HTML-Gumbo-0.190.0
 	dev-perl/HTML-Mason
 	dev-perl/HTML-Mason-PSGIHandler
 	dev-perl/HTML-Parser
@@ -105,7 +107,7 @@ DEPEND+="
 	dev-perl/Moose
 	dev-perl/MooseX-NonMoose
 	dev-perl/MooseX-Role-Parameterized
-	dev-perl/Mozilla-CA
+	>=dev-perl/Mozilla-CA-20261020
 	dev-perl/Net-CIDR
 	dev-perl/Net-IP
 	dev-perl/Parallel-ForkManager
@@ -116,7 +118,7 @@ DEPEND+="
 	dev-perl/Regexp-Common-net-CIDR
 	dev-perl/Regexp-IPv6
 	dev-perl/Scope-Upper
-	dev-perl/Starlet
+	>=dev-perl/Starlet-0.330.0
 	dev-perl/String-ShellQuote
 	dev-perl/Sub-Exporter
 	dev-perl/TermReadKey
@@ -187,10 +189,7 @@ src_prepare() {
 	sed -e "s|\$args{'with-DEV'} =1;|#\$args{'with-DEV'} =1;|" \
 		-i sbin/rt-test-dependencies.in || die 'dev sed failed'
 
-	# Complete upstream's CVE-2026-41073 TSV header injection mitigation.
-	# https://github.com/bestpractical/rt/commit/525547751b76cc422015960bae3056f4e8d4351f
-	eapply "${FILESDIR}/rt-6.0.3-CVE-2026-41073.patch"
-	eapply "${FILESDIR}/rt-makefile-serialize-install-prereqs.patch"
+	eapply "${FILESDIR}/rt-6.0.4-serialize-install.patch"
 	eapply_user
 }
 

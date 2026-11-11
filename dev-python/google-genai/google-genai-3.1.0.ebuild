@@ -18,7 +18,7 @@ LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
-RDEPEND="
+RDEPEND+="
 	>=dev-python/anyio-4.8.0[${PYTHON_USEDEP}]
 	<dev-python/anyio-5[${PYTHON_USEDEP}]
 	>=dev-python/google-auth-2.56.0[${PYTHON_USEDEP}]
@@ -27,7 +27,7 @@ RDEPEND="
 	<dev-python/httpx2-3[${PYTHON_USEDEP}]
 	>=dev-python/pydantic-2.12.5[${PYTHON_USEDEP}]
 	<dev-python/pydantic-3[${PYTHON_USEDEP}]
-	>=dev-python/requests-2.30.0[${PYTHON_USEDEP}]
+	>=dev-python/requests-2.28.1[${PYTHON_USEDEP}]
 	<dev-python/requests-3[${PYTHON_USEDEP}]
 	>=dev-python/tenacity-8.2.3[${PYTHON_USEDEP}]
 	<dev-python/tenacity-9.2.0[${PYTHON_USEDEP}]
@@ -48,8 +48,8 @@ BDEPEND+="
 "
 
 PATCHES=(
-	"${FILESDIR}/${P}-build-backend.patch"
-	"${FILESDIR}/${P}-httpx2-tests.patch"
+	"${FILESDIR}/google-genai-3.0.0-build-backend.patch"
+	"${FILESDIR}/google-genai-3.0.0-httpx2-tests.patch"
 )
 
 EPYTEST_PLUGINS=( pytest-asyncio )

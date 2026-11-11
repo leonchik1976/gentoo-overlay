@@ -1,0 +1,13 @@
+Serialize install prerequisites before the parallel install targets.
+
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -365,6 +365,8 @@
+ 	rm -rf $(DESTDIR)$(MASON_DATA_PATH)/etc/*
+ 	rm -rf $(DESTDIR)$(MASON_DATA_PATH)/obj/*
+ 
++.NOTPARALLEL: install
++
+ install: testdeps config-install dirs files-install fixperms instruct
+ 
+ files-install: libs-install etc-install config-install bin-install sbin-install html-install doc-install po-install static-install

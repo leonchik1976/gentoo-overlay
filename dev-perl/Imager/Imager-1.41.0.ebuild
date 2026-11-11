@@ -4,7 +4,7 @@
 EAPI=8
 
 DIST_AUTHOR=TONYC
-DIST_VERSION=1.040
+DIST_VERSION=1.041
 inherit perl-module
 
 DESCRIPTION="Image processing library for Perl"

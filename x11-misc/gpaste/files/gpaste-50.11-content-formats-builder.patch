@@ -1,0 +1,24 @@
+Use GTK's consuming conversion instead of an unavailable builder autoptr.
+gdk_content_formats_builder_free_to_formats() releases the builder reference;
+the returned formats remain owned by the existing GdkContentFormats autoptr.
+
+--- a/tests/clipboard/test-clipboard.c
++++ b/tests/clipboard/test-clipboard.c
+@@ -7,7 +7,7 @@
+ content_for (gboolean images_support,
+              ...)
+ {
+-    g_autoptr (GdkContentFormatsBuilder) builder = gdk_content_formats_builder_new ();
++    GdkContentFormatsBuilder *builder = gdk_content_formats_builder_new ();
+     va_list types;
+ 
+     va_start (types, images_support);
+@@ -15,7 +15,7 @@
+         gdk_content_formats_builder_add_gtype (builder, type);
+     va_end (types);
+ 
+-    g_autoptr (GdkContentFormats) formats = gdk_content_formats_builder_to_formats (builder);
++    g_autoptr (GdkContentFormats) formats = gdk_content_formats_builder_free_to_formats (builder);
+ 
+     return g_paste_clipboard_content_for_formats (formats, images_support);
+ }

@@ -3,9 +3,8 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{12..15} )
 VALA_USE_DEPEND="vapigen"
-inherit gnome2-utils meson python-any-r1 vala xdg
+inherit gnome2-utils meson vala xdg
 
 DESCRIPTION="Clipboard management system"
 HOMEPAGE="https://github.com/Keruspe/GPaste"
@@ -15,47 +14,38 @@ S="${WORKDIR}/GPaste-${PV}"
 LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
-IUSE="crypt +gnome +introspection keyring pwquality sqlite systemd test vala"
+IUSE="+gnome +introspection systemd vala wayland"
 REQUIRED_USE="
 	gnome? ( introspection )
-	keyring? ( crypt )
 	vala? ( introspection )
 "
-RESTRICT="!test? ( test )"
 
 DEPEND="
-	>=app-crypt/gcr-4.0.0:4=
-	>=dev-libs/glib-2.89.0:2
-	>=gui-libs/gtk-4.23.4:4[X,introspection?]
-	>=gui-libs/libadwaita-1.10_alpha:1[introspection?]
+	>=app-crypt/gcr-3.90.0:4=
+	>=dev-libs/glib-2.84.0:2
+	>=gui-libs/gtk-4.18.0:4[X,introspection?,wayland=]
+	>=gui-libs/libadwaita-1.9:1[introspection?]
 	sys-apps/dbus
+	x11-libs/libX11
+	x11-libs/libXi
 	x11-libs/pango
-	crypt? ( dev-libs/libsodium:= )
 	gnome? (
-		>=gnome-base/gnome-shell-51
-		<gnome-base/gnome-shell-52
-		>=x11-wm/mutter-51:0=[introspection]
-		<x11-wm/mutter-52
+		>=gnome-base/gnome-shell-50
+		<gnome-base/gnome-shell-51
 	)
 	introspection? ( dev-libs/gobject-introspection:= )
-	keyring? ( app-crypt/libsecret )
-	pwquality? ( dev-libs/libpwquality )
-	sqlite? ( >=dev-db/sqlite-3.35:3 )
 "
 RDEPEND="${DEPEND}
-	net-misc/curl
+	app-text/wgetpaste
 "
 BDEPEND+="
-	${PYTHON_DEPS}
 	dev-util/glib-utils
 	sys-devel/gettext
 	virtual/pkgconfig
-	test? (
-		net-libs/nodejs
-		x11-base/xorg-server[xvfb]
-	)
 	vala? ( $(vala_depend) )
 "
+
+PATCHES=( "${FILESDIR}/${P}-content-formats-builder.patch" )
 
 src_prepare() {
 	default
@@ -70,16 +60,11 @@ src_prepare() {
 src_configure() {
 	local emesonargs=(
 		-Dbash-completion=true
-		-Dfish-completion=true
 		-Dzsh-completion=true
+		-Dx-keybinder=true
 		-Ddbus-services-dir="${EPREFIX}/usr/share/dbus-1/services"
-		-Ddbus-interfaces-dir="${EPREFIX}/usr/share/dbus-1/interfaces"
 		-Dcontrol-center-keybindings-dir="${EPREFIX}/usr/share/gnome-control-center/keybindings"
 		-Dsystemd-user-unit-dir="${EPREFIX}/usr/lib/systemd/user"
-		$(meson_feature crypt encryption)
-		$(meson_feature keyring libsecret)
-		$(meson_feature pwquality)
-		$(meson_feature sqlite)
 		$(meson_use gnome gnome-shell)
 		$(meson_use introspection)
 		$(meson_use systemd)

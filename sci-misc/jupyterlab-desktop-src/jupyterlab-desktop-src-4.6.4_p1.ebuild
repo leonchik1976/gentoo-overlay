@@ -10,20 +10,22 @@ CHROMIUM_LANGS="
 	hi hr hu id it ja kn ko lt lv ml mr ms nb nl pl pt-BR pt-PT ro ru sk sl sr
 	sv sw ta te th tr uk ur vi zh-CN zh-TW
 "
-inherit chromium-2 desktop xdg-utils jupyterlab-desktop-yarn-deps-4.6.3_p1
+inherit chromium-2 desktop xdg-utils jupyterlab-desktop-yarn-deps-4.6.4_p1
 
 DESCRIPTION="JupyterLab desktop application, built from source with bundled Electron"
 HOMEPAGE="https://github.com/jupyterlab/jupyterlab-desktop"
+MY_PN=jupyterlab-desktop
+MY_P=${MY_PN}-${PV}
 MY_PV=${PV/_p/-}
 ELECTRON_VERSION=42.5.0
 YARN_VERSION=1.22.22
 SRC_URI="
 	https://github.com/yarnpkg/yarn/releases/download/v${YARN_VERSION}/yarn-v${YARN_VERSION}.tar.gz
-	https://github.com/jupyterlab/jupyterlab-desktop/archive/refs/tags/v${MY_PV}.tar.gz -> ${P}.tar.gz
+	https://github.com/jupyterlab/jupyterlab-desktop/archive/refs/tags/v${MY_PV}.tar.gz -> ${MY_P}.tar.gz
 	https://github.com/electron/electron/releases/download/v${ELECTRON_VERSION}/electron-v${ELECTRON_VERSION}-linux-arm64.zip
 "
 jupyterlab_desktop_yarn_src_uri
-S="${WORKDIR}/${PN}-${MY_PV}"
+S="${WORKDIR}/${MY_PN}-${MY_PV}"
 
 # Application: BSD-3-Clause; npm packages and Electron have additional licenses.
 LICENSE="BSD MIT ISC Apache-2.0 BSD-2 BlueOak-1.0.0 0BSD CC0-1.0
@@ -33,8 +35,9 @@ LICENSE="BSD MIT ISC Apache-2.0 BSD-2 BlueOak-1.0.0 0BSD CC0-1.0
 	SunSoft Unicode-DFS-2015 Unlicense UoI-NCSA libtiff unRAR public-domain"
 SLOT="0"
 KEYWORDS="~arm64"
+IUSE="test"
 REQUIRED_USE="elibc_glibc"
-RESTRICT="bindist mirror"
+RESTRICT="bindist mirror !test? ( test )"
 
 RDEPEND="
 	!sci-misc/jupyterlab-desktop-bin
@@ -75,10 +78,10 @@ QA_PREBUILT="
 	opt/jupyterlab-desktop/*.so*
 "
 
-PATCHES=( "${FILESDIR}/${P}-selected-python.patch" )
+PATCHES=( "${FILESDIR}/jupyterlab-desktop-4.6.3_p1-selected-python.patch" )
 
 src_unpack() {
-	unpack "${P}.tar.gz" "yarn-v${YARN_VERSION}.tar.gz"
+	unpack "${MY_P}.tar.gz" "yarn-v${YARN_VERSION}.tar.gz"
 }
 
 src_prepare() {
@@ -110,13 +113,18 @@ src_prepare() {
 src_compile() {
 	PATH="${WORKDIR}/yarn-v${YARN_VERSION}/bin:${PATH}" \
 		node "${WORKDIR}/yarn-v${YARN_VERSION}/bin/yarn.js" --offline build || die
-	# Keep only production dependencies in the installed application.
-	node "${WORKDIR}/yarn-v${YARN_VERSION}/bin/yarn.js" install --offline --frozen-lockfile --ignore-scripts \
-		--production --non-interactive || die
+}
+
+src_test() {
+	node "${WORKDIR}/yarn-v${YARN_VERSION}/bin/yarn.js" --offline test:unit || die
 }
 
 src_install() {
-	local appdir=/opt/${PN} electron_dir
+	# Keep only production dependencies in the installed application.
+	node "${WORKDIR}/yarn-v${YARN_VERSION}/bin/yarn.js" install --offline --frozen-lockfile --ignore-scripts \
+		--production --non-interactive || die
+
+	local appdir=/opt/${MY_PN} electron_dir
 	electron_dir=$(mktemp -d "${T}/electron.XXXXXX") || die
 	unzip -q "${DISTDIR}/electron-v${ELECTRON_VERSION}-linux-arm64.zip" \
 		-d "${electron_dir}" || die
@@ -126,17 +134,18 @@ src_install() {
 	) || die "Failed to prune Electron locale packs"
 	# The default Electron demo must not override our application.
 	rm "${electron_dir}/resources/default_app.asar" || die
-	mv "${electron_dir}/electron" "${electron_dir}/${PN}" || die
+	mv "${electron_dir}/electron" "${electron_dir}/${MY_PN}" || die
 	insinto "${appdir}"
 	doins -r "${electron_dir}/."
-	fperms +x "${appdir}/"{${PN},chrome-sandbox,chrome_crashpad_handler}
+	fperms +x "${appdir}/"{${MY_PN},chrome-sandbox,chrome_crashpad_handler}
 	fperms u+s "${appdir}/chrome-sandbox"
 	insinto "${appdir}/resources/app"
 	doins -r build node_modules package.json
-	dosym "../../opt/${PN}/${PN}" "/usr/bin/${PN}"
-	newicon -s 512 dist-resources/icons/512x512.png ${PN}.png
-	make_desktop_entry "${PN} %F" "JupyterLab Desktop" "${PN}" "Science;Development;" \
-		"MimeType=application/x-ipynb+json;"
+	dosym "../../opt/${MY_PN}/${MY_PN}" "/usr/bin/${MY_PN}"
+	newicon -s 512 dist-resources/icons/512x512.png ${MY_PN}.png
+	make_desktop_entry --eapi9 "${MY_PN}" --args "%F" \
+		--desktopid "${MY_PN}" --name "JupyterLab Desktop" --icon "${MY_PN}" \
+		--categories "Science;Development;" --entry "MimeType=application/x-ipynb+json;"
 	dodoc LICENSE README.md
 }
 

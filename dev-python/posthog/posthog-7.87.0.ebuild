@@ -90,7 +90,7 @@ distutils_enable_tests pytest
 
 PATCHES=(
 	"${FILESDIR}/posthog-7.64.0-setup-license.patch"
-	"${FILESDIR}/posthog-7.72.0-httpx2.patch"
+	"${FILESDIR}/posthog-7.87.0-httpx2.patch"
 )
 
 python_test() {

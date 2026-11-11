@@ -28,7 +28,6 @@ REQUIRED_USE="elibc_glibc"
 RESTRICT="bindist mirror strip"
 
 RDEPEND="
-	arm64? ( net-nds/openldap )
 	>=app-accessibility/at-spi2-core-2.46.0:2
 	app-crypt/libsecret
 	dev-libs/glib:2

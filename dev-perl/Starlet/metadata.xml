@@ -6,6 +6,7 @@
 		<name>Leonid Kopylov</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="github">jupyterlab/jupyterlab-desktop</remote-id>
+		<remote-id type="cpan">Starlet</remote-id>
+		<remote-id type="github">kazuho/Starlet</remote-id>
 	</upstream>
 </pkgmetadata>

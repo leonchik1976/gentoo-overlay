@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>leonchik1976@gmail.com</email>
+		<name>Leonid Kopylov</name>
+	</maintainer>
+	<longdescription>JupyterLab Desktop built from upstream source with a bundled
+		Electron runtime and the system Python environment.</longdescription>
+	<upstream>
+		<remote-id type="github">jupyterlab/jupyterlab-desktop</remote-id>
+	</upstream>
+</pkgmetadata>

@@ -37,7 +37,7 @@ REQUIRED_USE="elibc_glibc"
 # automatic stripping; the intentional RPATH correction is documented below.
 RESTRICT="bindist mirror strip"
 
-# Verified by extracting both the amd64 and arm64 v1.1.22 .deb assets
+# Verified by extracting both the amd64 and arm64 v1.2.0 .deb assets
 # directly (dpkg-deb -x/-e) rather than assuming an Electron-style
 # dependency set: control file reports "Tauri Copilot Application", and
 # `readelf -d` on usr/bin/github confirms a WebKitGTK app (libwebkit2gtk-
@@ -45,11 +45,11 @@ RESTRICT="bindist mirror strip"
 # chrome-sandbox helper and no CONFIG_CHECK=~USER_NS requirement here,
 # unlike app-office/obsidian or net-im/discord-canary-bin in ::guru.
 # The package also bundles a large (~220MB) local ONNX Runtime GenAI
-# engine (libonnxruntime*.so, Microsoft.AI.Foundry.Local.Core.so),
+# engine (libonnxruntime*.so, libfoundry_local.so),
 # installed directly under /opt/${MY_PN}, for on-device inference; they
 # are not linked by usr/bin/github itself (absent from its NEEDED list).
 # Every bundled ELF object (not just usr/bin/github) was individually
-# checked with `readelf -d` on both the amd64 and arm64 v1.1.22 assets,
+# checked with `readelf -d` on both the amd64 and arm64 v1.2.0 assets,
 # and each one's external NEEDED entries are covered by RDEPEND below.
 # native-plugins/libgithub_app_linux_pulse_plugin.so (a Tauri plugin) is
 # the one bundled object with NEEDED entries not already pulled in by
@@ -82,7 +82,7 @@ RESTRICT="bindist mirror strip"
 #
 # gtk+:3 is requested with both X and wayland because usr/bin/github
 # directly imports backend-specific GDK symbols on both architectures,
-# confirmed via `readelf -Ws` on the v1.1.22 amd64 and arm64 binaries:
+# confirmed via `readelf -Ws` on the v1.2.0 amd64 and arm64 binaries:
 # gdk_wayland_display_get_wl_display, gdk_wayland_display_set_startup_
 # notification_id, gdk_wayland_window_get_wl_surface, gdk_x11_display_
 # set_startup_notification_id, gdk_x11_window_get_xid (both arches), and
@@ -102,18 +102,21 @@ RDEPEND="
 	net-libs/libsoup:3.0
 	net-libs/webkit-gtk:4.1
 	sys-apps/dbus
-	elibc_glibc? ( sys-libs/glibc )
+	elibc_glibc? ( >=sys-libs/glibc-2.34 )
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf:2
 	x11-libs/gtk+:3[X,wayland]
 	x11-libs/pango
 "
+BDEPEND+=" dev-util/patchelf"
 
 QA_PREBUILT="*"
 
 src_install() {
 	insinto /opt/${MY_PN}
 	doins -r "usr/lib/GitHub Copilot"/.
+	# Keep sibling runtime libraries discoverable without upstream's build paths.
+	patchelf --set-rpath '$ORIGIN' "${ED}/opt/${MY_PN}/libfoundry_local.so" || die
 
 	exeinto /opt/${MY_PN}
 	doexe usr/bin/github usr/bin/git-credential-copilot

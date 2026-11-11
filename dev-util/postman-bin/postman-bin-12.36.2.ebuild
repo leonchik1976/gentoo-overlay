@@ -17,7 +17,12 @@ SRC_URI="
 "
 S="${WORKDIR}/Postman/app"
 
-LICENSE="all-rights-reserved"
+# Proprietary application plus the bundled Electron runtime and npm notices.
+# The runtime identifies itself as Electron 38.8.6; its exact release notices
+# and the shipped Apache Arrow, tslib, node-forge and Terminus Font grants
+# were reviewed separately from the application terms.
+LICENSE="all-rights-reserved Apache-2.0 BSD BSD-2 Boost-1.0 CC0-1.0 FFT2D FTL"
+LICENSE+=" IJG ISC LGPL-2 LGPL-2.1 MIT MPL-2.0 OFL-1.1 Unicode-3.0 Unlicense ZLIB"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 IUSE="suid"

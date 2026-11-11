@@ -1,7 +1,7 @@
 # Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-# @ECLASS: jupyterlab-desktop-yarn-deps-4.6.3_p1.eclass
+# @ECLASS: jupyterlab-desktop-yarn-deps-4.6.4_p1.eclass
 # @MAINTAINER:
 # Leonid Kopylov <leonchik1976@gmail.com>
 # @SUPPORTED_EAPIS: 8
