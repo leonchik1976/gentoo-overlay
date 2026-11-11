@@ -10,7 +10,7 @@ HOMEPAGE="https://bestpractical.com/rt/"
 SRC_URI="https://download.bestpractical.com/pub/${PN}/release/${P}.tar.gz"
 
 LICENSE="GPL-2"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~arm64"
 IUSE="graphviz mysql +postgres fastcgi lighttpd nginx +apache"
 REQUIRED_USE="^^ ( mysql postgres ) ^^ ( lighttpd nginx apache )"
 
