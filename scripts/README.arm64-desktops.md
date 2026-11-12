@@ -15,7 +15,7 @@ upstream binary. No maintainer-hosted npm dependency tarball is needed.
 | --- | --- |
 | `net-im/signal-desktop-bin-8.33.0_beta1` | Official arm64 beta Debian package; executable `signal-desktop-beta` |
 | `dev-db/mongodb-compass-1.53.1` | Application and required native addons built from source; upstream Electron runtime |
-| `sci-misc/jupyterlab-desktop-src-4.6.4_p1` | TypeScript application built from source; upstream Electron runtime; Gentoo Python environment |
+| `sci-misc/jupyterlab-desktop-4.6.4_p1` | TypeScript application built from source; upstream Electron runtime; Gentoo Python environment |
 
 The three package directories contain the ebuilds, maintainer metadata and
 Manifests. The two generated dependency eclasses and their generators under
@@ -1266,32 +1266,14 @@ push, branch change, or PR occurred. Historical failure evidence was not modifie
 or removed, and the earlier report content was preserved.
 
 
-## Source package rename (4.6.4_p1)
+## Source package name (4.6.4_p1)
 
-The source package is now `sci-misc/jupyterlab-desktop-src`; the earlier
-commands and logs above are historical evidence under its previous name.
-Gentoo already moves `sci-misc/jupyterlab-desktop` to
-`sci-misc/jupyterlab-desktop-bin` in `profiles/updates/4Q-2021`.
-This overlay deliberately adds no competing package move.
+The source package retains `sci-misc/jupyterlab-desktop` by maintainer request.
+Gentoo's `profiles/updates/4Q-2021` moves that atom to
+`sci-misc/jupyterlab-desktop-bin`, so the known `OldPackageName` finding is
+intentionally retained. No competing package move is added by this overlay.
+The blocker against the binary package remains because installed files conflict.
 
-Upstream archive names, unpack directory, `/opt/jupyterlab-desktop`,
-`/usr/bin/jupyterlab-desktop`, icons and desktop launcher remain unchanged.
-The source package keeps its weak blocker against the binary package, which
-installs conflicting files. The Yarn eclass and patch retain upstream names.
-
-An existing installation may still be recorded under the old atom or may
-already have been moved to the binary atom by Portage. Before migrating,
-check both installed atoms and the selected/world entry. If it is recorded
-as the binary atom, preview `emerge --pretend --verbose
-=sci-misc/jupyterlab-desktop-src-4.6.4_p1::local`: the binary-package blocker
-should arrange replacement. If it is still recorded under the old atom,
-first build the new source package without merging, then explicitly remove
-the old installed atom before installing the new one to avoid file collisions.
-With current Portage, this overlay's own `profiles/updates` directory makes
-its installed packages use overlay-specific moves: Gentoo's move does not
-automatically migrate an installation recorded as `repository=local`.
-Do not assume that `emaint --fix moveinst` will rename that old source install. Finally select `sci-misc/jupyterlab-desktop-src`
-and deselect obsolete old/binary atoms as applicable; update any per-package
-keyword/USE/mask configuration to the new source atom. Back up application
-settings before replacing an existing install. No migration commands were
-executed on a live system as part of this review.
+The upstream archive names, unpack directory, `/opt/jupyterlab-desktop`,
+`/usr/bin/jupyterlab-desktop`, icons, desktop launcher, patch and Yarn distfiles
+are unchanged. The temporary `-src` rename was reverted without rerunning tests.
