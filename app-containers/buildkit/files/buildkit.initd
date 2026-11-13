@@ -1,0 +1,13 @@
+#!/sbin/openrc-run
+
+name="BuildKit"
+description="BuildKit build daemon"
+command="/usr/bin/buildkitd"
+command_background="yes"
+pidfile="/run/${RC_SVCNAME}.pid"
+
+depend() {
+	need localmount
+	use net
+	after firewall
+}
