@@ -1,0 +1,19 @@
+Fix missing header prerequisites for the directly compiled pmnsunload binary.
+Locally written; not submitted upstream.
+
+The pmnsunload.o prerequisites do not apply to this explicit compile-and-link
+rule.  In parallel builds pmnsunload can therefore start before localconfig.h
+is generated.  Extend the earlier upstream fix for localconfig.h dependencies:
+https://github.com/performancecopilot/pcp/commit/8de7bbb06703f224b72fe0994acde3189b742fd2
+
+--- a/qa/src/GNUlocaldefs
++++ b/qa/src/GNUlocaldefs
+@@ -1001,7 +1001,7 @@ pmnsinarchives:	pmnsinarchives.c
+ 	$(LINKER_MAKERULE)
+ 
+-pmnsunload:	pmnsunload.c
++pmnsunload:	pmnsunload.c libpcp.h localconfig.h
+ 	rm -f $@
+ 	$(CCF) $(CDEFS) -o $@ $< $(LDLIBS)
+ 	$(LINKER_MAKERULE)
+ 
