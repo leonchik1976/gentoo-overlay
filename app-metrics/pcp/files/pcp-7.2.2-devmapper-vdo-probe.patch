@@ -1,0 +1,27 @@
+Check for a declared dm_vdo_stats_parse before calling it in the link probe.
+Taking its address makes a missing declaration an ordinary failed probe
+without an implicit function declaration diagnostic. A declared symbol must
+still link successfully. Update the shipped configure script as well.
+
+--- a/configure.ac
++++ b/configure.ac
+@@ -2083,7 +2083,7 @@
+     AC_MSG_CHECKING([for dm_vdo_stats_parse in libdevmapper])
+     AC_LINK_IFELSE([AC_LANG_PROGRAM(
+ 	[[#include <libdevmapper.h>]],
+-	[[ (void)dm_vdo_stats_parse(0, 0, 0); ]])],
++	[[ (void)(*&dm_vdo_stats_parse)(0, 0, 0); ]])],
+ 	[have_dm_vdo_stats=true;  AC_MSG_RESULT(yes)],
+ 	[have_dm_vdo_stats=false; AC_MSG_RESULT(no)])
+     LIBS="$save_LIBS"
+--- a/configure
++++ b/configure
+@@ -12829,7 +12829,7 @@
+ int
+ main (void)
+ {
+- (void)dm_vdo_stats_parse(0, 0, 0);
++ (void)(*&dm_vdo_stats_parse)(0, 0, 0);
+   ;
+   return 0;
+ }
