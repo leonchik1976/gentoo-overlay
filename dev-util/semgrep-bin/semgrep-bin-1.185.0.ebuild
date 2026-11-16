@@ -49,31 +49,31 @@ SRC_URI="
 	https://github.com/ocaml-community/calendar/archive/refs/tags/v3.0.0.tar.gz
 		-> calendar-3.0.0.gh.tar.gz
 	https://erratique.ch/software/fmt/releases/fmt-0.11.0.tbz
-	https://gitlab.inria.fr/fpottier/menhir/-/archive/20230608/archive.tar.gz
+	https://opam.ocaml.org/cache/sha512/33/334b9dcb1283a28b8547082a89536b1d439ff588290b8eaecdf4802c5f74dbc8d16ad6fc6c0820036183518d83e2cc273a75787a8b41137424c8e7ee82e2b50a
 		-> menhir-20230608.tar.gz
 	https://github.com/OCamlPro/ocplib-endian/archive/refs/tags/1.2.tar.gz
 		-> ocplib-endian-1.2.gh.tar.gz
 	https://github.com/ocaml-multicore/ocaml-uring/releases/download/v0.9/uring-0.9.tbz
 	https://erratique.ch/software/uucp/releases/uucp-17.0.0.tbz
 	https://erratique.ch/software/uutf/releases/uutf-1.0.4.tbz
-	https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/bzip2-libs-1.0.8-11.el9.x86_64.rpm
-	https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/libcom_err-1.46.5-8.el9.x86_64.rpm
-	https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/openssl-libs-3.5.8-1.el9_8.x86_64.rpm
-	https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/libcurl-minimal-7.76.1-40.el9_8.7.x86_64.rpm
-	https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/elfutils-libs-0.194-1.el9.alma.1.x86_64.rpm
-	https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/elfutils-libelf-0.194-1.el9.alma.1.x86_64.rpm
-	https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/libev-4.33-6.el9.x86_64.rpm
-	https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/libgcc-11.5.0-14.el9.alma.1.x86_64.rpm
-	https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/gmp-6.2.0-13.el9.x86_64.rpm
-	https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/krb5-libs-1.21.1-10.el9_8.x86_64.rpm
-	https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/keyutils-libs-1.6.3-1.el9.x86_64.rpm
-	https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/xz-libs-5.2.5-8.el9_0.x86_64.rpm
-	https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/glibc-2.34-275.el9_8.x86_64.rpm
-	https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/libnghttp2-1.43.0-6.el9_8.2.x86_64.rpm
-	https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/libselinux-3.6-3.el9.x86_64.rpm
-	https://dl.fedoraproject.org/pub/epel/9/Everything/x86_64/Packages/l/libunwind-1.8.0-4.el9.x86_64.rpm
-	https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/zlib-1.2.11-40.el9.x86_64.rpm
-	https://repo.almalinux.org/almalinux/9/BaseOS/x86_64/os/Packages/libzstd-1.5.5-1.el9.x86_64.rpm
+	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/bzip2-libs-1.0.8-11.el9.x86_64.rpm
+	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/libcom_err-1.46.5-8.el9.x86_64.rpm
+	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/openssl-libs-3.5.8-1.el9_8.x86_64.rpm
+	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/libcurl-minimal-7.76.1-40.el9_8.7.x86_64.rpm
+	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/elfutils-libs-0.194-1.el9.alma.1.x86_64.rpm
+	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/elfutils-libelf-0.194-1.el9.alma.1.x86_64.rpm
+	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/libev-4.33-6.el9.x86_64.rpm
+	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/libgcc-11.5.0-14.el9.alma.1.x86_64.rpm
+	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/gmp-6.2.0-13.el9.x86_64.rpm
+	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/krb5-libs-1.21.1-10.el9_8.x86_64.rpm
+	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/keyutils-libs-1.6.3-1.el9.x86_64.rpm
+	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/xz-libs-5.2.5-8.el9_0.x86_64.rpm
+	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/glibc-2.34-275.el9_8.x86_64.rpm
+	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/libnghttp2-1.43.0-6.el9_8.2.x86_64.rpm
+	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/libselinux-3.6-3.el9.x86_64.rpm
+	https://download-ib01.fedoraproject.org/pub/epel/9/Everything/x86_64/Packages/l/libunwind-1.8.0-4.el9.x86_64.rpm
+	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/zlib-1.2.11-40.el9.x86_64.rpm
+	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/libzstd-1.5.5-1.el9.x86_64.rpm
 	https://vault.almalinux.org/9.8/BaseOS/Source/Packages/keyutils-1.6.3-1.el9.src.rpm
 	https://vault.almalinux.org/9.8/BaseOS/Source/Packages/glibc-2.34-275.el9_8.src.rpm
 	https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.40/pcre2-10.40.tar.bz2
