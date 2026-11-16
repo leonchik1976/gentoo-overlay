@@ -4,7 +4,8 @@
 EAPI=8
 
 # python-single-r1 supports EAPI 7/8; the release wheels support Python 3.10–3.14.
-PYTHON_COMPAT=( python3_12 python3_13 python3_14 )
+# The matching GURU instrumentation/exporter dependencies start at Python 3.13.
+PYTHON_COMPAT=( python3_13 python3_14 )
 
 inherit python-single-r1 sysroot
 
@@ -126,7 +127,10 @@ RESTRICT="mirror strip"
 # Keep weak blockers against overlapping source/core packages, even though
 # those atoms are absent from the current gentoo/guru/local scan context.
 # Preserve the exact release's dependency windows, except for the tested
-# downstream baseline: Click 8.5.0, OTel 1.45.1/0.66b1 and jsonschema <4.27.
+# downstream baseline: Click 8.5.0, OTel 1.45.2/0.66b2,
+# and jsonschema <4.27. OTel patch-release source/API comparison and local
+# trace/log export tests justify these exact version pins; internal OTel pins
+# still select a coherent release set.
 # Upstream declares Click ~=8.4.2, OTel ~=1.37.0/~=0.58b0 and
 # jsonschema ~=4.25.1; these overrides are local compatibility choices,
 # not upstream-supported bounds. Keep installed METADATA aligned in
@@ -151,12 +155,12 @@ RDEPEND="
 		>=dev-python/jsonschema-4.25.1[${PYTHON_USEDEP}]
 		<dev-python/jsonschema-4.27[${PYTHON_USEDEP}]
 		~dev-python/mcp-1.29.0[${PYTHON_USEDEP}]
-		~dev-python/opentelemetry-api-1.45.1[${PYTHON_USEDEP}]
-		~dev-python/opentelemetry-sdk-1.45.1[${PYTHON_USEDEP}]
-		~dev-python/opentelemetry-exporter-otlp-proto-http-1.45.1[${PYTHON_USEDEP}]
-		>=dev-python/opentelemetry-exporter-otlp-proto-http-1.45.1-r1[${PYTHON_USEDEP}]
-		~dev-python/opentelemetry-instrumentation-requests-0.66_beta1[${PYTHON_USEDEP}]
-		~dev-python/opentelemetry-instrumentation-threading-0.66_beta1[${PYTHON_USEDEP}]
+		~dev-python/opentelemetry-api-1.45.2[${PYTHON_USEDEP}]
+		~dev-python/opentelemetry-sdk-1.45.2[${PYTHON_USEDEP}]
+		~dev-python/opentelemetry-exporter-otlp-proto-http-1.45.2[${PYTHON_USEDEP}]
+		>=dev-python/opentelemetry-exporter-otlp-proto-http-1.45.2-r1[${PYTHON_USEDEP}]
+		~dev-python/opentelemetry-instrumentation-requests-0.66_beta2[${PYTHON_USEDEP}]
+		~dev-python/opentelemetry-instrumentation-threading-0.66_beta2[${PYTHON_USEDEP}]
 		>=dev-python/packaging-21.0[${PYTHON_USEDEP}]
 		>=dev-python/peewee-3.14[${PYTHON_USEDEP}]
 		<dev-python/peewee-4[${PYTHON_USEDEP}]
@@ -231,8 +235,8 @@ src_prepare() {
 	sed -i \
 		-e 's/^Requires-Dist: jsonschema~=4\.25\.1$/Requires-Dist: jsonschema>=4.25.1,<4.27/' \
 		-e 's/^Requires-Dist: click~=8\.4\.2$/Requires-Dist: click==8.5.0/' \
-		-e 's/^Requires-Dist: \(opentelemetry-.*\)~=1\.37\.0$/Requires-Dist: \1==1.45.1/' \
-		-e 's/^Requires-Dist: \(opentelemetry-.*\)~=0\.58b0$/Requires-Dist: \1==0.66b1/' \
+		-e 's/^Requires-Dist: \(opentelemetry-.*\)~=1\.37\.0$/Requires-Dist: \1==1.45.2/' \
+		-e 's/^Requires-Dist: \(opentelemetry-.*\)~=0\.58b0$/Requires-Dist: \1==0.66b2/' \
 		"${S}/semgrep-${PV}.dist-info/METADATA" || die
 
 	local pkgdir="${S}/semgrep-${PV}.data/purelib/semgrep"
