@@ -50,10 +50,6 @@ RDEPEND="
 	dev-libs/glib:2
 	dev-libs/nspr
 	dev-libs/nss
-	|| (
-		dev-libs/openssl:0/3
-		dev-libs/openssl-compat:3
-	)
 	media-libs/alsa-lib
 	media-libs/mesa[opengl]
 	net-print/cups
@@ -74,7 +70,9 @@ RDEPEND="
 	x11-libs/libxkbcommon
 	x11-libs/pango
 "
-DEPEND="dev-libs/openssl:0/3 virtual/krb5"
+# Electron's crypto callbacks replace libmongocrypt's native OpenSSL backend.
+# Neither the rebuilt addons nor bundled Electron link system OpenSSL directly.
+DEPEND="virtual/krb5"
 BDEPEND+="
 	${PYTHON_DEPS}
 	app-arch/unzip
