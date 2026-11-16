@@ -37,7 +37,7 @@ REQUIRED_USE="elibc_glibc"
 # automatic stripping; the intentional RPATH correction is documented below.
 RESTRICT="bindist mirror strip"
 
-# Verified by extracting both the amd64 and arm64 v1.2.0 .deb assets
+# Verified by extracting both the amd64 and arm64 v1.4.2 .deb assets
 # directly (dpkg-deb -x/-e) rather than assuming an Electron-style
 # dependency set: control file reports "Tauri Copilot Application", and
 # `readelf -d` on usr/bin/github confirms a WebKitGTK app (libwebkit2gtk-
@@ -49,7 +49,7 @@ RESTRICT="bindist mirror strip"
 # installed directly under /opt/${MY_PN}, for on-device inference; they
 # are not linked by usr/bin/github itself (absent from its NEEDED list).
 # Every bundled ELF object (not just usr/bin/github) was individually
-# checked with `readelf -d` on both the amd64 and arm64 v1.2.0 assets,
+# checked with `readelf -d` on both the amd64 and arm64 v1.4.2 assets,
 # and each one's external NEEDED entries are covered by RDEPEND below.
 # native-plugins/libgithub_app_linux_pulse_plugin.so (a Tauri plugin) is
 # the one bundled object with NEEDED entries not already pulled in by
@@ -70,7 +70,8 @@ RESTRICT="bindist mirror strip"
 #   libatk-1.0.so.0                         app-accessibility/at-spi2-core (dev-libs/atk is
 #                                            merged/deprecated upstream in ::gentoo)
 #   libsoup-3.0.so.0                        net-libs/libsoup:3.0
-#   libssl.so.3, libcrypto.so.3             dev-libs/openssl:0=
+#   libssl.so.3, libcrypto.so.3             OpenSSL 3 ABI (normal or compat)
+#   libatomic.so.1, libgcc_s.so.1, libstdc++.so.6  sys-devel/gcc (system)
 #   libc.so.6, architecture-specific ld-linux  sys-libs/glibc
 #   (native-plugins/libgithub_app_linux_pulse_plugin.so only)
 #   libpulse.so.0, libpulse-simple.so.0     media-libs/libpulse
@@ -82,7 +83,7 @@ RESTRICT="bindist mirror strip"
 #
 # gtk+:3 is requested with both X and wayland because usr/bin/github
 # directly imports backend-specific GDK symbols on both architectures,
-# confirmed via `readelf -Ws` on the v1.2.0 amd64 and arm64 binaries:
+# confirmed via `readelf -Ws` on the v1.4.2 amd64 and arm64 binaries:
 # gdk_wayland_display_get_wl_display, gdk_wayland_display_set_startup_
 # notification_id, gdk_wayland_window_get_wl_surface, gdk_x11_display_
 # set_startup_notification_id, gdk_x11_window_get_xid (both arches), and
@@ -95,7 +96,10 @@ RDEPEND="
 	>=app-accessibility/at-spi2-core-2.46.0
 	dev-libs/glib:2
 	dev-libs/libayatana-appindicator
-	dev-libs/openssl:0=
+	|| (
+		dev-libs/openssl:0/3
+		dev-libs/openssl-compat:3
+	)
 	media-libs/alsa-lib
 	media-libs/harfbuzz
 	media-libs/libpulse
@@ -115,6 +119,8 @@ QA_PREBUILT="*"
 src_install() {
 	insinto /opt/${MY_PN}
 	doins -r "usr/lib/GitHub Copilot"/.
+	# Upstream omits the symlink matching the bundled library's SONAME.
+	dosym libonnxruntime.so /opt/${MY_PN}/libonnxruntime.so.1
 	# Keep sibling runtime libraries discoverable without upstream's build paths.
 	patchelf --set-rpath '$ORIGIN' "${ED}/opt/${MY_PN}/libfoundry_local.so" || die
 
