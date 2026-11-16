@@ -1,0 +1,100 @@
+{
+  "archives": [
+    {
+      "archive": "gentoo-artwork-0.2.tar.bz2",
+      "url": "https://distfiles.gentoo.org/distfiles/c0/gentoo-artwork-0.2.tar.bz2",
+      "size": 8169652,
+      "sha256": "e12ef6d99e3dba9217579f7182bcaf558b509680717629f8018f7d2309932f14",
+      "manifest_match": true,
+      "regular_files": 1001
+    },
+    {
+      "archive": "gentoo-artwork-0.3.tar.bz2",
+      "url": "https://distfiles.gentoo.org/distfiles/8f/gentoo-artwork-0.3.tar.bz2",
+      "size": 24870943,
+      "sha256": "1f78f0efb927d7493aad9df61b1833e0f89e039590531c61bebda78c6405c163",
+      "manifest_match": true,
+      "regular_files": 102
+    },
+    {
+      "archive": "gentoo-artwork-0.4.tar.bz2",
+      "url": "https://distfiles.gentoo.org/distfiles/18/gentoo-artwork-0.4.tar.bz2",
+      "size": 26804896,
+      "sha256": "1564fdf9beeb2a8147882f77be8b49591b6025ec61dfb96e069467b9e6d52030",
+      "manifest_match": true,
+      "regular_files": 513
+    },
+    {
+      "archive": "gentoo-artwork-0.4.1.tar.bz2",
+      "url": "https://distfiles.gentoo.org/distfiles/56/gentoo-artwork-0.4.1.tar.bz2",
+      "size": 2794643,
+      "sha256": "fc345f241282319c9085def4eae33e69b77f1f53301861be349173c49fbc87ca",
+      "manifest_match": true,
+      "regular_files": 7
+    },
+    {
+      "archive": "gentoo-artwork-0.4.2.tar.bz2",
+      "url": "https://distfiles.gentoo.org/distfiles/89/gentoo-artwork-0.4.2.tar.bz2",
+      "size": 612218,
+      "sha256": "4a0574dee6bd2c75c9e90fdeeba93ee2782ded954b41e0957bf5ad43343a40ec",
+      "manifest_match": true,
+      "regular_files": 25
+    },
+    {
+      "archive": "gentoo-bubble-icons-20060811.tar.gz",
+      "url": "https://distfiles.gentoo.org/distfiles/da/gentoo-bubble-icons-20060811.tar.gz",
+      "size": 2340198,
+      "sha256": "519416f265fed18dae57e703727acc34ce479dd2f6c16f84155a2d3e5e87632b",
+      "manifest_match": true,
+      "regular_files": 287
+    }
+  ],
+  "archive_file_records": 1935,
+  "archive_status_counts": {
+    "NO_EXPLICIT_LICENSE_GRANT_LOCATED": 1646,
+    "HISTORICAL_REDISTRIBUTION_CONCERN_REMOVED_BEFORE_INSTALL": 2,
+    "EXPLICIT_COLLECTION_NOTICE_UNDERLYING_RIGHTS_UNRESOLVED": 287
+  },
+  "installed_files": 1924,
+  "installed_without_archive_hash_match": [
+    "usr/share/icons/gentoo/index.theme"
+  ],
+  "metadata_license_hits": [
+    {
+      "archive": "gentoo-bubble-icons-20060811.tar.gz",
+      "member": "gentoo-bubble-icons/README",
+      "dimensions": "",
+      "metadata": {
+        "text": "\n                                _o)\n                                /\\\\\n                               _\\[i]onbox.org\n\nThank you for downloading the Gentoo Bubble Icons from www.ionbox.org\n\nThese icons are meant to supplement the Gentoo Icon Sets [www.gentoo.org]\nIf you have comments or suggestions you can send an e-mail to wolven@ionbox.org or sign\nmy guestbook.\n\n Wolven\n\n- Credits -----------------------------------------------------------------------------\n\nThe initial design for these icons was provided by port001@w0r.mine.nu.\n\nInstructions and discussions regarding this icon set can be found on the Gentoo Forums.\n[http://forums.gentoo.org/viewtopic.php?t=31958]\n\n- License ------------------------------------------------------------------------------\n\nCreative Commons Deed\n\nAttribution 2.0\n\nYou are free:\n\n    * to copy, distribute, display, and perform the work.\n    * to make derivative works.\n    * to make commercial use of the work.\n\nUnder the following conditions:\n\nBY Attribution. You must give the original author credit.\n\n    * For any reuse or distribution, you must make clear to others the license terms of this work.\n    * Any of these conditions can be waived if you get permission from the copyright holder.\n\nYour fair use and other rights are in no way affected by the above.\n\n[http://creativecommons.org/licenses/by/2.0/]\n"
+      },
+      "license_hits": [
+        " no way affected by the above.\n\n[http://creativecommons.org/licenses/by/2.0/]\n",
+        " other rights are in no way affected by the above.\n\n[http://creativecommons.org/licenses/by/2.0/]\n",
+        "----------------------------------------------------------\n\nCreative Commons Deed\n\nAttribution 2.0\n\nYou are free:\n\n    * to copy, distribute, display, and perform the work.\n    * to make derivative works.\n    * to make commercial use of the work.\n\nUnder the following conditio",
+        "Forums.\n[http://forums.gentoo.org/viewtopic.php?t=31958]\n\n- License ------------------------------------------------------------------------------\n\nCreative Commons Deed\n\nAttribution 2.0\n\nYou are free:\n\n    * to copy, distribute, display, and perform the work.\n    * ",
+        "ese conditions can be waived if you get permission from the copyright holder.\n\nYour fair use and other rights are in no way affected by the above.\n\n[http://creativecommons.org/licenses/by/2.0/]\n",
+        "ny reuse or distribution, you must make clear to others the license terms of this work.\n    * Any of these conditions can be waived if you get permission from the copyright holder.\n\nYour fair use and other rights are in no way affected by the above.\n\n[http://creative"
+      ],
+      "error": ""
+    }
+  ],
+  "metadata_errors": [
+    {
+      "archive": "gentoo-artwork-0.4.2.tar.bz2",
+      "member": "gentoo-artwork-0.4.2/icons/gentoo/l33t/l33t_UNK_base_icon.xcf",
+      "error": "UnidentifiedImageError: cannot identify image file <_io.BytesIO object at <address>>"
+    },
+    {
+      "archive": "gentoo-artwork-0.4.2.tar.bz2",
+      "member": "gentoo-artwork-0.4.2/icons/gentoo/l33t/l33t_GRE_base_icon.xcf",
+      "error": "UnidentifiedImageError: cannot identify image file <_io.BytesIO object at <address>>"
+    }
+  ],
+  "limitations": [
+    "No license is inferred from an ebuild, filename, image format, or metadata absence.",
+    "README grants do not independently prove rights to incorporated third-party artwork.",
+    "Filename hints from CREDITS are not authenticated author identifications.",
+    "Hash matches identify identical bytes, not which duplicate archive supplied the final file.",
+    "Inventory and metadata inspection do not replace visual review or copyright-holder permission."
+  ]
+}

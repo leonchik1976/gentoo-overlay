@@ -14,3 +14,8 @@ dev-php/fedora-autoloader
 # Leonid Kopylov <leonchik1976@gmail.com> (2026-10-28)
 # Maintain Fluentd locally with newer Ruby targets.
 app-admin/fluentd
+
+# Leonid Kopylov <leonchik1976@gmail.com> (2026-11-16)
+# Keep gentoo-artwork available locally while its licensing is audited.
+# https://bugs.gentoo.org/986570
+x11-themes/gentoo-artwork

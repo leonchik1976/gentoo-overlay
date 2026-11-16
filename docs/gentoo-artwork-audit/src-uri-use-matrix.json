@@ -1,0 +1,915 @@
+[
+  {
+    "use": [],
+    "distfiles": [],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "offensive"
+    ],
+    "distfiles": [],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "offensive",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "lilo"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "lilo",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "lilo",
+      "offensive"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "lilo",
+      "offensive",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "kde"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "kde",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "kde",
+      "offensive"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "kde",
+      "offensive",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "kde",
+      "lilo"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "kde",
+      "lilo",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "kde",
+      "lilo",
+      "offensive"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "kde",
+      "lilo",
+      "offensive",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "icons"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "icons",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "icons",
+      "offensive"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "icons",
+      "offensive",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "icons",
+      "lilo"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "icons",
+      "lilo",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "icons",
+      "lilo",
+      "offensive"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "icons",
+      "lilo",
+      "offensive",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "icons",
+      "kde"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "icons",
+      "kde",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "icons",
+      "kde",
+      "offensive"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "icons",
+      "kde",
+      "offensive",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "icons",
+      "kde",
+      "lilo"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "icons",
+      "kde",
+      "lilo",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "icons",
+      "kde",
+      "lilo",
+      "offensive"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "icons",
+      "kde",
+      "lilo",
+      "offensive",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "offensive"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "offensive",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "lilo"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "lilo",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "lilo",
+      "offensive"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "lilo",
+      "offensive",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "kde"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "kde",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "kde",
+      "offensive"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "kde",
+      "offensive",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "kde",
+      "lilo"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "kde",
+      "lilo",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "kde",
+      "lilo",
+      "offensive"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "kde",
+      "lilo",
+      "offensive",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "icons"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "icons",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "icons",
+      "offensive"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "icons",
+      "offensive",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "icons",
+      "lilo"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "icons",
+      "lilo",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "icons",
+      "lilo",
+      "offensive"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "icons",
+      "lilo",
+      "offensive",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "icons",
+      "kde"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "icons",
+      "kde",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "icons",
+      "kde",
+      "offensive"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "icons",
+      "kde",
+      "offensive",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "icons",
+      "kde",
+      "lilo"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "icons",
+      "kde",
+      "lilo",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "icons",
+      "kde",
+      "lilo",
+      "offensive"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  },
+  {
+    "use": [
+      "grub",
+      "icons",
+      "kde",
+      "lilo",
+      "offensive",
+      "pixmaps"
+    ],
+    "distfiles": [
+      "gentoo-artwork-0.2.tar.bz2",
+      "gentoo-artwork-0.3.tar.bz2",
+      "gentoo-artwork-0.4.1.tar.bz2",
+      "gentoo-artwork-0.4.2.tar.bz2",
+      "gentoo-artwork-0.4.tar.bz2",
+      "gentoo-bubble-icons-20060811.tar.gz"
+    ],
+    "matches_expected": true
+  }
+]

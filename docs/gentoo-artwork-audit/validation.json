@@ -1,0 +1,251 @@
+{
+  "commands": [
+    {
+      "command": [
+        "pkgdev",
+        "manifest",
+        "-d",
+        "/var/cache/distfiles",
+        "x11-themes/gentoo-artwork"
+      ],
+      "exit_code": 0,
+      "stdout": "manifests are up to date\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "pkgcheck",
+        "scan",
+        "--cache-dir",
+        "/tmp/codex/x11-themes/gentoo-artwork-0.4.2/pkgcheck-cache",
+        "x11-themes/gentoo-artwork"
+      ],
+      "exit_code": 0,
+      "stdout": "x11-themes/gentoo-artwork\n  RedundantVersion: version 0.4.2-r1: slot(0) keywords are overshadowed by version: 0.4.2-r2\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bash",
+        "-n",
+        "x11-themes/gentoo-artwork/gentoo-artwork-0.4.2-r1.ebuild",
+        "x11-themes/gentoo-artwork/gentoo-artwork-0.4.2-r2.ebuild"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "amd64_use_cases": [
+    {
+      "case": "none",
+      "flags": "",
+      "exit_code": 0,
+      "files": 0,
+      "observed": {
+        "grub": false,
+        "icons": false,
+        "kde": false,
+        "lilo": false,
+        "pixmaps": false
+      },
+      "expected": {
+        "grub": false,
+        "icons": false,
+        "kde": false,
+        "lilo": false,
+        "pixmaps": false
+      },
+      "offensive_file_present": false,
+      "matches_expected": true,
+      "log": "/tmp/codex/x11-themes/gentoo-artwork-0.4.2/amd64-none.log"
+    },
+    {
+      "case": "grub",
+      "flags": "grub",
+      "exit_code": 0,
+      "files": 4,
+      "observed": {
+        "grub": true,
+        "icons": false,
+        "kde": false,
+        "lilo": false,
+        "pixmaps": false
+      },
+      "expected": {
+        "grub": true,
+        "icons": false,
+        "kde": false,
+        "lilo": false,
+        "pixmaps": false
+      },
+      "offensive_file_present": false,
+      "matches_expected": true,
+      "log": "/tmp/codex/x11-themes/gentoo-artwork-0.4.2/amd64-grub.log"
+    },
+    {
+      "case": "kde",
+      "flags": "kde",
+      "exit_code": 0,
+      "files": 1,
+      "observed": {
+        "grub": false,
+        "icons": false,
+        "kde": true,
+        "lilo": false,
+        "pixmaps": false
+      },
+      "expected": {
+        "grub": false,
+        "icons": false,
+        "kde": true,
+        "lilo": false,
+        "pixmaps": false
+      },
+      "offensive_file_present": false,
+      "matches_expected": true,
+      "log": "/tmp/codex/x11-themes/gentoo-artwork-0.4.2/amd64-kde.log"
+    },
+    {
+      "case": "lilo",
+      "flags": "lilo",
+      "exit_code": 0,
+      "files": 2,
+      "observed": {
+        "grub": false,
+        "icons": false,
+        "kde": false,
+        "lilo": true,
+        "pixmaps": false
+      },
+      "expected": {
+        "grub": false,
+        "icons": false,
+        "kde": false,
+        "lilo": true,
+        "pixmaps": false
+      },
+      "offensive_file_present": false,
+      "matches_expected": true,
+      "log": "/tmp/codex/x11-themes/gentoo-artwork-0.4.2/amd64-lilo.log"
+    },
+    {
+      "case": "icons",
+      "flags": "icons",
+      "exit_code": 0,
+      "files": 1679,
+      "observed": {
+        "grub": false,
+        "icons": true,
+        "kde": false,
+        "lilo": false,
+        "pixmaps": false
+      },
+      "expected": {
+        "grub": false,
+        "icons": true,
+        "kde": false,
+        "lilo": false,
+        "pixmaps": false
+      },
+      "offensive_file_present": false,
+      "matches_expected": true,
+      "log": "/tmp/codex/x11-themes/gentoo-artwork-0.4.2/amd64-icons.log"
+    },
+    {
+      "case": "pixmaps",
+      "flags": "pixmaps",
+      "exit_code": 0,
+      "files": 237,
+      "observed": {
+        "grub": false,
+        "icons": false,
+        "kde": false,
+        "lilo": false,
+        "pixmaps": true
+      },
+      "expected": {
+        "grub": false,
+        "icons": false,
+        "kde": false,
+        "lilo": false,
+        "pixmaps": true
+      },
+      "offensive_file_present": false,
+      "matches_expected": true,
+      "log": "/tmp/codex/x11-themes/gentoo-artwork-0.4.2/amd64-pixmaps.log"
+    },
+    {
+      "case": "kde-lilo",
+      "flags": "kde lilo",
+      "exit_code": 0,
+      "files": 3,
+      "observed": {
+        "grub": false,
+        "icons": false,
+        "kde": true,
+        "lilo": true,
+        "pixmaps": false
+      },
+      "expected": {
+        "grub": false,
+        "icons": false,
+        "kde": true,
+        "lilo": true,
+        "pixmaps": false
+      },
+      "offensive_file_present": false,
+      "matches_expected": true,
+      "log": "/tmp/codex/x11-themes/gentoo-artwork-0.4.2/amd64-kde-lilo.log"
+    },
+    {
+      "case": "default",
+      "flags": "grub icons pixmaps",
+      "exit_code": 0,
+      "files": 1920,
+      "observed": {
+        "grub": true,
+        "icons": true,
+        "kde": false,
+        "lilo": false,
+        "pixmaps": true
+      },
+      "expected": {
+        "grub": true,
+        "icons": true,
+        "kde": false,
+        "lilo": false,
+        "pixmaps": true
+      },
+      "offensive_file_present": false,
+      "matches_expected": true,
+      "log": "/tmp/codex/x11-themes/gentoo-artwork-0.4.2/amd64-default.log"
+    }
+  ],
+  "amd64_host": "leonids-pc",
+  "arm64_host": "gentoo",
+  "amd64_all_files": 1924,
+  "arm64_effective_all_files": 1922,
+  "common_normalized_hashes_equal": true,
+  "amd64_only_files": [
+    "usr/share/doc/gentoo-artwork-0.4.2-r2/lilo.txt",
+    "usr/share/lilo/splashimages/lilo.bmp"
+  ],
+  "arm64_lilo_profile_masked": true,
+  "r2_sha256": "4ba1df4cd61206cc949f3000e5d52ce9b7d9b76aaa26a4cf1743bdd71174ca17",
+  "native_arm64_tested_r2_matches_local": true,
+  "historical_exclusions_absent": true,
+  "offensive_flag_enabled_file_present": true,
+  "live_system_merge_or_install": false,
+  "license_clearance_complete": false
+}
