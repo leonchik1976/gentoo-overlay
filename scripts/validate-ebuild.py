@@ -81,10 +81,11 @@ def main():
         (etc / "make.conf").write_text(
             "source /etc/portage/make.conf\n"
             f'PORTAGE_TMPDIR="{workspace}/build"\n'
+            f'PORTAGE_DEPCACHEDIR="{workspace}/depcache"\n'
             f'DISTDIR="{dist}"\n'
             f'PKGDIR="{workspace}/packages"\n'
             f'PORT_LOGDIR="{workspace}/logs"\n'
-            'FEATURES="${FEATURES} -userpriv -usersandbox -ipc-sandbox '
+            'FEATURES="${FEATURES} -userfetch -userpriv -usersandbox -ipc-sandbox '
             f'-pid-sandbox -cgroup -sccache -ccache network-sandbox {features}"\n'
             f'PYTHON_TARGETS="{args.python}"\nPYTHON_SINGLE_TARGET="{args.python}"\n'
             'MAKEOPTS="-j4"\nRUSTC_WRAPPER=""\nRUSTC_WORKSPACE_WRAPPER=""\n'
