@@ -21,8 +21,8 @@ RDEPEND+="
 	<dev-python/celery-6[${PYTHON_USEDEP}]
 	>=dev-python/opentelemetry-api-1.12[${PYTHON_USEDEP}]
 	<dev-python/opentelemetry-api-2[${PYTHON_USEDEP}]
-	~dev-python/opentelemetry-instrumentation-0.66_beta1[${PYTHON_USEDEP}]
-	~dev-python/opentelemetry-semantic-conventions-1.45.1[${PYTHON_USEDEP}]
+	~dev-python/opentelemetry-instrumentation-0.66_beta2[${PYTHON_USEDEP}]
+	~dev-python/opentelemetry-semantic-conventions-1.45.2[${PYTHON_USEDEP}]
 "
 
 # Smoke coverage for the runtime used by PostHog; its integration tests

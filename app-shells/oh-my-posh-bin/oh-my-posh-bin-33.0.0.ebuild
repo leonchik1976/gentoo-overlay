@@ -15,7 +15,7 @@ S="${WORKDIR}"
 
 # MIT project; exact release binary contains 29 Go dependency modules.
 # Their upstream license texts are packaged separately and listed
-# in files/NOTICE.deps-${PV}.txt. BSD-3-Clause maps to Gentoo BSD.
+# in the versioned third-party notice archive. BSD-3-Clause maps to Gentoo BSD.
 # go.yaml.in/yaml/v3 includes both MIT and Apache-2.0 source files.
 LICENSE="MIT Apache-2.0 BSD BSD-2"
 SLOT="0"

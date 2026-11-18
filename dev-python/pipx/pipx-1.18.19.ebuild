@@ -47,3 +47,12 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=${PV}
 pkg_postinst() {
 	optfeature "optional uv backend (--backend uv)" ">=dev-python/uv-0.12.22"
 }
+
+src_prepare() {
+	default
+
+	# The upstream wheel's SBOM hook has no packaged build backend.
+	# Portage tracks the dependencies of the locally built package.
+	sed -i -e '/"python-sbom\[hatch\]>=/d' \
+		-e '/^build\.hooks\.python-sbom =/d' pyproject.toml || die
+}

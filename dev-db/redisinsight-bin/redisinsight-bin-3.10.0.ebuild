@@ -32,7 +32,7 @@ S="${WORKDIR}"
 
 # Source-available under the Server Side Public License; see
 # licenses/SSPL-1 (already used by dev-db/mongodb in ::gentoo).
-LICENSE="SSPL-1"
+LICENSE="SSPL-1 MIT"
 SLOT="0"
 KEYWORDS="-* ~amd64 ~arm64"
 REQUIRED_USE="elibc_glibc"
@@ -89,6 +89,20 @@ src_prepare() {
 	pushd "opt/${MY_PN}/locales" > /dev/null || die
 	chromium_remove_language_paks
 	popd > /dev/null || die
+
+	local native_arch
+	case ${ARCH} in
+		amd64) native_arch=x64 ;;
+		arm64) native_arch=arm64 ;;
+		*) die "Unsupported architecture: ${ARCH}" ;;
+	esac
+
+	# Keep the glibc binding required by the packaged Electron runtime.
+	local prebuilds="opt/${MY_PN}/resources/app.asar.unpacked/node_modules/better-sqlite3/prebuilds"
+	[[ -f ${prebuilds}/linux-${native_arch}.node ]] ||
+		die "Missing better-sqlite3 binding for ${ARCH}"
+	find "${prebuilds}" -type f -name '*.node' \
+		! -name "linux-${native_arch}.node" -delete || die
 
 	gunzip usr/share/doc/redisinsight/changelog.gz || die
 

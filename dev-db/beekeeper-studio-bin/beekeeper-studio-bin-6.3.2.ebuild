@@ -28,7 +28,7 @@ SRC_URI="
 S="${WORKDIR}"
 
 # The release combines GPL-3+ community code with commercially licensed code.
-LICENSE="GPL-3+ Beekeeper-Studio-EULA-20260702"
+LICENSE="GPL-3+ Beekeeper-Studio-EULA-20260702 Apache-2.0 MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 REQUIRED_USE="elibc_glibc"
@@ -135,7 +135,6 @@ src_prepare() {
 		! -name "*-linux-${native_arch}.node" -delete || die
 	find "${snowflake}" -type f -name '*.node' \
 		! -name "*.linux-${native_arch}-gnu.node" -delete || die
-	rm -r "${modules}/@libsql/linux-${native_arch}-musl" || die
 	# The new upstream bundle ships only the platform-native DuckDB binding.
 	rm "opt/Beekeeper Studio/resources/vendor/pagent.exe" || die
 }

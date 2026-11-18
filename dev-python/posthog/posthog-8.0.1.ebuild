@@ -23,7 +23,6 @@ SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
 RDEPEND="${RDEPEND}
-	>=dev-python/backoff-1.10.0[${PYTHON_USEDEP}]
 	>=dev-python/distro-1.5.0[${PYTHON_USEDEP}]
 	>=dev-python/requests-2.7[${PYTHON_USEDEP}]
 	<dev-python/requests-3[${PYTHON_USEDEP}]
@@ -90,7 +89,7 @@ distutils_enable_tests pytest
 
 PATCHES=(
 	"${FILESDIR}/posthog-7.64.0-setup-license.patch"
-	"${FILESDIR}/posthog-7.87.0-httpx2.patch"
+	"${FILESDIR}/posthog-8.0.1-httpx2.patch"
 )
 
 python_test() {

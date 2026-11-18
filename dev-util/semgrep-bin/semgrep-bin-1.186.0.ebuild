@@ -16,14 +16,14 @@ HOMEPAGE="
 	https://pypi.org/project/semgrep/
 "
 
-# Exact release wheels from https://pypi.org/pypi/semgrep/1.185.0/json.
+# Exact release wheels from https://pypi.org/pypi/semgrep/1.186.0/json.
 # Supplementary archives/RPMs provide documents only; RPM binaries are ignored.
 SRC_URI="
 	amd64? (
-		https://files.pythonhosted.org/packages/f2/13/0d4dc8d124794105f300082c46e3d8ad45eac7af63113b57a5966629b5a3/semgrep-${PV}-cp310.cp311.cp312.cp313.cp314.py310.py311.py312.py313.py314-none-manylinux_2_34_x86_64.whl
+		https://files.pythonhosted.org/packages/fd/8c/25b9b38199d0bb5ec2fb12dbea2a7172b6cd0672a1161e2e33dbf3029cd1/semgrep-${PV}-cp310.cp311.cp312.cp313.cp314.py310.py311.py312.py313.py314-none-manylinux_2_34_x86_64.whl
 	)
 	arm64? (
-		https://files.pythonhosted.org/packages/ba/4e/cae05468e1b8c33a18bafb25539f845d6f35e6e58973ebdd2aafa6b387ed/semgrep-${PV}-cp310.cp311.cp312.cp313.cp314.py310.py311.py312.py313.py314-none-manylinux_2_34_aarch64.whl
+		https://files.pythonhosted.org/packages/ef/fa/3fe2cef7a821992b0b1ac00a0d9acf3944fe2cf8ce5840ae6331e702b70a/semgrep-${PV}-cp310.cp311.cp312.cp313.cp314.py310.py311.py312.py313.py314-none-manylinux_2_34_aarch64.whl
 	)
 	https://raw.githubusercontent.com/semgrep/semgrep/v${PV}/LICENSE
 		-> ${P}-semgrep-LICENSE
@@ -58,30 +58,30 @@ SRC_URI="
 	https://erratique.ch/software/uutf/releases/uutf-1.0.4.tbz
 	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/bzip2-libs-1.0.8-11.el9.x86_64.rpm
 	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/libcom_err-1.46.5-8.el9.x86_64.rpm
-	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/openssl-libs-3.5.8-1.el9_8.x86_64.rpm
-	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/libcurl-minimal-7.76.1-40.el9_8.7.x86_64.rpm
-	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/elfutils-libs-0.194-1.el9.alma.1.x86_64.rpm
-	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/elfutils-libelf-0.194-1.el9.alma.1.x86_64.rpm
+	https://repo.almalinux.org/almalinux/9.9/BaseOS/x86_64/os/Packages/openssl-libs-3.5.9-1.el9_9.x86_64.rpm
+	https://repo.almalinux.org/almalinux/9.9/BaseOS/x86_64/os/Packages/libcurl-minimal-7.76.1-43.el9.x86_64.rpm
+	https://repo.almalinux.org/almalinux/9.9/BaseOS/x86_64/os/Packages/elfutils-libs-0.195-1.el9.alma.1.x86_64.rpm
+	https://repo.almalinux.org/almalinux/9.9/BaseOS/x86_64/os/Packages/elfutils-libelf-0.195-1.el9.alma.1.x86_64.rpm
 	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/libev-4.33-6.el9.x86_64.rpm
-	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/libgcc-11.5.0-14.el9.alma.1.x86_64.rpm
+	https://repo.almalinux.org/almalinux/9.9/BaseOS/x86_64/os/Packages/libgcc-11.5.0-17.el9_9.alma.1.x86_64.rpm
 	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/gmp-6.2.0-13.el9.x86_64.rpm
-	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/krb5-libs-1.21.1-10.el9_8.x86_64.rpm
+	https://repo.almalinux.org/almalinux/9.9/BaseOS/x86_64/os/Packages/krb5-libs-1.21.1-10.el9_8.1.x86_64.rpm
 	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/keyutils-libs-1.6.3-1.el9.x86_64.rpm
-	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/xz-libs-5.2.5-8.el9_0.x86_64.rpm
-	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/glibc-2.34-275.el9_8.x86_64.rpm
-	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/libnghttp2-1.43.0-6.el9_8.2.x86_64.rpm
-	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/libselinux-3.6-3.el9.x86_64.rpm
+	https://repo.almalinux.org/almalinux/9.9/BaseOS/x86_64/os/Packages/xz-libs-5.2.5-8.el9_9.1.x86_64.rpm
+	https://repo.almalinux.org/almalinux/9.9/BaseOS/x86_64/os/Packages/glibc-2.34-290.el9_9.x86_64.rpm
+	https://repo.almalinux.org/almalinux/9.9/BaseOS/x86_64/os/Packages/libnghttp2-1.43.0-8.el9.x86_64.rpm
+	https://repo.almalinux.org/almalinux/9.9/BaseOS/x86_64/os/Packages/libselinux-3.6-4.el9.x86_64.rpm
 	https://download-ib01.fedoraproject.org/pub/epel/9/Everything/x86_64/Packages/l/libunwind-1.8.0-4.el9.x86_64.rpm
 	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/zlib-1.2.11-40.el9.x86_64.rpm
 	https://vault.almalinux.org/9.8/BaseOS/x86_64/os/Packages/libzstd-1.5.5-1.el9.x86_64.rpm
 	https://vault.almalinux.org/9.8/BaseOS/Source/Packages/keyutils-1.6.3-1.el9.src.rpm
-	https://vault.almalinux.org/9.8/BaseOS/Source/Packages/glibc-2.34-275.el9_8.src.rpm
+	https://vault.almalinux.org/9.9/BaseOS/Source/Packages/glibc-2.34-290.el9_9.src.rpm
 	https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.40/pcre2-10.40.tar.bz2
 "
 S="${WORKDIR}"
 
 # The wheel declares LGPL-2.1-or-later for Semgrep and bundles native libraries.
-# Code, rodata and build IDs match official distro RPMs for 25 libraries
+# Code, rodata and build IDs match AlmaLinux and EPEL RPMs for 25 libraries
 # per architecture; dynamic linking metadata differs. Static core attribution
 # and the tree-sitter binary still lack a complete upstream attestation.
 # The public release build pins unpatched tree-sitter 0.26.3 (MIT).
