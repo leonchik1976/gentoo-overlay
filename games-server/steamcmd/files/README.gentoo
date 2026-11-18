@@ -1,0 +1,15 @@
+Run the native ARM64 SteamCMD bootstrap as the steamcmd user so it can
+update itself and download dedicated servers into its writable directory:
+
+runuser -u steamcmd -- /opt/steamcmd/steamcmd.sh +quit
+
+Check the architecture of each dedicated server separately. SteamCMD
+can download server files regardless of whether their executables run
+natively on ARM64.
+
+For each server instance managed by OpenRC, symlink /etc/init.d/steamcmd
+to /etc/init.d/steamcmd.<instance> and copy /etc/conf.d/steamcmd to
+/etc/conf.d/steamcmd.<instance>. Configure the server executable, path
+and arguments in the instance's conf.d file.
+
+https://developer.valvesoftware.com/wiki/SteamCMD
