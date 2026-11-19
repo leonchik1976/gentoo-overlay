@@ -37,7 +37,7 @@ REQUIRED_USE="elibc_glibc"
 # automatic stripping; the intentional RPATH correction is documented below.
 RESTRICT="bindist mirror strip"
 
-# Verified by extracting both the amd64 and arm64 v1.4.2 .deb assets
+# Verified by extracting both the amd64 and arm64 v1.4.3 .deb assets
 # directly (dpkg-deb -x/-e) rather than assuming an Electron-style
 # dependency set: control file reports "Tauri Copilot Application", and
 # `readelf -d` on usr/bin/github confirms a WebKitGTK app (libwebkit2gtk-
@@ -49,7 +49,7 @@ RESTRICT="bindist mirror strip"
 # installed directly under /opt/${MY_PN}, for on-device inference; they
 # are not linked by usr/bin/github itself (absent from its NEEDED list).
 # Every bundled ELF object (not just usr/bin/github) was individually
-# checked with `readelf -d` on both the amd64 and arm64 v1.4.2 assets,
+# checked with `readelf -d` on both the amd64 and arm64 v1.4.3 assets,
 # and each one's external NEEDED entries are covered by RDEPEND below.
 # native-plugins/libgithub_app_linux_pulse_plugin.so (a Tauri plugin) is
 # the one bundled object with NEEDED entries not already pulled in by
@@ -83,7 +83,7 @@ RESTRICT="bindist mirror strip"
 #
 # gtk+:3 is requested with both X and wayland because usr/bin/github
 # directly imports backend-specific GDK symbols on both architectures,
-# confirmed via `readelf -Ws` on the v1.4.2 amd64 and arm64 binaries:
+# confirmed via `readelf -Ws` on the v1.4.3 amd64 and arm64 binaries:
 # gdk_wayland_display_get_wl_display, gdk_wayland_display_set_startup_
 # notification_id, gdk_wayland_window_get_wl_surface, gdk_x11_display_
 # set_startup_notification_id, gdk_x11_window_get_xid (both arches), and

@@ -124,7 +124,7 @@ src_install() {
 
 	sed -e "s|^Exec=/.*/kiro|Exec=kiro|" \
 		-e "s|^Icon=.*|Icon=kiro|" \
-		usr/share/applications/kiro-url-handler.desktop >"${T}/kiro-url-handler.desktop" || die
+		usr/share/applications/kiro.UrlHandler.desktop >"${T}/kiro-url-handler.desktop" || die
 	domenu "${T}/kiro-url-handler.desktop"
 
 	local size

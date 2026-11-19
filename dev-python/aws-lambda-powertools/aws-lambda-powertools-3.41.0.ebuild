@@ -41,5 +41,6 @@ pkg_postinst() {
 	optfeature "boto3-based local emulator support" dev-python/boto3
 	optfeature "Redis idempotency/cache support" dev-python/redis
 	optfeature "data masking support" dev-python/aws-encryption-sdk dev-python/jsonpath-ng
+	optfeature "SigV4a signing support" ">=dev-python/awscrt-0.23.0"
 	optfeature "Protobuf Kafka consumer support" dev-python/protobuf
 }

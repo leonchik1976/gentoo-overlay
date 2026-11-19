@@ -8,19 +8,8 @@ inherit flag-o-matic multiprocessing readme.gentoo-r1 toolchain-funcs
 DESCRIPTION="A fast and flexible Zsh theme"
 HOMEPAGE="https://github.com/romkatv/powerlevel10k"
 
-# This release bundles a specific, untagged commit of romkatv/gitstatus in
-# gitstatus/ (not any of gitstatus's own tagged releases): diffing it
-# against the standalone v1.5.4 and v1.5.5 tags shows it matches neither
-# exactly (different pinned libgit2 fork commit than v1.5.4; several
-# source-comment/string typo fixes not present in v1.5.5). Upstream has
-# stated there is no stable API between gitstatusd and the
-# gitstatus.plugin.zsh version it ships with ("build gitstatusd from the
-# same commit... it'll work" -- romkatv, powerlevel10k#392), so gitstatusd
-# is built here from powerlevel10k's own bundled copy of gitstatus rather
-# than from app-shells/gitstatus, which tracks gitstatus's real releases
-# and is not guaranteed to match what any given powerlevel10k release
-# bundles. Any version bump of this ebuild must re-derive this pin from
-# the new release's own gitstatus/build.info.
+# Keep the daemon and plugin aligned by building the bundled gitstatus.
+# The libgit2 pin and daemon version come from gitstatus/build.info.
 LIBGIT2_COMMIT="tag-2ecf33948a4df9ef45a66c68b8ef24a5e60eaac6"
 
 SRC_URI="
@@ -105,20 +94,14 @@ src_compile() {
 	# Passing CXXFLAGS on the make command line (as emake does) also
 	# fully overrides -- not appends to -- the Makefile's own
 	# `CXXFLAGS += ...` line, including -DGITSTATUS_VERSION=$(VERSION).
-	# We define it ourselves as "v1.5.4", matching the literal value in
-	# the bundled gitstatus/build.info: this is p10k's own internal
-	# compatibility token between gitstatus.plugin.zsh and gitstatusd
-	# (checked via the daemon's -G flag), not a claim that this is
-	# genuinely upstream gitstatus release v1.5.4 -- it provably isn't
-	# (see the LIBGIT2_COMMIT comment above). It must track whatever
-	# gitstatus/build.info says on any version bump of this ebuild.
+	# Set the daemon compatibility version recorded in gitstatus/build.info.
 	#
 	# We also link dynamically against the system libc (unlike upstream's
 	# default fully-static release binaries, which exist to be portable
 	# across distros); only libgit2 remains statically linked, which is
 	# how upstream's build produces it regardless of the -static toggle.
 	append-cxxflags -std=c++14 -funsigned-char -D_GNU_SOURCE \
-		-DGITSTATUS_ZERO_NSEC -DGITSTATUS_VERSION="v1.5.4" \
+		-DGITSTATUS_ZERO_NSEC -DGITSTATUS_VERSION="v1.5.5" \
 		-I"${LIBGIT2_S}/include"
 	append-ldflags -L"${LIBGIT2_S}/build"
 
