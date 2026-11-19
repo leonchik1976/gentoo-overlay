@@ -14,3 +14,19 @@ HOMEPAGE="https://pypi.org/project/jsonformatter/"
 LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
+
+BDEPEND+=" >=dev-python/setuptools-77.0.3[${PYTHON_USEDEP}]"
+
+PATCHES=( "${FILESDIR}/${P}-wheel-metadata.patch" )
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
+
+EPYTEST_DESELECT=(
+	# The sdist omits tests/logger_config.ini.
+	tests/test.py::JsonFormatterTest::test_file_config
+)
+
+python_test() {
+	epytest tests/test.py
+}

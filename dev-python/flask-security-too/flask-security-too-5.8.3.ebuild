@@ -24,3 +24,30 @@ RDEPEND="
 	>=dev-python/libpass-1.9.3[${PYTHON_USEDEP}]
 	>=dev-python/wtforms-3.0.0[${PYTHON_USEDEP}]
 "
+
+BDEPEND+="
+	test? (
+		dev-python/authlib[${PYTHON_USEDEP}]
+		dev-python/flask-mail[${PYTHON_USEDEP}]
+		dev-python/flask-sqlalchemy[${PYTHON_USEDEP}]
+		dev-python/freezegun[${PYTHON_USEDEP}]
+		dev-python/phonenumbers[${PYTHON_USEDEP}]
+		dev-python/requests[${PYTHON_USEDEP}]
+		dev-python/sqlalchemy[${PYTHON_USEDEP}]
+	)
+"
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
+
+EPYTEST_DESELECT=(
+	# Registration deliverability checking queries DNS.
+	tests/test_misc.py::test_login_email_whatever
+	# Earlier tests populate the shared RegisterForm username field.
+	tests/test_registerable.py::test_username_not_enabled
+)
+
+python_test() {
+	# The MongoDB cases require mongomock or a separate MongoDB instance.
+	epytest -k 'not cl-mongo and not mongoengine'
+}

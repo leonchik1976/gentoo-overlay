@@ -1,0 +1,35 @@
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,4 +1,6 @@
+ [project]
++license = "MIT"
++license-files = ["LICENSE"]
+ name = "Flask-Migrate"
+ version = "4.1.0"
+ authors = [
+@@ -9,7 +11,6 @@
+     "Environment :: Web Environment",
+     "Intended Audience :: Developers",
+     "Programming Language :: Python :: 3",
+-    "License :: OSI Approved :: MIT License",
+     "Operating System :: OS Independent",
+ ]
+ requires-python = ">=3.6"
+@@ -28,9 +29,6 @@
+ docs = [
+     "sphinx",
+ ]
+-
+-[project.license]
+-text = "MIT"
+ 
+ [project.readme]
+ file = "README.md"
+@@ -55,6 +53,6 @@
+ 
+ [build-system]
+ requires = [
+-    "setuptools>=61.2",
++    "setuptools>=77.0.3",
+ ]
+ build-backend = "setuptools.build_meta"

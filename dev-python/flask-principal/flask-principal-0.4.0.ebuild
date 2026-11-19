@@ -20,3 +20,5 @@ RDEPEND="
 	dev-python/flask[${PYTHON_USEDEP}]
 	dev-python/blinker[${PYTHON_USEDEP}]
 "
+
+PATCHES=( "${FILESDIR}/${P}-wheel-metadata.patch" )

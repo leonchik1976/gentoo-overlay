@@ -1,0 +1,45 @@
+--- a/setup.py
++++ b/setup.py
+@@ -38,7 +38,6 @@
+     classifiers=[
+         'Development Status :: 2 - Pre-Alpha',
+         'Intended Audience :: Developers',
+-        'License :: OSI Approved :: BSD License',
+         'Operating System :: OS Independent',
+         'Programming Language :: Python :: 2.7',
+         'Programming Language :: Python :: 3',
+@@ -49,6 +48,5 @@
+     author='MyColorfulDays',
+     author_email='my_colorful_days@163.com',
+     url='https://github.com/MyColorfulDays/jsonformatter.git',
+-    license='BSD License',
+     # packages=['jsonformatter']
+ )
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,8 +1,10 @@
+ [build-system]
+-requires = ["setuptools"]
++requires = ["setuptools>=77.0.3"]
+ build-backend = "setuptools.build_meta"
+ 
+ [project]
++license = "BSD-2-Clause"
++license-files = ["LICENSE"]
+ name = "jsonformatter"
+ version = "0.3.4"
+ description = 'Python log in json format.'
+@@ -10,7 +12,6 @@
+ classifiers = [
+     'Development Status :: 2 - Pre-Alpha',
+     'Intended Audience :: Developers',
+-    'License :: OSI Approved :: BSD License',
+     'Operating System :: OS Independent',
+     'Programming Language :: Python :: 2.7',
+     'Programming Language :: Python :: 3',
+@@ -24,5 +25,3 @@
+ requires-python = ">=2.7"
+ dependencies = []
+ 
+-[project.license]
+-file = "LICENSE"

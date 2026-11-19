@@ -25,3 +25,8 @@ RDEPEND="
 "
 
 BDEPEND+=" app-arch/unzip"
+
+PATCHES=( "${FILESDIR}/${P}-wheel-metadata.patch" )
+
+# The sole suite requires the Azure recording proxy and its SDK test harness.
+RESTRICT="test"

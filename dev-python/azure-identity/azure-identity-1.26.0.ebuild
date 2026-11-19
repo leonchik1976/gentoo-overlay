@@ -23,3 +23,19 @@ RDEPEND="
 "
 
 BDEPEND+=" >=dev-python/setuptools-77.0.3[${PYTHON_USEDEP}]"
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
+
+EPYTEST_DESELECT=(
+	# The sdist omits certificate.pem and the live Azure tests need credentials.
+	'tests/test_context_manager.py::test_close[CertificateCredential]'
+	'tests/test_context_manager.py::test_context_manager[CertificateCredential]'
+	'tests/test_context_manager.py::test_exit_args[CertificateCredential]'
+	tests/test_client_secret_credential.py::test_live_multitenant_authentication
+)
+
+python_test() {
+	# The global conftest requires the Azure SDK recording proxy.
+	epytest --noconftest tests/test_{authority,auth_record,chained_credential,initialization,context_manager,bearer_token_provider,environment_credential,managed_identity_client,client_secret_credential}.py
+}

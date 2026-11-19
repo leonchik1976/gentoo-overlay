@@ -20,3 +20,14 @@ RDEPEND="
 	<dev-python/msal-2[${PYTHON_USEDEP}]
 	dev-python/portalocker[${PYTHON_USEDEP}]
 "
+
+PATCHES=( "${FILESDIR}/${P}-wheel-metadata.patch" )
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
+
+python_test() {
+	# Missing cache helpers, platform-specific backends and a desktop
+	# Secret Service are outside these portable file and lock tests.
+	epytest tests/test_{crossplatlock,persistence}.py -k 'not libsecret'
+}

@@ -20,3 +20,13 @@ RDEPEND="
 	>=dev-python/azure-common-1.1[${PYTHON_USEDEP}]
 	>=dev-python/azure-mgmt-core-1.5.0[${PYTHON_USEDEP}]
 "
+
+PATCHES=( "${FILESDIR}/${P}-wheel-metadata.patch" )
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
+
+python_test() {
+	# The generated operation suites require the Azure recording proxy.
+	epytest --noconftest tests/test_utils.py
+}

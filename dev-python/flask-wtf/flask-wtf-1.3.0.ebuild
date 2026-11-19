@@ -19,3 +19,6 @@ RDEPEND="
 	dev-python/itsdangerous[${PYTHON_USEDEP}]
 	dev-python/wtforms[${PYTHON_USEDEP}]
 "
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest

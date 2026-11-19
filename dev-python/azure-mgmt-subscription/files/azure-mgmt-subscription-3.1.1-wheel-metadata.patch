@@ -1,0 +1,19 @@
+--- a/setup.py
++++ b/setup.py
+@@ -41,7 +41,7 @@
+     description='Microsoft Azure {} Client Library for Python'.format(PACKAGE_PPRINT_NAME),
+     long_description=readme + '\n\n' + changelog,
+     long_description_content_type='text/markdown',
+-    license='MIT License',
++    license='MIT',
+     author='Microsoft Corporation',
+     author_email='azpysdkhelp@microsoft.com',
+     url='https://github.com/Azure/azure-sdk-for-python',
+@@ -55,7 +55,6 @@
+         'Programming Language :: Python :: 3.8',
+         'Programming Language :: Python :: 3.9',
+         'Programming Language :: Python :: 3.10',
+-        'License :: OSI Approved :: MIT License',
+     ],
+     zip_safe=False,
+     packages=find_packages(exclude=[

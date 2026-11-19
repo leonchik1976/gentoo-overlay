@@ -19,3 +19,18 @@ RDEPEND="
 	>=dev-python/flask-sqlalchemy-1.0[${PYTHON_USEDEP}]
 	>=dev-python/alembic-1.9.0[${PYTHON_USEDEP}]
 "
+
+BDEPEND+=" >=dev-python/setuptools-77.0.3[${PYTHON_USEDEP}]"
+
+PATCHES=( "${FILESDIR}/${P}-wheel-metadata.patch" )
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
+
+python_test() {
+	# The tests invoke the Flask CLI as a subprocess.
+	mkdir -p "${T}/bin" || die
+	printf '#!/bin/sh\nexec "%s" -m flask "$@"\n' "${PYTHON}" > "${T}/bin/flask" || die
+	chmod +x "${T}/bin/flask" || die
+	PATH="${T}/bin:${PATH}" epytest tests
+}

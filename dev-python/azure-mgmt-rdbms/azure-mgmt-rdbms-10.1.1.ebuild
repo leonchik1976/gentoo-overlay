@@ -21,3 +21,12 @@ RDEPEND="
 "
 
 BDEPEND+=" >=dev-python/setuptools-77.0.3[${PYTHON_USEDEP}]"
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
+
+python_test() {
+	# The disabled CLI suites create real Azure database servers. Run the
+	# independent import test explicitly because its filename is disabled too.
+	epytest tests/disable_test_import.py
+}

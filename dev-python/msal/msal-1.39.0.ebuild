@@ -23,3 +23,13 @@ RDEPEND="
 	>=dev-python/cryptography-2.5[${PYTHON_USEDEP}]
 	<dev-python/cryptography-51[${PYTHON_USEDEP}]
 "
+
+PATCHES=( "${FILESDIR}/${P}-wheel-metadata.patch" )
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
+
+python_test() {
+	# Other modules import omitted helpers or require external endpoints.
+	epytest tests/test_{cloudshell,individual_cache,optional_thumbprint}.py
+}

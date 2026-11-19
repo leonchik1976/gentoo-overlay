@@ -30,8 +30,9 @@ LICENSE="POSTGRESQL MIT Apache-2.0 Apache-2.0-with-LLVM-exceptions
 	LGPL-2 LGPL-2.1+ MPL-2.0 OFL-1.1 PSF-2 Unicode-3.0 Unicode-DFS-2016 ZLIB"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
+IUSE="test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE} elibc_glibc"
-RESTRICT="bindist fetch mirror test"
+RESTRICT="bindist fetch mirror !test? ( test )"
 
 BDEPEND="
 	${PYTHON_DEPS}
@@ -165,6 +166,14 @@ src_compile() {
 	pushd runtime >/dev/null || die
 	"${yarn[@]}" workspaces focus --production || die
 	popd >/dev/null || die
+}
+
+src_test() {
+	# The Python regression harness needs configured PostgreSQL servers,
+	# and the feature tests also need browser drivers.
+	cd web || die
+	YARN_ENABLE_NETWORK=false YARN_ENABLE_GLOBAL_CACHE=false \
+		node "${WORKDIR}/package/bin/yarn.js" run jest --ci --runInBand || die
 }
 
 src_install() {

@@ -1,0 +1,119 @@
+Use requests-mock for offline policy tests. Gentoo deprecates HTTPretty.
+
+--- a/tests/test_policies.py
++++ b/tests/test_policies.py
+@@ -27,7 +27,7 @@
+ import time
+ from unittest import mock
+ import pytest
+-import httpretty
++import requests_mock
+ 
+ from azure.core.configuration import Configuration
+ from azure.core.pipeline import Pipeline
+@@ -51,9 +51,14 @@
+     monkeypatch.setattr(time, "sleep", sleep)
+ 
+ 
+-@httpretty.activate
++@pytest.fixture
++def http_mock():
++    with requests_mock.Mocker() as mocker:
++        yield mocker
++
++
+ @pytest.mark.usefixtures("sleepless")
+-def test_register_rp_policy():
++def test_register_rp_policy(http_mock):
+     """Protocol:
+     - We call the provider and get a 409 provider error
+     - Now we POST register provider and get "Registering"
+@@ -77,14 +82,13 @@
+ 
+     provider_success = '{"success": true}'
+ 
+-    httpretty.register_uri(
+-        httpretty.PUT,
++    http_mock.register_uri(
++        "PUT",
+         provider_url,
+-        responses=[
+-            httpretty.Response(body=provider_error, status=409),
+-            httpretty.Response(body=provider_success),
++        [
++            {"text": provider_error, "status_code": 409, "headers": {"Content-Type": "application/json"}},
++            {"text": provider_success, "headers": {"Content-Type": "application/json"}},
+         ],
+-        content_type="application/json",
+     )
+ 
+     register_post_url = (
+@@ -103,18 +107,18 @@
+ 
+     register_get_result = {"registrationState": "Registered"}
+ 
+-    httpretty.register_uri(
+-        httpretty.POST,
++    http_mock.register_uri(
++        "POST",
+         register_post_url,
+-        body=json.dumps(register_post_result),
+-        content_type="application/json",
+-    )
+-
+-    httpretty.register_uri(
+-        httpretty.GET,
++        text=json.dumps(register_post_result),
++        headers={"Content-Type": "application/json"},
++    )
++
++    http_mock.register_uri(
++        "GET",
+         register_get_url,
+-        body=json.dumps(register_get_result),
+-        content_type="application/json",
++        text=json.dumps(register_get_result),
++        headers={"Content-Type": "application/json"},
+     )
+ 
+     request = HttpRequest("PUT", provider_url)
+@@ -127,9 +131,8 @@
+     assert json.loads(response.http_response.text())["success"]
+ 
+ 
+-@httpretty.activate
+ @pytest.mark.usefixtures("sleepless")
+-def test_register_failed_policy():
++def test_register_failed_policy(http_mock):
+     """Protocol:
+     - We call the provider and get a 409 provider error
+     - Now we POST register provider and get "Registering"
+@@ -152,14 +155,13 @@
+ 
+     provider_success = '{"success": true}'
+ 
+-    httpretty.register_uri(
+-        httpretty.PUT,
++    http_mock.register_uri(
++        "PUT",
+         provider_url,
+-        responses=[
+-            httpretty.Response(body=provider_error, status=409),
+-            httpretty.Response(body=provider_success),
++        [
++            {"text": provider_error, "status_code": 409, "headers": {"Content-Type": "application/json"}},
++            {"text": provider_success, "headers": {"Content-Type": "application/json"}},
+         ],
+-        content_type="application/json",
+     )
+ 
+     register_post_url = (
+@@ -168,7 +170,7 @@
+         "providers/Microsoft.Sql/register?api-version=2016-02-01"
+     )
+ 
+-    httpretty.register_uri(httpretty.POST, register_post_url, status=409, content_type="application/json")
++    http_mock.post(register_post_url, status_code=409, headers={"Content-Type": "application/json"})
+ 
+     request = HttpRequest("PUT", provider_url)
+     policies = [

@@ -18,3 +18,5 @@ SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
 BDEPEND+=" app-arch/unzip"
+
+PATCHES=( "${FILESDIR}/${P}-wheel-metadata.patch" )
