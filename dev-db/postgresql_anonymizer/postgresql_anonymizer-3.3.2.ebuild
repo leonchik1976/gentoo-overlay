@@ -359,7 +359,7 @@ CRATES="
 RUST_MIN_VER="1.96.0"
 RUST_REQ_USE="rustfmt"
 LLVM_COMPAT=( {16..22} )
-POSTGRES_COMPAT=( {14..18} )
+POSTGRES_COMPAT=( {14..19} )
 POSTGRES_USEDEP="server"
 
 inherit cargo edo llvm-r2 postgres
