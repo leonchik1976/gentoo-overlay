@@ -25,30 +25,28 @@ SRC_URI="
 		-> snipe-it-dep-bacon-bacon-qr-code-6ca2f3cac351f8e4.zip
 	https://codeload.github.com/brick/math/legacy.zip/63422359a44b7f06cae63c3b429b59e8efcc0629
 		-> snipe-it-dep-brick-math-fedd07f5910a2c86.zip
-	https://codeload.github.com/CarbonPHP/carbon-doctrine-types/legacy.zip/99f76ffa36cce3b70a4a6abce41dba15ca2e84cb
-		-> snipe-it-dep-carbonphp-carbon-doctrine-types-74dfb8c8d5355a23.zip
+	https://codeload.github.com/CarbonPHP/carbon-doctrine-types/legacy.zip/bf72f821b9952722ea9f9c3912f85946e1af9e3d
+		-> snipe-it-dep-carbonphp-carbon-doctrine-types-806012462710e224.zip
 	https://codeload.github.com/DASPRiD/Enum/legacy.zip/b5874fa9ed0043116c72162ec7f4fb50e02e7cce
 		-> snipe-it-dep-dasprid-enum-0d27d2d685e3ba9d.zip
 	https://codeload.github.com/defuse/php-encryption/legacy.zip/f53396c2d34225064647a05ca76c1da9d99e5828
 		-> snipe-it-dep-defuse-php-encryption-54d2f01953275081.zip
 	https://codeload.github.com/dflydev/dflydev-dot-access-data/legacy.zip/a23a2bf4f31d3518f3ecb38660c95715dfead60f
 		-> snipe-it-dep-dflydev-dot-access-data-864e87b39a81e1bb.zip
-	https://codeload.github.com/doctrine/cache/legacy.zip/56cd022adb5514472cb144c087393c1821911d09
-		-> snipe-it-dep-doctrine-cache-8a9cdec8c463ddaf.zip
 	https://codeload.github.com/doctrine/dbal/legacy.zip/95d84866bf3c04b2ddca1df7c049714660959aef
 		-> snipe-it-dep-doctrine-dbal-aabe0c4ff7b363f1.zip
-	https://codeload.github.com/doctrine/deprecations/legacy.zip/d4fe3e6fd9bb9e72557a19674f44d8ac7db4c6ca
-		-> snipe-it-dep-doctrine-deprecations-8a563367e944655d.zip
+	https://codeload.github.com/doctrine/deprecations/legacy.zip/d2e16653a734c8784c1851ad68b02f997b53ca82
+		-> snipe-it-dep-doctrine-deprecations-23b1f57b862b4745.zip
 	https://codeload.github.com/doctrine/event-manager/legacy.zip/dda33921b198841ca8dbad2eaa5d4d34769d18cf
 		-> snipe-it-dep-doctrine-event-manager-4ad848a8f833b5e9.zip
-	https://codeload.github.com/doctrine/inflector/legacy.zip/6d6c96277ea252fc1304627204c3d5e6e15faa3b
-		-> snipe-it-dep-doctrine-inflector-b9f2632ca0d5f4d7.zip
+	https://codeload.github.com/doctrine/inflector/legacy.zip/46351b6812b7b6d52b82c3efa5dfb786a198ec88
+		-> snipe-it-dep-doctrine-inflector-6cc540781e21d9dc.zip
 	https://codeload.github.com/doctrine/instantiator/legacy.zip/0a0fa9780f5d4e507415a065172d26a98d02047b
 		-> snipe-it-dep-doctrine-instantiator-23550eaa812918f7.zip
-	https://codeload.github.com/doctrine/lexer/legacy.zip/31ad66abc0fc9e1a1f2d9bc6a42668d2fbbcd6dd
-		-> snipe-it-dep-doctrine-lexer-06ac8748f5ae84cf.zip
-	https://codeload.github.com/dragonmantank/cron-expression/legacy.zip/d61a8a9604ec1f8c3d150d09db6ce98b32675013
-		-> snipe-it-dep-dragonmantank-cron-expression-724d5c2e43b2d62c.zip
+	https://codeload.github.com/doctrine/lexer/legacy.zip/71d305eaa6480d3d3460c7d053d1da7749fa9cca
+		-> snipe-it-dep-doctrine-lexer-bbabca947f95fe24.zip
+	https://codeload.github.com/dragonmantank/cron-expression/legacy.zip/4189372ffeff09bf14f731f67a9de90c7b413ebe
+		-> snipe-it-dep-dragonmantank-cron-expression-6bb0240e29532d6c.zip
 	https://codeload.github.com/eduardokum/laravel-mail-auto-embed/legacy.zip/eab2c5ef2f0ab7c4f1f8c1eb9666ed813e7c5368
 		-> snipe-it-dep-eduardokum-laravel-mail-auto-embed-ea6070386bd45312.zip
 	https://codeload.github.com/egulias/EmailValidator/legacy.zip/d42c8731f0624ad6bdc8d3e5e9a4524f68801cfa
@@ -61,18 +59,18 @@ SRC_URI="
 		-> snipe-it-dep-fakerphp-faker-325e47975f89e4eb.zip
 	https://codeload.github.com/filp/whoops/legacy.zip/d2102955e48b9fd9ab24280a7ad12ed552752c4d
 		-> snipe-it-dep-filp-whoops-16dd512d19d0f6ee.zip
-	https://codeload.github.com/googleapis/php-jwt/legacy.zip/47ad26bab5e7c70ae8a6f08ed25ff83631121380
-		-> snipe-it-dep-firebase-php-jwt-32e556d71e89104c.zip
+	https://codeload.github.com/googleapis/php-jwt/legacy.zip/0501f5729b9e2448516674aff07c7d1727869b8e
+		-> snipe-it-dep-firebase-php-jwt-2f403265753c932b.zip
 	https://codeload.github.com/fruitcake/php-cors/legacy.zip/38aaa6c3fd4c157ffe2a4d10aa8b9b16ba8de379
 		-> snipe-it-dep-fruitcake-php-cors-a44b3737864b01a5.zip
 	https://codeload.github.com/GrahamCampbell/Result-Type/legacy.zip/adccca3324eece92ca35463648c12b9e6293c05b
 		-> snipe-it-dep-graham-campbell-result-type-f3f7f505b42598a0.zip
-	https://codeload.github.com/guzzle/guzzle/legacy.zip/ee80339fd9177ba44c49cdb653ff02a4d1106b9a
-		-> snipe-it-dep-guzzlehttp-guzzle-2c0486440e3c106d.zip
-	https://codeload.github.com/guzzle/promises/legacy.zip/cde49999552d185d64715fe9c1f77a2aadd2f9f1
-		-> snipe-it-dep-guzzlehttp-promises-95893dbcb432a5f4.zip
-	https://codeload.github.com/guzzle/psr7/legacy.zip/95e7828100de18b4e269fb1703be530082d5166d
-		-> snipe-it-dep-guzzlehttp-psr7-066311c4c0e19204.zip
+	https://codeload.github.com/guzzle/guzzle/legacy.zip/81755d989b3007ca7f88a069857553cd08e7dc2e
+		-> snipe-it-dep-guzzlehttp-guzzle-5a187358e58123d1.zip
+	https://codeload.github.com/guzzle/promises/legacy.zip/3d88c829bd5f13d13847b39067dbf09a60af2154
+		-> snipe-it-dep-guzzlehttp-promises-bb3faed7eaa1f031.zip
+	https://codeload.github.com/guzzle/psr7/legacy.zip/ad5e3f872690e1151e1171de2963150fc45ea1e3
+		-> snipe-it-dep-guzzlehttp-psr7-aea8d6ad44dd6c44.zip
 	https://codeload.github.com/guzzle/uri-template/legacy.zip/d0058dccf4299d70c3d9da3378b8908b32780368
 		-> snipe-it-dep-guzzlehttp-uri-template-f93a1b10e9e12495.zip
 	https://codeload.github.com/InnoGE/laravel-msgraph-mail/legacy.zip/0d1ab4d7752ca3e86fcd5af76a66f45c9e37c1ca
@@ -85,16 +83,18 @@ SRC_URI="
 		-> snipe-it-dep-laravel-notification-channels-google-chat-14160a662fdaaaa0.zip
 	https://codeload.github.com/laravel-notification-channels/microsoft-teams/legacy.zip/e19c029525b54728fe978afa6bead6c8f33a842f
 		-> snipe-it-dep-laravel-notification-channels-microsoft-teams-0f5774b6d45d2b13.zip
-	https://codeload.github.com/laravel/framework/legacy.zip/58ea544a2a80dc03c168e13a5dc9a1d176a88717
-		-> snipe-it-dep-laravel-framework-c92d54f74bb3f19f.zip
+	https://codeload.github.com/laravel/framework/legacy.zip/d091054fca4761e109b477bdca364dc93c7fd6df
+		-> snipe-it-dep-laravel-framework-e70918bfe05d27dc.zip
 	https://codeload.github.com/laravel/helpers/legacy.zip/5915be977c7cc05fe2498d561b8c026ee56567dd
 		-> snipe-it-dep-laravel-helpers-5473a5d59ab612ed.zip
-	https://codeload.github.com/laravel/passport/legacy.zip/1d2e0170a52f150d5c35c9a6fc1f7ccebcde7626
-		-> snipe-it-dep-laravel-passport-9ab519eefa7e1cba.zip
-	https://codeload.github.com/laravel/prompts/legacy.zip/5d3cdef29e93ca3b62b1871359db3078cd99908b
-		-> snipe-it-dep-laravel-prompts-2a762c35a3aca251.zip
-	https://codeload.github.com/laravel/serializable-closure/legacy.zip/7cfc24e4fa2cca045fb8dd2a797a2b2b13b655ed
-		-> snipe-it-dep-laravel-serializable-closure-7e390a013cdc89c3.zip
+	https://codeload.github.com/laravel/mcp/legacy.zip/ab9238ce6c89095679651dd3d19d67641d73a436
+		-> snipe-it-dep-laravel-mcp-eb4faeff09078bef.zip
+	https://codeload.github.com/laravel/passport/legacy.zip/980ed27da1da67408754b7e0c13989fe05327d9e
+		-> snipe-it-dep-laravel-passport-de3209b95830e441.zip
+	https://codeload.github.com/laravel/prompts/legacy.zip/abdfc75a1ae6c6f21522daed50da7124cbff09d2
+		-> snipe-it-dep-laravel-prompts-e928711416826f01.zip
+	https://codeload.github.com/laravel/serializable-closure/legacy.zip/2bfb44e8af009b553ed2c060c94b0bc3c67b4769
+		-> snipe-it-dep-laravel-serializable-closure-d86762c375305e12.zip
 	https://codeload.github.com/laravel/slack-notification-channel/legacy.zip/3c27f6e851570274255809f4d3939ff5c2ace82b
 		-> snipe-it-dep-laravel-slack-notification-channel-46ff918544a811f3.zip
 	https://codeload.github.com/laravel/socialite/legacy.zip/40e0757a75637c7b2dff05d3286b0d8fc25e5c0e
@@ -103,18 +103,18 @@ SRC_URI="
 		-> snipe-it-dep-laravel-tinker-1214d2018c95f204.zip
 	https://codeload.github.com/laravel/ui/legacy.zip/ff27db15416c1ed8ad9848f5692e47595dd5de27
 		-> snipe-it-dep-laravel-ui-67bce7952178a01a.zip
-	https://codeload.github.com/lcobucci/jwt/legacy.zip/bb3e9f21e4196e8afc41def81ef649c164bca25e
-		-> snipe-it-dep-lcobucci-jwt-32d65ea67b1e6b01.zip
-	https://codeload.github.com/thephpleague/commonmark/legacy.zip/6efbd9c472b91db0a3350fcd601c8332c2382e1f
-		-> snipe-it-dep-league-commonmark-33892d6f7ce3abf8.zip
+	https://codeload.github.com/lcobucci/jwt/legacy.zip/482760068e5a55a9045feddb3e2fc3f878cbd577
+		-> snipe-it-dep-lcobucci-jwt-2ff4d75d6063a580.zip
+	https://codeload.github.com/thephpleague/commonmark/legacy.zip/8eb53e906fd60c67038d22f1f1cab420ed58b8be
+		-> snipe-it-dep-league-commonmark-e9f265cfa66a5c65.zip
 	https://codeload.github.com/thephpleague/config/legacy.zip/754b3604fb2984c71f4af4a9cbe7b57f346ec1f3
 		-> snipe-it-dep-league-config-5589f6c5d3b3469c.zip
 	https://codeload.github.com/thephpleague/csv/legacy.zip/6582ace29ae09ba5b07049d40ea13eb19c8b5073
 		-> snipe-it-dep-league-csv-579f57d351bd6ff5.zip
-	https://codeload.github.com/thephpleague/event/legacy.zip/062ebb450efbe9a09bc2478e89b7c933875b0935
-		-> snipe-it-dep-league-event-c83ca4b0e4e2c65f.zip
-	https://codeload.github.com/thephpleague/flysystem/legacy.zip/5fc8404762179ae514678487b23494fd69b2309c
-		-> snipe-it-dep-league-flysystem-aaf11ba2f673b139.zip
+	https://codeload.github.com/thephpleague/event/legacy.zip/ec38ff7ea10cad7d99a79ac937fbcffb9334c210
+		-> snipe-it-dep-league-event-b9e32fa9c0fa821d.zip
+	https://codeload.github.com/thephpleague/flysystem/legacy.zip/f7fb152932f30072d573510cbd4dd657d6475b25
+		-> snipe-it-dep-league-flysystem-529f5f91f97ac109.zip
 	https://codeload.github.com/thephpleague/flysystem-aws-s3-v3/legacy.zip/0c62fdac907791d8649ad3c61cb7a77628344fb8
 		-> snipe-it-dep-league-flysystem-aws-s3-v3-5b665c5bf7a602c8.zip
 	https://codeload.github.com/thephpleague/flysystem-local/legacy.zip/a099b24dce160f3b2239043d13d47c4a1a214ea4
@@ -123,36 +123,34 @@ SRC_URI="
 		-> snipe-it-dep-league-mime-type-detection-03d968dee68b0f5f.zip
 	https://codeload.github.com/thephpleague/oauth1-client/legacy.zip/f9c94b088837eb1aae1ad7c4f23eb65cc6993055
 		-> snipe-it-dep-league-oauth1-client-912e97168fdb1591.zip
-	https://codeload.github.com/thephpleague/oauth2-server/legacy.zip/cc8778350f905667e796b3c2364a9d3bd7a73518
-		-> snipe-it-dep-league-oauth2-server-aeff498f7d10a4d8.zip
-	https://codeload.github.com/thephpleague/uri/legacy.zip/08cf38e3924d4f56238125547b5720496fac8fd4
-		-> snipe-it-dep-league-uri-21d7b4b3771de670.zip
-	https://codeload.github.com/thephpleague/uri-interfaces/legacy.zip/85d5c77c5d6d3af6c54db4a78246364908f3c928
-		-> snipe-it-dep-league-uri-interfaces-6d5895ece754acb6.zip
-	https://codeload.github.com/livewire/livewire/legacy.zip/5976d18b1c808287017a17337d9e68dc1ca64ca2
-		-> snipe-it-dep-livewire-livewire-e70ade19eacd7d83.zip
+	https://codeload.github.com/thephpleague/oauth2-server/legacy.zip/9d2f6fc0a0b5aa1bb02506971d3a4ecff2c6526c
+		-> snipe-it-dep-league-oauth2-server-acdb0e937386dce6.zip
+	https://codeload.github.com/thephpleague/uri/legacy.zip/be89e2382e37acdef232259071ade5180821397b
+		-> snipe-it-dep-league-uri-46bebca3919cc2dd.zip
+	https://codeload.github.com/thephpleague/uri-interfaces/legacy.zip/ea66240cff4ae9a56ce85d577a04d038b771e51c
+		-> snipe-it-dep-league-uri-interfaces-d9e438cac6226631.zip
+	https://codeload.github.com/livewire/livewire/legacy.zip/8d7f8fc6138274a2f3384c9db354ca012215a259
+		-> snipe-it-dep-livewire-livewire-0e0a778b46c40886.zip
 	https://codeload.github.com/Masterminds/html5-php/legacy.zip/fcf91eb64359852f00d921887b219479b4f21251
 		-> snipe-it-dep-masterminds-html5-7ffa23d15e5f21c8.zip
-	https://codeload.github.com/Seldaek/monolog/legacy.zip/b321dd6749f0bf7189444158a3ce785cc16d69b0
-		-> snipe-it-dep-monolog-monolog-111ec7010cb0457d.zip
+	https://codeload.github.com/Seldaek/monolog/legacy.zip/1f5f55bb4a9a230ff6d8a4ceccea31d10b0142ac
+		-> snipe-it-dep-monolog-monolog-f95fdba5655c04c6.zip
 	https://codeload.github.com/jmespath/jmespath.php/legacy.zip/2157c5e50e813ec6a96c1eed3be7f64a20fb32a8
 		-> snipe-it-dep-mtdowling-jmespath.php-8ab2c74f82c961db.zip
 	https://codeload.github.com/neitanod/forceutf8/legacy.zip/c1fbe70bfb5ad41b8ec5785056b0e308b40d4831
 		-> snipe-it-dep-neitanod-forceutf8-22cee6a798876885.zip
-	https://codeload.github.com/CarbonPHP/carbon/legacy.zip/a1c54919f5fff9800cd03c32bd01defd5a4061cb
-		-> snipe-it-dep-nesbot-carbon-c5eacc54510ff2f0.zip
-	https://codeload.github.com/nette/schema/legacy.zip/c54350438cd6914616f790a49cb424605f421562
-		-> snipe-it-dep-nette-schema-94856791a88465d0.zip
-	https://codeload.github.com/nette/utils/legacy.zip/b043439dbdf954e6c28b5ea7e34b0100f83165e0
-		-> snipe-it-dep-nette-utils-571124ae622d90ae.zip
+	https://codeload.github.com/CarbonPHP/carbon/legacy.zip/ce0e5636fae7d1e99856eb70cae4c719a284aa08
+		-> snipe-it-dep-nesbot-carbon-b85e605eb37e341b.zip
+	https://codeload.github.com/nette/schema/legacy.zip/af9fa8a86bfca9b02b10346220db26e62ef942ec
+		-> snipe-it-dep-nette-schema-494dccdaf9fab58b.zip
+	https://codeload.github.com/nette/utils/legacy.zip/6bf24518accf32cf845bca305e0b92078700fd01
+		-> snipe-it-dep-nette-utils-ae7db0be8ba095c8.zip
 	https://codeload.github.com/nikic/PHP-Parser/legacy.zip/dca41cd15c2ac9d055ad70dbfd011130757d1f82
 		-> snipe-it-dep-nikic-php-parser-ebedbb8e91aa49ff.zip
 	https://codeload.github.com/nunomaduro/collision/legacy.zip/716af8f95a470e9094cfca09ed897b023be191a5
 		-> snipe-it-dep-nunomaduro-collision-33e61bc4af1fd1f2.zip
-	https://codeload.github.com/nunomaduro/termwind/legacy.zip/712a31b768f5daea284c2169a7d227031001b9a8
-		-> snipe-it-dep-nunomaduro-termwind-52a54a9560248b14.zip
-	https://codeload.github.com/Nyholm/psr7/legacy.zip/a71f2b11690f4b24d099d6b16690a90ae14fc6f3
-		-> snipe-it-dep-nyholm-psr7-3c4edcc5ca0b2e24.zip
+	https://codeload.github.com/nunomaduro/termwind/legacy.zip/9b85ae4d802403bfc004ea633ce542bc262ee5c3
+		-> snipe-it-dep-nunomaduro-termwind-92713add25d7c562.zip
 	https://codeload.github.com/okvpn/clock-lts/legacy.zip/5e7dc00d23a7d65e8ed2b0ff7a4dcf7860c05a14
 		-> snipe-it-dep-okvpn-clock-lts-b4543aecdb1803a1.zip
 	https://codeload.github.com/SAML-Toolkits/php-saml/legacy.zip/8732729ea91d1764a8d39062647845bba4bb3c29
@@ -167,6 +165,8 @@ SRC_URI="
 		-> snipe-it-dep-paragonie-random_compat-c714afbe7d1fd8d0.zip
 	https://codeload.github.com/paragonie/sodium_compat/legacy.zip/4524c98a826776c9a32d6ce06932563cb10f3995
 		-> snipe-it-dep-paragonie-sodium_compat-190c873bb0f3c25f.zip
+	https://codeload.github.com/php-http/discovery/legacy.zip/82fe4c73ef3363caed49ff8dd1539ba06044910d
+		-> snipe-it-dep-php-http-discovery-7c2dc3b591664b66.zip
 	https://codeload.github.com/phpDocumentor/ReflectionCommon/legacy.zip/1d01c49d4ed62f25aa84a747ad35d5a16924662b
 		-> snipe-it-dep-phpdocumentor-reflection-common-8afb6237b8b44436.zip
 	https://codeload.github.com/phpDocumentor/ReflectionDocBlock/legacy.zip/31a105931bc8ffa3a123383829772e832fd8d903
@@ -175,8 +175,8 @@ SRC_URI="
 		-> snipe-it-dep-phpdocumentor-type-resolver-295d8b3cb2b22ac5.zip
 	https://codeload.github.com/schmittjoh/php-option/legacy.zip/67b192b6a42ec03944b972d6e633ddec78ad2c6d
 		-> snipe-it-dep-phpoption-phpoption-0f9cf5f4c8d25776.zip
-	https://codeload.github.com/phpseclib/phpseclib/legacy.zip/d17e0ddaeaf6f22f7e007cbb437d78792fe2a0e4
-		-> snipe-it-dep-phpseclib-phpseclib-1d71d5305959b0dd.zip
+	https://codeload.github.com/phpseclib/phpseclib/legacy.zip/91f3a6436bb84040ac0cf49e761977f17d16a39b
+		-> snipe-it-dep-phpseclib-phpseclib-d42e1f85c137e5f6.zip
 	https://codeload.github.com/phpspec/prophecy/legacy.zip/09c2e5949d676286358a62af818f8407167a9dd6
 		-> snipe-it-dep-phpspec-prophecy-fc6eb7fdd61fa4dc.zip
 	https://codeload.github.com/phpstan/phpdoc-parser/legacy.zip/a004701b11273a26cd7955a61d67a7f1e525a45a
@@ -201,6 +201,10 @@ SRC_URI="
 		-> snipe-it-dep-psr-http-factory-ebfb30e616f82257.zip
 	https://codeload.github.com/php-fig/http-message/legacy.zip/402d35bcb92c70c026d1a6a9883f06b2ead23d71
 		-> snipe-it-dep-psr-http-message-74da1a8feed0363b.zip
+	https://codeload.github.com/php-fig/http-server-handler/legacy.zip/84c4fb66179be4caaf8e97bd239203245302e7d4
+		-> snipe-it-dep-psr-http-server-handler-fb94900851d5e9c4.zip
+	https://codeload.github.com/php-fig/http-server-middleware/legacy.zip/c1481f747daaa6a0782775cd6a8c26a1bf4a3829
+		-> snipe-it-dep-psr-http-server-middleware-4bc66a3e22057115.zip
 	https://codeload.github.com/php-fig/log/legacy.zip/f16e1d5863e37f8d8c2a01719f5b34baa2b714d3
 		-> snipe-it-dep-psr-log-bb89227095bcfcd6.zip
 	https://codeload.github.com/php-fig/simple-cache/legacy.zip/764e0b3939f5ca87cb904f570ef9be2d78a07865
@@ -211,8 +215,8 @@ SRC_URI="
 		-> snipe-it-dep-ralouphie-getallheaders-ac174dbb3922ad03.zip
 	https://codeload.github.com/ramsey/collection/legacy.zip/344572933ad0181accbf4ba763e85a0306a8c5e2
 		-> snipe-it-dep-ramsey-collection-9dbfa32940b8c5e3.zip
-	https://codeload.github.com/ramsey/uuid/legacy.zip/1df15849d00943a67d677dc9cfd80795f038c9f8
-		-> snipe-it-dep-ramsey-uuid-84b4174b03a5249d.zip
+	https://codeload.github.com/ramsey/uuid/legacy.zip/f9aa3efc8015fcbc013d84d699583b268ccb593a
+		-> snipe-it-dep-ramsey-uuid-e19d2c945d80f1b7.zip
 	https://codeload.github.com/robrichards/xmlseclibs/legacy.zip/03062be78178cbb5e8f605cd255dc32a14981f92
 		-> snipe-it-dep-robrichards-xmlseclibs-9436173817912e94.zip
 	https://codeload.github.com/rollbar/rollbar-php/legacy.zip/98982f49b2ad1cc6469cad7a870ac9361a238a4c
@@ -247,70 +251,72 @@ SRC_URI="
 		-> snipe-it-dep-spatie-laravel-signal-aware-command-67e87763d71f676c.zip
 	https://codeload.github.com/spatie/temporary-directory/legacy.zip/662e481d6ec07ef29fd05010433428851a42cd07
 		-> snipe-it-dep-spatie-temporary-directory-205a60188182eba2.zip
-	https://codeload.github.com/symfony/clock/legacy.zip/674fa3b98e21531dd040e613479f5f6fa8f32111
-		-> snipe-it-dep-symfony-clock-6819082deaaee13e.zip
-	https://codeload.github.com/symfony/console/legacy.zip/962e18f09ebe68a49039b4c82fc0ea4871824fca
-		-> snipe-it-dep-symfony-console-e946106d0f9c44dc.zip
-	https://codeload.github.com/symfony/css-selector/legacy.zip/e3822e1cb7013a0a99b3c578130458927ec4eb89
-		-> snipe-it-dep-symfony-css-selector-abef78ff51d56918.zip
-	https://codeload.github.com/symfony/deprecation-contracts/legacy.zip/f3202fa1b5097b0af062dc978b32ecf63404e31d
-		-> snipe-it-dep-symfony-deprecation-contracts-d8f62a33a27ef3ed.zip
-	https://codeload.github.com/symfony/error-handler/legacy.zip/8373921e231e190a88e2ad526951bbaa791576fa
-		-> snipe-it-dep-symfony-error-handler-49e4323bf646bf32.zip
+	https://codeload.github.com/symfony/clock/legacy.zip/07437f612dca89c1894c1db04491002b1e798f03
+		-> snipe-it-dep-symfony-clock-26b1f53288dc712a.zip
+	https://codeload.github.com/symfony/console/legacy.zip/81957c2440c05c962fe8291f318de6e85f8db330
+		-> snipe-it-dep-symfony-console-17b67e849c94163a.zip
+	https://codeload.github.com/symfony/css-selector/legacy.zip/4cdbb4a575111d771791339a9d5231155918f699
+		-> snipe-it-dep-symfony-css-selector-541d405f7ce146a6.zip
+	https://codeload.github.com/symfony/deprecation-contracts/legacy.zip/feb1edf4e546af3b85c5caebe8359a20db230ca3
+		-> snipe-it-dep-symfony-deprecation-contracts-f101aa7133ac2fc9.zip
+	https://codeload.github.com/symfony/error-handler/legacy.zip/545852cfe9c4979c82389155b4d8d05f8864e4f1
+		-> snipe-it-dep-symfony-error-handler-2dab77be062201d8.zip
 	https://codeload.github.com/symfony/event-dispatcher/legacy.zip/d269974ee93c61d03620ffee358355bfdb471d66
 		-> snipe-it-dep-symfony-event-dispatcher-0a480d7126d40879.zip
-	https://codeload.github.com/symfony/event-dispatcher-contracts/legacy.zip/c7de7a00ffb67842132da02ea92988a39ccd9f4e
-		-> snipe-it-dep-symfony-event-dispatcher-contracts-f12914263fb841ef.zip
-	https://codeload.github.com/symfony/filesystem/legacy.zip/d721ea61b4a5fba8c5b6e7c1feda19efea144b50
-		-> snipe-it-dep-symfony-filesystem-35672deaf8f55b81.zip
-	https://codeload.github.com/symfony/finder/legacy.zip/5ce28827081f6d1f0c32eaf3882750f19cb5bbe6
-		-> snipe-it-dep-symfony-finder-e254697e2d2297f2.zip
-	https://codeload.github.com/symfony/http-foundation/legacy.zip/58c89144c7a36dd89c3d01917e9fa3a72d8aaf31
-		-> snipe-it-dep-symfony-http-foundation-73b726e64ee1ffac.zip
-	https://codeload.github.com/symfony/http-kernel/legacy.zip/aa160388d444210e3d01bbb4c5c53af4cd763df4
-		-> snipe-it-dep-symfony-http-kernel-f805dcc344f55d99.zip
-	https://codeload.github.com/symfony/mailer/legacy.zip/b17c9bf3a551d5f635638a3b6c05f06c4dc87584
-		-> snipe-it-dep-symfony-mailer-37e8bc09f701668d.zip
-	https://codeload.github.com/symfony/mime/legacy.zip/bf328d82105831db3e409195db0540ff57f27c80
-		-> snipe-it-dep-symfony-mime-9d1e2ec9781acd5a.zip
+	https://codeload.github.com/symfony/event-dispatcher-contracts/legacy.zip/658e29751424da3ef4758c60f769e59d1b2981eb
+		-> snipe-it-dep-symfony-event-dispatcher-contracts-9d4faa3c0f26231c.zip
+	https://codeload.github.com/symfony/filesystem/legacy.zip/53d609da66578dad5a39fe290e8f924ec8f05e93
+		-> snipe-it-dep-symfony-filesystem-4de546ee1d167647.zip
+	https://codeload.github.com/symfony/finder/legacy.zip/c723f990aefe8c1053b18374faf4231eba84f518
+		-> snipe-it-dep-symfony-finder-23a54280e2521410.zip
+	https://codeload.github.com/symfony/http-foundation/legacy.zip/7fb73cffa06e2bcc2cb523fcccb1e8174106b206
+		-> snipe-it-dep-symfony-http-foundation-7cbbfeb76612c9e1.zip
+	https://codeload.github.com/symfony/http-kernel/legacy.zip/94c57f4c5c45a311d244a0aeadb72b14ee41d25d
+		-> snipe-it-dep-symfony-http-kernel-e041cd74e766db16.zip
+	https://codeload.github.com/symfony/mailer/legacy.zip/1aa1e2ee7515826bb17b0ad0d2f16962fcaa7859
+		-> snipe-it-dep-symfony-mailer-b464b4ce19179570.zip
+	https://codeload.github.com/symfony/mime/legacy.zip/94a4c017435bc515f5ac80421a2c555fb9ca3676
+		-> snipe-it-dep-symfony-mime-d96af30bd9624259.zip
 	https://codeload.github.com/symfony/polyfill-ctype/legacy.zip/141046a8f9477948ff284fa65be2095baafb94f2
 		-> snipe-it-dep-symfony-polyfill-ctype-45481910211b7925.zip
-	https://codeload.github.com/symfony/polyfill-intl-grapheme/legacy.zip/bb899c1db0aa8127dc3afe8cda4a67eb24915f8d
-		-> snipe-it-dep-symfony-polyfill-intl-grapheme-504b9f4ad1f41b3e.zip
-	https://codeload.github.com/symfony/polyfill-intl-idn/legacy.zip/51b5ff5ba85452b31ec6f55490b08148612339d9
-		-> snipe-it-dep-symfony-polyfill-intl-idn-113b0a0ef45a3338.zip
-	https://codeload.github.com/symfony/polyfill-intl-normalizer/legacy.zip/aa20edea75bd9c48cfecc8360922e5a6e5c44502
-		-> snipe-it-dep-symfony-polyfill-intl-normalizer-4c9faa2336ba12bf.zip
-	https://codeload.github.com/symfony/polyfill-mbstring/legacy.zip/d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6
-		-> snipe-it-dep-symfony-polyfill-mbstring-18b5aa05c611fddd.zip
-	https://codeload.github.com/symfony/polyfill-php80/legacy.zip/dfb55726c3a76ea3b6459fcfda1ec2d80a682411
-		-> snipe-it-dep-symfony-polyfill-php80-4d00542e9b37d5b6.zip
-	https://codeload.github.com/symfony/polyfill-php83/legacy.zip/5ea99087fb99c273a9b9236ed4c31e78b16103c6
-		-> snipe-it-dep-symfony-polyfill-php83-f4c1b9b4d4a1f89b.zip
-	https://codeload.github.com/symfony/polyfill-php84/legacy.zip/f4e1dfaee5b74aba5964fe1fd4dfc7ba5e3085fa
-		-> snipe-it-dep-symfony-polyfill-php84-581bcc10247ab03e.zip
-	https://codeload.github.com/symfony/polyfill-php85/legacy.zip/255fab485aaa1006ed411040c42aecd7b5302d7a
-		-> snipe-it-dep-symfony-polyfill-php85-3cb37d581704320b.zip
-	https://codeload.github.com/symfony/polyfill-uuid/legacy.zip/26dfec253c4cf3e51b541b52ddf7e42cb0908e94
-		-> snipe-it-dep-symfony-polyfill-uuid-779db6de727026e7.zip
-	https://codeload.github.com/symfony/process/legacy.zip/058d17fc284cce14efb2385783b55014a461b176
-		-> snipe-it-dep-symfony-process-1dc883560deb0431.zip
-	https://codeload.github.com/symfony/psr-http-message-bridge/legacy.zip/76f1a57719a4a04c0ea18678a6c9305b5dcb9da8
-		-> snipe-it-dep-symfony-psr-http-message-bridge-098969bce30aea8c.zip
-	https://codeload.github.com/symfony/routing/legacy.zip/ddd558991e98f693ae6bf5063cc1b0362c6bbec3
-		-> snipe-it-dep-symfony-routing-efd53a62ce2513ec.zip
-	https://codeload.github.com/symfony/service-contracts/legacy.zip/c0a284bab1ed8aa0417e3d69250ab437739563a0
-		-> snipe-it-dep-symfony-service-contracts-5a840549550e0921.zip
-	https://codeload.github.com/symfony/string/legacy.zip/e394af32256bf9e7bf80849d95e589167c10097b
-		-> snipe-it-dep-symfony-string-d3e81184cd7c32a4.zip
-	https://codeload.github.com/symfony/translation/legacy.zip/2ee1e4a3b32a528a642babe041ff7c440b213b4b
-		-> snipe-it-dep-symfony-translation-fe9172554f7989bf.zip
-	https://codeload.github.com/symfony/translation-contracts/legacy.zip/ccb206b98faccc511ebae8e5fad50f2dc0b30621
-		-> snipe-it-dep-symfony-translation-contracts-e156fadd6dbb0819.zip
-	https://codeload.github.com/symfony/uid/legacy.zip/69d732355a139c6f8881337d28515aa01f12b8be
-		-> snipe-it-dep-symfony-uid-5a882a8613ecca23.zip
-	https://codeload.github.com/symfony/var-dumper/legacy.zip/53712df8727da1744490202eeb9cb50d4b95419d
-		-> snipe-it-dep-symfony-var-dumper-ba9d23ed2fa1a472.zip
+	https://codeload.github.com/symfony/polyfill-intl-grapheme/legacy.zip/5a8f33c87aeecffce24e721b5064fab05f4becf8
+		-> snipe-it-dep-symfony-polyfill-intl-grapheme-2af2121f62a43886.zip
+	https://codeload.github.com/symfony/polyfill-intl-idn/legacy.zip/533d68cf99c8f8ee2e8893c59ed59192e92cfd74
+		-> snipe-it-dep-symfony-polyfill-intl-idn-f4ed84e64442490f.zip
+	https://codeload.github.com/symfony/polyfill-intl-normalizer/legacy.zip/ebd57ccc7edb93d632e184efbe7693d2517bab3b
+		-> snipe-it-dep-symfony-polyfill-intl-normalizer-fda892c01dec406d.zip
+	https://codeload.github.com/symfony/polyfill-mbstring/legacy.zip/122889ed24dc000165bcbfd77ec412f15cbdfc6a
+		-> snipe-it-dep-symfony-polyfill-mbstring-3a31ab2843a6e546.zip
+	https://codeload.github.com/symfony/polyfill-php80/legacy.zip/9c6a5d6b01ca51d486c813e9a9c0ed55f208bb74
+		-> snipe-it-dep-symfony-polyfill-php80-0d5a9195418534fc.zip
+	https://codeload.github.com/symfony/polyfill-php83/legacy.zip/80ccff923a8d61f73ebe9da0aa94e25232f004ce
+		-> snipe-it-dep-symfony-polyfill-php83-d3fcaad533bd434e.zip
+	https://codeload.github.com/symfony/polyfill-php84/legacy.zip/22c6548499cbe5c5bb072fc0c42312dff062a015
+		-> snipe-it-dep-symfony-polyfill-php84-1d8f67de93a6b3ef.zip
+	https://codeload.github.com/symfony/polyfill-php85/legacy.zip/94c794cb5ba51784bc259f11e9f128593297d8dc
+		-> snipe-it-dep-symfony-polyfill-php85-44c6037d439446a6.zip
+	https://codeload.github.com/symfony/polyfill-time/legacy.zip/ac9f1ed802dd58f37e720388130c088434aa09fc
+		-> snipe-it-dep-symfony-polyfill-time-d92c7a642e112836.zip
+	https://codeload.github.com/symfony/polyfill-uuid/legacy.zip/b23ff8245cc5c4479ea2be3d0132d2e6dd433993
+		-> snipe-it-dep-symfony-polyfill-uuid-44af99cf50653b0e.zip
+	https://codeload.github.com/symfony/process/legacy.zip/a5a6912edbbfc4c98cd080bc4bbe37c8e7eeb20a
+		-> snipe-it-dep-symfony-process-b08b5a57df1459cd.zip
+	https://codeload.github.com/symfony/psr-http-message-bridge/legacy.zip/b05964aa9d788bc8ffcc31c59d5c4573e3d4d1fc
+		-> snipe-it-dep-symfony-psr-http-message-bridge-ffa2dcfa66aa403b.zip
+	https://codeload.github.com/symfony/routing/legacy.zip/0000ade604b7bc798cb1e75edf6f17df48185f73
+		-> snipe-it-dep-symfony-routing-3a12ea78bfd3f4be.zip
+	https://codeload.github.com/symfony/service-contracts/legacy.zip/052852a96fd5e5ebdb617dba22031e41a3300fb5
+		-> snipe-it-dep-symfony-service-contracts-36bcd158c9cebd03.zip
+	https://codeload.github.com/symfony/string/legacy.zip/8dff7da3a56638f1d189c5368183294102de4ced
+		-> snipe-it-dep-symfony-string-bdec1a8719092db4.zip
+	https://codeload.github.com/symfony/translation/legacy.zip/00dc42a2c904e95433825c7b58fe24c08550d1c8
+		-> snipe-it-dep-symfony-translation-bc999024d03c2be3.zip
+	https://codeload.github.com/symfony/translation-contracts/legacy.zip/0a3ae917402632fcba2aeddae9c98332f3d7dd05
+		-> snipe-it-dep-symfony-translation-contracts-59697dcba9045702.zip
+	https://codeload.github.com/symfony/uid/legacy.zip/3e706a245b5343ea93be9cafe84525bfb54e60fc
+		-> snipe-it-dep-symfony-uid-ad1b8420fa561c69.zip
+	https://codeload.github.com/symfony/var-dumper/legacy.zip/6e6ff33ea8cf5df27f00a5561ebd5ee9bd7f1618
+		-> snipe-it-dep-symfony-var-dumper-c08d0fb38c6efd8e.zip
 	https://codeload.github.com/tabuna/breadcrumbs/legacy.zip/120322c2ca2032233a7fd214739c1e8edb70f8a4
 		-> snipe-it-dep-tabuna-breadcrumbs-9455ae4c71d70f72.zip
 	https://codeload.github.com/tecnickcom/tc-lib-barcode/legacy.zip/cd81392e6e1e57e0f6ff8519b1edbc11d8e47a44
@@ -339,14 +345,14 @@ SRC_URI="
 		-> snipe-it-dep-tmilos-value-97118fed28cd45dc.zip
 	https://codeload.github.com/unicodeveloper/laravel-password/legacy.zip/806e345ae992e0adf38c4cfa32063d7d7c9d189a
 		-> snipe-it-dep-unicodeveloper-laravel-password-0c8edef3b5814e0e.zip
-	https://codeload.github.com/vlucas/phpdotenv/legacy.zip/301c07936b16d88628b126b01d082ba153cf4c40
-		-> snipe-it-dep-vlucas-phpdotenv-773d8b93afa94d15.zip
+	https://codeload.github.com/phpdotenv/phpdotenv/legacy.zip/96149103e62ac67e915f6d2ef59b72dee2e011e0
+		-> snipe-it-dep-vlucas-phpdotenv-e75ba3d1190adb33.zip
 	https://codeload.github.com/voku/portable-ascii/legacy.zip/8e1051fe39379367aecf014f41744ce7539a856f
 		-> snipe-it-dep-voku-portable-ascii-900c0e1c36267aa8.zip
 	https://codeload.github.com/dwightwatson/validating/legacy.zip/a8e823f1e2dcbb3d663e84e0e4197d11e5b15d30
 		-> snipe-it-dep-watson-validating-17ee8eaf77bcdaf4.zip
-	https://codeload.github.com/webmozarts/assert/legacy.zip/2ccb7c2e821038c03a3e6e1700c570c158c55f70
-		-> snipe-it-dep-webmozart-assert-7c09899ab676d19b.zip
+	https://codeload.github.com/webmozarts/assert/legacy.zip/e578132c01bd0c64108386ab20d8217cd175ddec
+		-> snipe-it-dep-webmozart-assert-9274321cd7bba117.zip
 "
 
 # Application, locked production libraries, and bundled frontend assets.

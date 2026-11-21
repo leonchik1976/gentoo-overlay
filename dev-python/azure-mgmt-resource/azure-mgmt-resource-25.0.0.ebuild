@@ -17,11 +17,10 @@ KEYWORDS="~amd64 ~arm64"
 RDEPEND="
 	>=dev-python/isodate-0.6.1[${PYTHON_USEDEP}]
 	>=dev-python/typing-extensions-4.6.0[${PYTHON_USEDEP}]
-	>=dev-python/azure-common-1.1[${PYTHON_USEDEP}]
-	>=dev-python/azure-mgmt-core-1.5.0[${PYTHON_USEDEP}]
+	>=dev-python/azure-mgmt-core-1.6.0[${PYTHON_USEDEP}]
 "
 
-PATCHES=( "${FILESDIR}/${P}-wheel-metadata.patch" )
+BDEPEND+=" >=dev-python/setuptools-77.0.3[${PYTHON_USEDEP}]"
 
 EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

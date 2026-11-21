@@ -13,7 +13,7 @@ SRC_URI="https://github.com/cortexproject/cortex/archive/refs/tags/v${PV}.tar.gz
 # dependencies shipped in the upstream release tarball's vendor/
 # directory (Cortex vendors its dependencies, so no separate module
 # mirror or EGO_SUM is required).
-LICENSE="Apache-2.0 BSD BSD-2 CC0-1.0 ISC MIT MPL-2.0"
+LICENSE="Apache-2.0 BSD BSD-2 CC0-1.0 ISC MIT MIT-0 MPL-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
@@ -23,7 +23,7 @@ ACCT_DEPEND="
 "
 RDEPEND="${ACCT_DEPEND}"
 
-BDEPEND+=" >=dev-lang/go-1.25.0"
+BDEPEND+=" >=dev-lang/go-1.27.0"
 
 # The upstream test suite depends on external services (etcd, consul,
 # S3-compatible object storage, etc.) that are not available in the

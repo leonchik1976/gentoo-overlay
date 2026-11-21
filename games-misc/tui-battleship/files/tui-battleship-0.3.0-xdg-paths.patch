@@ -1,0 +1,245 @@
+--- a/tui-battleship.sh
++++ b/tui-battleship.sh
+@@ -47,10 +47,36 @@
+   C6="\e[32m" # green
+ }
+ 
++function init_paths()
++{
++ if ! mkdir -p "$CONFIG_DIR" "$STATE_DIR"
++ then
++  echo "tui-battleship: could not create $CONFIG_DIR or $STATE_DIR." >&2
++  exit 1
++ fi
++ if [[ ! -f "$CONFIG_FILE" ]]&&! cp "$ASSET_DIR/tui-battleship.config" "$CONFIG_FILE"
++ then
++  echo "tui-battleship: could not create default configuration file at $CONFIG_FILE." >&2
++  exit 1
++ fi
++ if [[ ! -f "$LOG_FILE" ]]&&! : >"$LOG_FILE"
++ then
++  echo "tui-battleship: could not create log file at $LOG_FILE." >&2
++  exit 1
++ fi
++ if [[ ! -f "$HISCORES_FILE" ]]&&! : >"$HISCORES_FILE"
++ then
++  echo "tui-battleship: could not create high-score file at $HISCORES_FILE." >&2
++  exit 1
++ fi
++}
++
+ function load_config()
+ {
+  config_fail=0
++ unset INFO_TOGGLE CHEATSHEET_TOGGLE
+  [[ -z "$CONFIG_FILE" ]]&&config_fail=1||source "$CONFIG_FILE"
++ INFO_TOGGLE=${INFO_TOGGLE:-${CHEATSHEET_TOGGLE:-}}
+  #DEFAULT VALUES in case config doesn't load
+  [[ -z $PLACE_SHIPS ]]&&PLACE_SHIPS=auto&&config_fail=1
+  [[ -z $CARRIERS ]]&&CARRIERS=1&&config_fail=1
+@@ -72,7 +98,7 @@
+  if [[ $NAVIGATION_KEYS == 'aswd' ]];then NAV_LEFT='a';NAV_DOWN='s';NAV_UP='w';NAV_RIGHT='d';CHEAT_NAV='aswd';fi
+  TOTAL=$(($CARRIERS*4+$BATTLESHIPS*3+$CRUISERS*2+$DESTROYERS))
+  load_colors
+-[[ $config_fail == 1 ]]&&notify-send -t 9000 -i  "$SHARE_DIR/tui-battleship-$PREFERRED_PNG.png" "Configurations not loaded correctly.
++[[ $config_fail == 1 ]]&&notify-send -t 9000 -i  "$ASSET_DIR/tui-battleship-$PREFERRED_PNG.png" "Configurations not loaded correctly.
+ Running with hardcoded default values."
+ }
+ 
+@@ -96,15 +122,15 @@
+ function show_hiscores ()
+ {
+  echo -e "                          ${C0} ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╗ \n                           ║ ${C1}T${C0} │ ${C1}O${C0} │ ${C1}P${C0} │ ${C3}-${C0} │ ${C1}T${C0} │ ${C1}E${C0} │ ${C1}N${C0} ║\n                           ╚═══╧═══╧═══╧═══╧═══╧═══╧═══╝"
+- if [[ -f "$SHARE_DIR/hiscores.txt" ]]&&[[ -n $(cat "$SHARE_DIR/hiscores.txt") ]]
+- then
+-  TOP_10_LENGTH=$(cat "$SHARE_DIR/hiscores.txt"|wc -l)
++ if [[ -f "$HISCORES_FILE" ]]&&[[ -n $(cat "$HISCORES_FILE") ]]
++ then
++  TOP_10_LENGTH=$(cat "$HISCORES_FILE"|wc -l)
+   if [[ $TOP_10_LENGTH -gt 10 ]];then TOP_10_LENGTH=10;fi
+   ii=31;i=1;
+   while [[ $i -le $TOP_10_LENGTH ]]
+   do
+-   [[ "$(sort -h "$SHARE_DIR"/hiscores.txt |sed -n ${i}p|awk '{print $2}')" == "$WIN_TIME" ]]&&h="${I}"||h=""
+-   echo -e "                             ${h}\0033[${ii}m$i $(sort -h "$SHARE_DIR"/hiscores.txt |sed -n ${i}p)${n}"
++   [[ "$(sort -h "$HISCORES_FILE" |sed -n ${i}p|awk '{print $2}')" == "$WIN_TIME" ]]&&h="${I}"||h=""
++   echo -e "                             ${h}\0033[${ii}m$i $(sort -h "$HISCORES_FILE" |sed -n ${i}p)${n}"
+    sleep 0.1
+    ((i++));((ii++))
+    if [[ $ii -gt 36 ]];then ii=31;fi;
+@@ -419,7 +445,7 @@
+  clear
+  print_matrix
+  echo -e "                                     ${J}${C3}A SAD DAY!${n}\n             ${C1}The computer bombed and sank all your ships in $CPU_TRIES tries.${n}"
+- [[ $NOTIFICATION_TOGGLE == "yes" ]]&&notify-send -t 5000 -i  "$SHARE_DIR/tui-battleship-$PREFERRED_PNG.png" "You were DEFEATED after $CPU_TRIES tries."
++ [[ $NOTIFICATION_TOGGLE == "yes" ]]&&notify-send -t 5000 -i  "$ASSET_DIR/tui-battleship-$PREFERRED_PNG.png" "You were DEFEATED after $CPU_TRIES tries."
+  sleep 1
+   echo -e "                     ${C0}Press any key to return to the main menu${n}";press_any_key;db_str="M";clear;
+ }
+@@ -429,18 +455,18 @@
+  clear
+  print_matrix
+  WIN_TIME=$(date +%Y-%m-%d\,%T)
+- if [[ $(cat "$SHARE_DIR/hiscores.txt"|wc -l) -lt 1 ]]
++ if [[ $(cat "$HISCORES_FILE"|wc -l) -lt 1 ]]
+  then
+   TENTH=100 #avoid first time error
+  else
+-  TENTH="$(sort -h "$SHARE_DIR/hiscores.txt"|head -10|tail -1|awk '{print $1}')"
++  TENTH="$(sort -h "$HISCORES_FILE"|head -10|tail -1|awk '{print $1}')"
+  fi
+  SCORELINE="$USR_TRIES $WIN_TIME "
+  echo -e "                               ${J}${C3}MISSION ACCOMPLISHED!!!${n}\n                        ${C1}You bombed all enemy ships in $USR_TRIES tries.${n}"
+- [[ $NOTIFICATION_TOGGLE == "yes" ]]&&notify-send -t 5000 -i  "$SHARE_DIR/tui-battleship-$PREFERRED_PNG.png" "VICTORY in $USR_TRIES tries!"
+- if [ "$USR_TRIES" -lt "$TENTH" ]||[[ "$(cat "$SHARE_DIR/hiscores.txt"|wc -l)" -lt 10 ]]
+- then
+-  echo $SCORELINE>>"$SHARE_DIR/hiscores.txt"
++ [[ $NOTIFICATION_TOGGLE == "yes" ]]&&notify-send -t 5000 -i  "$ASSET_DIR/tui-battleship-$PREFERRED_PNG.png" "VICTORY in $USR_TRIES tries!"
++ if [ "$USR_TRIES" -lt "$TENTH" ]||[[ "$(cat "$HISCORES_FILE"|wc -l)" -lt 10 ]]
++ then
++  echo $SCORELINE>>"$HISCORES_FILE"
+   echo -e "                          ${C1}That's right, you made it to the${n}"
+   show_hiscores
+  fi
+@@ -458,17 +484,17 @@
+  load_grids
+  populate
+  if [[ $switch_populate == 1 ]];then PLACE_SHIPS='auto';load_grids;populate;PLACE_SHIPS=manual;switch_populate='';fi
+-  echo -e "                        ${C0}┏━━━┯━━━┯━━━┓\n                        ${C0}┃ ${C2}T ${C0}│${C2} U ${C0}│${C2} I ${C0}┃\n                        ${C0}┗━━━╅───┼───╄━━━┯━━━┯━━━┯━━━┓\n                            ${C0}┃ ${C2}B ${C0}│${C2} A ${C0}│${C2} T ${C0}│${C2} T ${C0}│${C6} L ${C0}│${C6} E ${C0}┃\n                        ${C0}    ┗━━━┷━━━┷━━━╅───┼───┼───╄━━━┓\n                           ${C6}GOOD LUCK!${C0}   ┃${C2} S ${C0}│${C2} H ${C0}${C0}│${C6} I ${C0}│${C6} P ${C0}┃\n                                       ${C0} ┗━━━┷━━━┷━━━┷━━━┛ ">$SHARE_DIR/tui-battleship.log
++  echo -e "                        ${C0}┏━━━┯━━━┯━━━┓\n                        ${C0}┃ ${C2}T ${C0}│${C2} U ${C0}│${C2} I ${C0}┃\n                        ${C0}┗━━━╅───┼───╄━━━┯━━━┯━━━┯━━━┓\n                            ${C0}┃ ${C2}B ${C0}│${C2} A ${C0}│${C2} T ${C0}│${C2} T ${C0}│${C6} L ${C0}│${C6} E ${C0}┃\n                        ${C0}    ┗━━━┷━━━┷━━━╅───┼───┼───╄━━━┓\n                           ${C6}GOOD LUCK!${C0}   ┃${C2} S ${C0}│${C2} H ${C0}${C0}│${C6} I ${C0}│${C6} P ${C0}┃\n                                       ${C0} ┗━━━┷━━━┷━━━┷━━━┛ ">"$LOG_FILE"
+ }
+ 
+ function cpu_miss()
+ {
+- echo -e "                    ${C4}Computer missed.            Hits:$CPU_HITS/$TOTAL Tries:$CPU_TRIES${n}      ">>$SHARE_DIR/tui-battleship.log
++ echo -e "                    ${C4}Computer missed.            Hits:$CPU_HITS/$TOTAL Tries:$CPU_TRIES${n}      ">>"$LOG_FILE"
+  USR_F[$1]=" . "
+  USR_X[$1]=${C5}
+  print_matrix
+  load_cheat
+- [[ $LOG_TOGGLE == 'yes' ]]&&tail "$SHARE_DIR/tui-battleship.log"
++ [[ $LOG_TOGGLE == 'yes' ]]&&tail "$LOG_FILE"
+ }
+ 
+ function cpu_hit()
+@@ -476,11 +502,11 @@
+  USR_F[$1]=" X "
+  USR_X[$1]=${C3}
+  ((CPU_HITS++))
+- echo -e "                    ${C3}Computer hit a ship.        Hits:$CPU_HITS/$TOTAL Tries:$CPU_TRIES${n}      ">>$SHARE_DIR/tui-battleship.log
+- if [[ ${USR_G[$1]} == "1" ]];then echo -e "                    ${C3}${I}COMPUTER SANK YOUR DESTROYER (1).${n}                  ">>$SHARE_DIR/tui-battleship.log;else((SHIP_HITS++));fi
++ echo -e "                    ${C3}Computer hit a ship.        Hits:$CPU_HITS/$TOTAL Tries:$CPU_TRIES${n}      ">>"$LOG_FILE"
++ if [[ ${USR_G[$1]} == "1" ]];then echo -e "                    ${C3}${I}COMPUTER SANK YOUR DESTROYER (1).${n}                  ">>"$LOG_FILE";else((SHIP_HITS++));fi
+  print_matrix
+  load_cheat
+- [[ $LOG_TOGGLE == 'yes' ]]&&tail "$SHARE_DIR/tui-battleship.log"
++ [[ $LOG_TOGGLE == 'yes' ]]&&tail "$LOG_FILE"
+ # sleep 1
+  cpu_play
+ }
+@@ -495,7 +521,7 @@
+  4)ship="CARRIER (4444)"
+  ;;
+  esac
+- echo -e "                    ${C3}${I}COMPUTER SANK YOUR $ship.${n}                  ">>$SHARE_DIR/tui-battleship.log
++ echo -e "                    ${C3}${I}COMPUTER SANK YOUR $ship.${n}                  ">>"$LOG_FILE"
+  FOLLOW=0
+  SHIP_HITS=0
+  SQ0=0
+@@ -609,16 +635,16 @@
+  if [[ ${CPU_G[CURSOR]} != 0 ]]
+  then
+   ((USR_HITS++))
+-   echo -e "                    ${C2}You hit a ship.             Hits:$USR_HITS/$TOTAL Tries:$USR_TRIES${n}      ">>$SHARE_DIR/tui-battleship.log
++   echo -e "                    ${C2}You hit a ship.             Hits:$USR_HITS/$TOTAL Tries:$USR_TRIES${n}      ">>"$LOG_FILE"
+   print_matrix
+   load_cheat
+-  [[ $LOG_TOGGLE == 'yes' ]]&&tail "$SHARE_DIR/tui-battleship.log"
++  [[ $LOG_TOGGLE == 'yes' ]]&&tail "$LOG_FILE"
+   [[ $USR_HITS == $TOTAL ]]&&win_game
+  else
+-  echo -e "                    ${C2}You missed.                 Hits:$USR_HITS/$TOTAL Tries:$USR_TRIES${n}      ">>$SHARE_DIR/tui-battleship.log
++  echo -e "                    ${C2}You missed.                 Hits:$USR_HITS/$TOTAL Tries:$USR_TRIES${n}      ">>"$LOG_FILE"
+   print_matrix
+   load_cheat
+-  [[ $LOG_TOGGLE == 'yes' ]]&&tail "$SHARE_DIR/tui-battleship.log"
++  [[ $LOG_TOGGLE == 'yes' ]]&&tail "$LOG_FILE"
+   cpu_play
+  fi
+ }
+@@ -642,7 +668,7 @@
+    if [[ $MOUSE_TYPE == "LEFT_CLICK_UP" ]]&&[[ $MOUSE_ROW == 23 ]]&&[[ $MOUSE_COLUMN -gt 53 ]]&&[[ $MOUSE_COLUMN -lt 67 ]];then clear;[[ $INFO_TOGGLE == "no" ]]&&INFO_TOGGLE="yes"||INFO_TOGGLE="no";fi
+    if [[ $MOUSE_TYPE == "LEFT_CLICK_UP" ]]&&[[ $MOUSE_ROW == 23 ]]&&[[ $INFO_TOGGLE == "yes" ]]
+    then
+-    if [[ $MOUSE_COLUMN -gt 27 ]]&&[[ $MOUSE_COLUMN -lt 36 ]];then clear;[[ $NOTIFICATION_TOGGLE == "yes" ]]&&notify-send -t 5000 -i  "$SHARE_DIR/tui-battleship-$PREFERRED_PNG.png" "Exited tui-battleship.";exit;fi
++    if [[ $MOUSE_COLUMN -gt 27 ]]&&[[ $MOUSE_COLUMN -lt 36 ]];then clear;[[ $NOTIFICATION_TOGGLE == "yes" ]]&&notify-send -t 5000 -i  "$ASSET_DIR/tui-battleship-$PREFERRED_PNG.png" "Exited tui-battleship.";exit;fi
+     if [[ $MOUSE_COLUMN -gt 36 ]]&&[[ $MOUSE_COLUMN -lt 44 ]];then db_str="M";new_game;fi
+     if [[ $MOUSE_COLUMN -gt 44 ]]&&[[ $MOUSE_COLUMN -lt 53 ]];then clear;db_str="M";fi
+ #    if [[ $MOUSE_COLUMN -gt 53 ]]&&[[ $MOUSE_COLUMN -lt 67 ]];then clear;;fi
+@@ -657,10 +683,10 @@
+  if [[ $MOUSE_TYPE == "LEFT_CLICK_UP" ]]&&[[ $MOUSE_COLUMN -gt 44 ]]&&[[ $MOUSE_COLUMN -lt 59 ]]
+  then
+   if [[ $MOUSE_ROW == 9 ]];then clear;new_game;play_menu;fi
+-  if [[ $MOUSE_ROW == 11 ]];then echo -e "\0033[?25h";stty echo; printf '\033[?1000;1002;1006;1015l';clear;[[ $NOTIFICATION_TOGGLE == "yes" ]]&&notify-send -t 5000 -i "$SHARE_DIR/tui-battleship-$PREFERRED_PNG.png" "Editing tui-battleship configuration file" &eval $PREFERRED_EDITOR $CONFIG_FILE; printf '\033[?1000;1002;1006;1015h';echo -ne "\0033[?25l";stty -echo;clear;load_config;fi
++  if [[ $MOUSE_ROW == 11 ]];then echo -e "\0033[?25h";stty echo; printf '\033[?1000;1002;1006;1015l';clear;[[ $NOTIFICATION_TOGGLE == "yes" ]]&&notify-send -t 5000 -i "$ASSET_DIR/tui-battleship-$PREFERRED_PNG.png" "Editing tui-battleship configuration file" &eval "$PREFERRED_EDITOR \"\$CONFIG_FILE\""; printf '\033[?1000;1002;1006;1015h';echo -ne "\0033[?25l";stty -echo;clear;load_config;fi
+   if [[ $MOUSE_ROW == 13 ]];then clear;show_hiscores;echo -e "\n                           ${C0}Press any key to return${n}";press_any_key;clear;fi
+   if [[ $MOUSE_ROW == 15 ]];then clear;instructions;clear;fi
+-  if [[ $MOUSE_ROW == 17 ]];then clear;[[ $NOTIFICATION_TOGGLE == "yes" ]]&&notify-send -t 5000 -i  "$SHARE_DIR/tui-battleship-$PREFERRED_PNG.png" "Exited tui-battleship.";exit;fi
++  if [[ $MOUSE_ROW == 17 ]];then clear;[[ $NOTIFICATION_TOGGLE == "yes" ]]&&notify-send -t 5000 -i  "$ASSET_DIR/tui-battleship-$PREFERRED_PNG.png" "Exited tui-battleship.";exit;fi
+  fi
+ }
+ 
+@@ -712,7 +738,7 @@
+   while [[ $(tput lines) -lt $LINE_LIM ]]||[[ $(tput cols) -lt 82 ]];do clear; echo -e "${C3} CAUTION:\nWindow is to small, it should be at least 82 columns x $LINE_LIM lines.\n ${C0}Resize window and press any key to continue$n";press_any_key;clear;done
+   print_matrix
+   load_cheat
+-  [[ $LOG_TOGGLE == 'yes' ]]&&tail "$SHARE_DIR/tui-battleship.log"
++  [[ $LOG_TOGGLE == 'yes' ]]&&tail "$LOG_FILE"
+   db_str="$(get_mouse_keyboard_input)"
+   case $db_str in
+    $NAV_UP|"ESC[A") if  [[ $CURSOR -ge 10 ]]; then NEW_CURSOR=$((CURSOR-10));mv_cursor;fi;
+@@ -723,7 +749,7 @@
+    ;;
+    $NAV_LEFT|"ESC[D") if  [[ ${CPU_P[CURSOR]} != 0 ]]; then NEW_CURSOR=$((CURSOR-1));mv_cursor;fi;
+    ;;
+-   q)clear;[[ $NOTIFICATION_TOGGLE == "yes" ]]&&notify-send -t 5000 -i  "$SHARE_DIR/tui-battleship-$PREFERRED_PNG.png" "Exited tui-battleship.";exit
++   q)clear;[[ $NOTIFICATION_TOGGLE == "yes" ]]&&notify-send -t 5000 -i  "$ASSET_DIR/tui-battleship-$PREFERRED_PNG.png" "Exited tui-battleship.";exit
+    ;;
+    i)clear;if [[ $INFO_TOGGLE == yes ]];then INFO_TOGGLE="no";else INFO_TOGGLE="yes";fi;
+    ;;
+@@ -775,13 +801,13 @@
+   case $mm_str in
+    n)clear;new_game;play_menu;
+    ;;
+-   c)echo -e "\0033[?25h";stty echo; printf '\033[?1000;1002;1006;1015l';clear;[[ $NOTIFICATION_TOGGLE == "yes" ]]&&notify-send -t 5000 -i "$SHARE_DIR/tui-battleship-$PREFERRED_PNG.png" "Editing tui-battleship configuration file" &eval $PREFERRED_EDITOR $CONFIG_FILE; printf '\033[?1000;1002;1006;1015h';echo -ne "\0033[?25l";stty -echo;clear;load_config
++   c)echo -e "\0033[?25h";stty echo; printf '\033[?1000;1002;1006;1015l';clear;[[ $NOTIFICATION_TOGGLE == "yes" ]]&&notify-send -t 5000 -i "$ASSET_DIR/tui-battleship-$PREFERRED_PNG.png" "Editing tui-battleship configuration file" &eval "$PREFERRED_EDITOR \"\$CONFIG_FILE\""; printf '\033[?1000;1002;1006;1015h';echo -ne "\0033[?25l";stty -echo;clear;load_config
+    ;;
+    r)clear;instructions;clear;
+    ;;
+    s)clear;show_hiscores;echo -e "\n                           ${C0}Press any key to return${n}";press_any_key;clear;
+    ;;
+-   q)clear;[[ $NOTIFICATION_TOGGLE == "yes" ]]&&notify-send -t 5000 -i  "$SHARE_DIR/tui-battleship-$PREFERRED_PNG.png" "Exited tui-battleship.";exit
++   q)clear;[[ $NOTIFICATION_TOGGLE == "yes" ]]&&notify-send -t 5000 -i  "$ASSET_DIR/tui-battleship-$PREFERRED_PNG.png" "Exited tui-battleship.";exit
+    ;;
+    "ESC["*M|"ESC["*m) echo -ne "\0033[H" ;get_mouse_data "$mm_str"; get_mouse_menu
+    ;;
+@@ -809,12 +835,17 @@
+ I="\e[7m" #invert
+ J="\e[5m" #blink
+ n="\e[m" #reset
+-CONFIG_FILE="$HOME/.config/tui-battleship/tui-battleship.config"
+-SHARE_DIR="$HOME/.local/share/tui-battleship"
++ASSET_DIR="@GENTOO_EPREFIX@/usr/share/tui-battleship"
++CONFIG_DIR="${XDG_CONFIG_HOME:-${HOME}/.config}/tui-battleship"
++STATE_DIR="${XDG_STATE_HOME:-${HOME}/.local/state}/tui-battleship"
++CONFIG_FILE="${CONFIG_DIR}/tui-battleship.config"
++LOG_FILE="${STATE_DIR}/tui-battleship.log"
++HISCORES_FILE="${STATE_DIR}/hiscores.txt"
+ WINDOW_LINES0=$(tput lines)
+ WINDOW_COLS0=$(tput cols)
+ KITTY_M_SWITCH=up
+ ############## GAME ####################
++init_paths
+ load_config
+ declare -A MOUSE_GRID
+ create_mouse_grid_array 

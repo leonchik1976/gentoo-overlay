@@ -65,7 +65,7 @@ RDEPEND+="
 BDEPEND+=" >=dev-python/setuptools-77[${PYTHON_USEDEP}] "
 
 PATCHES=(
-	"${FILESDIR}/${P}-renderer-workspace.patch"
+	"${FILESDIR}/dash-4.5.0-renderer-workspace.patch"
 	"${FILESDIR}/${P}-setuptools-metadata.patch"
 )
 DOCS=( README.md "${FILESDIR}/README.gentoo" )
