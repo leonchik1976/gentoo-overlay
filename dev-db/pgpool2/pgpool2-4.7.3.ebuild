@@ -3,7 +3,7 @@
 
 EAPI=8
 
-POSTGRES_COMPAT=( {14..18} )
+POSTGRES_COMPAT=( {14..19} )
 
 inherit autotools flag-o-matic postgres-multi
 
@@ -43,6 +43,7 @@ BDEPEND="${BDEPEND}
 "
 
 src_prepare() {
+	eapply "${FILESDIR}/pgpool-4.7.3-postgresql19-lsyscache.patch"
 	eapply \
 		"${FILESDIR}/pgpool-4.2.0-configure-memcached.patch" \
 		"${FILESDIR}/pgpool-configure-pam.patch" \
