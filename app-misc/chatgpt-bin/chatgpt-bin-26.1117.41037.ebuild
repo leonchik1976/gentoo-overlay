@@ -22,7 +22,7 @@ S="${WORKDIR}"
 
 # Proprietary application terms and bundled Chromium/Electron notices.
 LICENSE="all-rights-reserved Apache-2.0 BSD BSD-2 Boost-1.0 CC0-1.0 FFT2D FTL"
-LICENSE+=" IJG ISC LGPL-2 LGPL-2.1 MIT MPL-2.0 OFL-1.1 PSF-2 Unicode-3.0 Unlicense ZLIB"
+LICENSE+=" IJG ISC LGPL-2 LGPL-2.1 libtiff MIT MPL-2.0 OFL-1.1 PSF-2 Unicode-3.0 Unlicense ZLIB"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 REQUIRED_USE="elibc_glibc"

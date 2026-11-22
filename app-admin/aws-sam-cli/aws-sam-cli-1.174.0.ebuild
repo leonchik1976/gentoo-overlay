@@ -26,17 +26,17 @@ RESTRICT="test"
 # Upstream requests boto3[crt].  CRT support is intentionally omitted;
 # standard botocore HTTP and S3 transfer implementations remain available.
 #
-# Upstream (1.173.0) pins click-8.1.8, boto3-1.43.108, tomlkit-0.15.1,
+# Upstream (1.174.0) pins click-8.1.8, boto3-1.44.5, tomlkit-0.15.1,
 # watchdog-4.0.2 and tzlocal-5.4.4, and requires rich>=14.3.3.
 # Gentoo patch/minor updates within the bounds below are intentionally
 # allowed.  Rich follows upstream's range; sci-ml/ollmcp carries a local
 # compatibility patch permitting Rich versions below 15.1.  Keep cfn-lint
 # and docker within upstream's compatibility ranges.
 RDEPEND+="
-	~dev-python/aws-lambda-builders-1.70.0[${PYTHON_USEDEP}]
-	~dev-python/aws-sam-translator-1.117.0[${PYTHON_USEDEP}]
-	>=dev-python/boto3-1.43.108[${PYTHON_USEDEP}]
-	<dev-python/boto3-1.44[${PYTHON_USEDEP}]
+	~dev-python/aws-lambda-builders-1.71.0[${PYTHON_USEDEP}]
+	~dev-python/aws-sam-translator-1.118.0[${PYTHON_USEDEP}]
+	>=dev-python/boto3-1.44.5[${PYTHON_USEDEP}]
+	<dev-python/boto3-1.45[${PYTHON_USEDEP}]
 	>=dev-python/boto3-stubs-1.41.0[${PYTHON_USEDEP}]
 	>=dev-python/cfn-lint-1.52.0[${PYTHON_USEDEP}]
 	<dev-python/cfn-lint-1.59[${PYTHON_USEDEP}]

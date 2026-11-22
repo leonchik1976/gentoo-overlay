@@ -51,7 +51,8 @@ src_install() {
 
 	local notices="${T}/third-party-notices"
 	mkdir -p "${notices}" || die
-	tar -xJf "${FILESDIR}/${P}-third-party-notices.tar.xz" -C "${notices}" || die
+	# Both release binaries retain the exact modules and checksums from 33.0.0.
+	tar -xJf "${FILESDIR}/${PN}-33.0.0-third-party-notices.tar.xz" -C "${notices}" || die
 	docinto third-party-notices
 	dodoc -r "${notices}/."
 }

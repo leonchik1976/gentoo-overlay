@@ -1,0 +1,21 @@
+TablePlus 27.4.1 build 402 Snowflake driver notices
+
+Both Linux driver binaries identify libsnowflakeclient 2.12.0, OpenSSL
+3.5.8, and zlib 1.3.1. The OpenSSL 1.1.1i literal is an encryption metadata
+field in SnowflakeGCSClient.cpp at v2.12.0. The OpenSSL distribution grants
+the Apache-2.0 license for its CRYPTOGAMS assembly.
+
+The binaries also contain curl diagnostics, Boost.URL paths, cJSON type
+names, picojson parser diagnostics, and the Snowflake TOML parser. Their
+notices come from the dependencies referenced by libsnowflakeclient 2.12.0.
+Those build inputs do not establish the exact revisions of the dependencies
+in TablePlus's binaries.
+
+https://github.com/openssl/openssl/blob/openssl-3.5.8/LICENSE.txt
+https://github.com/madler/zlib/blob/v1.3.1/LICENSE
+https://github.com/snowflakedb/libsnowflakeclient/blob/v2.12.0/LICENSE
+https://github.com/boostorg/boost/blob/boost-1.81.0/LICENSE_1_0.txt
+https://github.com/curl/curl/blob/curl-8_21_0/COPYING
+https://github.com/DaveGamble/cJSON/blob/v1.7.19/LICENSE
+https://github.com/snowflakedb/libsnowflakeclient/blob/v2.12.0/deps/tomlplusplus/LICENSE
+https://github.com/snowflakedb/libsnowflakeclient/blob/v2.12.0/deps/picojson/LICENSE
