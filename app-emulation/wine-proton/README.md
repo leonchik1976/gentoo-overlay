@@ -56,9 +56,9 @@ architecture in use.
 
 ## Sources
 
-- Base: `::gentoo/app-emulation/wine-proton/wine-proton-11.0.2e.ebuild`
+- Base: `::gentoo/app-emulation/wine-proton/wine-proton-11.0.3-r1.ebuild`
 - arm64 reference: `::gentoo/app-emulation/wine-staging/wine-staging-11.20.ebuild`
-- https://github.com/ValveSoftware/wine/tree/proton-wine-11.0-2e
+- https://github.com/ValveSoftware/wine/tree/proton-wine-11.0-3
 - https://devmanual.gentoo.org/eclass-reference/wine.eclass/
 - https://bugs.gentoo.org/977021 (GCC/BFD requirement)
 - https://bugs.gentoo.org/959263 (SDL requirement)

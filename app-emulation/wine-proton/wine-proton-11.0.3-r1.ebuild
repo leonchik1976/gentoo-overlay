@@ -7,8 +7,6 @@ PYTHON_COMPAT=( python3_{12..15} python3_{14..15}t )
 inherit eapi9-ver flag-o-matic optfeature python-any-r1
 inherit readme.gentoo-r1 toolchain-funcs wine
 
-WINE_GECKO=2.47.4
-WINE_MONO=10.4.1
 WINE_PV=$(ver_rs 2 -)
 
 DESCRIPTION="Valve Software's fork of Wine"
@@ -136,6 +134,7 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-8.0.1c-unwind.patch
 	"${FILESDIR}"/${PN}-9.0-rpath.patch
 	"${FILESDIR}"/${PN}-11.0.1-restore-menubuilder.patch
+	"${FILESDIR}/${PN}-11.0.3-match-mono-with-proton.patch"
 )
 
 src_prepare() {
