@@ -16,7 +16,7 @@ S="${WORKDIR}"
 
 # lichen against both release binaries resolves every embedded Go module to
 # Apache-2.0, BSD-3-Clause (-> BSD), MIT, MPL-2.0, or Unlicense, with a
-# single exception: github.com/infracost/go-proto@v1.30.0 ships no LICENSE
+# single exception: github.com/infracost/go-proto@v1.57.1 ships no LICENSE
 # file and pkg.go.dev's own scanner reports "None detected" for it too --
 # this is not a classifier false positive, it is genuinely missing from
 # upstream. go-proto is Infracost's own first-party module (sibling of the

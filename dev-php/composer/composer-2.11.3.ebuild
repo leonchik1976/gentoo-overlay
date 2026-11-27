@@ -10,7 +10,7 @@ HOMEPAGE="https://getcomposer.org/ https://github.com/composer/composer"
 SRC_URI="https://getcomposer.org/download/${PV}/composer.phar -> ${P}.phar"
 S=${WORKDIR}
 
-LICENSE="MIT"
+LICENSE="BSD MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 

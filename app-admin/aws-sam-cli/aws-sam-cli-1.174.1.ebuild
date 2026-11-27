@@ -26,7 +26,7 @@ RESTRICT="test"
 # Upstream requests boto3[crt].  CRT support is intentionally omitted;
 # standard botocore HTTP and S3 transfer implementations remain available.
 #
-# Upstream (1.174.0) pins click-8.1.8, boto3-1.44.5, tomlkit-0.15.1,
+# Upstream (1.174.1) pins click-8.1.8, boto3-1.44.5, tomlkit-0.15.1,
 # watchdog-4.0.2 and tzlocal-5.4.4, and requires rich>=14.3.3.
 # Gentoo patch/minor updates within the bounds below are intentionally
 # allowed.  Rich follows upstream's range; sci-ml/ollmcp carries a local

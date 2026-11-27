@@ -22,6 +22,8 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
+BDEPEND+=" >=dev-python/setuptools-77[${PYTHON_USEDEP}]"
+
 distutils_enable_tests unittest
 
 python_test() {
